@@ -71,7 +71,7 @@ We welcome contributions to the Blitz Wallet PR website! To contribute:
 
 ## 📞 Contact
 
-For any questions or feedback, visit the [Blitz Wallet official website](https://blitz-wallet.com) or contact us via email at [contact@blitz-wallet.com](mailto:contact@blitz-wallet.com).
+For any questions or feedback, visit the [Blitz Wallet official website](https://blitz-wallet.com) or contact us via email at [support@blitz-wallet.com](mailto:support@blitz-wallet.com).
 
 ## 📜 License
 
