@@ -1,0 +1,40 @@
+{
+  "name": "blitz-wallet-website",
+  "version": "1.0.0",
+  "description": "Webiste for blitz wallet app",
+  "main": "index.mjs",
+  "scripts": {
+    "dev": "tsc -w & nodemon .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Blake Kaufman",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@bitcoinerlab/secp256k1": "^1.1.1",
+    "@mempool/mempool.js": "^2.3.0",
+    "@vulpemventures/secp256k1-zkp": "^3.2.1",
+    "ably": "^2.0.2",
+    "bip32": "^4.0.0",
+    "bip39": "^3.1.0",
+    "bitcoinjs-lib": "^6.1.5",
+    "bolt11": "^1.4.1",
+    "boltz-core": "^2.1.2",
+    "dotenv": "16.4.1",
+    "ecpair": "^2.1.0",
+    "elliptic": "^6.5.4",
+    "expo-server-sdk": "3.7.0",
+    "express": "4.18.2",
+    "firebase": "^10.10.0",
+    "jsonwebtoken": "^9.0.2",
+    "liquidjs-lib": "^6.0.2-liquid.34",
+    "mongodb": "^6.4.0",
+    "netlify-cli": "^17.33.3",
+    "netlify-lambda": "2.0.16",
+    "openai": "4.47.1",
+    "secp256k1": "^5.0.0",
+    "serverless-http": "3.2.0",
+    "tiny-secp256k1": "2.2.3",
+    "wallycore": "^1.2.0"
+  }
+}

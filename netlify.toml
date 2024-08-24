@@ -1,0 +1,17 @@
+[build]
+  functions = "netlify"
+  
+[[redirects]]
+  from = "/u/*"
+  to = "/.netlify/functions/dynamic-profile"
+  status = 200
+
+[[redirects]]
+  from = "/favicon.ico"
+  to = "/favicon.ico"
+  status = 200
+
+[[redirects]]
+  from = "/static/*"
+  to = "/static/:splat"
+  status = 200

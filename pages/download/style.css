@@ -1,0 +1,126 @@
+body {
+  height: 100%;
+
+  overflow-x: hidden;
+  overflow-y: scroll;
+  display: flex;
+  justify-content: center;
+  background: #010101;
+}
+main {
+  height: 100dvh;
+  width: 100dvw;
+  /* width: 95%; */
+
+  display: flex;
+  flex-direction: column;
+
+  background-image: radial-gradient(
+      48.5% 44.5% at 0% 0%,
+      #0375f6 2%,
+      rgba(3, 117, 246, 0.92) 10.17%,
+      rgba(3, 117, 246, 0.83) 18.33%,
+      rgba(3, 117, 246, 0.75) 26.5%,
+      rgba(3, 117, 246, 0.67) 34.67%,
+      rgba(3, 117, 246, 0.58) 42.83%,
+      rgba(3, 117, 246, 0.5) 51%,
+      rgba(3, 117, 246, 0.42) 59.17%,
+      rgba(3, 117, 246, 0.33) 67.33%,
+      rgba(3, 117, 246, 0.25) 75.5%,
+      rgba(3, 117, 246, 0.17) 83.67%,
+      rgba(3, 117, 246, 0) 100%
+    ),
+    linear-gradient(90deg, #000000 0%, #000000 25%, #000000 50%, #000000 100%);
+}
+
+.title {
+  width: 95%;
+  max-width: 1000px;
+  color: whitesmoke;
+  margin: 50px auto;
+}
+
+.title .headContainer {
+  width: 100%;
+  max-width: 950px;
+  margin-bottom: 75px;
+}
+.title .headContainer h1 {
+  font-size: 80px;
+}
+.title h2 {
+  width: 100%;
+  font-size: 20px;
+}
+
+.title p {
+  max-width: 800px;
+}
+
+.appCards {
+  width: 95%;
+  max-width: max-content;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto auto;
+  padding-bottom: 20px;
+}
+.appCards .card {
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.appCards .card {
+  width: 280px;
+  height: 120px;
+
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(
+      251.51deg,
+      rgba(3, 117, 246, 0.2) 0%,
+      rgba(3, 117, 246, 0) 100%
+    ),
+    rgba(255, 255, 255, 0.04);
+}
+.appCards .card img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7460%)
+    hue-rotate(144deg) brightness(115%) contrast(102%);
+}
+.appCards .card p {
+  width: max-content;
+  font-size: 30px;
+  color: white;
+}
+
+.bp {
+  color: var(--primary_color);
+}
+
+footer {
+  margin-top: auto;
+}
+@media screen and (max-width: 1000px) {
+  .title .headContainer {
+    flex-wrap: wrap;
+  }
+}
+@media screen and (max-width: 550px) {
+  .title .headContainer h1 {
+    font-size: 45px;
+  }
+}

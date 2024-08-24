@@ -1,0 +1,362 @@
+body {
+  width: 100%;
+  background-color: var(--dm-background);
+  overflow-x: hidden;
+}
+
+main {
+  width: 100%;
+  /* height: 2000px; */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+nav {
+  width: 100%;
+  max-width: unset;
+  position: fixed;
+  z-index: 99;
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+nav .navContent {
+  width: 95%;
+  max-width: 1200px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.navItems {
+  width: 350px;
+  display: flex;
+  list-style: none;
+  align-items: center;
+  justify-content: space-between;
+}
+.navItem {
+  font-size: 18px;
+  color: var(--dm-text);
+
+  cursor: pointer;
+  font-family: var(--description_font);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navItem a {
+  text-decoration: none;
+}
+
+.hero {
+  width: 100%;
+  height: 100dvb;
+  min-height: 500px;
+
+  /* padding-top: 80px; */
+}
+
+/* Hero section */
+
+.hero .CTA {
+  width: 95%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.hero h1 {
+  width: 100%;
+  max-width: 900px;
+  font-size: 80px;
+  margin-bottom: 20px;
+  font-family: var(--title_font);
+  color: whitesmoke;
+  text-align: center;
+  margin: auto auto 50px;
+}
+.hero .headerP {
+  margin-bottom: 20px;
+  font-family: var(--title_font);
+  text-align: center;
+  color: whitesmoke;
+}
+
+.hero .appContainer a {
+  text-decoration: none;
+}
+
+.hero .appCards {
+  width: 95%;
+  max-width: max-content;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: auto auto;
+  padding-bottom: 20px;
+}
+.hero .appCards .card {
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  margin: 10px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.hero .appCards .card {
+  width: 280px;
+  height: 120px;
+
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: linear-gradient(
+      251.51deg,
+      rgba(3, 117, 246, 0.2) 0%,
+      rgba(3, 117, 246, 0) 100%
+    ),
+    rgba(255, 255, 255, 0.04);
+
+  position: relative;
+}
+.hero .appCards .card img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7460%)
+    hue-rotate(144deg) brightness(115%) contrast(102%);
+}
+.hero .appCards .card p {
+  width: max-content;
+  font-size: 30px;
+  color: white;
+}
+
+.hero .appCards .card .flagTip {
+  position: absolute;
+  top: 0;
+  right: 41px;
+  width: 30px;
+  height: 28.5px;
+  clip-path: polygon(73% 46%, 100% 99.5%, 100% 0%);
+
+  background-color: var(--primary_color);
+}
+.hero .appCards .card .beta_p {
+  width: max-content;
+  padding: 5px;
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  font-size: 15px;
+  color: white;
+
+  background-color: var(--primary_color);
+}
+/* --------------------------------- */
+/* Modal */
+/* --------------------------------- */
+.modalContainer {
+  width: 100dvw;
+  height: 100dvh;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  position: absolute;
+  z-index: 99;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  width: 95%;
+  max-width: 550px;
+
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 gainsboro;
+}
+.modal h1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.modal p {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* --------------------------------- */
+/* what is blitz wallet section */
+/* --------------------------------- */
+
+.about {
+  width: 95%;
+  max-width: 1000px;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px 0 gainsboro;
+
+  /* background-color: var(--secondary_color); */
+  color: white;
+
+  margin: 100px 0;
+}
+.about h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-family: var(--title_font);
+}
+.about p {
+  width: 100%;
+  font-size: 18px;
+
+  line-height: 30px;
+}
+.about p:not(:last-child) {
+  margin-bottom: 20px;
+}
+.about .quickDesc {
+  font-weight: bold;
+  color: var(--text_contrast_to_secondary);
+  text-align: center;
+}
+.about .blueHighlight {
+  font-weight: bold;
+  color: var(--text_contrast_to_secondary);
+}
+
+/* --------------------------------- */
+/* Powered By */
+/* --------------------------------- */
+
+.poweredBy {
+  width: 95%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 100px 0;
+}
+
+.poweredBy h2 {
+  width: 100%;
+  font-size: 55px;
+  margin-bottom: 50px;
+  color: whitesmoke;
+}
+.poweredBy img {
+  width: 200px;
+  height: auto;
+}
+.poweredBy .breezFilter {
+  filter: brightness(0) saturate(100%) invert(44%) sepia(59%) saturate(6017%)
+    hue-rotate(193deg) brightness(103%) contrast(102%);
+}
+.poweredBy .companyContainer {
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* --------------------------------- */
+/* Our Mission */
+/* --------------------------------- */
+
+.ourMission {
+  width: 95%;
+  max-width: 1000px;
+
+  padding: 20px;
+  margin: 100px 0;
+}
+
+.ourMission h2 {
+  font-size: 45px;
+  margin-bottom: 20px;
+}
+.ourMission .top_p,
+.bottom_p {
+  margin-left: 20px;
+  line-height: 35px;
+}
+.ourMission .top_p:not(:last-child) {
+  margin-bottom: 20px;
+}
+.ourMission h4 {
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+@media screen and (max-width: 1000px) {
+  .hero {
+    flex-direction: column-reverse;
+  }
+
+  .hero h1 {
+    text-align: center;
+  }
+}
+@media screen and (max-width: 730px) {
+  .hero .CTA {
+    width: 95%;
+  }
+  .hero h1 {
+    font-size: 40px;
+    text-wrap: wrap;
+  }
+  .hero h2 {
+    font-size: 20px;
+  }
+
+  .poweredBy .companyContainer {
+    flex-direction: column;
+    height: 320px;
+  }
+}
+@media screen and (max-width: 600px) {
+  .hero .CTA {
+    width: 95%;
+  }
+  .hero h1 {
+    font-size: 35px;
+    text-wrap: wrap;
+  }
+  .hero h2 {
+    font-size: 18px;
+  }
+  .hero .phone {
+    height: 400px;
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  .hero h2 {
+    font-size: 16px;
+  }
+  .hero .appContainer {
+    height: 100px;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.pb {
+  color: var(--primary_color);
+}

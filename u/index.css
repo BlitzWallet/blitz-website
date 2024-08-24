@@ -1,0 +1,55 @@
+body {
+  width: 100dvw;
+  min-height: 100dvh;
+  background-color: var(--dm-background);
+  display: flex;
+  flex-direction: column;
+}
+
+.wordmarkContainer {
+  width: 70%;
+  margin: 40px auto;
+}
+.wordmarkContainer img {
+  width: 250px;
+}
+
+.contentContainer {
+  width: 95%;
+  max-width: 800px;
+  margin: auto auto;
+  height: 500px;
+  color: white;
+  text-align: center;
+}
+.contentContainer h1 {
+  font-size: 50px;
+
+  margin-bottom: 20px;
+}
+.contentContainer .buttonContainer {
+  width: 80%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  margin: 70px auto 0;
+}
+.contentContainer .button {
+  width: 100%;
+  text-decoration: none;
+  border: 1px solid white;
+  padding: 10px 0;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+.contentContainer span {
+  text-decoration: none;
+}
+@media screen and (max-width: 500px) {
+  .contentContainer h1 {
+    font-size: 40px;
+  }
+  .contentContainer h2 {
+    font-size: 16px;
+  }
+}

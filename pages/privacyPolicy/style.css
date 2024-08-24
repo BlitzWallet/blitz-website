@@ -1,0 +1,44 @@
+.policyContent {
+  width: 95%;
+  max-width: 1000px;
+  margin: 50px auto;
+}
+
+.policyContent .header {
+  font-size: 45px;
+  text-align: center;
+  font-family: var(--title_font);
+  margin-bottom: 50px;
+}
+.policyContent h2,
+h3 {
+  font-family: var(--title_font);
+  margin-bottom: 20px;
+}
+.policyContent p {
+  font-family: var(--other_font);
+  line-height: 35px;
+}
+.policyContent .contentSection:not(:last-child) {
+  margin-bottom: 100px;
+}
+.policyContent .mb_p {
+  margin-bottom: 10px;
+}
+.policyContent .bld_p {
+  font-weight: bold;
+}
+.policyContent .permission_p {
+  margin-bottom: 30px;
+}
+
+.policyContent .contentSection ul {
+  height: 90px;
+  width: 98%;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  margin-left: auto;
+}
