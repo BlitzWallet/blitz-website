@@ -64,6 +64,12 @@ nav .mobileNavDropdown .imgContainer {
   justify-content: center;
   align-items: center;
 }
+nav .shown {
+  display: block;
+}
+nav .hidden {
+  display: none;
+}
 nav .mobileNavDropdown .closeMobileNavBTN {
   margin-left: auto;
   cursor: pointer;
