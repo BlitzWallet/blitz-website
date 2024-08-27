@@ -132,16 +132,18 @@ footer {
 
   display: flex;
   justify-content: center;
-  margin-top: 100px;
 }
 footer .content {
   max-width: 1200px;
   width: 95%;
+  min-height: 150px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 50px 0;
+  padding: 20px 0 20px;
+  color: white;
+  position: relative;
 }
 
 footer .privcyContent {
@@ -159,14 +161,17 @@ footer .privcyContent div {
   width: 100%;
   max-width: 250px;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
 }
 
 footer .img {
   width: 100px;
-
   height: 100px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 footer .img img {
   width: 100%;
@@ -187,10 +192,14 @@ footer .navItems {
   /* Footer */
   /* --------------------------------- */
   footer .content {
-    flex-direction: column-reverse;
+    flex-direction: column;
   }
   footer .img {
     margin: 50px 0;
+    position: relative;
+    transform: translate(0, 0);
+    top: 0;
+    left: 0;
   }
 }
 @media screen and (max-width: 800px) {
