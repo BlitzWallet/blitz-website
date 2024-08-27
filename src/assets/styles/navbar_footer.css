@@ -14,8 +14,13 @@ nav {
 
 nav .navContent {
   width: 100%;
+  display: flex;
+  align-items: center;
 }
 nav .logo {
+  width: 300px;
+}
+nav .wordmark {
   width: 300px;
 }
 
