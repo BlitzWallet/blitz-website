@@ -49,10 +49,11 @@ nav .mobileNavDropdown .mobileNavDropdown-Container {
   width: 100%;
   max-width: 1200px;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 }
 nav .mobileNavDropdown .navItems {
-  height: 200px;
+  height: calc(100dvh / 2);
+  min-height: 200px;
   flex-direction: column;
   margin: auto 0;
 }
@@ -109,15 +110,13 @@ nav .mobileNavDropdown .appContainer {
   /* margin: 0 10px; */
   cursor: pointer;
   font-family: var(--description_font);
-  transition: color 0.3s ease, transform 0.3s ease;
+  transition: color 0.3s ease;
   color: var(--dm-text);
 }
 .navItem:hover {
   color: var(--primary_color);
 }
-.navItem:last-child:hover {
-  transform: scale(1.3);
-}
+
 .navItem a {
   text-decoration: none;
 }
