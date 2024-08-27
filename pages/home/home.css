@@ -124,6 +124,7 @@ main {
 
   font-size: 15px;
   color: white;
+  border-top-right-radius: 8px;
 
   background-color: var(--primary_color);
 }
