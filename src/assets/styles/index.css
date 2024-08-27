@@ -25,13 +25,14 @@
 }
 body {
   height: fit-content;
-  background-color: var(--lm-background);
+  background-color: var(--dm-background);
 }
 h1,
 h2,
 h3,
 h4 {
   font-family: var(--title_font);
+  color: var(--dm-text);
 }
 
 p,
@@ -39,6 +40,7 @@ a,
 li,
 span {
   font-family: var(--other_font);
+  color: var(--dm-text);
 }
 
 a {
