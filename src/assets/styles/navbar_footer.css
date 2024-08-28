@@ -221,8 +221,12 @@ footer .navItems {
   }
 }
 @media screen and (max-width: 600px) {
-  nav .logo {
+  nav .wordmark {
     width: 230px;
+  }
+  nav .mobile {
+    width: 40px;
+    height: 40px;
   }
 
   footer .navItems {
