@@ -1,6 +1,10 @@
 "use strict";
 import "dotenv/config";
 import { getSignleContact } from "../db";
+import { createBoltzSwapKeys } from "../middleware/createBoltzSwapKeys";
+import { randomBytes } from "liquidjs-lib/src/psetv2/utils";
+import createLNtoLiquidSwap from "../middleware/createLNtoLiquidSwap";
+import claimBoltzTransaction from "../middleware/claimBoltzSwap";
 
 export async function handler(event, context) {
   if (event.httpMethod === "GET") {
@@ -12,7 +16,7 @@ export async function handler(event, context) {
 
       if (Object.keys(queryParams).length === 0) {
         const swapRates = await (
-          await fetch("https://api.boltz.exchange/v2/swap/reverse")
+          await fetch(`${process.env.BOLTZ_API_URL}swap/reverse`)
         ).json();
         const limits = swapRates["BTC"]["L-BTC"].limits;
         return {
@@ -31,12 +35,62 @@ export async function handler(event, context) {
           }),
         };
       } else {
+        console.log("TEST");
         const [payingContact] = await getSignleContact(username.toLowerCase());
         console.log(queryParams);
         const receiveAddress =
           payingContact["contacts"].myProfile.receiveAddress;
         const receiveAmount = queryParams.amount;
-        console.log(receiveAmount);
+        // console.log(receiveAmount);
+
+        const createdResponse = await createLNtoLiquidSwap(
+          receiveAmount,
+          receiveAddress
+        );
+
+        console.log(createdResponse.createdResponse);
+
+        setTimeout(() => {
+          claimBoltzTransaction(
+            createdResponse.keys,
+            undefined,
+            createdResponse.preimage,
+            process.env.ENVIRONMENT,
+            0.11
+          );
+        }, 15000);
+        // console.log(createdResponse);
+        return {
+          statusCode: 200,
+          body: JSON.stringify(`yes`),
+        };
+        const preimage = crypto.randomBytes(32);
+
+        const preimageHash = sha256(preimage).toString("hex");
+
+        const liquidAddress = await createLiquidReceiveAddress();
+        const signature = keys.signSchnorr(
+          sha256(Buffer.from(liquidAddress.address, "utf-8"))
+        );
+
+        console.log(liquidAddress.address);
+
+        const data = (
+          await axios.post(
+            `${getBoltzApiUrl(process.env.BOLTZ_ENVIRONMENT)}/v2/swap/reverse`,
+            {
+              address: liquidAddress.address,
+              addressSignature: signature.toString("hex"),
+              claimPublicKey: keys.publicKey.toString("hex"),
+              from: "BTC",
+              invoiceAmount: swapAmountSats,
+              preimageHash: preimageHash,
+              to: "L-BTC",
+              referralId: "blitzWallet",
+              description: description || "Send to Blitz Wallet",
+            }
+          )
+        ).data;
 
         return {
           statusCode: 200,
