@@ -18,6 +18,6 @@
 
 [[redirects]]
   from = "/.well-known/lnurlp/:username"
-  to = "/.netlify/functions/lnurlpInfo"
+  to = "/.netlify/functions/lnurlp"
   status = 200
   force = true
