@@ -1,4 +1,5 @@
 // Import the functions you need from the SDKs you need
+import { initializeAuth, signInAnonymously } from "firebase/auth";
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
 
@@ -13,6 +14,8 @@ import {
   getDocs,
   getDoc,
   deleteDoc,
+  query,
+  where,
 } from "firebase/firestore";
 
 // Optionally import the services that you want to use
@@ -35,6 +38,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = initializeAuth(app);
 
 export async function addDataToCollection(dataObject, collection, uuid) {
   try {
@@ -99,5 +103,33 @@ export async function deleteDataFromCollection(collectionName, uuid) {
       resolve(false);
     });
     console.log(err);
+  }
+}
+export async function getSignleContact(wantedName) {
+  const didSignIn = await signIn();
+  try {
+    if (!didSignIn) throw new Error("ERROR");
+    const userProfilesRef = collection(db, "blitzWalletUsers");
+
+    const q = query(
+      userProfilesRef,
+      where("contacts.myProfile.uniqueNameLower", "==", wantedName)
+    );
+
+    const querySnapshot = await getDocs(q);
+    // Extract the data from each document
+    const userData = querySnapshot.docs.map((doc) => doc.data());
+    return new Promise((resolve) => resolve(userData));
+  } catch (err) {
+    console.log(err);
+  }
+}
+async function signIn() {
+  try {
+    await signInAnonymously(auth);
+    return true;
+  } catch (error) {
+    console.error("Error signing in anonymously", error);
+    return false;
   }
 }
