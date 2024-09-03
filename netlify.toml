@@ -15,3 +15,9 @@
   from = "/static/*"
   to = "/static/:splat"
   status = 200
+
+[[redirects]]
+  from = "/.well-known/lnurlp/:username"
+  to = "/.netlify/functions/lnurlpInfo"
+  status = 200
+  force = true
