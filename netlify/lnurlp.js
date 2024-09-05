@@ -1,20 +1,19 @@
 "use strict";
 import "dotenv/config";
 import { getSignleContact } from "../db";
-import createLNtoLiquidSwap from "../middleware/createLNtoLiquidSwap";
-import sendNotification from "../middleware/sendNotification";
+import { createLNtoLiquidSwap } from "../middleware/createLNtoLiquidSwap";
+import { sendNotification } from "../middleware/sendNotification";
 
 import { decrypt } from "../middleware/encription";
 
 export async function handler(event, context) {
   if (event.httpMethod === "GET") {
     const data = event.body ? JSON.parse(event.body) : null; //sanitation
-    try {
-      const pathParts = event.path.split("/");
-      const username = pathParts[pathParts.length - 1];
-      const queryParams = event.queryStringParameters;
-
-      if (Object.keys(queryParams).length === 0) {
+    const pathParts = event.path.split("/");
+    const username = pathParts[pathParts.length - 1];
+    const queryParams = event.queryStringParameters;
+    if (Object.keys(queryParams).length === 0) {
+      try {
         const swapRates = await (
           await fetch(`${process.env.BOLTZ_API_URL}swap/reverse`)
         ).json();
@@ -22,7 +21,7 @@ export async function handler(event, context) {
         return {
           statusCode: 200,
           body: JSON.stringify({
-            callback: `https://blitz-wallet.com/.netlify/functoins/lnurlp/${username}`, // The URL from LN SERVICE which will accept the pay request parameters
+            callback: `https://blitz-wallet.com/.well-known/lnurlp/${username}`, // The URL from LN SERVICE which will accept the pay request parameters
             maxSendable: limits.maximal * 1000, // Max millisatoshi amount LN SERVICE is willing to receive
             minSendable: limits.minimal * 1000, // Min millisatoshi amount LN SERVICE is willing to receive, can not be less than 1 or more than `maxSendable`
             metadata: JSON.stringify([
@@ -34,18 +33,44 @@ export async function handler(event, context) {
             tag: "payRequest", // Type of LNURL
           }),
         };
-      } else {
-        const receiveAmount = queryParams.amount;
+      } catch (err) {
+        console.log(err);
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            status: "ERROR",
+            reason: "Error getting invoice reqirements",
+          }),
+        };
+      }
+    } else {
+      let payingContact = await getSignleContact(username.toLowerCase());
+
+      try {
+        if (!queryParams.amount) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "No amount provided",
+            }),
+          };
+        }
 
         // const payingContact = {};
-        const [payingContact] = await getSignleContact(username.toLowerCase());
+
+        if (!payingContact) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Error getting pay information",
+            }),
+          };
+        }
         // console.log(queryParams);
 
-        const receiveAddress =
-          payingContact["contacts"].myProfile.receiveAddress;
-        //  process.env.TESTET_ADDRESS;
-
-        if (!payingContact?.pushNotifications?.key?.encriptedText) {
+        if (!payingContact[0]?.pushNotifications?.key?.encriptedText) {
           return {
             statusCode: 400,
             body: JSON.stringify({
@@ -55,16 +80,41 @@ export async function handler(event, context) {
           };
         }
 
+        const receiveAmount = Math.round(queryParams.amount / 1000);
+        const receiveAddress =
+          payingContact[0]["contacts"].myProfile.receiveAddress;
+        //  process.env.TESTET_ADDRESS;
+
         const devicePushKey = decrypt(
-          payingContact.pushNotifications.key.encriptedText
+          payingContact[0].pushNotifications.key.encriptedText
         );
         // process.env.NOTIFICATIONS_KEY;
-        const deviceType = payingContact.pushNotifications.platform;
+        const deviceType = payingContact[0].pushNotifications.platform;
         //  "ios"
+
+        if (!devicePushKey || !deviceType || !receiveAddress) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Error getting pay information",
+            }),
+          };
+        }
+
         const createdResponse = await createLNtoLiquidSwap(
           receiveAmount,
           receiveAddress
         );
+        if (!createdResponse) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Not able to create invoice",
+            }),
+          };
+        }
 
         sendNotification({
           devicePushKey: devicePushKey,
@@ -77,23 +127,23 @@ export async function handler(event, context) {
         });
 
         return {
-          statusCode: 400,
+          statusCode: 200,
           body: JSON.stringify({
             pr: createdResponse.createdResponse.invoice, // bech32-serialized lightning invoice
             routes: [], // an empty array
           }),
         };
-      }
-    } catch (err) {
-      console.log(err);
-      return {
-        statusCode: 400,
-        body: JSON.stringify({
-          status: "ERROR",
-          reason: "Error creating invoice",
-        }),
-      };
-    } // // JSON WEB TOKEN
+      } catch (err) {
+        console.log(err);
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            status: "ERROR",
+            reason: "Error creating invoice",
+          }),
+        };
+      } // // JSON WEB TOKEN
+    }
   } else
     return {
       statusCode: 400,
