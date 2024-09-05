@@ -2,18 +2,14 @@
 import "dotenv/config";
 import * as crypto from "crypto";
 
-const algorithm = "aes-256-ctr";
-const secretKey = process.env.ENCRIPTION_KEY;
+const algorithm = "aes-256-cbc";
+const secretKey = Buffer.from(process.env.ENCRIPTION_KEY, "hex");
 
 const encrypt = (text) => {
   try {
     const iv = crypto.randomBytes(16);
 
-    const cipher = crypto.createCipheriv(
-      algorithm,
-      "d04ec40718b0c037074fafff6fa0fa87be76ddf63b0aad750814e20234470575",
-      iv
-    );
+    const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
 
     const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
 
@@ -27,18 +23,25 @@ const encrypt = (text) => {
 };
 
 const decrypt = (hash) => {
-  const decipher = crypto.createDecipheriv(
-    algorithm,
-    secretKey,
-    Buffer.from(hash.iv, "hex")
-  );
+  try {
+    // Extract the IV and content from the hash
+    const iv = Buffer.from(hash.iv, "hex"); // Convert IV back to Buffer
+    const encryptedText = Buffer.from(hash.content, "hex"); // Convert encrypted content back to Buffer
 
-  const decrpyted = Buffer.concat([
-    decipher.update(Buffer.from(hash.content, "hex")),
-    decipher.final(),
-  ]);
+    // Create decipher object with the same algorithm, secret key, and IV
+    const decipher = crypto.createDecipheriv(algorithm, secretKey, iv);
 
-  return decrpyted.toString();
+    // Decrypt the content
+    const decrypted = Buffer.concat([
+      decipher.update(encryptedText),
+      decipher.final(),
+    ]);
+
+    // Return the decrypted text
+    return decrypted.toString();
+  } catch (err) {
+    return err;
+  }
 };
 
 export { encrypt, decrypt };
