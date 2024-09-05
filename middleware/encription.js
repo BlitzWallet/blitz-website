@@ -18,7 +18,7 @@ const encrypt = (text) => {
       content: encrypted.toString("hex"),
     };
   } catch (err) {
-    return err;
+    return false;
   }
 };
 
@@ -40,7 +40,7 @@ const decrypt = (hash) => {
     // Return the decrypted text
     return decrypted.toString();
   } catch (err) {
-    return err;
+    return false;
   }
 };
 
