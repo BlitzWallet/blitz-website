@@ -106,12 +106,14 @@ export async function handler(event, context) {
           receiveAmount,
           receiveAddress
         );
-        if (!createdResponse) {
+
+        console.log(createdResponse);
+        if (createdResponse.createdResponse.error) {
           return {
             statusCode: 400,
             body: JSON.stringify({
               status: "ERROR",
-              reason: "Not able to create invoice",
+              reason: createdResponse.createdResponse.error,
             }),
           };
         }
