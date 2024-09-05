@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin";
-
+import * as apn from "apn";
 var serviceAccount = {
   type: process.env.FIREBASE_TYPE,
   project_id: process.env.FIREBASE_PROJECT_ID,
@@ -13,8 +13,6 @@ var serviceAccount = {
   client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
   universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN,
 };
-
-import * as apn from "apn";
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({
@@ -61,13 +59,12 @@ export function sendNotification({
       .send(notification, devicePushKey) // Replace with the device token
       .then((result) => {
         console.log(result);
+        apnProvider.shutdown();
       })
       .catch((err) => {
         console.error(err);
       });
 
-    // Shut down the APNs provider
-    apnProvider.shutdown();
     return;
   } else {
     const message = {
