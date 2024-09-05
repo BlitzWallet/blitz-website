@@ -15,10 +15,10 @@ export default async function createLNtoLiquidSwap(
   const keys = ECPairFactory(ecc).makeRandom();
 
   const signature = keys.signSchnorr(
-    crypto.sha256(Buffer.from(process.env.TESTET_ADDRESS, "utf-8"))
+    crypto.sha256(Buffer.from(liquidAddress, "utf-8"))
   );
 
-  console.log(process.env.TESTET_ADDRESS);
+  console.log(liquidAddress);
   // Create a Submarine Swap
   const createdResponse = await fetch(
     `${process.env.BOLTZ_API_URL}swap/reverse`,
@@ -28,7 +28,7 @@ export default async function createLNtoLiquidSwap(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        address: process.env.TESTET_ADDRESS,
+        address: liquidAddress,
         addressSignature: signature.toString("hex"),
         invoiceAmount: Number(invoiceAmount),
         to: "L-BTC",
