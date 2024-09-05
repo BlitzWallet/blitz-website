@@ -30,7 +30,7 @@ const apnProvider = new apn.Provider({
   production: false, // Set to true for production environment
 });
 
-export default function sendNotification({
+export function sendNotification({
   devicePushKey,
   deviceType,
   amount,
