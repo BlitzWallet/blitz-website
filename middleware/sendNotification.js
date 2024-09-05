@@ -1,5 +1,18 @@
 import * as admin from "firebase-admin";
-var serviceAccount = require("../blitz-wallet-82b39-firebase-adminsdk-oz8m2-db83984822.json");
+
+var serviceAccount = {
+  type: process.env.FIREBASE_TYPE,
+  project_id: process.env.FIREBASE_PROJECT_ID,
+  private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
+  private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+  client_email: process.env.FIREBASE_CLIENT_EMAIL,
+  client_id: process.env.FIREBASE_CLIENT_ID,
+  auth_uri: process.env.FIREBASE_AUTH_URI,
+  token_uri: process.env.FIREBASE_TOKEN_URI,
+  auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
+  client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
+  universe_domain: process.env.FIREBASE_UNIVERSE_DOMAIN,
+};
 
 import * as apn from "apn";
 
@@ -10,7 +23,7 @@ admin.initializeApp({
 // Set up the APNs provider with your key
 const apnProvider = new apn.Provider({
   token: {
-    key: "../AuthKey_DZWD6HDAJD.p8", // Path to the .p8 key file
+    key: process.env.APPLE_KEY, // Path to the .p8 key file
     keyId: process.env.APN_KEY_ID, // Key ID from Apple Developer Account
     teamId: process.env.APN_TEAM_ID, // Team ID from Apple Developer Account
   },
