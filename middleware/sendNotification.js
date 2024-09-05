@@ -18,49 +18,60 @@ const apnProvider = new apn.Provider({
 });
 
 export default function sendNotification({
-  contact,
+  devicePushKey,
+  deviceType,
   amount,
   swapInfo,
-  keys,
+  privateKey,
   preimage,
+  liquidAddress,
 }) {
-  // Send a message to the device corresponding to the provided registration token
-  // Create a notification
-  let notification = new apn.Notification({
-    alert: {
-      title: `Receiving ${amount} sats`,
-    },
-    topic: "org.reactjs.native.example.BlitzWallet", // Replace with your app's bundle identifier
-    payload: {
-      swapInfo,
-      keys,
-      preimage,
-    },
-  });
-
-  // Send the notification
-  apnProvider
-    .send(
-      notification,
-      "c198a31703c325f6fdb627e59483b15d80b4ee272ad3716836c6c37d4c9fc734"
-    ) // Replace with the device token
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((err) => {
-      console.error(err);
+  if (deviceType.toLowerCase() === "ios") {
+    // Send a message to the device corresponding to the provided registration token
+    // Create a notification
+    let notification = new apn.Notification({
+      alert: {
+        title: `Receiving ${amount} sats`,
+      },
+      topic: "org.reactjs.native.example.BlitzWallet", // Replace with your app's bundle identifier
+      payload: {
+        swapInfo,
+        privateKey,
+        preimage,
+        liquidAddress,
+      },
+      contentAvailable: 1,
     });
 
-  // Shut down the APNs provider
-  apnProvider.shutdown();
-  return;
-  admin
-    .messaging()
-    .send(message)
-    .then((response) => {
-      console.log("Successfully sent message:", response);
-    })
-    .catch((error) => {
-      console.error("Error sending message:", error);
-    });
+    // Send the notification
+    apnProvider
+      .send(notification, devicePushKey) // Replace with the device token
+      .then((result) => {
+        console.log(result);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+
+    // Shut down the APNs provider
+    apnProvider.shutdown();
+    return;
+  } else {
+    const message = {
+      notification: {
+        title: `Receiving ${amount} sats`,
+      },
+      token: devicePushKey, // Replace with the device token
+      contentAvailable: 1,
+    };
+    admin
+      .messaging()
+      .send(message)
+      .then((response) => {
+        console.log("Successfully sent message:", response);
+      })
+      .catch((error) => {
+        console.error("Error sending message:", error);
+      });
+  }
 }
