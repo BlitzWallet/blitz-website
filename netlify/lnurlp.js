@@ -6,6 +6,8 @@ import { randomBytes } from "liquidjs-lib/src/psetv2/utils";
 import createLNtoLiquidSwap from "../middleware/createLNtoLiquidSwap";
 import sendNotification from "../middleware/sendNotification";
 
+import { decrypt } from "../middleware/encription";
+
 export async function handler(event, context) {
   if (event.httpMethod === "GET") {
     const data = event.body ? JSON.parse(event.body) : null; //sanitation
@@ -37,72 +39,35 @@ export async function handler(event, context) {
       } else {
         const receiveAmount = queryParams.amount;
         console.log(receiveAmount);
-        const message = {
-          notification: {
-            title: "Test Notification",
-            body: "This is a notification sent to both iOS and Android devices!",
-          },
-          token:
-            "c198a31703c325f6fdb627e59483b15d80b4ee272ad3716836c6c37d4c9fc734", // Replace with the device token
-        };
-        const [payingContact] = await getSignleContact(username.toLowerCase());
-        console.log(queryParams);
-        const receiveAddress =
-          payingContact["contacts"].myProfile.receiveAddress;
+
+        // const [payingContact] = await getSignleContact(username.toLowerCase());
+        // console.log(queryParams);
+        const receiveAddress = process.env.TESTET_ADDRESS;
+        // payingContact["contacts"].myProfile.receiveAddress;
+
+        const devicePushKey =
+          process.env.NOTIFICATIONS_KEY ||
+          decrypt(payingContact.pushNotifications.key);
+        const deviceType = payingContact.pushNotifications.platform;
 
         const createdResponse = await createLNtoLiquidSwap(
           receiveAmount,
           receiveAddress
         );
+
         sendNotification({
-          contact: {},
+          devicePushKey: devicePushKey,
+          deviceType: deviceType,
           amount: receiveAmount,
           swapInfo: createdResponse.createdResponse,
-          keys: createdResponse.keys,
+          privateKey: createdResponse.keys.privateKey.toString("hex"),
           preimage: createdResponse.preimage,
+          liquidAddress: receiveAddress,
         });
 
-        // console.log(createdResponse.createdResponse);
-
-        // setTimeout(() => {
-        // SEND NOTIFICATION TO DEVICE TO CLIAM THE SWAP
-        // }, 15000);
-        // // console.log(createdResponse);
         return {
           statusCode: 200,
           body: JSON.stringify(`yes`),
-        };
-        const preimage = crypto.randomBytes(32);
-
-        const preimageHash = sha256(preimage).toString("hex");
-
-        const liquidAddress = await createLiquidReceiveAddress();
-        const signature = keys.signSchnorr(
-          sha256(Buffer.from(liquidAddress.address, "utf-8"))
-        );
-
-        console.log(liquidAddress.address);
-
-        const data = (
-          await axios.post(
-            `${getBoltzApiUrl(process.env.BOLTZ_ENVIRONMENT)}/v2/swap/reverse`,
-            {
-              address: liquidAddress.address,
-              addressSignature: signature.toString("hex"),
-              claimPublicKey: keys.publicKey.toString("hex"),
-              from: "BTC",
-              invoiceAmount: swapAmountSats,
-              preimageHash: preimageHash,
-              to: "L-BTC",
-              referralId: "blitzWallet",
-              description: description || "Send to Blitz Wallet",
-            }
-          )
-        ).data;
-
-        return {
-          statusCode: 200,
-          body: JSON.stringify(`${receiveAddress} ${receiveAmount}`),
         };
       }
     } catch (err) {
