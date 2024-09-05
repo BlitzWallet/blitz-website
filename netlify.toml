@@ -1,5 +1,8 @@
 [build]
   functions = "netlify"
+
+[functions]
+  "*" = { timeout = 20 } # Increase timeout limit
   
 [[redirects]]
   from = "/u/*"
