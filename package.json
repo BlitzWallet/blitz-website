@@ -16,6 +16,7 @@
     "@mempool/mempool.js": "^2.3.0",
     "@vulpemventures/secp256k1-zkp": "^3.2.1",
     "ably": "^2.0.2",
+    "apn": "^2.2.0",
     "bip32": "^4.0.0",
     "bip39": "^3.1.0",
     "bitcoinjs-lib": "^6.1.5",
