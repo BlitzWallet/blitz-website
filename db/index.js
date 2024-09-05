@@ -122,6 +122,7 @@ export async function getSignleContact(wantedName) {
     return new Promise((resolve) => resolve(userData));
   } catch (err) {
     console.log(err);
+    return new Promise((resolve) => resolve(false));
   }
 }
 async function signIn() {
