@@ -1,8 +1,6 @@
 "use strict";
 import "dotenv/config";
 import { getSignleContact } from "../db";
-import { createBoltzSwapKeys } from "../middleware/createBoltzSwapKeys";
-import { randomBytes } from "liquidjs-lib/src/psetv2/utils";
 import createLNtoLiquidSwap from "../middleware/createLNtoLiquidSwap";
 import sendNotification from "../middleware/sendNotification";
 
@@ -24,7 +22,7 @@ export async function handler(event, context) {
         return {
           statusCode: 200,
           body: JSON.stringify({
-            callback: `https://blitz-wallet.com/.netlify/functoins/lnurlpAddress/${username}`, // The URL from LN SERVICE which will accept the pay request parameters
+            callback: `https://blitz-wallet.com/.netlify/functoins/lnurlp/${username}`, // The URL from LN SERVICE which will accept the pay request parameters
             maxSendable: limits.maximal * 1000, // Max millisatoshi amount LN SERVICE is willing to receive
             minSendable: limits.minimal * 1000, // Min millisatoshi amount LN SERVICE is willing to receive, can not be less than 1 or more than `maxSendable`
             metadata: JSON.stringify([
@@ -38,18 +36,31 @@ export async function handler(event, context) {
         };
       } else {
         const receiveAmount = queryParams.amount;
-        console.log(receiveAmount);
 
-        // const [payingContact] = await getSignleContact(username.toLowerCase());
+        // const payingContact = {};
+        const [payingContact] = await getSignleContact(username.toLowerCase());
         // console.log(queryParams);
-        const receiveAddress = process.env.TESTET_ADDRESS;
-        // payingContact["contacts"].myProfile.receiveAddress;
 
-        const devicePushKey =
-          process.env.NOTIFICATIONS_KEY ||
-          decrypt(payingContact.pushNotifications.key);
+        const receiveAddress =
+          payingContact["contacts"].myProfile.receiveAddress;
+        //  process.env.TESTET_ADDRESS;
+
+        if (!payingContact?.pushNotifications?.key?.encriptedText) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "User does not have push notifications turned on",
+            }),
+          };
+        }
+
+        const devicePushKey = decrypt(
+          payingContact.pushNotifications.key.encriptedText
+        );
+        // process.env.NOTIFICATIONS_KEY;
         const deviceType = payingContact.pushNotifications.platform;
-
+        //  "ios"
         const createdResponse = await createLNtoLiquidSwap(
           receiveAmount,
           receiveAddress
@@ -66,23 +77,29 @@ export async function handler(event, context) {
         });
 
         return {
-          statusCode: 200,
-          body: JSON.stringify(`yes`),
+          statusCode: 400,
+          body: JSON.stringify({
+            pr: createdResponse.createdResponse.invoice, // bech32-serialized lightning invoice
+            routes: [], // an empty array
+          }),
         };
       }
     } catch (err) {
       console.log(err);
       return {
-        statusCode: 401,
+        statusCode: 400,
         body: JSON.stringify({
-          message: "Error creating lnurlp request",
-          err: JSON.stringify(err),
+          status: "ERROR",
+          reason: "Error creating invoice",
         }),
       };
     } // // JSON WEB TOKEN
   } else
     return {
-      statusCode: 401,
-      body: JSON.stringify({ message: "Must be a get request" }),
+      statusCode: 400,
+      body: JSON.stringify({
+        status: "ERROR",
+        reason: "Must be a post request",
+      }),
     };
 }
