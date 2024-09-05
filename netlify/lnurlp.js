@@ -4,7 +4,7 @@ import { getSignleContact } from "../db";
 import { createBoltzSwapKeys } from "../middleware/createBoltzSwapKeys";
 import { randomBytes } from "liquidjs-lib/src/psetv2/utils";
 import createLNtoLiquidSwap from "../middleware/createLNtoLiquidSwap";
-import claimBoltzTransaction from "../middleware/claimBoltzSwap";
+import sendNotification from "../middleware/sendNotification";
 
 export async function handler(event, context) {
   if (event.httpMethod === "GET") {
@@ -35,31 +35,39 @@ export async function handler(event, context) {
           }),
         };
       } else {
-        console.log("TEST");
+        const receiveAmount = queryParams.amount;
+        console.log(receiveAmount);
+        const message = {
+          notification: {
+            title: "Test Notification",
+            body: "This is a notification sent to both iOS and Android devices!",
+          },
+          token:
+            "c198a31703c325f6fdb627e59483b15d80b4ee272ad3716836c6c37d4c9fc734", // Replace with the device token
+        };
         const [payingContact] = await getSignleContact(username.toLowerCase());
         console.log(queryParams);
         const receiveAddress =
           payingContact["contacts"].myProfile.receiveAddress;
-        const receiveAmount = queryParams.amount;
-        // console.log(receiveAmount);
 
         const createdResponse = await createLNtoLiquidSwap(
           receiveAmount,
           receiveAddress
         );
+        sendNotification({
+          contact: {},
+          amount: receiveAmount,
+          swapInfo: createdResponse.createdResponse,
+          keys: createdResponse.keys,
+          preimage: createdResponse.preimage,
+        });
 
-        console.log(createdResponse.createdResponse);
+        // console.log(createdResponse.createdResponse);
 
-        setTimeout(() => {
-          claimBoltzTransaction(
-            createdResponse.keys,
-            undefined,
-            createdResponse.preimage,
-            process.env.ENVIRONMENT,
-            0.11
-          );
-        }, 15000);
-        // console.log(createdResponse);
+        // setTimeout(() => {
+        // SEND NOTIFICATION TO DEVICE TO CLIAM THE SWAP
+        // }, 15000);
+        // // console.log(createdResponse);
         return {
           statusCode: 200,
           body: JSON.stringify(`yes`),
@@ -98,6 +106,7 @@ export async function handler(event, context) {
         };
       }
     } catch (err) {
+      console.log(err);
       return {
         statusCode: 401,
         body: JSON.stringify({
