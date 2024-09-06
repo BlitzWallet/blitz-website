@@ -42,7 +42,7 @@ export function sendNotification({
     // Create a notification
     let notification = new apn.Notification({
       alert: {
-        title: `Receiving ${amount} sats`,
+        title: `Click to claim swap`,
       },
       topic: "org.reactjs.native.example.BlitzWallet", // Replace with your app's bundle identifier
       payload: {
@@ -52,6 +52,11 @@ export function sendNotification({
         liquidAddress,
       },
       contentAvailable: 1,
+      // aps: {
+      //   "content-available": 1, // This makes it a background notification
+      //   // sound: "default", // Optional: adds sound to notification
+      //   // badge: 1, // Optional: adds badge to the app icon
+      // },
     });
 
     // Send the notification
