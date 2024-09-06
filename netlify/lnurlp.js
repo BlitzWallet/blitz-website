@@ -107,7 +107,15 @@ export async function handler(event, context) {
           receiveAddress
         );
 
-        console.log(createdResponse);
+        console.log({
+          devicePushKey: devicePushKey,
+          deviceType: deviceType,
+          amount: receiveAmount,
+          swapInfo: createdResponse.createdResponse,
+          privateKey: createdResponse.keys.privateKey.toString("hex"),
+          preimage: createdResponse.preimage.toString("hex"),
+          liquidAddress: receiveAddress,
+        });
         if (createdResponse.createdResponse.error) {
           return {
             statusCode: 400,
@@ -124,7 +132,7 @@ export async function handler(event, context) {
           amount: receiveAmount,
           swapInfo: createdResponse.createdResponse,
           privateKey: createdResponse.keys.privateKey.toString("hex"),
-          preimage: createdResponse.preimage,
+          preimage: createdResponse.preimage.toString("hex"),
           liquidAddress: receiveAddress,
         });
 
