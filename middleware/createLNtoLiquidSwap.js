@@ -38,7 +38,7 @@ export async function createLNtoLiquidSwap(
           claimPublicKey: keys.publicKey.toString("hex"),
           preimageHash: crypto.sha256(preimage).toString("hex"),
           referralId: "blitzWallet",
-          description: description || `Pay to ${uniqueName}`,
+          description: `Pay to ${uniqueName}`,
         }),
       })
     ).json();
