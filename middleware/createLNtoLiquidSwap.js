@@ -5,7 +5,11 @@ import { Transaction, address, crypto, networks } from "liquidjs-lib";
 import { randomBytes } from "liquidjs-lib/src/psetv2/utils";
 import ecc from "@bitcoinerlab/secp256k1";
 
-export async function createLNtoLiquidSwap(invoiceAmount, liquidAddress) {
+export async function createLNtoLiquidSwap(
+  invoiceAmount,
+  liquidAddress,
+  uniqueName
+) {
   console.log("RUNNING IN FUNC");
   // Create a random preimage for the swap; has to have a length of 32 bytes
 
@@ -33,8 +37,8 @@ export async function createLNtoLiquidSwap(invoiceAmount, liquidAddress) {
           from: "BTC",
           claimPublicKey: keys.publicKey.toString("hex"),
           preimageHash: crypto.sha256(preimage).toString("hex"),
-          // referralId: "blitzWallet",
-          // description: description || "Send to Blitz Wallet",
+          referralId: "blitzWallet",
+          description: description || `Pay to ${uniqueName}`,
         }),
       })
     ).json();

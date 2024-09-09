@@ -44,9 +44,8 @@ export async function handler(event, context) {
         };
       }
     } else {
-      let payingContact = await getSignleContact(username.toLowerCase());
-
       try {
+        let payingContact = {};
         if (!queryParams.amount) {
           return {
             statusCode: 400,
@@ -57,40 +56,44 @@ export async function handler(event, context) {
           };
         }
 
-        // const payingContact = {};
+        if (process.env.ENVIRONMENT != "testnet") {
+          payingContact = await getSignleContact(username.toLowerCase());
+          if (!payingContact) {
+            return {
+              statusCode: 400,
+              body: JSON.stringify({
+                status: "ERROR",
+                reason: "Error getting pay information",
+              }),
+            };
+          }
 
-        if (!payingContact) {
-          return {
-            statusCode: 400,
-            body: JSON.stringify({
-              status: "ERROR",
-              reason: "Error getting pay information",
-            }),
-          };
-        }
-        // console.log(queryParams);
-
-        if (!payingContact[0]?.pushNotifications?.key?.encriptedText) {
-          return {
-            statusCode: 400,
-            body: JSON.stringify({
-              status: "ERROR",
-              reason: "User does not have push notifications turned on",
-            }),
-          };
+          if (!payingContact[0]?.pushNotifications?.key?.encriptedText) {
+            return {
+              statusCode: 400,
+              body: JSON.stringify({
+                status: "ERROR",
+                reason: "User does not have push notifications turned on",
+              }),
+            };
+          }
         }
 
         const receiveAmount = Math.round(queryParams.amount / 1000);
         const receiveAddress =
-          payingContact[0]["contacts"].myProfile.receiveAddress;
-        //  process.env.TESTET_ADDRESS;
+          process.env.ENVIRONMENT === "testnet"
+            ? process.env.TESTET_ADDRESS
+            : payingContact[0]["contacts"].myProfile.receiveAddress;
 
-        const devicePushKey = decrypt(
-          payingContact[0].pushNotifications.key.encriptedText
-        );
-        // process.env.NOTIFICATIONS_KEY;
-        const deviceType = payingContact[0].pushNotifications.platform;
-        //  "ios"
+        const devicePushKey =
+          process.env.ENVIRONMENT === "testnet"
+            ? process.env.NOTIFICATIONS_KEY
+            : decrypt(payingContact[0].pushNotifications.key.encriptedText);
+
+        const deviceType =
+          process.env.ENVIRONMENT === "testnet"
+            ? "ios"
+            : payingContact[0].pushNotifications.platform;
 
         if (!devicePushKey || !deviceType || !receiveAddress) {
           return {
@@ -104,7 +107,8 @@ export async function handler(event, context) {
 
         const createdResponse = await createLNtoLiquidSwap(
           receiveAmount,
-          receiveAddress
+          receiveAddress,
+          username
         );
 
         console.log({
