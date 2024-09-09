@@ -73,12 +73,22 @@ export function sendNotification({
     return;
   } else {
     const message = {
+      to: devicePushKey,
       notification: {
-        title: `Receiving ${amount} sats`,
+        title: `Blitz wallet running in the background`,
+        // body: "This is a background notification for Android",
+        // click_action: "FLUTTER_NOTIFICATION_CLICK",
       },
-      token: devicePushKey, // Replace with the device token
-      contentAvailable: 1,
+      data: {
+        swapInfo,
+        privateKey,
+        preimage,
+        liquidAddress,
+      },
+      content_available: true,
+      priority: "high",
     };
+
     admin
       .messaging()
       .send(message)
