@@ -1,6 +1,12 @@
 "use strict";
 import "dotenv/config";
-import { addDataToCollection, getDataFromCollection } from "../db";
+import {
+  addDataToCollection,
+  deleteDataFromCollection,
+  getDataFromCollection,
+  isValidUniqueName,
+  queryContacts,
+} from "../db";
 import { decryptMessage, encryptMessage } from "../middleware/newEncription";
 
 export async function handler(event, context) {
@@ -68,9 +74,73 @@ export async function handler(event, context) {
 
         //get and return data to device
       } else if (databaseMethod === "deletedata") {
+        const didDeleteData = await deleteDataFromCollection(
+          decryptedContent.dataObject,
+          userPubKey
+        );
+        if (didDeleteData) {
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              status: "SUCCESS",
+            }),
+          };
+        } else {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Not able to delete data from database",
+            }),
+          };
+        }
         //delete data from database and return if successful or not
       } else if (databaseMethod === "validuniquename") {
+        const isNameAvailable = await isValidUniqueName(
+          decryptedContent.dataObject,
+          decryptedContent.wantedName
+        );
+        if (isNameAvailable) {
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              status: "SUCCESS",
+            }),
+          };
+        } else {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Name not available",
+            }),
+          };
+        }
         //check if is valid and return value
+      } else if (databaseMethod === "getallcontacts") {
+        const returnedContacts = await queryContacts(collectionName);
+        if (returnedContacts) {
+          const encriptedContacts = encryptMessage(
+            process.env.DB_PRIVKEY,
+            userPubKey,
+            JSON.stringify(returnedContacts)
+          );
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              status: "SUCCESS",
+              data: encriptedContacts,
+            }),
+          };
+        } else {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Not able to get contact",
+            }),
+          };
+        }
       } else if (databaseMethod === "singlecontact") {
         //gets single contact and returns contact
       } else if (databaseMethod === "validposname") {
