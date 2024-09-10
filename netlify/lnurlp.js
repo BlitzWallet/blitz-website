@@ -57,7 +57,10 @@ export async function handler(event, context) {
         }
 
         if (process.env.ENVIRONMENT != "testnet") {
-          payingContact = await getSignleContact(username.toLowerCase());
+          payingContact = await getSignleContact(
+            "blitzWalletUsers",
+            username.toLowerCase()
+          );
           if (!payingContact) {
             return {
               statusCode: 400,
