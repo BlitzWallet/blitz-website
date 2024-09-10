@@ -31,9 +31,15 @@ if (!getApps().length) {
 const db = getFirestore(app);
 const auth = initializeAuth(app);
 
-export async function addDataToCollection(dataObject, collection, uuid) {
+export async function addDataToCollection(
+  dataObject,
+  collectionName = "blitzWalletUsers",
+  uuid
+) {
   try {
-    const docRef = doc(db, `${collection}/${uuid}`);
+    const didSignIn = await signIn();
+    if (!didSignIn) throw Error("Not signed in");
+    const docRef = doc(db, `${collectionName}/${uuid}`);
 
     let docData = dataObject;
 
@@ -49,8 +55,13 @@ export async function addDataToCollection(dataObject, collection, uuid) {
     return false;
   }
 }
-export async function getDataFromCollection(collectionName, uuid) {
+export async function getDataFromCollection(
+  collectionName = "blitzWalletUsers",
+  uuid
+) {
   try {
+    const didSignIn = await signIn();
+    if (!didSignIn) throw Error("Not signed in");
     const docRef = doc(db, `${collectionName}`, `${uuid}`);
     const docSnap = await getDoc(docRef);
 
@@ -64,8 +75,13 @@ export async function getDataFromCollection(collectionName, uuid) {
     return false;
   }
 }
-export async function deleteDataFromCollection(collectionName, uuid) {
+export async function deleteDataFromCollection(
+  collectionName = "blitzWalletUsers",
+  uuid
+) {
   try {
+    const didSignIn = await signIn();
+    if (!didSignIn) throw Error("Not signed in");
     const docRef = doc(db, `${collectionName}/${uuid}`);
     const respones = await deleteDoc(docRef);
 
@@ -76,8 +92,13 @@ export async function deleteDataFromCollection(collectionName, uuid) {
   }
 }
 
-export async function isValidUniqueName(collectionName, wantedName) {
+export async function isValidUniqueName(
+  collectionName = "blitzWalletUsers",
+  wantedName
+) {
   try {
+    const didSignIn = await signIn();
+    if (!didSignIn) throw Error("Not signed in");
     const userProfilesRef = collection(db, collectionName);
     const q = query(
       userProfilesRef,
@@ -97,6 +118,8 @@ export async function isValidUniqueName(collectionName, wantedName) {
 
 export async function queryContacts(collectionName) {
   try {
+    const didSignIn = await signIn();
+    if (!didSignIn) throw Error("Not signed in");
     const snapshot = await getDocs(collection(db, collectionName));
 
     return snapshot["docs"];
@@ -107,11 +130,14 @@ export async function queryContacts(collectionName) {
 }
 
 export async function getSignleContact(
-  collection = "blitzWalletUsers",
+  collectionName = "blitzWalletUsers",
   wantedName
 ) {
+  console.log(collectionName, wantedName);
   try {
-    const userProfilesRef = collection(db, collection);
+    const didSignIn = await signIn();
+    if (!didSignIn) throw Error("Not signed in");
+    const userProfilesRef = collection(db, collectionName);
 
     const q = query(
       userProfilesRef,
@@ -132,6 +158,8 @@ export async function canUsePOSName(
   wantedName
 ) {
   try {
+    const didSignIn = await signIn();
+    if (!didSignIn) throw Error("Not signed in");
     const userProfilesRef = collection(db, collectionName);
     const q = query(
       userProfilesRef,
@@ -146,11 +174,16 @@ export async function canUsePOSName(
 }
 
 // Function to search users by username
-export async function searchUsers(collection = "blitzWalletUsers", searchTerm) {
-  if (!searchTerm) return []; // Return an empty array if the search term is empty
+export async function searchUsers(
+  collectionName = "blitzWalletUsers",
+  searchTerm
+) {
+  const didSignIn = await signIn();
+  if (!didSignIn) throw Error("Not signed in");
+  if (!searchTerm) return false; // Return an empty array if the search term is empty
 
   try {
-    const usersRef = collection(db, collection);
+    const usersRef = collection(db, collectionName);
     const q = query(
       usersRef,
       where(
