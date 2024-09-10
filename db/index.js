@@ -106,9 +106,12 @@ export async function queryContacts(collectionName) {
   }
 }
 
-export async function getSignleContact(wantedName) {
+export async function getSignleContact(
+  collection = "blitzWalletUsers",
+  wantedName
+) {
   try {
-    const userProfilesRef = collection(db, "blitzWalletUsers");
+    const userProfilesRef = collection(db, collection);
 
     const q = query(
       userProfilesRef,
@@ -143,11 +146,11 @@ export async function canUsePOSName(
 }
 
 // Function to search users by username
-export async function searchUsers(searchTerm) {
+export async function searchUsers(collection = "blitzWalletUsers", searchTerm) {
   if (!searchTerm) return []; // Return an empty array if the search term is empty
 
   try {
-    const usersRef = collection(db, "blitzWalletUsers");
+    const usersRef = collection(db, collection);
     const q = query(
       usersRef,
       where(
@@ -175,25 +178,14 @@ export async function searchUsers(searchTerm) {
 
 export async function signIn() {
   try {
-    const customClaim = await createCustomFBToken();
-    if (!customClaim) throw Error("NO CLAIM TOKEN CREATED");
-    return customClaim;
-  } catch (error) {
-    console.error("Error signing in anonymously", error);
-    return false;
-  }
-}
-
-async function createCustomFBToken() {
-  try {
     const token = await admin
       .auth()
       .createCustomToken(process.env.FIREBASE_AUTH_CODE);
     await signInWithCustomToken(auth, token);
-
+    if (!token) throw Error("NO CLAIM TOKEN CREATED");
     return token;
   } catch (error) {
-    console.error("Error creating custom token:", error);
+    console.error("Error signing in anonymously", error);
     return false;
   }
 }
