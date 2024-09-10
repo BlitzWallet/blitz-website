@@ -2,13 +2,18 @@
 import "dotenv/config";
 import { signIn } from "../db";
 import { decrypt } from "../middleware/encription";
+import { decryptMessage } from "../middleware/newEncription";
 
 export async function handler(event, context) {
   if (event.httpMethod === "POST") {
     const postData = event.body ? JSON.parse(event.body) : null; //sanitation
-    const decrypted = decrypt(postData);
+    const decryptedContent = decryptMessage(
+      process.env.DB_PRIVKEY,
+      postData.pubKey,
+      postData.content
+    );
 
-    console.log(decrypted);
+    console.log(decryptedContent);
   } else
     return {
       statusCode: 400,
