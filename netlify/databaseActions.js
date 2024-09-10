@@ -2,6 +2,7 @@
 import "dotenv/config";
 import {
   addDataToCollection,
+  canUsePOSName,
   deleteDataFromCollection,
   getDataFromCollection,
   getSignleContact,
@@ -76,7 +77,7 @@ export async function handler(event, context) {
         //get and return data to device
       } else if (databaseMethod === "deletedata") {
         const didDeleteData = await deleteDataFromCollection(
-          decryptedContent.dataObject,
+          collectionName,
           userPubKey
         );
         if (didDeleteData) {
@@ -98,7 +99,7 @@ export async function handler(event, context) {
         //delete data from database and return if successful or not
       } else if (databaseMethod === "validuniquename") {
         const isNameAvailable = await isValidUniqueName(
-          decryptedContent.dataObject,
+          collectionName,
           decryptedContent.wantedName
         );
         if (isNameAvailable) {
@@ -143,7 +144,10 @@ export async function handler(event, context) {
           };
         }
       } else if (databaseMethod === "singlecontact") {
-        const returnedContact = await getSignleContact(collectionName);
+        const returnedContact = await getSignleContact(
+          collectionName,
+          decryptedContent.wantedName
+        );
         if (returnedContact) {
           const encriptedContact = encryptMessage(
             process.env.DB_PRIVKEY,
@@ -168,6 +172,26 @@ export async function handler(event, context) {
         }
         //gets single contact and returns contact
       } else if (databaseMethod === "validposname") {
+        const isNameAvailable = await canUsePOSName(
+          collectionName,
+          decryptedContent.wantedName
+        );
+        if (isNameAvailable) {
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              status: "SUCCESS",
+            }),
+          };
+        } else {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Name not available",
+            }),
+          };
+        }
         //check if is valid and return value
       } else if (databaseMethod === "searchusers") {
         //returns a list of users based on search parameter
