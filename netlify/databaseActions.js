@@ -1,8 +1,7 @@
 "use strict";
 import "dotenv/config";
-import { addDataToCollection, signIn } from "../db";
-import { decrypt } from "../middleware/encription";
-import { decryptMessage } from "../middleware/newEncription";
+import { addDataToCollection, getDataFromCollection } from "../db";
+import { decryptMessage, encryptMessage } from "../middleware/newEncription";
 
 export async function handler(event, context) {
   if (event.httpMethod === "POST") {
@@ -28,7 +27,6 @@ export async function handler(event, context) {
             statusCode: 200,
             body: JSON.stringify({
               status: "SUCCESS",
-              reason: "",
             }),
           };
         } else {
@@ -41,6 +39,33 @@ export async function handler(event, context) {
           };
         }
       } else if (databaseMethod == "getdata") {
+        const returnedContact = await getDataFromCollection(
+          collectionName,
+          userPubKey
+        );
+        if (returnedContact) {
+          const encriptedContact = encryptMessage(
+            process.env.DB_PRIVKEY,
+            userPubKey,
+            JSON.stringify(returnedContact)
+          );
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              status: "SUCCESS",
+              data: encriptedContact,
+            }),
+          };
+        } else {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Not able to get contact",
+            }),
+          };
+        }
+
         //get and return data to device
       } else if (databaseMethod === "deletedata") {
         //delete data from database and return if successful or not
