@@ -4,6 +4,7 @@ import {
   addDataToCollection,
   deleteDataFromCollection,
   getDataFromCollection,
+  getSignleContact,
   isValidUniqueName,
   queryContacts,
 } from "../db";
@@ -137,11 +138,34 @@ export async function handler(event, context) {
             statusCode: 400,
             body: JSON.stringify({
               status: "ERROR",
-              reason: "Not able to get contact",
+              reason: "Not able to get contacts",
             }),
           };
         }
       } else if (databaseMethod === "singlecontact") {
+        const returnedContact = await getSignleContact(collectionName);
+        if (returnedContact) {
+          const encriptedContact = encryptMessage(
+            process.env.DB_PRIVKEY,
+            userPubKey,
+            JSON.stringify(returnedContact)
+          );
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              status: "SUCCESS",
+              data: encriptedContact,
+            }),
+          };
+        } else {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Not able to get contact",
+            }),
+          };
+        }
         //gets single contact and returns contact
       } else if (databaseMethod === "validposname") {
         //check if is valid and return value
