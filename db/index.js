@@ -75,22 +75,22 @@ export async function getDataFromCollection(
     return false;
   }
 }
-export async function deleteDataFromCollection(
-  collectionName = "blitzWalletUsers",
-  uuid
-) {
-  try {
-    const didSignIn = await signIn();
-    if (!didSignIn) throw Error("Not signed in");
-    const docRef = doc(db, `${collectionName}/${uuid}`);
-    const respones = await deleteDoc(docRef);
+// export async function deleteDataFromCollection(
+//   collectionName = "blitzWalletUsers",
+//   uuid
+// ) {
+//   try {
+//     const didSignIn = await signIn();
+//     if (!didSignIn) throw Error("Not signed in");
+//     const docRef = doc(db, `${collectionName}/${uuid}`);
+//     const respones = await deleteDoc(docRef);
 
-    return true;
-  } catch (err) {
-    console.log(err);
-    return false;
-  }
-}
+//     return true;
+//   } catch (err) {
+//     console.log(err);
+//     return false;
+//   }
+// }
 
 export async function isValidUniqueName(
   collectionName = "blitzWalletUsers",

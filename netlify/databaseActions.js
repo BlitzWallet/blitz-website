@@ -79,26 +79,33 @@ export async function handler(event, context) {
 
         //get and return data to device
       } else if (databaseMethod === "deletedata") {
-        const didDeleteData = await deleteDataFromCollection(
-          collectionName,
-          userPubKey
-        );
-        if (didDeleteData) {
-          return {
-            statusCode: 200,
-            body: JSON.stringify({
-              status: "SUCCESS",
-            }),
-          };
-        } else {
-          return {
-            statusCode: 400,
-            body: JSON.stringify({
-              status: "ERROR",
-              reason: "Not able to delete data from database",
-            }),
-          };
-        }
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            status: "ERROR",
+            reason: "Not able to delete data from database",
+          }),
+        };
+        // const didDeleteData = await deleteDataFromCollection(
+        //   collectionName,
+        //   userPubKey
+        // );
+        // if (didDeleteData) {
+        //   return {
+        //     statusCode: 200,
+        //     body: JSON.stringify({
+        //       status: "SUCCESS",
+        //     }),
+        //   };
+        // } else {
+        //   return {
+        //     statusCode: 400,
+        //     body: JSON.stringify({
+        //       status: "ERROR",
+        //       reason: "Not able to delete data from database",
+        //     }),
+        //   };
+        // }
         //delete data from database and return if successful or not
       } else if (databaseMethod === "validuniquename") {
         const isNameAvailable = await isValidUniqueName(
