@@ -25,3 +25,37 @@ main {
 .header-sponsor-BTN {
   margin: 50px auto 0;
 }
+
+.sponsor-container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.sponsor-container h1 {
+  font-size: 50px;
+  text-align: center;
+  margin-top: 80px;
+  margin-bottom: 20px;
+}
+.sponsor-container .sponsor-people-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.sponsor-container .sponsor {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  background-color: aliceblue;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  margin: 25px;
+}
+.sponsor-container .sponsor:hover {
+  transform: scale(1.1);
+}
+.sponsor-container p {
+  text-align: center;
+}
