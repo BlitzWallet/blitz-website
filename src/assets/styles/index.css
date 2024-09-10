@@ -59,3 +59,12 @@ a {
   left: 0;
   cursor: pointer;
 }
+
+button {
+  background-color: var(--dm-text);
+  padding: 8px 15px;
+  border: 0;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+}
