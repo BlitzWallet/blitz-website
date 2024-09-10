@@ -15,10 +15,12 @@ import { decryptMessage, encryptMessage } from "../middleware/newEncription";
 export async function handler(event, context) {
   if (event.httpMethod === "POST") {
     const postData = event.body ? JSON.parse(event.body) : null; //sanitation
-    const decryptedContent = await decryptMessage(
-      process.env.DB_PRIVKEY,
-      postData.pubKey,
-      postData.content
+    const decryptedContent = JSON.parse(
+      await decryptMessage(
+        process.env.DB_PRIVKEY,
+        postData.pubKey,
+        postData.content
+      )
     );
     const databaseMethod = decryptedContent.type.toLowerCase();
     const userPubKey = postData.pubKey;

@@ -180,7 +180,7 @@ export async function searchUsers(
 ) {
   const didSignIn = await signIn();
   if (!didSignIn) throw Error("Not signed in");
-  if (!searchTerm) return false; // Return an empty array if the search term is empty
+  if (!searchTerm) return []; // Return an empty array if the search term is empty
 
   try {
     const usersRef = collection(db, collectionName);
