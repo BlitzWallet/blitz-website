@@ -12,7 +12,8 @@
 
     <link rel="stylesheet" href="../../src/assets/styles/index.css" />
     <link rel="stylesheet" href="../../src/assets/styles/navbar_footer.css" />
-    <link rel="stylesheet" href="style.css" />
+
+    <link rel="stylesheet" href="./style.css" />
 
     <meta
       name="description"
@@ -39,99 +40,41 @@
   </script>
   <body>
     <nav>
-      <a href="../../">
-        <img
-          alt="blitz wallet full text logo"
-          class="logo"
-          src="../../public/wordmark.png"
-        />
-      </a>
-      <div class="desktop">
-        <ul class="navItems">
-          <li class="navItem">
-            <a href="../../pages/download/">Download</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/donate/">Donate</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">Contact</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">FAQ</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">Blog</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">
-              <img
-                alt="github icon to show blitz wallet open source code"
-                class="iconStyle"
-                src="../../src/assets/images/github.svg"
-            /></a>
-          </li>
-        </ul>
-      </div>
-      <div class="mobile mobileNavBTN">
-        <img
-          src="../../src/assets/images/hamburger.png"
-          alt="hamburger icon for mobile nav"
-        />
-      </div>
-      <div class="mobileNavDropdown">
-        <div class="imgContainer">
+      <div class="navContent">
+        <a href="/">
+          <img class="wordmark" src="../../public/wordmark.png" />
+        </a>
+        <div class="mobile mobileNavBTN">
           <img
-            class="iconStyle closeMobileNavBTN"
+            class="navigationIcon shown"
+            src="../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
             src="../../src/assets/images/xIcon.svg"
-            alt="x icon to close the mobile nav dropdown"
+            alt="hamburger icon for mobile nav"
           />
         </div>
-        <ul class="navItems">
-          <li class="navItem">
-            <a href="../../pages/download/">Download</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/donate/">Donate</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">Contact</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">FAQ</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">Blog</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">
-              <img
-                alt="github icon to show blitz wallet open source code"
-                class="iconStyle"
-                src="../../src/assets/images/github.svg"
-            /></a>
-          </li>
-        </ul>
-        <div class="appContainer">
-          <div class="app">
-            <img
-              alt="apple icon to show if the app is doanloadable on app store"
-              draggable="false"
-              class="iconStyle"
-              src="../../src/assets/images/apple.svg"
-            />
-            <span>Coming Soon...</span>
-            <div class="screen"></div>
-          </div>
-          <div class="app">
-            <img
-              draggable="false"
-              alt="Google playstore icon to show if app is downlaodable on goodle playstore"
-              class="iconStyle"
-              src="../../src/assets/images/google-play.png"
-            />
-            <span>Coming Soon...</span>
-            <div class="screen"></div>
+        <div class="mobileNavDropdown">
+          <div class="mobileNavDropdown-Container">
+            <ul class="navItems">
+              <li class="navItem">
+                <a href="../notBuildYet">Donate</a>
+              </li>
+              <li class="navItem">
+                <a href="../notBuildYet">Contact</a>
+              </li>
+              <li class="navItem">
+                <a href="../notBuildYet">FAQ</a>
+              </li>
+              <li class="navItem">
+                <a href="../notBuildYet">Blog</a>
+              </li>
+              <li class="navItem">
+                <a href="../privacyPolicy">Privacy Policy</a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -139,56 +82,30 @@
 
     <main>
       <section class="content">
-        <h1>Hi There.</h1>
-        <p>
-          You might be wondering, why does a Bitcoin Wallet have a donations
-          page, don't they collect money from each transation and swaps?
+        <h1>Hello</h1>
+        <p class="header-p">
+          Blitz Wallet is on a mission to provide an easy way to start
+          interacting with Bitcoin. And that mission is only as strong as the
+          community behind it. So, as a posible future sponsor of that mission,
+          we say thank you.
         </p>
+
+        <button class="header-sponsor-BTN">Become a sponsor</button>
       </section>
     </main>
 
     <footer>
       <div class="content">
         <div class="privcyContent">
-          <p>@2023 Blitz Wallet LLC.</p>
-          <div>
-            <a href="../privacyPolicy/"> <p>Privacy Policy</p></a>
-            <p>|</p>
-            <a
-              target="_blank"
-              href=" http://www.apache.org/licenses/LICENSE-2.0"
-              >Lisencse</a
-            >
-          </div>
+          <a href="./privacyPolicy/"> <p>Privacy Policy</p></a>
+          <a target="_blank" href=" http://www.apache.org/licenses/LICENSE-2.0"
+            >Lisencse</a
+          >
         </div>
         <div class="img">
           <img alt="blitz wallet icon" src="../../public/favicon.png" />
         </div>
-        <ul class="navItems">
-          <li class="navItem">
-            <a href="../../pages/download/">Download</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/donate/">Donate</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">Contact</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">FAQ</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">Blog</a>
-          </li>
-          <li class="navItem">
-            <a href="../../pages/notBuildYet">
-              <img
-                alt="github icon to show blitz wallet open source code"
-                class="iconStyle"
-                src="../../src/assets/images/github.svg"
-            /></a>
-          </li>
-        </ul>
+        <p>@2023 Blitz Wallet LLC.</p>
       </div>
     </footer>
   </body>

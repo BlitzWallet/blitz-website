@@ -1,5 +1,6 @@
 main {
   width: 100%;
+  min-height: calc(100dvh - 80px - 250px);
   display: flex;
   flex-direction: column;
 }
@@ -7,9 +8,20 @@ main {
   width: 95%;
   max-width: 1000px;
   margin: 50px auto;
+  display: flex;
+  flex-direction: column;
 }
 .content h1 {
   font-size: 60px;
   margin-bottom: 20px;
   text-align: center;
+}
+.header-p {
+  margin: 25px 0;
+  text-align: center;
+  font-size: 18px;
+  line-height: 40px;
+}
+.header-sponsor-BTN {
+  margin: 50px auto 0;
 }
