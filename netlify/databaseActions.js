@@ -8,6 +8,7 @@ import {
   getSignleContact,
   isValidUniqueName,
   queryContacts,
+  searchUsers,
 } from "../db";
 import { decryptMessage, encryptMessage } from "../middleware/newEncription";
 
@@ -194,6 +195,32 @@ export async function handler(event, context) {
         }
         //check if is valid and return value
       } else if (databaseMethod === "searchusers") {
+        const potentialUsers = await searchUsers(
+          collectionName,
+          decryptedContent.searchTerm
+        );
+        if (potentialUsers) {
+          const encriptedContact = encryptMessage(
+            process.env.DB_PRIVKEY,
+            userPubKey,
+            JSON.stringify(potentialUsers)
+          );
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              status: "SUCCESS",
+              data: encriptedContact,
+            }),
+          };
+        } else {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Not able to get contact",
+            }),
+          };
+        }
         //returns a list of users based on search parameter
       } else {
         return {
