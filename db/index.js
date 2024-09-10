@@ -1,7 +1,12 @@
 // Import the functions you need from the SDKs you need
-import { initializeAuth, signInAnonymously } from "firebase/auth";
+import {
+  initializeAuth,
+  signInAnonymously,
+  signInWithCustomToken,
+} from "firebase/auth";
 import { initializeApp } from "firebase/app";
 // TODO: Add SDKs for Firebase products that you want to use
+import * as admin from "firebase-admin";
 
 import {
   getFirestore,
@@ -34,6 +39,13 @@ const firebaseConfig = {
   messagingSenderId: "129198472150",
   appId: "1:129198472150:web:86511e5250364ee1764277",
 };
+
+// Initialize the Firebase Admin SDK
+// const app = admin.initializeApp({
+//   projectId: "blitz-wallet-82b39",
+//   credential: admin.credential.applicationDefault(),
+//   databaseURL: "https://BlitzWalletUsers.firebaseio.com",
+// });
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -106,9 +118,10 @@ export async function deleteDataFromCollection(collectionName, uuid) {
   }
 }
 export async function getSignleContact(wantedName) {
-  const didSignIn = await signIn();
+  const token = await signIn();
   try {
-    if (!didSignIn) throw new Error("ERROR");
+    if (!token) throw new Error("ERROR");
+
     const userProfilesRef = collection(db, "blitzWalletUsers");
 
     const q = query(
@@ -127,10 +140,25 @@ export async function getSignleContact(wantedName) {
 }
 async function signIn() {
   try {
-    await signInAnonymously(auth);
+    const customClaim = await createCustomToken();
+    if (!customClaim) throw Error("NO CLAIM TOKEN CREATED");
     return true;
   } catch (error) {
     console.error("Error signing in anonymously", error);
+    return false;
+  }
+}
+
+async function createCustomToken() {
+  try {
+    const token = await admin
+      .auth()
+      .createCustomToken(process.env.FIREBASE_AUTH_CODE);
+    await signInWithCustomToken(auth, token);
+
+    return true;
+  } catch (error) {
+    console.error("Error creating custom token:", error);
     return false;
   }
 }
