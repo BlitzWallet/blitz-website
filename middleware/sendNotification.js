@@ -42,7 +42,7 @@ export function sendNotification({
     // Create a notification
     let notification = new apn.Notification({
       alert: {
-        title: `Blitz wallet running in the background`,
+        title: "Payment received",
       },
       topic: "org.reactjs.native.example.BlitzWallet", // Replace with your app's bundle identifier
       payload: {
