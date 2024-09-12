@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="shortcut icon"
+      href="../../public/favicon.png"
+      type="image/x-icon"
+    />
+
+    <link rel="stylesheet" href="../../src/assets/styles/index.css" />
+    <link rel="stylesheet" href="../../src/assets/styles/navbar_footer.css" />
+
+    <link rel="stylesheet" href="./style.css" />
+
+    <meta
+      name="description"
+      content="Blitz Wallet is a free Bitcoin lightning wallet and runs exclusivly off donations."
+    />
+
+    <script src="../../src/js/navbar.js" defer></script>
+
+    <title>Blitz Wallet | Sponsor</title>
+    <script src="./index.js" defer></script>
+  </head>
+  <!-- Google tag (gtag.js) -->
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
+
+    gtag("config", "G-WNRJ7Y4RVE");
+  </script>
+  <body>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <img class="wordmark" src="../../public/wordmark.png" />
+        </a>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <div class="mobileNavDropdown">
+          <div class="mobileNavDropdown-Container">
+            <ul class="navItems">
+              <li class="navItem">
+                <a href="../notBuildYet">About</a>
+              </li>
+              <li class="navItem">
+                <a href="../notBuildYet">Contact</a>
+              </li>
+              <li class="navItem">
+                <a href="../notBuildYet">FAQ</a>
+              </li>
+              <li class="navItem">
+                <a href="../notBuildYet">Blog</a>
+              </li>
+              <li class="navItem">
+                <a href="../privacyPolicy">Privacy Policy</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main>
+      <section class="content">
+        <div class="content-inputContainer">
+          <input placeholder="Amount (sats)" min="0" type="number" />
+          <span>Sats</span>
+        </div>
+
+        <div class="content-optionContainer">
+          <span class="optionContainer-option selected-option option-twitter"
+            >Twitter</span
+          >
+          <span class="optionContainer-option">Nostr</span>
+        </div>
+
+        <span>or</span>
+
+        <a class="annonOption">Donate Anonymously</a>
+      </section>
+    </main>
+
+    <footer>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="../privacyPolicy/"> <p>Privacy Policy</p></a>
+          <a target="_blank" href=" http://www.apache.org/licenses/LICENSE-2.0"
+            >Lisencse</a
+          >
+        </div>
+        <div class="img">
+          <img alt="blitz wallet icon" src="../../public/favicon.png" />
+        </div>
+        <p>@2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+  </body>
+</html>
