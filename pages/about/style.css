@@ -5,11 +5,26 @@ main {
   flex-direction: column;
 }
 .content {
+  min-height: calc(100dvh - 80px - 200px);
+  align-items: center;
   width: 95%;
   max-width: 1000px;
+  /* margin: max(calc((100dvh - 80px - 250px) / 2), 50px) auto 50px; */
   margin: 50px auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  /* overflow-y: scroll; */
+}
+.content ol {
+  width: 95%;
+  max-width: 700px;
+  margin: 50px auto;
+  list-style-type: decimal-leading-zero;
+  font-size: 40px;
+}
+.content li {
+  /* margin: 70px 0; */
 }
 .content h1 {
   font-size: 60px;
