@@ -191,6 +191,48 @@ export async function handler(event, context) {
             }),
           };
         }
+      } else if (postData.type === "buyGiftCard") {
+        try {
+          const response = await fetch(`${serverURL}/svs/create-invoice`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${postData.access_token}`,
+            },
+            body: JSON.stringify({
+              productId: postData.productId, //string
+              cardValue: postData.cardValue, //number
+              quantity: postData.quantity, //number
+            }),
+          });
+          const data = await response.json();
+
+          if (data.statusCode === 400)
+            return {
+              statusCode: 400,
+              body: JSON.stringify({
+                error: data.error,
+              }),
+            };
+          //   const encriptedContact = encryptMessage(
+          //     process.env.DB_PRIVKEY,
+          //     userPubKey,
+          //     JSON.stringify(data)
+          //   );
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              response: data,
+            }),
+          };
+        } catch (err) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              error: "Error getting options",
+            }),
+          };
+        }
       }
       // if (!token)
       //   return {
