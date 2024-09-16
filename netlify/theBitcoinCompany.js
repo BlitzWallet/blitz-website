@@ -47,6 +47,31 @@ export async function handler(event, context) {
             }),
           };
         }
+      } else if (postData.type === "listGiftCardsWhenSignedIn") {
+        try {
+          const response = await fetch(`${serverURL}/svs/offers-for-user`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${postData.access_token}`,
+            },
+          });
+          const data = await response.json();
+
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              giftCards: data.result.svs,
+            }),
+          };
+        } catch (err) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              error: "Error getting options",
+            }),
+          };
+        }
       } else if (postData.type === "signUp") {
         try {
           const response = await fetch(`${serverURL}/auth/sign-up`, {
@@ -123,6 +148,7 @@ export async function handler(event, context) {
             body: JSON.stringify(err),
           };
         }
+      } else if (postData.type == "quoteGiftCard") {
       }
       // if (!token)
       //   return {
