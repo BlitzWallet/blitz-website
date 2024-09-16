@@ -4,7 +4,7 @@ import { Expo } from "expo-server-sdk";
 
 import {
   addDataToCollection,
-  deleteDataFromCollection,
+  // deleteDataFromCollection,
   getDataFromCollection,
 } from "../db";
 import { decrypt, encrypt } from "../middleware/encription";

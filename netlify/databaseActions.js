@@ -3,7 +3,7 @@ import "dotenv/config";
 import {
   addDataToCollection,
   canUsePOSName,
-  deleteDataFromCollection,
+  // deleteDataFromCollection,
   getDataFromCollection,
   getSignleContact,
   isValidUniqueName,
