@@ -2,7 +2,6 @@
 import "dotenv/config";
 import { JWTAuth } from "../middleware/JWTAuth";
 import { decryptMessage, encryptMessage } from "../middleware/newEncription";
-import e from "express";
 
 const serverURL =
   process.env.BOLTZ_ENVIRONMENT === "liquid"
@@ -135,6 +134,43 @@ export async function handler(event, context) {
           //     userPubKey,
           //     JSON.stringify(data)
           //   );
+          console.log(data);
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              response: data,
+            }),
+          };
+        } catch (err) {
+          console.log(err, "TESt");
+          return {
+            statusCode: 400,
+            body: JSON.stringify(err),
+          };
+        }
+      } else if (postData.type === "lookupUser") {
+        try {
+          const response = await fetch(`${serverURL}/users/find`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${postData.access_token}`,
+            },
+          });
+          const data = await response.json();
+          if (data.statusCode === 400)
+            return {
+              statusCode: 400,
+              body: JSON.stringify({
+                error: data.error,
+              }),
+            };
+          //   const encriptedContact = encryptMessage(
+          //     process.env.DB_PRIVKEY,
+          //     userPubKey,
+          //     JSON.stringify(data)
+          //   );
+          console.log(data);
           return {
             statusCode: 200,
             body: JSON.stringify({
