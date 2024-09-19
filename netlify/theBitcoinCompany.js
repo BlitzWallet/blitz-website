@@ -79,6 +79,7 @@ export async function handler(event, context) {
             body: JSON.stringify({
               email: postData.email,
               password: postData.password,
+              referralCode: "TJNCEX",
             }),
             headers: {
               "Content-Type": "application/json",
