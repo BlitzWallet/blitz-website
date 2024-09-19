@@ -150,6 +150,41 @@ export async function handler(event, context) {
             body: JSON.stringify(err),
           };
         }
+      } else if (postData.type === "getNewAccessToken") {
+        try {
+          const response = await fetch(`${serverURL}/auth/refresh-token`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${postData.refreshToken}`,
+            },
+          });
+          const data = await response.json();
+          if (data.statusCode === 400)
+            return {
+              statusCode: 400,
+              body: JSON.stringify({
+                error: data.error,
+              }),
+            };
+          //   const encriptedContact = encryptMessage(
+          //     process.env.DB_PRIVKEY,
+          //     userPubKey,
+          //     JSON.stringify(data)
+          //   );
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              response: data,
+            }),
+          };
+        } catch (err) {
+          console.log(err, "TESt");
+          return {
+            statusCode: 400,
+            body: JSON.stringify(err),
+          };
+        }
       } else if (postData.type === "lookupUser") {
         try {
           const response = await fetch(`${serverURL}/users/find`, {
