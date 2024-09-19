@@ -188,7 +188,7 @@ export async function handler(event, context) {
       } else if (postData.type === "requestResetPassword") {
         try {
           const response = await fetch(
-            `${serverURL}/auth/request-reset-password`,
+            `${serverURL}/auth/request-password-reset`,
             {
               method: "POST",
               headers: {
