@@ -2,9 +2,10 @@
 import "dotenv/config";
 import { JWTAuth } from "../middleware/JWTAuth";
 import { decryptMessage, encryptMessage } from "../middleware/newEncription";
+import { getTBCaccessCode } from "../middleware/getTBCaccessCode";
 
 const serverURL =
-  process.env.BOLTZ_ENVIRONMENT === "liquid"
+  process.env.ENVIRONMENT === "liquid"
     ? "https://api.thebitcoincompany.com"
     : "https://api.dev.thebitcoincompany.com";
 export async function handler(event, context) {
@@ -20,7 +21,7 @@ export async function handler(event, context) {
       //     )
       //   );
 
-      const isAuthenticated = JWTAuth(token);
+      const access_token = await getTBCaccessCode();
 
       if (postData.type === "listGiftCards") {
         try {
@@ -52,7 +53,7 @@ export async function handler(event, context) {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${postData.access_token}`,
+              Authorization: `Bearer ${access_token}`,
             },
           });
 
@@ -72,275 +73,234 @@ export async function handler(event, context) {
             }),
           };
         }
-      } else if (postData.type === "signUp") {
-        try {
-          const response = await fetch(`${serverURL}/auth/sign-up`, {
-            method: "POST",
-            body: JSON.stringify({
-              email: postData.email,
-              password: postData.password,
-              referralCode: "TJNCEX",
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          const data = await response.json();
-          if (data.statusCode === 400)
-            return {
-              statusCode: 400,
-              body: JSON.stringify({
-                error: data.error,
-              }),
-            };
-          //   const encriptedContact = encryptMessage(
-          //     process.env.DB_PRIVKEY,
-          //     userPubKey,
-          //     JSON.stringify(data)
-          //   );
-          return {
-            statusCode: 200,
-            body: JSON.stringify({
-              response: data,
-            }),
-          };
-        } catch (err) {
-          console.log(err, "TESt");
-          return {
-            statusCode: 400,
-            body: JSON.stringify(err),
-          };
-        }
-      } else if (postData.type === "login") {
-        try {
-          const response = await fetch(`${serverURL}/auth/login`, {
-            method: "POST",
-            body: JSON.stringify({
-              email: postData.email,
-              password: postData.password,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          const data = await response.json();
-          if (data.statusCode === 400)
-            return {
-              statusCode: 400,
-              body: JSON.stringify({
-                error: data.error,
-              }),
-            };
-          //   const encriptedContact = encryptMessage(
-          //     process.env.DB_PRIVKEY,
-          //     userPubKey,
-          //     JSON.stringify(data)
-          //   );
-          console.log(data);
-          return {
-            statusCode: 200,
-            body: JSON.stringify({
-              response: data,
-            }),
-          };
-        } catch (err) {
-          console.log(err, "TESt");
-          return {
-            statusCode: 400,
-            body: JSON.stringify(err),
-          };
-        }
-      } else if (postData.type === "getNewAccessToken") {
-        try {
-          const response = await fetch(`${serverURL}/auth/refresh-token`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${postData.refreshToken}`,
-            },
-          });
-          const data = await response.json();
-          if (data.statusCode === 400)
-            return {
-              statusCode: 400,
-              body: JSON.stringify({
-                error: data.error,
-              }),
-            };
-          //   const encriptedContact = encryptMessage(
-          //     process.env.DB_PRIVKEY,
-          //     userPubKey,
-          //     JSON.stringify(data)
-          //   );
-          return {
-            statusCode: 200,
-            body: JSON.stringify({
-              response: data,
-            }),
-          };
-        } catch (err) {
-          console.log(err, "TESt");
-          return {
-            statusCode: 400,
-            body: JSON.stringify(err),
-          };
-        }
-      } else if (postData.type === "lookupUser") {
-        try {
-          const response = await fetch(`${serverURL}/users/find`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${postData.access_token}`,
-            },
-          });
-          const data = await response.json();
-          if (data.statusCode === 400)
-            return {
-              statusCode: 400,
-              body: JSON.stringify({
-                error: data.error,
-              }),
-            };
-          //   const encriptedContact = encryptMessage(
-          //     process.env.DB_PRIVKEY,
-          //     userPubKey,
-          //     JSON.stringify(data)
-          //   );
-          console.log(data);
-          return {
-            statusCode: 200,
-            body: JSON.stringify({
-              response: data,
-            }),
-          };
-        } catch (err) {
-          console.log(err, "TESt");
-          return {
-            statusCode: 400,
-            body: JSON.stringify(err),
-          };
-        }
-      } else if (postData.type === "requestResetPassword") {
-        try {
-          const response = await fetch(
-            `${serverURL}/auth/request-password-reset`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                email: postData.email,
-              }),
-            }
-          );
-          const data = await response.json();
-          if (data.statusCode === 400)
-            return {
-              statusCode: 400,
-              body: JSON.stringify({
-                error: data.error,
-              }),
-            };
+      }
+      //    else if (postData.type === "signUp") {
+      //     try {
+      //       const response = await fetch(`${serverURL}/auth/sign-up`, {
+      //         method: "POST",
+      //         body: JSON.stringify({
+      //           email: postData.email,
+      //           password: postData.password,
+      //           referralCode: "TJNCEX",
+      //         }),
+      //         headers: {
+      //           "Content-Type": "application/json",
+      //         },
+      //       });
+      //       const data = await response.json();
+      //       if (data.statusCode === 400)
+      //         return {
+      //           statusCode: 400,
+      //           body: JSON.stringify({
+      //             error: data.error,
+      //           }),
+      //         };
+      //       //   const encriptedContact = encryptMessage(
+      //       //     process.env.DB_PRIVKEY,
+      //       //     userPubKey,
+      //       //     JSON.stringify(data)
+      //       //   );
+      //       return {
+      //         statusCode: 200,
+      //         body: JSON.stringify({
+      //           response: data,
+      //         }),
+      //       };
+      //     } catch (err) {
+      //       console.log(err, "TESt");
+      //       return {
+      //         statusCode: 400,
+      //         body: JSON.stringify(err),
+      //       };
+      //     }
+      //   } else if (postData.type === "login") {
+      //     try {
+      //       const response = await fetch(`${serverURL}/auth/login`, {
+      //         method: "POST",
+      //         body: JSON.stringify({
+      //           email: postData.email,
+      //           password: postData.password,
+      //         }),
+      //         headers: {
+      //           "Content-Type": "application/json",
+      //         },
+      //       });
+      //       const data = await response.json();
+      //       if (data.statusCode === 400)
+      //         return {
+      //           statusCode: 400,
+      //           body: JSON.stringify({
+      //             error: data.error,
+      //           }),
+      //         };
+      //       //   const encriptedContact = encryptMessage(
+      //       //     process.env.DB_PRIVKEY,
+      //       //     userPubKey,
+      //       //     JSON.stringify(data)
+      //       //   );
+      //       console.log(data);
+      //       return {
+      //         statusCode: 200,
+      //         body: JSON.stringify({
+      //           response: data,
+      //         }),
+      //       };
+      //     } catch (err) {
+      //       console.log(err, "TESt");
+      //       return {
+      //         statusCode: 400,
+      //         body: JSON.stringify(err),
+      //       };
+      //     }
+      //   } else if (postData.type === "getNewAccessToken") {
+      //     try {
+      //       const response = await fetch(`${serverURL}/auth/refresh-token`, {
+      //         method: "GET",
+      //         headers: {
+      //           "Content-Type": "application/json",
+      //           Authorization: `Bearer ${postData.refreshToken}`,
+      //         },
+      //       });
+      //       const data = await response.json();
+      //       if (data.statusCode === 400)
+      //         return {
+      //           statusCode: 400,
+      //           body: JSON.stringify({
+      //             error: data.error,
+      //           }),
+      //         };
+      //       //   const encriptedContact = encryptMessage(
+      //       //     process.env.DB_PRIVKEY,
+      //       //     userPubKey,
+      //       //     JSON.stringify(data)
+      //       //   );
+      //       return {
+      //         statusCode: 200,
+      //         body: JSON.stringify({
+      //           response: data,
+      //         }),
+      //       };
+      //     } catch (err) {
+      //       console.log(err, "TESt");
+      //       return {
+      //         statusCode: 400,
+      //         body: JSON.stringify(err),
+      //       };
+      //     }
+      //   } else if (postData.type === "lookupUser") {
+      //     try {
+      //       const response = await fetch(`${serverURL}/users/find`, {
+      //         method: "GET",
+      //         headers: {
+      //           "Content-Type": "application/json",
+      //           Authorization: `Bearer ${access_token}`,
+      //         },
+      //       });
+      //       const data = await response.json();
+      //       if (data.statusCode === 400)
+      //         return {
+      //           statusCode: 400,
+      //           body: JSON.stringify({
+      //             error: data.error,
+      //           }),
+      //         };
+      //       //   const encriptedContact = encryptMessage(
+      //       //     process.env.DB_PRIVKEY,
+      //       //     userPubKey,
+      //       //     JSON.stringify(data)
+      //       //   );
+      //       console.log(data);
+      //       return {
+      //         statusCode: 200,
+      //         body: JSON.stringify({
+      //           response: data,
+      //         }),
+      //       };
+      //     } catch (err) {
+      //       console.log(err, "TESt");
+      //       return {
+      //         statusCode: 400,
+      //         body: JSON.stringify(err),
+      //       };
+      //     }
+      //   } else if (postData.type === "requestResetPassword") {
+      //     try {
+      //       const response = await fetch(
+      //         `${serverURL}/auth/request-password-reset`,
+      //         {
+      //           method: "POST",
+      //           headers: {
+      //             "Content-Type": "application/json",
+      //           },
+      //           body: JSON.stringify({
+      //             email: postData.email,
+      //           }),
+      //         }
+      //       );
+      //       const data = await response.json();
+      //       if (data.statusCode === 400)
+      //         return {
+      //           statusCode: 400,
+      //           body: JSON.stringify({
+      //             error: data.error,
+      //           }),
+      //         };
 
-          return {
-            statusCode: 200,
-            body: JSON.stringify({
-              response: data,
-            }),
-          };
-        } catch (err) {
-          console.log(err, "TESt");
-          return {
-            statusCode: 400,
-            body: JSON.stringify(err),
-          };
-        }
-      } else if (postData.type == "quoteGiftCard") {
+      //       return {
+      //         statusCode: 200,
+      //         body: JSON.stringify({
+      //           response: data,
+      //         }),
+      //       };
+      //     } catch (err) {
+      //       console.log(err, "TESt");
+      //       return {
+      //         statusCode: 400,
+      //         body: JSON.stringify(err),
+      //       };
+      //     }
+      //   } else if (postData.type === "resetAccountPassword") {
+      //     try {
+      //       const response = await fetch(`${serverURL}/auth/reset-password`, {
+      //         method: "POST",
+      //         headers: {
+      //           "Content-Type": "application/json",
+      //         },
+      //         body: JSON.stringify({
+      //           password: postData.password,
+      //           resetToken: postData.resetToken,
+      //         }),
+      //       });
+      //       const data = await response.json();
+      //       if (data.statusCode === 400)
+      //         return {
+      //           statusCode: 400,
+      //           body: JSON.stringify({
+      //             error: data.error,
+      //           }),
+      //         };
+
+      //       return {
+      //         statusCode: 200,
+      //         body: JSON.stringify({
+      //           response: data,
+      //         }),
+      //       };
+      //     } catch (err) {
+      //       console.log(err, "TESt");
+      //       return {
+      //         statusCode: 400,
+      //         body: JSON.stringify(err),
+      //       };
+      //     }
+      //   }
+      else if (postData.type == "quoteGiftCard") {
         try {
           const response = await fetch(`${serverURL}/svs/quote-card`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${postData.access_token}`,
-            },
-            body: JSON.stringify({
-              productId: postData.productId, //string
-              cardValue: postData.cardValue, //number
-              quantity: postData.quantity, //number
-              purchaseType: "Lightning",
-            }),
-          });
-          const data = await response.json();
-
-          if (data.statusCode === 400)
-            return {
-              statusCode: 400,
-              body: JSON.stringify({
-                error: data.error,
-              }),
-            };
-          //   const encriptedContact = encryptMessage(
-          //     process.env.DB_PRIVKEY,
-          //     userPubKey,
-          //     JSON.stringify(data)
-          //   );
-          return {
-            statusCode: 200,
-            body: JSON.stringify({
-              response: data,
-            }),
-          };
-        } catch (err) {
-          return {
-            statusCode: 400,
-            body: JSON.stringify({
-              error: "Error getting options",
-            }),
-          };
-        }
-      } else if (postData.type === "resetAccountPassword") {
-        try {
-          const response = await fetch(`${serverURL}/auth/reset-password`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              password: postData.password,
-              resetToken: postData.resetToken,
-            }),
-          });
-          const data = await response.json();
-          if (data.statusCode === 400)
-            return {
-              statusCode: 400,
-              body: JSON.stringify({
-                error: data.error,
-              }),
-            };
-
-          return {
-            statusCode: 200,
-            body: JSON.stringify({
-              response: data,
-            }),
-          };
-        } catch (err) {
-          console.log(err, "TESt");
-          return {
-            statusCode: 400,
-            body: JSON.stringify(err),
-          };
-        }
-      } else if (postData.type == "quoteGiftCard") {
-        try {
-          const response = await fetch(`${serverURL}/svs/quote-card`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${postData.access_token}`,
+              Authorization: `Bearer ${access_token}`,
             },
             body: JSON.stringify({
               productId: postData.productId, //string
@@ -385,17 +345,57 @@ export async function handler(event, context) {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${postData.access_token}`,
+                Authorization: `Bearer ${access_token}`,
               },
               body: JSON.stringify({
                 productId: postData.productId, //string
                 cardValue: postData.cardValue, //number
                 quantity: postData.quantity, //number
-                useSatsBalance: true,
-                useUSDBalance: true,
+                label: "Purchase from Blitz Wallet",
+                giftPersonalization: {
+                  email: postData.email,
+                  to: postData.blitzUsername,
+                  from: "Blitz Wallet",
+                  message: "Thanks for using Blitz!",
+                },
               }),
             }
           );
+          const data = await response.json();
+
+          if (data.statusCode === 400)
+            return {
+              statusCode: 400,
+              body: JSON.stringify({
+                error: data.error,
+              }),
+            };
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              response: data,
+            }),
+          };
+        } catch (err) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              error: "Error getting options",
+            }),
+          };
+        }
+      } else if (postData.type === "giftCardStatus") {
+        try {
+          const response = await fetch(`${serverURL}/svs/invoice-status`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${access_token}`,
+            },
+            body: JSON.stringify({
+              invoice: postData.invoice,
+            }),
+          });
           const data = await response.json();
 
           if (data.statusCode === 400)
@@ -424,17 +424,14 @@ export async function handler(event, context) {
             }),
           };
         }
-      } else if (postData.type === "giftCardStatus") {
+      } else if (postData.type === "getUserPurchases") {
         try {
-          const response = await fetch(`${serverURL}/svs/invoice-status`, {
-            method: "POST",
+          const response = await fetch(`${serverURL}/user/giftcards`, {
+            method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `Bearer ${postData.access_token}`,
+              Authorization: `Bearer ${access_token}`,
             },
-            body: JSON.stringify({
-              invoice: postData.invoice,
-            }),
           });
           const data = await response.json();
 
