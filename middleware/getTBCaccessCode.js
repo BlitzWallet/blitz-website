@@ -31,7 +31,6 @@ const client = new MongoClient(uri, {
 export async function getTBCaccessCode() {
   try {
     await client.connect();
-
     const database = client.db("BlitzWallet");
     const collection = database.collection("BlitzOrgData");
     const [orgData] = await collection
@@ -59,6 +58,7 @@ export async function getTBCaccessCode() {
       });
 
       const data = await response.json();
+
       if (data.statusCode === 400) return false;
 
       const encripted = encrypt(
@@ -90,6 +90,10 @@ export async function getTBCaccessCode() {
       return decryptedContent.accessToken;
     }
   } catch (err) {
+    console.log(err);
     return false;
+  } finally {
+    console.log("RUNNIN IN CLOSE");
+    await client.close();
   }
 }

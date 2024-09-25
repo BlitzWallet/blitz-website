@@ -22,7 +22,6 @@ export async function handler(event, context) {
       //   );
 
       const access_token = await getTBCaccessCode();
-
       if (postData.type === "listGiftCards") {
         try {
           const response = await fetch(`${serverURL}/giftcards`, {
@@ -318,11 +317,6 @@ export async function handler(event, context) {
                 error: data.error,
               }),
             };
-          //   const encriptedContact = encryptMessage(
-          //     process.env.DB_PRIVKEY,
-          //     userPubKey,
-          //     JSON.stringify(data)
-          //   );
           return {
             statusCode: 200,
             body: JSON.stringify({
@@ -386,16 +380,19 @@ export async function handler(event, context) {
         }
       } else if (postData.type === "giftCardStatus") {
         try {
-          const response = await fetch(`${serverURL}/svs/invoice-status`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${access_token}`,
-            },
-            body: JSON.stringify({
-              invoice: postData.invoice,
-            }),
-          });
+          const response = await fetch(
+            `${serverURL}/giftcards/invoice-status`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${access_token}`,
+              },
+              body: JSON.stringify({
+                invoice: postData.invoice,
+              }),
+            }
+          );
           const data = await response.json();
 
           if (data.statusCode === 400)
