@@ -3,15 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blitz Wallet | Contact</title>
 
-    <link rel="icon" type="image/x-icon" href="./public/favicon.png" />
     <link rel="stylesheet" href="../../src/assets/styles/index.css" />
     <link rel="stylesheet" href="../../src/assets/styles/navbar_footer.css" />
 
-    <title>Blitz Wallet</title>
+    <link rel="stylesheet" href="style.css" />
     <script src="../../src/js/navbar.js" defer></script>
   </head>
+  <script
+    async
+    src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+  ></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag("js", new Date());
 
+    gtag("config", "G-WNRJ7Y4RVE");
+  </script>
   <body>
     <nav>
       <div class="navContent">
@@ -34,7 +46,7 @@
           <div class="mobileNavDropdown-Container">
             <ul class="navItems">
               <li class="navItem">
-                <a href="../notBuildYet">Donate</a>
+                <a href="../notBuildYet/">About</a>
               </li>
               <li class="navItem">
                 <a href="../contact">Contact</a>
@@ -46,35 +58,32 @@
                 <a href="../notBuildYet">Blog</a>
               </li>
               <li class="navItem">
-                <a href="../privacyPolicy">Privacy Policy</a>
+                <a href="../privacyPolicy/">Privacy Policy</a>
               </li>
             </ul>
           </div>
         </div>
       </div>
     </nav>
-    <main
-      style="
-        height: 100vh;
-        width: 100vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        background-color: var(--dm-background);
-      "
-    >
-      <h1 style="color: white">COMING SOON</h1>
-      <p style="color: white">
-        Follow
-        <a
-          style="color: white"
-          target="_blank"
-          href="https://twitter.com/BlitzWallet1"
-          >@blitzwallet1</a
-        >
-        on twitter for updates
-      </p>
+
+    <main>
+      <h4>
+        If you need assistence, reach out to blake@blitz-wallet.com for help.
+      </h4>
     </main>
+    <footer>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="../privacyPolicy/"> <p>Privacy Policy</p></a>
+          <a target="_blank" href=" http://www.apache.org/licenses/LICENSE-2.0"
+            >Lisencse</a
+          >
+        </div>
+        <div class="img">
+          <img alt="blitz wallet icon" src="../../public/favicon.png" />
+        </div>
+        <p>@2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
   </body>
 </html>
