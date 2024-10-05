@@ -1,5 +1,7 @@
 import * as admin from "firebase-admin";
 import * as apn from "apn";
+import { google } from "googleapis"; // Google API library for authentication
+
 var serviceAccount = {
   type: process.env.FIREBASE_TYPE,
   project_id: process.env.FIREBASE_PROJECT_ID,
@@ -25,7 +27,6 @@ const apnProvider = new apn.Provider({
     keyId: process.env.APN_KEY_ID, // Key ID from Apple Developer Account
     teamId: process.env.APN_TEAM_ID, // Team ID from Apple Developer Account
   },
-  production: true, // Set to true for production environment
 });
 
 export function sendContactNotification({
@@ -47,32 +48,69 @@ export function sendContactNotification({
     apnProvider
       .send(notification, devicePushKey) // Replace with the device token
       .then((result) => {
-        console.log(result);
+        console.log(result.failed, "RESULT");
         apnProvider.shutdown();
       })
       .catch((err) => {
-        console.error(err);
+        console.error(err, "ERROR");
       });
 
     return;
   } else {
+    sendNotification(devicePushKey, message);
+  }
+}
+
+const SERVICE_ACCOUNT_KEY_PATH =
+  "../blitz-wallet-82b39-firebase-adminsdk-oz8m2-c51d14c341.json";
+
+// Your Firebase project ID
+const PROJECT_ID = "blitz-wallet-82b39";
+
+// Function to get access token using service account key
+async function getAccessToken() {
+  const auth = new google.auth.GoogleAuth({
+    keyFile: SERVICE_ACCOUNT_KEY_PATH,
+    scopes: ["https://www.googleapis.com/auth/firebase.messaging"],
+  });
+
+  const token = await auth.getAccessToken();
+  return token;
+}
+
+// Function to send FCM notification
+async function sendNotification(devicePushKey, globalMessage) {
+  try {
+    // Message payload
     const message = {
-      to: devicePushKey,
-      notification: {
-        title: message,
-        // body: "This is a background notification for Android",
-        // click_action: "FLUTTER_NOTIFICATION_CLICK",
+      message: {
+        token: devicePushKey, // FCM token of the device to send notification to
+        notification: {
+          title: globalMessage,
+        },
       },
     };
+    const accessToken = await getAccessToken();
 
-    admin
-      .messaging()
-      .send(message)
-      .then((response) => {
-        console.log("Successfully sent message:", response);
-      })
-      .catch((error) => {
-        console.error("Error sending message:", error);
-      });
+    const response = await fetch(
+      `https://fcm.googleapis.com/v1/projects/${PROJECT_ID}/messages:send`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(message),
+      }
+    );
+
+    const result = await response.json();
+    if (response.ok) {
+      console.log("Notification sent successfully:", result);
+    } else {
+      console.error("Failed to send notification:", result.error);
+    }
+  } catch (error) {
+    console.error("Error sending notification:", error);
   }
 }

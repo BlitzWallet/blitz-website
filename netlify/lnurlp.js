@@ -8,6 +8,13 @@ import { decrypt } from "../middleware/encription";
 
 export async function handler(event, context) {
   if (event.httpMethod === "GET") {
+    return {
+      statusCode: 400,
+      body: JSON.stringify({
+        status: "ERROR",
+        reason: "This is not ready yet",
+      }),
+    };
     const data = event.body ? JSON.parse(event.body) : null; //sanitation
     const pathParts = event.path.split("/");
     const username = pathParts[pathParts.length - 1];
