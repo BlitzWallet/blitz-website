@@ -47,13 +47,24 @@ export async function handler(event, context) {
           : decrypt(devicePushKey);
 
       console.log(decryptedPushKey, deviceType, message);
-      const messages = [
-        {
-          to: `${decryptedPushKey}`,
-          sound: "default",
-          body: message,
-        },
-      ];
+      const messages =
+        deviceType === "ios"
+          ? [
+              {
+                to: `${decryptedPushKey}`,
+                sound: "default",
+                body: message,
+                // _contentAvailable: true,
+                badge: 1,
+              },
+            ]
+          : [
+              {
+                to: `${decryptedPushKey}`,
+                sound: "default",
+                body: message,
+              },
+            ];
 
       const response = await expo.sendPushNotificationsAsync(messages);
       console.log("Push notification response:", response);
