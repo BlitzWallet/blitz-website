@@ -1,6 +1,11 @@
 import * as admin from "firebase-admin";
 import * as apn from "apn";
 import { google } from "googleapis"; // Google API library for authentication
+import { Expo } from "expo-server-sdk";
+
+let expo = new Expo({
+  accessToken: process.env.EXPO_ACCESS_TOKEN,
+});
 
 var serviceAccount = {
   type: process.env.FIREBASE_TYPE,
@@ -27,6 +32,7 @@ const apnProvider = new apn.Provider({
     keyId: process.env.APN_KEY_ID, // Key ID from Apple Developer Account
     teamId: process.env.APN_TEAM_ID, // Team ID from Apple Developer Account
   },
+  production: true,
 });
 
 export function sendContactNotification({
@@ -34,6 +40,25 @@ export function sendContactNotification({
   deviceType,
   message,
 }) {
+  if (!Expo.isExpoPushToken(devicePushKey)) return;
+
+  expo.sendPushNotificationsAsync([
+    {
+      to: `${devicePushKey}`,
+      sound: "default",
+      // aps: {
+      //   "content-available": 1,
+      // },
+      _contentAvailable: true,
+      mutableContent: true,
+      priority: "high",
+      // title: "Blitz Wallet",
+      // body: { pr: userData.pr },
+      body: message,
+    },
+  ]);
+
+  return;
   if (deviceType.toLowerCase() === "ios") {
     // Send a message to the device corresponding to the provided registration token
     // Create a notification
@@ -61,16 +86,10 @@ export function sendContactNotification({
   }
 }
 
-const SERVICE_ACCOUNT_KEY_PATH =
-  "../blitz-wallet-82b39-firebase-adminsdk-oz8m2-c51d14c341.json";
-
-// Your Firebase project ID
-const PROJECT_ID = "blitz-wallet-82b39";
-
 // Function to get access token using service account key
 async function getAccessToken() {
   const auth = new google.auth.GoogleAuth({
-    keyFile: SERVICE_ACCOUNT_KEY_PATH,
+    keyFile: process.env.SERVICE_ACCOUNT_KEY_PATH,
     scopes: ["https://www.googleapis.com/auth/firebase.messaging"],
   });
 
@@ -93,7 +112,7 @@ async function sendNotification(devicePushKey, globalMessage) {
     const accessToken = await getAccessToken();
 
     const response = await fetch(
-      `https://fcm.googleapis.com/v1/projects/${PROJECT_ID}/messages:send`,
+      `https://fcm.googleapis.com/v1/projects/${process.env.PROJECT_ID}/messages:send`,
       {
         method: "POST",
         headers: {

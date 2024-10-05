@@ -3,6 +3,11 @@ import "dotenv/config";
 import { decrypt } from "../middleware/encription";
 import { sendContactNotification } from "../middleware/sendContactNotification";
 import { JWTAuth } from "../middleware/JWTAuth";
+import { Expo } from "expo-server-sdk";
+
+let expo = new Expo({
+  accessToken: process.env.EXPO_ACCESS_TOKEN,
+});
 
 export async function handler(event, context) {
   const data = event.body ? JSON.parse(event.body) : null; //sanitation
@@ -42,12 +47,22 @@ export async function handler(event, context) {
           : decrypt(devicePushKey);
 
       console.log(decryptedPushKey, deviceType, message);
+      const messages = [
+        {
+          to: `${decryptedPushKey}`,
+          sound: "default",
+          body: message,
+        },
+      ];
 
-      sendContactNotification({
-        devicePushKey: decryptedPushKey,
-        deviceType: deviceType,
-        message: message,
-      });
+      const response = await expo.sendPushNotificationsAsync(messages);
+      console.log("Push notification response:", response);
+
+      // sendContactNotification({
+      //   devicePushKey: decryptedPushKey,
+      //   deviceType: deviceType,
+      //   message: message,
+      // });
       return {
         statusCode: 200,
         body: JSON.stringify({
