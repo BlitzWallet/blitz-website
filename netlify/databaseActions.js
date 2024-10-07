@@ -25,6 +25,7 @@ export async function handler(event, context) {
     const databaseMethod = decryptedContent.type.toLowerCase();
     const userPubKey = postData.pubKey;
     const collectionName = decryptedContent.collectionName;
+    console.log(databaseMethod);
 
     try {
       if (databaseMethod === "adddata") {
@@ -55,11 +56,12 @@ export async function handler(event, context) {
           userPubKey
         );
         if (returnedContact) {
-          const encriptedContact = encryptMessage(
+          const encriptedContact = await encryptMessage(
             process.env.DB_PRIVKEY,
             userPubKey,
             JSON.stringify(returnedContact)
           );
+
           return {
             statusCode: 200,
             body: JSON.stringify({
@@ -132,7 +134,7 @@ export async function handler(event, context) {
       } else if (databaseMethod === "getallcontacts") {
         const returnedContacts = await queryContacts(collectionName);
         if (returnedContacts) {
-          const encriptedContacts = encryptMessage(
+          const encriptedContacts = await encryptMessage(
             process.env.DB_PRIVKEY,
             userPubKey,
             JSON.stringify(returnedContacts)
@@ -159,7 +161,7 @@ export async function handler(event, context) {
           decryptedContent.wantedName
         );
         if (returnedContact) {
-          const encriptedContact = encryptMessage(
+          const encriptedContact = await encryptMessage(
             process.env.DB_PRIVKEY,
             userPubKey,
             JSON.stringify(returnedContact)
@@ -209,7 +211,7 @@ export async function handler(event, context) {
           decryptedContent.searchTerm
         );
         if (potentialUsers) {
-          const encriptedContact = encryptMessage(
+          const encriptedContact = await encryptMessage(
             process.env.DB_PRIVKEY,
             userPubKey,
             JSON.stringify(potentialUsers)

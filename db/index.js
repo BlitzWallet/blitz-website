@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin";
-import { initializeAuth, signInWithCustomToken } from "firebase/auth";
+import { getAuth, initializeAuth, signInWithCustomToken } from "firebase/auth";
 import { getApps, initializeApp } from "firebase/app";
 import {
   getFirestore,
@@ -20,16 +20,45 @@ const firebaseConfig = {
   messagingSenderId: "129198472150",
   appId: "1:129198472150:web:86511e5250364ee1764277",
 };
+let db, auth, app;
+// if (!getApps().length) {
+//   app = initializeApp(firebaseConfig, "blitzWallet");
+// } else {
+//   app = getApps()[0]; // use the already initialized app
+// }
 
-let app;
-if (!getApps().length) {
-  app = initializeApp(firebaseConfig, "blitzWallet");
-} else {
-  app = getApps()[0]; // use the already initialized app
+// const db = getFirestore(app);
+// const auth = initializeAuth(app);
+
+export async function initializeFirebase() {
+  try {
+    if (!admin.apps.length) {
+      admin.initializeApp({
+        credential: admin.credential.cert({
+          projectId: process.env.FIREBASE_PROJECT_ID,
+          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+          privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+        }),
+      });
+    }
+    if (!getApps().length) {
+      app = initializeApp(firebaseConfig);
+      db = getFirestore(app);
+      auth = initializeAuth(app);
+    } else {
+      app = getApps()[0];
+      db = getFirestore(app);
+      auth = getAuth(app);
+    }
+    if (!app || !db || !auth) {
+      throw new Error("Failed to initialize Firebase services");
+    }
+    return { db, auth, app };
+  } catch (error) {
+    console.error("Firebase initialization error: ", error);
+    throw error;
+  }
 }
-
-const db = getFirestore(app);
-const auth = initializeAuth(app);
 
 export async function addDataToCollection(
   dataObject,
@@ -211,9 +240,11 @@ export async function searchUsers(
 
 export async function signIn() {
   try {
+    const { db, auth, app } = await initializeFirebase();
+
     const token = await admin
       .auth()
-      .createCustomToken(process.env.FIREBASE_AUTH_CODE);
+      .createCustomToken(process.env.FIREBASE_AUTH_CODE, { role: "admin" });
     await signInWithCustomToken(auth, token);
     if (!token) throw Error("NO CLAIM TOKEN CREATED");
     return token;
