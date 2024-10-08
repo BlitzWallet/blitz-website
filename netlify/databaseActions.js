@@ -6,6 +6,7 @@ import {
   // deleteDataFromCollection,
   getDataFromCollection,
   getSignleContact,
+  getUnknownContact,
   isValidUniqueName,
   queryContacts,
   searchUsers,
@@ -233,6 +234,34 @@ export async function handler(event, context) {
           };
         }
         //returns a list of users based on search parameter
+      } else if (databaseMethod === "getunknowncontact") {
+        const returnedContact = await getUnknownContact(
+          decryptedContent.uuid,
+          collectionName
+        );
+        if (returnedContact) {
+          const encriptedContact = await encryptMessage(
+            process.env.DB_PRIVKEY,
+            userPubKey,
+            JSON.stringify(returnedContact)
+          );
+
+          return {
+            statusCode: 200,
+            body: JSON.stringify({
+              status: "SUCCESS",
+              data: encriptedContact,
+            }),
+          };
+        } else {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Not able to get contact",
+            }),
+          };
+        }
       } else {
         return {
           statusCode: 400,

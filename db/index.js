@@ -10,6 +10,7 @@ import {
   query,
   where,
   getDocs,
+  limit,
 } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -149,7 +150,7 @@ export async function queryContacts(collectionName) {
   try {
     const didSignIn = await signIn();
     if (!didSignIn) throw Error("Not signed in");
-    const snapshot = await getDocs(collection(db, collectionName));
+    const snapshot = await getDocs(collection(db, collectionName, limit(50)));
 
     return snapshot["docs"];
   } catch (err) {
@@ -224,7 +225,8 @@ export async function searchUsers(
         "contacts.myProfile.uniqueNameLower",
         "<=",
         searchTerm.toLowerCase() + "\uf8ff"
-      )
+      ),
+      limit(50)
     );
     const querySnapshot = await getDocs(q);
 
@@ -235,6 +237,31 @@ export async function searchUsers(
   } catch (error) {
     console.error("Error searching users: ", error);
     return false; //needd to equal empty arrray
+  }
+}
+export async function getUnknownContact(
+  uuid,
+  collectionName = "blitzWalletUsers"
+) {
+  try {
+    const docRef = doc(db, `${collectionName}`, `${uuid}`);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+      const data = docSnap.data();
+
+      return new Promise((resolve) => {
+        resolve(data);
+      });
+    } else
+      return new Promise((resolve) => {
+        resolve(false);
+      });
+  } catch (err) {
+    return new Promise((resolve) => {
+      resolve(null);
+    });
+    console.log(err);
   }
 }
 
