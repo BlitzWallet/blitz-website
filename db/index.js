@@ -12,6 +12,7 @@ import {
   getDocs,
   limit,
 } from "firebase/firestore";
+import { getFireabaseAcessToken } from "../middleware/getFirebaseToken";
 
 const firebaseConfig = {
   apiKey: process.env.FIREBASE_API,
@@ -270,12 +271,18 @@ export async function signIn() {
   try {
     const { db, auth, app } = await initializeFirebase();
 
-    const token = await admin
-      .auth()
-      .createCustomToken(process.env.FIREBASE_AUTH_CODE, { role: "admin" });
-    await signInWithCustomToken(auth, token);
-    if (!token) throw Error("NO CLAIM TOKEN CREATED");
-    return token;
+    // const token = await admin
+    //   .auth()
+    //   .createCustomToken(process.env.FIREBASE_AUTH_CODE, { role: "admin" });
+
+    const retirevedTOken = await getFireabaseAcessToken();
+
+    // console.log(token);
+
+    console.log(retirevedTOken);
+    await signInWithCustomToken(auth, retirevedTOken);
+    if (!retirevedTOken) throw Error("NO CLAIM TOKEN CREATED");
+    return retirevedTOken;
   } catch (error) {
     console.error("Error signing in anonymously", error);
     return false;
