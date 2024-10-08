@@ -16,22 +16,23 @@ import { decryptMessage, encryptMessage } from "../middleware/newEncription";
 export async function handler(event, context) {
   if (event.httpMethod === "POST") {
     const postData = event.body ? JSON.parse(event.body) : null; //sanitation
-    const decryptedContent = JSON.parse(
-      await decryptMessage(
-        process.env.DB_PRIVKEY,
-        postData.pubKey,
-        postData.content
-      )
-    );
-    const databaseMethod = decryptedContent.type.toLowerCase();
+    // const postData = JSON.parse(
+    //   await decryptMessage(
+    //     process.env.DB_PRIVKEY,
+    //     postData.pubKey,
+    //     postData.content
+    //   )
+    // );
+
+    const databaseMethod = postData.type.toLowerCase();
     const userPubKey = postData.pubKey;
-    const collectionName = decryptedContent.collectionName;
+    const collectionName = postData.collectionName;
     console.log(databaseMethod);
 
     try {
       if (databaseMethod === "adddata") {
         const didAddData = await addDataToCollection(
-          decryptedContent.dataObject,
+          postData.dataObject,
           collectionName,
           userPubKey
         );
@@ -57,17 +58,17 @@ export async function handler(event, context) {
           userPubKey
         );
         if (returnedContact) {
-          const encriptedContact = await encryptMessage(
-            process.env.DB_PRIVKEY,
-            userPubKey,
-            JSON.stringify(returnedContact)
-          );
+          // const encriptedContact = await encryptMessage(
+          //   process.env.DB_PRIVKEY,
+          //   userPubKey,
+          //   JSON.stringify(returnedContact)
+          // );
 
           return {
             statusCode: 200,
             body: JSON.stringify({
               status: "SUCCESS",
-              data: encriptedContact,
+              data: returnedContact,
             }),
           };
         } else {
@@ -113,7 +114,7 @@ export async function handler(event, context) {
       } else if (databaseMethod === "validuniquename") {
         const isNameAvailable = await isValidUniqueName(
           collectionName,
-          decryptedContent.wantedName
+          postData.wantedName
         );
         if (isNameAvailable) {
           return {
@@ -135,16 +136,16 @@ export async function handler(event, context) {
       } else if (databaseMethod === "getallcontacts") {
         const returnedContacts = await queryContacts(collectionName);
         if (returnedContacts) {
-          const encriptedContacts = await encryptMessage(
-            process.env.DB_PRIVKEY,
-            userPubKey,
-            JSON.stringify(returnedContacts)
-          );
+          // const encriptedContacts = await encryptMessage(
+          //   process.env.DB_PRIVKEY,
+          //   userPubKey,
+          //   JSON.stringify(returnedContacts)
+          // );
           return {
             statusCode: 200,
             body: JSON.stringify({
               status: "SUCCESS",
-              data: encriptedContacts,
+              data: returnedContacts,
             }),
           };
         } else {
@@ -159,19 +160,19 @@ export async function handler(event, context) {
       } else if (databaseMethod === "singlecontact") {
         const returnedContact = await getSignleContact(
           collectionName,
-          decryptedContent.wantedName
+          postData.wantedName
         );
         if (returnedContact) {
-          const encriptedContact = await encryptMessage(
-            process.env.DB_PRIVKEY,
-            userPubKey,
-            JSON.stringify(returnedContact)
-          );
+          // const encriptedContact = await encryptMessage(
+          //   process.env.DB_PRIVKEY,
+          //   userPubKey,
+          //   JSON.stringify(returnedContact)
+          // );
           return {
             statusCode: 200,
             body: JSON.stringify({
               status: "SUCCESS",
-              data: encriptedContact,
+              data: returnedContact,
             }),
           };
         } else {
@@ -187,7 +188,7 @@ export async function handler(event, context) {
       } else if (databaseMethod === "validposname") {
         const isNameAvailable = await canUsePOSName(
           collectionName,
-          decryptedContent.wantedName
+          postData.wantedName
         );
         if (isNameAvailable) {
           return {
@@ -209,19 +210,19 @@ export async function handler(event, context) {
       } else if (databaseMethod === "searchusers") {
         const potentialUsers = await searchUsers(
           collectionName,
-          decryptedContent.searchTerm
+          postData.searchTerm
         );
         if (potentialUsers) {
-          const encriptedContact = await encryptMessage(
-            process.env.DB_PRIVKEY,
-            userPubKey,
-            JSON.stringify(potentialUsers)
-          );
+          // const encriptedContact = await encryptMessage(
+          //   process.env.DB_PRIVKEY,
+          //   userPubKey,
+          //   JSON.stringify(potentialUsers)
+          // );
           return {
             statusCode: 200,
             body: JSON.stringify({
               status: "SUCCESS",
-              data: encriptedContact,
+              data: potentialUsers,
             }),
           };
         } else {
@@ -236,21 +237,21 @@ export async function handler(event, context) {
         //returns a list of users based on search parameter
       } else if (databaseMethod === "getunknowncontact") {
         const returnedContact = await getUnknownContact(
-          decryptedContent.uuid,
+          postData.uuid,
           collectionName
         );
         if (returnedContact) {
-          const encriptedContact = await encryptMessage(
-            process.env.DB_PRIVKEY,
-            userPubKey,
-            JSON.stringify(returnedContact)
-          );
+          // const encriptedContact = await encryptMessage(
+          //   process.env.DB_PRIVKEY,
+          //   userPubKey,
+          //   JSON.stringify(returnedContact)
+          // );
 
           return {
             statusCode: 200,
             body: JSON.stringify({
               status: "SUCCESS",
-              data: encriptedContact,
+              data: returnedContact,
             }),
           };
         } else {
