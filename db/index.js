@@ -150,7 +150,8 @@ export async function queryContacts(collectionName) {
   try {
     const didSignIn = await signIn();
     if (!didSignIn) throw Error("Not signed in");
-    const snapshot = await getDocs(collection(db, collectionName, limit(50)));
+    const q = query(collection(db, collectionName), limit(50));
+    const snapshot = await getDocs(q);
 
     return snapshot["docs"];
   } catch (err) {
