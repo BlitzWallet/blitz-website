@@ -12,6 +12,7 @@ import {
   searchUsers,
 } from "../db";
 import { decryptMessage, encryptMessage } from "../middleware/newEncription";
+import { JWTAuth } from "../middleware/JWTAuth";
 
 export async function handler(event, context) {
   if (event.httpMethod === "POST") {
@@ -27,7 +28,18 @@ export async function handler(event, context) {
     const databaseMethod = postData.type.toLowerCase();
     const userPubKey = postData.pubKey;
     const collectionName = postData.collectionName;
+    const token = postData.JWT;
     console.log(databaseMethod);
+
+    const isAuthenticated = JWTAuth(token);
+
+    if (!isAuthenticated)
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          error: "not authenticated",
+        }),
+      };
 
     try {
       if (databaseMethod === "adddata") {
