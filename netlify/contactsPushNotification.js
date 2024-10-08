@@ -41,10 +41,7 @@ export async function handler(event, context) {
       const deviceType = data.deviceType;
       const message = data.message;
 
-      const decryptedPushKey =
-        process.env.ENVIRONMENT === "testnet"
-          ? process.env.NOTIFICATIONS_KEY
-          : decrypt(devicePushKey);
+      const decryptedPushKey = decrypt(devicePushKey);
 
       console.log(decryptedPushKey, deviceType, message);
       const messages =

@@ -150,10 +150,10 @@ export async function queryContacts(collectionName) {
   try {
     const didSignIn = await signIn();
     if (!didSignIn) throw Error("Not signed in");
-    const q = query(collection(db, collectionName), limit(50));
+    const q = query(collection(db, collectionName), limit(40));
     const snapshot = await getDocs(q);
 
-    return snapshot["docs"];
+    return snapshot.docs.map((doc) => doc.data());
   } catch (err) {
     console.log(err);
     return false;
@@ -237,7 +237,7 @@ export async function searchUsers(
     return users;
   } catch (error) {
     console.error("Error searching users: ", error);
-    return false; //needd to equal empty arrray
+    return []; //needd to equal empty arrray
   }
 }
 export async function getUnknownContact(

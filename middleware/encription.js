@@ -38,7 +38,8 @@ const decrypt = (hash) => {
     ]);
 
     // Return the decrypted text
-    return decrypted.toString();
+    const key = decrypted.toString();
+    return key;
   } catch (err) {
     return false;
   }
