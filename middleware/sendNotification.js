@@ -1,5 +1,10 @@
 import * as admin from "firebase-admin";
 import * as apn from "apn";
+import { Expo } from "expo-server-sdk";
+
+let expo = new Expo({
+  accessToken: process.env.EXPO_ACCESS_TOKEN,
+});
 var serviceAccount = {
   type: process.env.FIREBASE_TYPE,
   project_id: process.env.FIREBASE_PROJECT_ID,
@@ -28,7 +33,7 @@ const apnProvider = new apn.Provider({
   production: false, // Set to true for production environment
 });
 
-export function sendNotification({
+export async function sendNotification({
   devicePushKey,
   deviceType,
   amount,
@@ -37,6 +42,38 @@ export function sendNotification({
   preimage,
   liquidAddress,
 }) {
+  try {
+    if (!Expo.isExpoPushToken(devicePushKey)) return;
+
+    const didSend = await expo.sendPushNotificationsAsync([
+      {
+        to: `${devicePushKey}`,
+        sound: "default",
+        // aps: {
+        //   "content-available": 1,
+        // },
+        _contentAvailable: true,
+        mutableContent: true,
+        priority: "high",
+        title: "Blitz Wallet",
+
+        body: "Received swap, open app to claim",
+        data: {
+          swapInfo,
+          privateKey,
+          preimage,
+          liquidAddress,
+        },
+      },
+    ]);
+
+    return didSend.filter((item) => item.status === "ok").length;
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+
+  return;
   if (deviceType.toLowerCase() === "ios") {
     // Send a message to the device corresponding to the provided registration token
     // Create a notification
@@ -67,7 +104,7 @@ export function sendNotification({
         apnProvider.shutdown();
       })
       .catch((err) => {
-        console.error(err);
+        console.error(err.failed);
       });
 
     return;

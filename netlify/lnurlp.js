@@ -140,7 +140,7 @@ export async function handler(event, context) {
           };
         }
 
-        sendNotification({
+        const didWork = await sendNotification({
           devicePushKey: devicePushKey,
           deviceType: deviceType,
           amount: receiveAmount,
@@ -149,6 +149,16 @@ export async function handler(event, context) {
           preimage: createdResponse.preimage.toString("hex"),
           liquidAddress: receiveAddress,
         });
+
+        if (!didWork) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Not able to send notification to receving device",
+            }),
+          };
+        }
 
         return {
           statusCode: 200,
