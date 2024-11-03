@@ -57,7 +57,7 @@ export async function sendNotification({
         priority: "high",
         title: "Blitz Wallet",
 
-        body: "Received swap, open app to claim",
+        body: "Received background payment, open app to claim",
         data: {
           swapInfo,
           privateKey,
