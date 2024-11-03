@@ -63,31 +63,41 @@ export async function handler(event, context) {
           };
         }
 
-        if (process.env.ENVIRONMENT != "testnet") {
-          payingContact = await getSignleContact(
-            "blitzWalletUsers",
-            username.toLowerCase()
-          );
-          if (!payingContact) {
-            return {
-              statusCode: 400,
-              body: JSON.stringify({
-                status: "ERROR",
-                reason: "Error getting pay information",
-              }),
-            };
-          }
+        // if (process.env.ENVIRONMENT != "testnet") {
+        payingContact = await getSignleContact(
+          "blitzWalletUsers",
+          username.toLowerCase()
+        );
 
-          if (!payingContact[0]?.pushNotifications?.key?.encriptedText) {
-            return {
-              statusCode: 400,
-              body: JSON.stringify({
-                status: "ERROR",
-                reason: "User does not have push notifications turned on",
-              }),
-            };
-          }
+        if (!payingContact) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "Error getting pay information",
+            }),
+          };
         }
+
+        if (!payingContact[0]?.pushNotifications?.key?.encriptedText) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "User does not have push notifications turned on",
+            }),
+          };
+        }
+        if (!payingContact[0]?.enabledLNURL) {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({
+              status: "ERROR",
+              reason: "User does not have a lightning address turned on",
+            }),
+          };
+        }
+        // }
 
         const receiveAmount = Math.round(queryParams.amount / 1000);
         const receiveAddress =
@@ -95,15 +105,11 @@ export async function handler(event, context) {
             ? process.env.TESTET_ADDRESS
             : payingContact[0]["contacts"].myProfile.receiveAddress;
 
-        const devicePushKey =
-          process.env.ENVIRONMENT === "testnet"
-            ? process.env.NOTIFICATIONS_KEY
-            : decrypt(payingContact[0].pushNotifications.key.encriptedText);
+        const devicePushKey = decrypt(
+          payingContact[0].pushNotifications.key.encriptedText
+        );
 
-        const deviceType =
-          process.env.ENVIRONMENT === "testnet"
-            ? "ios"
-            : payingContact[0].pushNotifications.platform;
+        const deviceType = payingContact[0].pushNotifications.platform;
 
         if (!devicePushKey || !deviceType || !receiveAddress) {
           return {
