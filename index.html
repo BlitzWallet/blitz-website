@@ -15,8 +15,8 @@
     />
 
     <script src="./src/js/navbar.js" defer></script>
-    <!-- <script src="/pages/home/modal.js" defer></script> -->
-
+    <script src="/pages/home/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <title>Blitz Wallet | Bitcoin lightning wallet</title>
     <!-- Google tag (gtag.js) -->
     <script
@@ -40,10 +40,29 @@
         <a href="/">
           <img
             alt="A logo that says blitz wallet"
-            class="wordmark"
-            src="./public/wordmark.png"
+            class="logo"
+            src="./public/favicon.png"
           />
         </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="./pages/notBuildYet/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="./pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="./pages/notBuildYet">FAQ</a>
+            </li>
+            <li class="navItem">
+              <a href="./pages/notBuildYet">Blog</a>
+            </li>
+            <li class="navItem">
+              <a href="./pages/privacyPolicy/">Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
         <div class="mobile mobileNavBTN">
           <img
             class="navigationIcon shown"
@@ -56,29 +75,30 @@
             alt="hamburger icon for mobile nav"
           />
         </div>
-        <div class="mobileNavDropdown">
-          <div class="mobileNavDropdown-Container">
-            <ul class="navItems">
-              <li class="navItem">
-                <a href="./pages/notBuildYet/">About</a>
-              </li>
-              <li class="navItem">
-                <a href="./pages/contact">Contact</a>
-              </li>
-              <li class="navItem">
-                <a href="./pages/notBuildYet">FAQ</a>
-              </li>
-              <li class="navItem">
-                <a href="./pages/notBuildYet">Blog</a>
-              </li>
-              <li class="navItem">
-                <a href="./pages/privacyPolicy/">Privacy Policy</a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <p class="downloadModal">Download</p>
       </div>
     </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavDropdown-Container">
+        <ul class="navItems">
+          <li class="navItem">
+            <a href="./pages/notBuildYet/">About</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/contact">Contact</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/notBuildYet">FAQ</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/notBuildYet">Blog</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/privacyPolicy/">Privacy Policy</a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
     <main>
       <section class="hero">
@@ -90,13 +110,14 @@
             <span class="pb"> Blockstream Greenlight </span> to create an
             unforgetable Bitcoin Lightning Experience.
           </p>
-          <div class="appCards">
+
+          <p class="button downloadModal">Download</p>
+          <!-- <div class="appCards">
             <a
               target="_blank"
               href="https://testflight.apple.com/join/r8MfbNa6"
               class="card appCard"
             >
-              <!-- <div class="flagTip"></div> -->
               <p class="beta_p">Beta</p>
               <img
                 alt="apple icon to show if the app is doanloadable on app store"
@@ -111,7 +132,6 @@
               href="https://github.com/BlakeKaufman/BlitzWallet/tags"
               class="card"
             >
-              <!-- <div class="flagTip"></div> -->
               <p class="beta_p">Beta</p>
 
               <img
@@ -123,19 +143,28 @@
 
               <p>ANDROID</p>
             </a>
-          </div>
+          </div> -->
         </div>
       </section>
       <div class="modalContainer">
         <div class="modal">
-          <h2>Thank you so much for showing interst in Blitz!</h2>
-          <p>At this time we are done adding new users to the beta program</p>
+          <h2>Download Blitz Wallet</h2>
+          <div class="downloadTypeInModal">
+            <p class="selectorItem IOS active">App Store</p>
+            <p class="selectorItem Android">Play Store</p>
+          </div>
+
+          <div class="qr-container">
+            <div id="qr-code"></div>
+          </div>
+          <!-- <p>At this time we are done adding new users to the beta program</p>
           <p>
             Keep an eye out on our Twitter
             <a href="https://twitter.com/BlitzWallet1">@BlitzWallet1 </a> or
             join the <a href="https://t.me/blitzwallet">telegram</a> to provide
             app suggestions
-          </p>
+          </p> -->
+          <p>Scan with your mobile device</p>
         </div>
       </div>
 
