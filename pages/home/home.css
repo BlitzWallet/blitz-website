@@ -15,7 +15,7 @@ main {
 
 .hero {
   width: 100%;
-  height: 100dvb;
+  height: calc(100dvb - 80px);
   min-height: 500px;
 
   /* padding-top: 80px; */
@@ -35,22 +35,24 @@ main {
 .hero h1 {
   width: 100%;
   max-width: 900px;
-  font-size: 80px;
-  margin-bottom: 20px;
-  font-family: var(--title_font);
+  font-size: 60px;
   color: whitesmoke;
   text-align: center;
-  margin: auto auto 50px;
+  margin: 50px auto 20px;
 }
 .hero .headerP {
+  max-width: 650px;
   margin-bottom: 20px;
-  font-family: var(--title_font);
   text-align: center;
   color: whitesmoke;
 }
 
 .hero .appContainer a {
   text-decoration: none;
+}
+
+.hero .button {
+  margin-top: 30px;
 }
 
 .hero .appCards {
@@ -147,22 +149,54 @@ main {
 
 .modal {
   width: 95%;
-  max-width: 550px;
+  max-width: 400px;
 
-  background-color: white;
+  background-color: var(--dm-background);
+  border: 1px solid var(--dm-text);
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 0 10px 0 gainsboro;
+  display: flex;
+  flex-direction: column;
 }
-.modal h1 {
+.modal h2 {
   text-align: center;
   margin-bottom: 20px;
-  color: var(--lm-text);
+  color: var(--dm-text);
 }
 .modal p {
   text-align: center;
-  margin-bottom: 10px;
-  color: var(--lm-text);
+  margin: 3px;
+  color: var(--dm-text);
+}
+.modalContainer .downloadTypeInModal {
+  width: 100%;
+  max-width: 350px;
+  display: flex;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto 15px;
+  border: 1px solid var(--dm-text);
+}
+.modalContainer .selectorItem {
+  width: 50%;
+  padding: 5px 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.modalContainer .active {
+  background-color: #dcdcdc7d;
+}
+
+.modal .qr-container {
+  background: white;
+  padding: 20px;
+  display: inline-block;
+  border-radius: 8px;
+  margin: 20px auto;
+}
+
+#qr-code {
+  display: block;
 }
 
 /* --------------------------------- */
@@ -174,17 +208,14 @@ main {
   max-width: 1000px;
   padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 0 10px 0 gainsboro;
 
-  /* background-color: var(--secondary_color); */
   color: white;
-
-  margin: 100px 0;
 }
 .about h2 {
   font-size: 24px;
   margin-bottom: 20px;
   font-family: var(--title_font);
+  text-align: center;
 }
 .about p {
   width: 100%;
@@ -203,6 +234,17 @@ main {
 .about .blueHighlight {
   font-weight: bold;
   color: var(--text_contrast_to_secondary);
+}
+
+.about table {
+  font-family: var(--title_font) sans-serif;
+  font-size: 30px;
+
+  row-gap: 10px;
+  column-gap: 10px;
+}
+.about table tr td:first-child {
+  margin-right: 10px;
 }
 
 /* --------------------------------- */

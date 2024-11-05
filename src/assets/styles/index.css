@@ -61,11 +61,16 @@ a {
   cursor: pointer;
 }
 
-button {
+.button {
   background-color: var(--dm-text);
+  color: var(--lm-text);
   padding: 8px 15px;
   border: 0;
   border-radius: 8px;
-  font-size: 18px;
+  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease-in-out;
+}
+.button:hover {
+  background-color: #b8b8b8;
 }

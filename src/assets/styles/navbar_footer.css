@@ -3,36 +3,47 @@
 /* --------------------------------- */
 
 nav {
-  width: 95%;
-  max-width: 1200px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 0 auto;
+  position: sticky;
+  top: 0;
+  background-color: var(--dm-background);
+  border-bottom: 1px solid var(--dm-text);
+  /* backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px); */
 }
 
 nav .navContent {
-  width: 100%;
+  width: 95%;
+  max-width: 1200px;
+  height: 80px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
 }
 nav .logo {
-  width: 300px;
+  width: 50px;
 }
 nav .wordmark {
   width: 300px;
 }
+nav .desktopNav {
+  width: calc(100% - 80px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+nav p {
+  cursor: pointer;
+}
 
 nav .mobile {
-  display: flex;
+  display: none;
   width: 50px;
   height: 50px;
   cursor: pointer;
   margin-left: auto;
 }
 
-nav .mobileNavDropdown {
+.mobileNavDropdown {
   width: 100vw;
   height: calc(100dvh - 80px);
 
@@ -49,20 +60,21 @@ nav .mobileNavDropdown {
 
   flex-direction: column;
 }
-nav .mobileNavDropdown .mobileNavDropdown-Container {
+.mobileNavDropdown .mobileNavDropdown-Container {
   height: 100%;
   width: 100%;
   max-width: 1200px;
   display: flex;
   justify-content: center;
+  background-color: var(--dm-background);
 }
-nav .mobileNavDropdown .navItems {
+.mobileNavDropdown .navItems {
   height: calc(100dvh / 2);
   min-height: 200px;
   flex-direction: column;
   margin: auto 0;
 }
-nav .mobileNavDropdown .imgContainer {
+.mobileNavDropdown .imgContainer {
   width: 95%;
   height: 80px;
   display: flex;
@@ -75,12 +87,12 @@ nav .shown {
 nav .hidden {
   display: none;
 }
-nav .mobileNavDropdown .closeMobileNavBTN {
+.mobileNavDropdown .closeMobileNavBTN {
   margin-left: auto;
   cursor: pointer;
 }
 
-nav .mobileNavDropdown .appContainer {
+.mobileNavDropdown .appContainer {
   width: 95%;
   max-width: 400px;
   display: flex;
@@ -213,7 +225,10 @@ footer .navItems {
   }
 }
 @media screen and (max-width: 800px) {
-  nav .desktop {
+  nav .desktopNav {
+    display: none;
+  }
+  nav p {
     display: none;
   }
   nav .mobile {
