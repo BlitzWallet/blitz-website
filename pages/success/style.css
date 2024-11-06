@@ -1,0 +1,6 @@
+.successMesage {
+  height: calc(100dvh - 50px - 190px);
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}

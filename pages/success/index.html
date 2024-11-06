@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blitz Wallet | Form Success</title>
+
+    <link
+      rel="shortcut icon"
+      href="../../public/favicon.png"
+      type="image/x-icon"
+    />
+
+    <link rel="stylesheet" href="../../src/assets/styles/index.css" />
+    <link rel="stylesheet" href="../../src/assets/styles/navbar_footer.css" />
+    <link
+      rel="stylesheet"
+      href="../../src/components/downloadModal/style.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+
+    <script src="../../src/js/navbar.js" defer></script>
+    <script src="../../src/components/downloadModal/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </head>
+  <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <img
+            alt="A logo that says blitz wallet"
+            class="logo"
+            src="../../public/favicon.png"
+          />
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/notBuildYet/">About</a>
+            </li>
+            <li class="navItem active">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/notBuildYet">FAQ</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/notBuildYet">Blog</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/privacyPolicy/">Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavDropdown-Container">
+        <ul class="navItems">
+          <li class="navItem">
+            <a href="./pages/notBuildYet/">About</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/contact">Contact</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/notBuildYet">FAQ</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/notBuildYet">Blog</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/privacyPolicy/">Privacy Policy</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <section class="successMesage">
+      <h2 id="pageDescription">
+        Your message has been successfully sent. We will get back to you
+        shortly.
+      </h2>
+    </section>
+
+    <footer>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="../privacyPolicy/"> <p>Privacy Policy</p></a>
+          <a target="_blank" href=" http://www.apache.org/licenses/LICENSE-2.0"
+            >Lisencse</a
+          >
+        </div>
+        <div class="img">
+          <img alt="blitz wallet icon" src="../../public/favicon.png" />
+        </div>
+        <p>@2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+  </body>
+</html>
