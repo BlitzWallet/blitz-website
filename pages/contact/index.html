@@ -5,11 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Blitz Wallet | Contact</title>
 
+    <link
+      rel="shortcut icon"
+      href="../../public/favicon.png"
+      type="image/x-icon"
+    />
+
     <link rel="stylesheet" href="../../src/assets/styles/index.css" />
     <link rel="stylesheet" href="../../src/assets/styles/navbar_footer.css" />
+    <link
+      rel="stylesheet"
+      href="../../src/components/downloadModal/style.css"
+    />
 
     <link rel="stylesheet" href="./style.css" />
     <script src="../../src/js/navbar.js" defer></script>
+    <script src="../../src/components/downloadModal/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
@@ -26,11 +39,49 @@
   </head>
 
   <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
     <nav>
       <div class="navContent">
         <a href="/">
-          <img class="wordmark" src="../../public/wordmark.png" />
+          <img
+            alt="A logo that says blitz wallet"
+            class="logo"
+            src="../../public/favicon.png"
+          />
         </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/notBuildYet/">About</a>
+            </li>
+            <li class="navItem active">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/notBuildYet">FAQ</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/notBuildYet">Blog</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/privacyPolicy/">Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
         <div class="mobile mobileNavBTN">
           <img
             class="navigationIcon shown"
@@ -43,35 +94,65 @@
             alt="hamburger icon for mobile nav"
           />
         </div>
-        <div class="mobileNavDropdown">
-          <div class="mobileNavDropdown-Container">
-            <ul class="navItems">
-              <li class="navItem">
-                <a href="../notBuildYet/">About</a>
-              </li>
-              <li class="navItem">
-                <a href="../contact">Contact</a>
-              </li>
-              <li class="navItem">
-                <a href="../notBuildYet">FAQ</a>
-              </li>
-              <li class="navItem">
-                <a href="../notBuildYet">Blog</a>
-              </li>
-              <li class="navItem">
-                <a href="../privacyPolicy/">Privacy Policy</a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <p class="downloadModal">Download</p>
       </div>
     </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavDropdown-Container">
+        <ul class="navItems">
+          <li class="navItem">
+            <a href="./pages/notBuildYet/">About</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/contact">Contact</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/notBuildYet">FAQ</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/notBuildYet">Blog</a>
+          </li>
+          <li class="navItem">
+            <a href="./pages/privacyPolicy/">Privacy Policy</a>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-    <main>
-      <h4>
-        If you need assistence, reach out to blake@blitz-wallet.com for help.
-      </h4>
-    </main>
+    <section>
+      <h2 id="pageDescription">Contact Us</h2>
+      <div class="formContainer">
+        <div class="questionContainer">
+          <h2>Hi,</h2>
+          <h2>Have a question in mind?</h2>
+        </div>
+        <form action="/pages/success" name="contact" netlify>
+          <label>
+            Name (optional)
+            <input
+              type="text"
+              name="sendersName"
+              placeholder="Enter name here"
+            />
+          </label>
+          <label>
+            Email (reqired)
+            <input type="email" name="email" placeholder="Enter email here" />
+          </label>
+          <label for="message"
+            >Message (reqired)
+            <textarea
+              placeholder="Add message here"
+              id="message"
+              name="message"
+            ></textarea>
+          </label>
+
+          <button>Submit</button>
+        </form>
+      </div>
+    </section>
+
     <footer>
       <div class="content">
         <div class="privcyContent">
