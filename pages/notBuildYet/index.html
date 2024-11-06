@@ -4,20 +4,77 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="icon" type="image/x-icon" href="./public/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="../../public/favicon.png" />
     <link rel="stylesheet" href="../../src/assets/styles/index.css" />
     <link rel="stylesheet" href="../../src/assets/styles/navbar_footer.css" />
+    <link
+      rel="stylesheet"
+      href="../../src/components/downloadModal/style.css"
+    />
 
     <title>Blitz Wallet</title>
     <script src="../../src/js/navbar.js" defer></script>
+    <script src="../../src/components/downloadModal/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
   </head>
 
   <body>
+    <!-- modals -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
     <nav>
       <div class="navContent">
         <a href="/">
-          <img class="wordmark" src="../../public/wordmark.png" />
+          <img
+            alt="A logo that says blitz wallet"
+            class="logo"
+            src="../../public/favicon.png"
+          />
         </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/notBuildYet/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/notBuildYet">FAQ</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/notBuildYet">Blog</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/privacyPolicy/">Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
         <div class="mobile mobileNavBTN">
           <img
             class="navigationIcon shown"
@@ -30,29 +87,30 @@
             alt="hamburger icon for mobile nav"
           />
         </div>
-        <div class="mobileNavDropdown">
-          <div class="mobileNavDropdown-Container">
-            <ul class="navItems">
-              <li class="navItem">
-                <a href="../notBuildYet">Donate</a>
-              </li>
-              <li class="navItem">
-                <a href="../contact">Contact</a>
-              </li>
-              <li class="navItem">
-                <a href="../notBuildYet">FAQ</a>
-              </li>
-              <li class="navItem">
-                <a href="../notBuildYet">Blog</a>
-              </li>
-              <li class="navItem">
-                <a href="../privacyPolicy">Privacy Policy</a>
-              </li>
-            </ul>
-          </div>
-        </div>
+        <p class="downloadModal">Download</p>
       </div>
     </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavDropdown-Container">
+        <ul class="navItems">
+          <li class="navItem">
+            <a href="/pages/notBuildYet/">About</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/contact">Contact</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/notBuildYet">FAQ</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/notBuildYet">Blog</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          </li>
+        </ul>
+      </div>
+    </div>
     <main
       style="
         height: 100vh;
