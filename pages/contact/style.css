@@ -48,6 +48,7 @@ textarea {
   height: 40px;
   background-color: var(--dm-text);
   font-family: var(--other_font);
+  color: var(--lm-text);
   border: unset;
   margin-left: auto;
   font-size: 18px;
