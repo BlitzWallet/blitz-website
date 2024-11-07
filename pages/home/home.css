@@ -132,6 +132,34 @@ main {
 }
 
 /* --------------------------------- */
+/* How does Blitz Wallet work */
+/* --------------------------------- */
+.blitzWalletComponenets {
+  width: 95%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.blitzWalletComponenets .componentsDiagram {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.blitzWalletComponenets h2 {
+  margin-bottom: 30px;
+}
+.blitzWalletComponenets p {
+  margin-bottom: 30px;
+}
+.blitzWalletComponenets li {
+  margin-bottom: 30px;
+  line-height: 2em;
+}
+
+/* --------------------------------- */
 /* what is blitz wallet section */
 /* --------------------------------- */
 

@@ -46,6 +46,9 @@ textarea {
   font-family: var(--other_font);
   color: var(--dm-text);
 }
+p {
+  line-height: 2em;
+}
 
 a {
   color: unset;
