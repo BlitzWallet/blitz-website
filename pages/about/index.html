@@ -12,7 +12,10 @@
 
     <link rel="stylesheet" href="../../src/assets/styles/index.css" />
     <link rel="stylesheet" href="../../src/assets/styles/navbar_footer.css" />
-
+    <link
+      rel="stylesheet"
+      href="../../src/components/downloadModal/style.css"
+    />
     <link rel="stylesheet" href="./style.css" />
 
     <meta
@@ -21,9 +24,11 @@
     />
 
     <script src="../../src/js/navbar.js" defer></script>
+    <script src="../../src/components/downloadModal/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <title>Blitz Wallet | About</title>
-    <script defer src="./index.js"></script>
+    <!-- <script defer src="./index.js"></script> -->
     <!-- Google tag (gtag.js) -->
     <script
       async
@@ -41,6 +46,21 @@
   </head>
 
   <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
     <nav>
       <div class="navContent">
         <a href="/">
@@ -107,20 +127,61 @@
     </div>
 
     <main>
-      <section class="content">
+      <section class="companyStrategySection contentSection">
+        <h2>Our Strategy</h2>
+        <div class="companyStrategy">
+          <div class="singleItemRow">
+            <p>Purpose</p>
+            <p>
+              To empower users to send and receive payments across the globe
+              with ease.
+            </p>
+          </div>
+          <div class="singleItemRow">
+            <p>Vision</p>
+            <p>To become the leading payment solutions platform</p>
+          </div>
+
+          <div class="tripleItemRow">
+            <p>Goals</p>
+            <div class="item">
+              <p><strong>People</strong></p>
+              <p>
+                Create a simple, KYC free, and self-custodial application to
+                allow people to transact freely and securly.
+              </p>
+            </div>
+
+            <div class="item">
+              <p><strong>Planet</strong></p>
+              <p>
+                Remove payment barriors, and economic ineqalities between
+                regions
+              </p>
+            </div>
+
+            <div class="item">
+              <p><strong>Transparency</strong></p>
+              <p>
+                Utilize the open-source philosophy in all buinsess processes
+                such as idea generation, code, and future plans.
+              </p>
+            </div>
+          </div>
+        </div>
+
         <!-- <ol>
           <li>Simplicity</li>
           <li>Self-custodial</li>
-          <li>Legacy</li>
           <li>Innovative</li>
           <li>Community First</li>
           <li>Open-source</li>
-          <li>Adaptability</li>
+          <li>Adaptable</li>
           <li>Bitcoin only</li>
           <li>Competitive with heart</li>
-          <li>Transparency</li>
+          <li>Transparent</li>
           <li>Customer-centric</li>
-          <li>Accessibility</li>
+          <li>Accessible</li>
           <li>Continuous learning</li>
           <li>Agile mindset</li>
           <li>Future-proofing</li>
@@ -129,7 +190,7 @@
           <li>Security-first</li>
           <li>Winning for others</li>
         </ol> -->
-        <h1>Hello</h1>
+        <!-- <h1>Hello</h1>
         <p class="header-p">
           Blitz Wallet's mission is to break down barriers when entering the
           Bitcoin space. That mission is only as strong as the community behind
@@ -141,21 +202,15 @@
           target="_self"
           class="header-sponsor-BTN"
           >Become a sponsor</a
-        >
+        > -->
+      </section>
+      <section class="bitcoinThesisSection contentSection">
+        <h2>Our Bitcoin Thesis</h2>
       </section>
 
-      <section class="sponsor-container">
+      <!-- <section class="sponsor-container">
         <h1 style="margin-top: 0">Platinum</h1>
         <p>Become the first Platinm sponsor</p>
-        <!-- <div class="sponsor-people-container">
-          <div class="sponsor-person">
-            <img />
-          </div>
-          <div class="sponsor"></div>
-          <div class="sponsor"></div>
-          <div class="sponsor"></div>
-          <div class="sponsor"></div>
-        </div> -->
       </section>
       <section class="sponsor-container">
         <h1>Gold</h1>
@@ -168,7 +223,7 @@
       <section class="sponsor-container">
         <h1>Bronze</h1>
         <p>Become the first Bronze sponsor</p>
-      </section>
+      </section> -->
     </main>
 
     <footer>

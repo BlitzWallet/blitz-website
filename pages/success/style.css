@@ -4,3 +4,8 @@
   justify-content: center;
   display: flex;
 }
+
+.successMessage h2 {
+  width: 90%;
+  text-align: center;
+}

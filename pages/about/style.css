@@ -1,36 +1,32 @@
 main {
   width: 100%;
+
   min-height: calc(100dvh - 80px - 250px);
   display: flex;
   flex-direction: column;
 }
-.content {
-  min-height: calc(100dvh - 80px - 200px);
+.contentSection {
   align-items: center;
   width: 95%;
   max-width: 1000px;
-  /* margin: max(calc((100dvh - 80px - 250px) / 2), 50px) auto 50px; */
-  margin: 50px auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* overflow-y: scroll; */
+  margin: 50px auto 100px;
 }
-.content ol {
+.contentSection h2 {
+  font-size: 40px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.companyStrategySection ol {
   width: 95%;
   max-width: 700px;
   margin: 50px auto;
   list-style-type: decimal-leading-zero;
   font-size: 40px;
 }
-.content li {
-  /* margin: 70px 0; */
+.companyStrategySection li {
+  margin: 40px 0;
 }
-.content h1 {
-  font-size: 60px;
-  margin-bottom: 20px;
-  text-align: center;
-}
+
 .header-p {
   margin: 25px 0;
   text-align: center;
@@ -81,4 +77,65 @@ main {
 }
 .sponsor-container p {
   text-align: center;
+}
+.companyStrategy {
+  width: 95%;
+  margin: 0 auto;
+}
+.companyStrategy .singleItemRow {
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  margin: 30px 0;
+}
+.companyStrategy .tripleItemRow {
+  display: grid;
+  grid-template-columns: 100px 1fr 1fr 1fr;
+  margin: 30px 0;
+  column-gap: 20px;
+  align-items: center;
+}
+.companyStrategy .tripleItemRow .item {
+  align-self: baseline;
+}
+.companyStrategy .tripleItemRow .item p:first-child {
+  margin-bottom: 10px;
+}
+
+.companyStrategy .singleItemRow p:last-child {
+  text-align: center;
+}
+
+@media screen and (max-width: 730px) {
+  .companyStrategy .singleItemRow {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: none;
+    margin: 0;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .companyStrategy .singleItemRow p:first-child {
+    margin-bottom: 10px;
+  }
+  .companyStrategy .tripleItemRow {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: none;
+    column-gap: 0;
+    margin: 0;
+    text-align: center;
+  }
+  .companyStrategy .tripleItemRow p:first-child {
+    margin-bottom: 10px;
+  }
+  .companyStrategy .tripleItemRow .item {
+    margin-bottom: 30px;
+  }
+  .companyStrategy .tripleItemRow .item {
+    align-self: center;
+  }
+}
+
+.pb {
+  color: var(--primary_color);
 }
