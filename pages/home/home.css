@@ -164,7 +164,68 @@ main {
   height: auto;
   margin: 0 auto;
 }
+/* --------------------------------- */
+/* Features section */
+/* --------------------------------- */
+.appView {
+  margin: 80px 0;
+}
+.appView .gridContainer {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
 
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  column-gap: 50px;
+}
+.gridContainer .gridItem {
+  padding: 40px;
+  border-radius: 20px;
+}
+
+.gridContainer .gridItem:first-child {
+  background-color: var(--dm-backgroundOffset);
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+}
+.gridContainer .innerContent {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.gridContainer .gridItem:first-child h2 {
+  font-size: 40px;
+  margin-bottom: 30px;
+  transition: opacity 0.4s ease-in-out;
+}
+.gridContainer .gridItem:first-child p {
+  width: 80%;
+  transition: opacity 0.4s ease-in-out;
+}
+
+.gridContainer .gridItem:last-child {
+  background: #93edd9;
+  background: linear-gradient(0deg, #93edd9, #7ecdd7);
+  height: 600px;
+}
+
+.gridContainer .sliderBTNs {
+  width: 100%;
+  margin: auto auto 0;
+  display: flex;
+  justify-content: space-around;
+}
+.gridContainer .sliderBTNs img {
+  width: 40px;
+  filter: invert(98%) sepia(98%) saturate(0%) hue-rotate(313deg)
+    brightness(101%) contrast(103%);
+  cursor: pointer;
+}
+.gridContainer .sliderBTNs img:first-child {
+  transform: rotate(180deg);
+}
 /* --------------------------------- */
 /* How does Blitz Wallet work */
 /* --------------------------------- */

@@ -18,6 +18,7 @@
     <script src="./src/js/navbar.js" defer></script>
     <script src="./src/components/downloadModal/index.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="./pages/home/slideshow.js" defer></script>
     <title>Blitz Wallet | Bitcoin lightning wallet</title>
     <!-- Google tag (gtag.js) -->
     <script
@@ -98,6 +99,20 @@
     </div>
 
     <main>
+      <div class="modalContainer">
+        <div class="modal">
+          <h2>Download Blitz Wallet</h2>
+          <div class="downloadTypeInModal">
+            <p class="selectorItem IOS active">App Store</p>
+            <p class="selectorItem Android">Play Store</p>
+          </div>
+
+          <div class="qr-container">
+            <div id="qr-code"></div>
+          </div>
+          <p>Scan with your mobile device</p>
+        </div>
+      </div>
       <section class="hero">
         <div class="CTA">
           <img
@@ -159,20 +174,36 @@
           </div> -->
         </div>
       </section>
-      <div class="modalContainer">
-        <div class="modal">
-          <h2>Download Blitz Wallet</h2>
-          <div class="downloadTypeInModal">
-            <p class="selectorItem IOS active">App Store</p>
-            <p class="selectorItem Android">Play Store</p>
+      <section class="appView">
+        <div class="gridContainer">
+          <div class="gridItem">
+            <div class="innerContent">
+              <h2>Explore the Blitz Store</h2>
+              <p>
+                Discover a seamless in-app store experience, designed to make
+                spending your Bitcoin as easy as a few taps. Browse a curated
+                selection of items and services, pay instantly, and enjoy the
+                convenience of secure, wallet-integrated shopping.
+              </p>
+
+              <div class="sliderBTNs">
+                <img
+                  class="sliderBTNImages left"
+                  src="./src/assets//images/circleRightArrow.svg"
+                  alt="A circle with an arrow inside to go left on the slideshow"
+                />
+                <img
+                  class="sliderBTNImages right"
+                  src="./src/assets//images/circleRightArrow.svg"
+                  alt="A circle with an arrow inside to go right on the slideshow"
+                />
+              </div>
+            </div>
           </div>
 
-          <div class="qr-container">
-            <div id="qr-code"></div>
-          </div>
-          <p>Scan with your mobile device</p>
+          <div class="gridItem"></div>
         </div>
-      </div>
+      </section>
 
       <!-- move this to the about page -->
       <!-- <section class="blitzWalletComponenets">
