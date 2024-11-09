@@ -159,7 +159,7 @@ main {
   transform: translate(-50%, -50%);
 }
 .hero .blitzHomepage {
-  width: 95%;
+  width: 100%;
   max-width: 310px;
   height: auto;
   margin: 0 auto;
@@ -168,6 +168,7 @@ main {
 /* Features section */
 /* --------------------------------- */
 .appView {
+  width: 100%;
   margin: 80px 0;
 }
 .appView .gridContainer {
@@ -175,9 +176,8 @@ main {
   max-width: 1200px;
   margin: 0 auto;
 
-  display: grid;
-  grid-template-columns: 1fr 400px;
-  column-gap: 50px;
+  display: flex;
+  justify-content: center;
 }
 .gridContainer .gridItem {
   padding: 40px;
@@ -185,10 +185,13 @@ main {
 }
 
 .gridContainer .gridItem:first-child {
-  background-color: var(--dm-backgroundOffset);
+  width: 95%;
   max-width: 500px;
+  background-color: var(--dm-backgroundOffset);
+
   display: flex;
   flex-direction: column;
+  margin-right: 50px;
 }
 .gridContainer .innerContent {
   display: flex;
@@ -206,9 +209,15 @@ main {
 }
 
 .gridContainer .gridItem:last-child {
+  width: 95%;
+  max-width: 400px;
   background: #93edd9;
   background: linear-gradient(0deg, #93edd9, #7ecdd7);
-  height: 600px;
+  /* height: auto; */
+}
+.gridContainer .gridItem:last-child img {
+  width: 100%;
+  /* height: auto; */
 }
 
 .gridContainer .sliderBTNs {
@@ -373,6 +382,28 @@ main {
 
   .hero h1 {
     text-align: center;
+  }
+}
+@media screen and (max-width: 900px) {
+  .appView .gridContainer {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .gridContainer .gridItem:last-child {
+    margin-bottom: 50px;
+  }
+  .gridContainer .gridItem:first-child {
+    margin-right: 0;
+  }
+  .gridContainer .gridItem:first-child h2 {
+    font-size: 30px;
+    text-align: center;
+  }
+  .gridContainer .gridItem:first-child p {
+    width: 100%;
+    text-align: center;
+    margin: 0 auto 50px;
   }
 }
 @media screen and (max-width: 730px) {
