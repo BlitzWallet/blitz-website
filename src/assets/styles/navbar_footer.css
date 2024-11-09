@@ -5,16 +5,17 @@
 nav {
   position: sticky;
   top: 0;
-  background-color: var(--dm-background);
+  /* background-color: #d9d9d923; */
   border-bottom: 1px solid #d9d9d923;
-  /* backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px); */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 99;
 }
 
 nav .navContent {
   width: 95%;
-  max-width: 1500px;
-  height: 70px;
+  max-width: 1300px;
+  height: 60px;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -26,16 +27,28 @@ nav .wordmark {
   width: 300px;
 }
 nav .desktopNav {
-  width: calc(100% - 80px);
+  width: calc(100% - 530px);
   display: flex;
   align-items: center;
   justify-content: center;
+  font-size: 12px;
 }
 nav .desktopNav .active {
   color: var(--primary_color);
 }
-nav p {
+
+nav p,
+.bitzName {
+  width: 265px;
+  font-size: 20px;
   cursor: pointer;
+  border-bottom: unset;
+}
+nav p:first-child {
+  font-weight: bold;
+}
+nav p:last-child {
+  text-align: right;
 }
 
 nav .mobile {
@@ -125,14 +138,14 @@ nav .hidden {
 }
 
 .navItems {
-  width: 500px;
+  width: 430px;
   display: flex;
   list-style: none;
   align-items: center;
   justify-content: space-between;
 }
 .navItem {
-  font-size: 18px;
+  font-size: 16px;
   /* margin: 0 10px; */
   cursor: pointer;
   font-family: var(--description_font);
@@ -238,8 +251,18 @@ footer .navItems {
   nav p {
     display: none;
   }
+  nav .bitzName {
+    display: block;
+    text-align: left;
+  }
+  nav p:last-child {
+    text-align: left;
+  }
   nav .mobile {
     display: flex;
+  }
+  nav .navItem {
+    font-size: 18px;
   }
 }
 @media screen and (max-width: 600px) {
