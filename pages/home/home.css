@@ -197,6 +197,7 @@ main {
   display: flex;
   flex-direction: column;
   height: 100%;
+  min-height: 400px;
 }
 .gridContainer .gridItem:first-child h2 {
   font-size: 40px;
@@ -236,7 +237,7 @@ main {
   transform: rotate(180deg);
 }
 
-.appView h2 {
+.appView .sponsorsHeader {
   font-size: 30px;
   text-align: center;
   margin: 50px 0;
