@@ -235,6 +235,23 @@ main {
 .gridContainer .sliderBTNs img:first-child {
   transform: rotate(180deg);
 }
+
+.appView h2 {
+  font-size: 30px;
+  text-align: center;
+  margin: 50px 0;
+}
+
+.appView .sponsorContainer {
+  width: 95%;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 30px;
+  text-align: center;
+  margin: 0 auto;
+  font-size: 30px;
+}
 /* --------------------------------- */
 /* How does Blitz Wallet work */
 /* --------------------------------- */
@@ -421,6 +438,12 @@ main {
   .poweredBy .companyContainer {
     flex-direction: column;
     height: 320px;
+  }
+  .appView h2 {
+    margin: 50px 0 30px;
+  }
+  .appView .sponsorContainer {
+    font-size: 20px;
   }
 }
 @media screen and (max-width: 600px) {
