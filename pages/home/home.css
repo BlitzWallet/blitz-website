@@ -240,7 +240,7 @@ main {
 .appView .sponsorsHeader {
   font-size: 30px;
   text-align: center;
-  margin: 50px 0;
+  margin: 0px 0 30px;
 }
 
 .appView .sponsorContainer {
@@ -253,6 +253,97 @@ main {
   margin: 0 auto;
   font-size: 30px;
 }
+/* --------------------------------- */
+/* Blitz Wallet featues */
+/* --------------------------------- */
+.features {
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.features .sectionHeader {
+  font-size: 70px;
+  text-align: center;
+  max-width: 800px;
+  margin: 30px auto;
+  font-weight: 500;
+  letter-spacing: 0.5;
+}
+.features .sectionDescription {
+  width: 90%;
+  text-align: center;
+  margin-bottom: 100px;
+}
+.features .featuresContainer {
+  display: flex;
+
+  width: 95%;
+  margin: 50px auto;
+  justify-content: center;
+}
+.features .appImage {
+  max-width: 400px;
+  background: #93edd9;
+  background: linear-gradient(0deg, #93edd9, #7ecdd7);
+  padding: 40px;
+  border-radius: 20px;
+  margin-right: 150px;
+}
+.features .appImage img {
+  width: 100%;
+  height: auto;
+}
+
+.features .featuresText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 560px;
+}
+.features .header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+.features .header img {
+  width: 35px;
+  height: 35px;
+  padding: 5px;
+  border-radius: 5px;
+  background-color: var(--dm-text);
+  /* filter: invert(98%) sepia(98%) saturate(0%) hue-rotate(313deg)
+    brightness(101%) contrast(103%); */
+  margin-right: 15px;
+}
+.features .header h3 {
+  font-weight: 500;
+}
+.features .featuresText h2 {
+  max-width: 360px;
+  font-size: 35px;
+  line-height: 1.5em;
+  margin-bottom: 30px;
+}
+.features .featuresText p {
+  width: 100%;
+}
+.features .leftContainer {
+  display: flex;
+}
+.features .rightContainer {
+  flex-direction: row-reverse;
+  margin: 150px 0;
+}
+.features .rightContainer .appImage {
+  margin-right: 0;
+  margin-left: 150px;
+}
+.features .appBTN {
+  width: max-content;
+  margin-top: 30px;
+}
+
 /* --------------------------------- */
 /* How does Blitz Wallet work */
 /* --------------------------------- */
@@ -402,6 +493,15 @@ main {
     text-align: center;
   }
 }
+
+@media screen and (max-width: 930px) {
+  .features .appImage {
+    margin-right: 50px;
+  }
+  .features .rightContainer .appImage {
+    margin-left: 50px;
+  }
+}
 @media screen and (max-width: 900px) {
   .appView .gridContainer {
     display: flex;
@@ -422,6 +522,33 @@ main {
     width: 100%;
     text-align: center;
     margin: 0 auto 50px;
+  }
+}
+@media screen and (max-width: 800px) {
+  .features .sectionHeader {
+    font-size: 30px;
+  }
+  .features .appImage {
+    margin-right: 0;
+  }
+  .features .rightContainer .appImage {
+    margin-left: 0;
+  }
+  .features .featuresContainer {
+    flex-direction: column-reverse;
+    align-items: center;
+    margin: 60px 0;
+  }
+  .features .featuresText {
+    align-items: center;
+    text-align: center;
+    margin-bottom: 50px;
+  }
+  .features .featuresText h2 {
+    max-width: unset;
+  }
+  .features .featuresText {
+    width: 100%;
   }
 }
 @media screen and (max-width: 730px) {
