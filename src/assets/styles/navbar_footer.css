@@ -204,6 +204,7 @@ footer .top .listItems .list ul {
 }
 footer .top .listItems .list li {
   cursor: pointer;
+  margin: 5px 0;
 }
 
 footer .content {
