@@ -5,6 +5,37 @@ main {
   display: flex;
   flex-direction: column;
 }
+.pageHeader {
+  width: 95%;
+  font-size: 17vw;
+  text-align: center;
+  margin: 0 auto;
+}
+.visionDescription {
+  width: 95%;
+  max-width: 1300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.valuesSection {
+  width: 100%;
+  max-width: 1300px;
+  margin: 75px auto;
+  display: flex;
+  justify-content: space-between;
+}
+.valuesSection .value h2 {
+  font-size: 50px;
+  text-align: center;
+  text-transform: uppercase;
+}
+.valuesSection .value p {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 600px;
+}
+
 .contentSection {
   align-items: center;
   width: 95%;
@@ -15,16 +46,6 @@ main {
   font-size: 40px;
   margin-bottom: 30px;
   text-align: center;
-}
-.companyStrategySection ol {
-  width: 95%;
-  max-width: 700px;
-  margin: 50px auto;
-  list-style-type: decimal-leading-zero;
-  font-size: 40px;
-}
-.companyStrategySection li {
-  margin: 40px 0;
 }
 
 .header-p {
