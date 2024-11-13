@@ -21,7 +21,7 @@ main {
 .valuesSection {
   width: 95%;
   max-width: 1300px;
-  margin: 150px auto 0;
+  margin: 100px auto 0;
   display: flex;
   justify-content: space-between;
 }
@@ -37,6 +37,55 @@ main {
   margin-top: 20px;
   width: 100%;
   max-width: 600px;
+  text-align: center;
+}
+.purposeSection {
+  width: 95%;
+  max-width: 1300px;
+  margin: 100px auto 0;
+}
+.purposeSection .purposeContianer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.purposeHeader {
+  font-size: 40px;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.purposeDescription {
+  width: 95%;
+  max-width: max-content;
+}
+
+.companyStrategy {
+  width: 100%;
+  margin-top: 75px;
+}
+.companyStrategy .tripleItemRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  column-gap: 40px;
+  align-items: center;
+}
+.companyStrategy .tripleItemRow .item {
+  align-self: baseline;
+}
+.companyStrategy .tripleItemRow .item h2 {
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  text-align: center;
+}
+.companyStrategy .tripleItemRow .item p:last-child {
+  text-align: center;
+}
+
+.companyStrategy .singleItemRow p:last-child {
   text-align: center;
 }
 
@@ -101,32 +150,6 @@ main {
   transform: scale(1.1);
 }
 .sponsor-container p {
-  text-align: center;
-}
-.companyStrategy {
-  width: 95%;
-  margin: 0 auto;
-}
-.companyStrategy .singleItemRow {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  margin: 30px 0;
-}
-.companyStrategy .tripleItemRow {
-  display: grid;
-  grid-template-columns: 100px 1fr 1fr 1fr;
-  margin: 30px 0;
-  column-gap: 20px;
-  align-items: center;
-}
-.companyStrategy .tripleItemRow .item {
-  align-self: baseline;
-}
-.companyStrategy .tripleItemRow .item p:first-child {
-  margin-bottom: 10px;
-}
-
-.companyStrategy .singleItemRow p:last-child {
   text-align: center;
 }
 
