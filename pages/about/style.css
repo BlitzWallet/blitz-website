@@ -42,7 +42,7 @@ main {
 .purposeSection {
   width: 95%;
   max-width: 1300px;
-  margin: 100px auto 0;
+  margin: 200px auto 0;
 }
 .purposeSection .purposeContianer {
   width: 100%;
@@ -55,6 +55,7 @@ main {
   font-size: 40px;
   text-align: center;
   margin-right: 20px;
+  text-transform: uppercase;
 }
 
 .purposeDescription {
@@ -206,6 +207,16 @@ main {
   }
   .pageHeader {
     margin-top: 30px;
+  }
+  .purposeSection .purposeContianer {
+    flex-direction: column;
+  }
+  .purposeSection .purposeContianer .purposeHeader {
+    font-size: 30px;
+    margin-right: 0;
+  }
+  .purposeSection .purposeContianer .purposeDescription {
+    text-align: center;
   }
 }
 
