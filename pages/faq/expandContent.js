@@ -15,13 +15,13 @@ function handleExpandedClick(event) {
   if (isExpaned) {
     expandedIcon.src = "../../src/assets/images/plusIcon.svg";
     dropdownContianer.style.height = "0px";
-    listContainer.style.opacity = "0";
+    // listContainer.style.opacity = "0";
   } else {
     expandedIcon.src = "../../src/assets/images/minusIcon.svg";
     dropdownContianer.style.height = `${
       Array.from(dropdownContianer.children)[0].offsetHeight
     }px`;
-    listContainer.style.opacity = "1";
+    // listContainer.style.opacity = "1";
   }
 }
 
