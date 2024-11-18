@@ -1,0 +1,131 @@
+.faq {
+  width: 95%;
+  max-width: 1300px;
+  margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.faq .nav .questionsGrouping:not(:last-child) {
+  margin-bottom: 50px;
+}
+.faq .nav .questionsGrouping ul li {
+  margin: 20px 0;
+  cursor: pointer;
+}
+.faq .content {
+  width: calc(100% - 320px);
+  float: right;
+}
+
+.faq .warning {
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--dm-backgroundOffset);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 50px;
+}
+.faq .warning .header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.faq .warning .header img {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+.faq .warning .listItemP:not(:last-child) {
+  margin-bottom: 20px;
+}
+
+.faq .questions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.faq .questions h2 {
+  margin-bottom: 75px;
+}
+.faq .questions .expandContainer {
+  width: 100%;
+  max-width: 900px;
+  border-bottom: 1px solid var(--dm-text);
+  /* padding-bottom: 20px; */
+}
+.faq .questions .expandContainer:not(:last-child) {
+  margin-bottom: 40px;
+}
+
+.faq .questions .expandContainer .alwaysShow {
+  width: 100%;
+  display: flex;
+  align-items: center;
+
+  position: relative;
+  margin-bottom: 40px;
+}
+.faq .questions .expandContainer .expandContainerCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.faq .questions .expandContainer .expandIconContainer {
+  background-color: var(--dm-backgroundOffset);
+  padding: 10px;
+  border-radius: 8px;
+  margin-right: 15px;
+}
+.faq .questions .expandContainer .alwaysShow p {
+  margin-right: auto;
+
+  font-size: 20px;
+}
+
+.faq .imageConstant {
+  width: 20px;
+  height: 20px;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7460%)
+    hue-rotate(144deg) brightness(115%) contrast(102%);
+}
+
+.dropdownContent {
+  height: 0;
+  width: 100%;
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+  /* padding-top: 20px; */
+}
+.dropdownContent ul {
+  width: calc(100% - 55px);
+  margin-left: 45px;
+  /* padding-top: 20px; */
+  list-style: none;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+}
+.dropdownContent ul li a {
+  width: 100%;
+  height: 60px;
+  line-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  /* padding-top: 20px; */
+}
+.dropdownContent ul li:last-child {
+  padding-bottom: 20px;
+}
+.dropdownContent p {
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  padding-bottom: 20px;
+}

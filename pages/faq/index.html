@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="shortcut icon"
+      href="../../public/favicon.png"
+      type="image/x-icon"
+    />
+
+    <link rel="stylesheet" href="../../src/assets/styles/index.css" />
+    <link rel="stylesheet" href="../../src/assets/styles/navbar_footer.css" />
+    <link
+      rel="stylesheet"
+      href="../../src/components/downloadModal/style.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+
+    <meta
+      name="description"
+      content="Blitz Wallet is a free Bitcoin lightning wallet and runs exclusivly off donations."
+    />
+
+    <script src="../../src/js/navbar.js" defer></script>
+    <script src="../../src/components/downloadModal/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="./expandContent.js" defer></script>
+
+    <title>Blitz Wallet | FAQ</title>
+    <!-- <script defer src="./index.js"></script> -->
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </head>
+
+  <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <p class="bitzName">Blitz Wallet.</p>
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/notBuildYet">FAQ</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/notBuildYet">Blog</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/privacyPolicy/">Privacy Policy</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavDropdown-Container">
+        <ul class="navItems">
+          <li class="navItem">
+            <a href="/pages/about/">About</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/contact">Contact</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/notBuildYet">FAQ</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/notBuildYet">Blog</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <main class="faq">
+      <div class="warning">
+        <div class="header">
+          <img src="/src/assets/images/cautionIcon.svg" alt="Caution Icon" />
+          <p>
+            <strong>Be cauious of people asking for your 12-word seed!</strong>
+          </p>
+        </div>
+        <p class="listItemP">
+          Blitz Wallet is self-custodial: you are the only one who controls the
+          funds in the wallet.
+        </p>
+        <p class="listItemP">
+          A seed is made up of 12-words which can be found in settings. Make a
+          backup, and keep it safe. If you lose your seed, we can't help you.
+        </p>
+        <p class="listItemP">
+          Do not enter your seed in any websites or Google forms.
+        </p>
+      </div>
+      <!-- Actual questions -->
+      <div class="questions">
+        <h2>Blitz FAQ</h2>
+
+        <div class="expandContainer">
+          <div class="alwaysShow">
+            <p>What is Blitz Wallet?</p>
+            <img
+              src="../../src/assets/images/plusIcon.svg"
+              alt="A plus icon to expand a dropdown"
+              class="icon imageConstant"
+            />
+            <div class="expandContainerCover"></div>
+          </div>
+
+          <div class="dropdownContent">
+            <p>
+              Blitz Wallet is a self-custodial Bitcoin-only wallet. This means
+              you, and only you, have control of the funds in your wallet. By
+              leveraging multiple technologies, we aim to provide a seamless
+              payment experience allowing anyone to transact over the Bitcoin
+              network.
+            </p>
+          </div>
+        </div>
+        <div class="expandContainer">
+          <div class="alwaysShow">
+            <p>What is Bitcoin?</p>
+            <img
+              src="../../src/assets/images/plusIcon.svg"
+              alt="A plus icon to expand a dropdown"
+              class="icon imageConstant"
+            />
+            <div class="expandContainerCover"></div>
+          </div>
+
+          <div class="dropdownContent">
+            <p>
+              Bitcoin is digital money that works on the internet. It allows
+              people to send money directly to each other without needing a
+              trusted third party. It runs on a public, secure network called a
+              blockchain that keeps track of all transactions.
+            </p>
+          </div>
+        </div>
+        <div class="expandContainer">
+          <div class="alwaysShow">
+            <p>How is Blitz Wallet Different?</p>
+            <img
+              src="../../src/assets/images/plusIcon.svg"
+              alt="A plus icon to expand a dropdown"
+              class="icon imageConstant"
+            />
+            <div class="expandContainerCover"></div>
+          </div>
+
+          <div class="dropdownContent">
+            <p>
+              Blitz Wallet is designed for you, providing custody and security
+              in a simple user interface. The contacts section of Blitz Wallet
+              allows you to easily send and request payments to friends creating
+              a user experience not seen by self-custodial wallets. Also, by
+              creating a shop page directly in the wallet you can live off
+              Bitcoin without downloading any other apps.
+            </p>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            A self-custodial Bitcoin Lighting, Liquid, and Ecash wallet aiming
+            to simplify payments on the Bitcoin Network.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
+              <li><a href="/pages/notBuildYet/">FAQ</a></li>
+              <li><a href="/pages/notBuildYet/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlakeKaufman/BlitzWallet">Github</a>
+              </li>
+              <li><a href="https://x.com/blitzwallet1">Twitter</a></li>
+              <li><a href="https://youtube.com/@BlitzWallet">Youtube</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="./pages/privacyPolicy/">Privacy Policy</a>
+          <a target="_blank" href=" http://www.apache.org/licenses/LICENSE-2.0"
+            >Lisencse</a
+          >
+        </div>
+        <p>@2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+  </body>
+</html>
