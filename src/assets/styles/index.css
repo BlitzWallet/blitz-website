@@ -74,13 +74,20 @@ a {
 .button {
   background-color: var(--dm-text);
   color: var(--lm-text);
-  padding: 8px 15px;
+  padding: 15px 12px;
   border: 0;
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
 }
 .button:hover {
   background-color: #b8b8b8;
+}
+.button .buttonImage {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
 }

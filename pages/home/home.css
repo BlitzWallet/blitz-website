@@ -58,13 +58,16 @@ main {
   font-weight: 400;
   line-height: 1.3;
 }
-
+.hero .buttonsContianer {
+  display: flex;
+  margin-top: 30px;
+}
 .hero .appContainer a {
   text-decoration: none;
 }
 
-.hero .button {
-  margin-top: 30px;
+.hero .button:not(:last-child) {
+  margin-right: 15px;
 }
 
 .hero .appCards {
