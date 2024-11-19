@@ -63,7 +63,7 @@ nav .mobile {
 
 .mobileNavDropdown {
   width: 100vw;
-  height: calc(100dvh - 80px);
+  height: calc(100dvh - 61px);
 
   align-items: center;
 
