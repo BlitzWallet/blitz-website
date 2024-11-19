@@ -528,7 +528,7 @@ main {
 }
 @media screen and (max-width: 800px) {
   .appView .sponsorsHeader {
-    font-size: 30px;
+    font-size: 35px;
   }
   .appView .sponsorContainer {
     font-size: 18px;
@@ -567,9 +567,6 @@ main {
     font-size: 40px;
     text-wrap: wrap;
   }
-  .hero h2 {
-    font-size: 20px;
-  }
 
   .poweredBy .companyContainer {
     flex-direction: column;
@@ -577,9 +574,6 @@ main {
   }
   .appView h2 {
     margin: 50px 0 30px;
-  }
-  .appView .sponsorContainer {
-    font-size: 20px;
   }
 }
 @media screen and (max-width: 600px) {
@@ -597,6 +591,10 @@ main {
     height: 400px;
     width: 200px;
   }
+  .appView .sponsorContainer {
+    flex-direction: column;
+    row-gap: 20px;
+  }
 }
 
 @media screen and (max-width: 430px) {
@@ -607,6 +605,15 @@ main {
     height: 100px;
     flex-direction: column;
     align-items: center;
+  }
+}
+@media screen and (max-width: 375px) {
+  .hero .buttonsContianer {
+    flex-direction: column;
+  }
+  .hero .button:not(:last-child) {
+    margin-right: 0;
+    margin-bottom: 20px;
   }
 }
 
