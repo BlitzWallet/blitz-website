@@ -161,6 +161,9 @@ nav .hidden {
 .navItem a {
   text-decoration: none;
 }
+.navItems .activePage {
+  color: var(--primary_color);
+}
 
 /* --------------------------------- */
 /* Footer */

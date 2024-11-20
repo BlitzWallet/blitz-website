@@ -52,6 +52,7 @@ textarea {
   border: unset;
   margin-left: auto;
   font-size: 18px;
+  cursor: pointer;
 }
 @media screen and (max-width: 900px) {
   .formContainer .questionContainer {
