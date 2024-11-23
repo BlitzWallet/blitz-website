@@ -230,6 +230,95 @@
         </div>
         <div class="expandContainer">
           <div class="alwaysShow">
+            <p>What are Blitz Wallet fees?</p>
+            <img
+              src="../../src/assets/images/plusIcon.svg"
+              alt="A plus icon to expand a dropdown"
+              class="icon imageConstant"
+            />
+            <div class="expandContainerCover"></div>
+          </div>
+
+          <div class="dropdownContent">
+            <div class="heightContainer">
+              <h4>Receiving</h4>
+              <div class="gridContainer">
+                <div class="gridRow">
+                  <h5 class="gridHeader">Event</h5>
+                  <h5 class="gridHeader">Fee</h5>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">On-chain transaction</p>
+                  <p class="gridItem">Liquid network fee + 0.1%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">Lighting payment w/o lightning channel</p>
+                  <p class="gridItem">Liquid network fee + 0.25%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">
+                    Lighting payment with lightning channel
+                  </p>
+                  <p class="gridItem">none</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">Liquid payment</p>
+                  <p class="gridItem">none</p>
+                </div>
+              </div>
+              <h4>Sending</h4>
+              <div class="gridContainer">
+                <div class="gridRow">
+                  <h5 class="gridHeader">Event</h5>
+                  <h5 class="gridHeader">Fee</h5>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">On-chain transaction</p>
+                  <p class="gridItem">
+                    Bitcoin network fee + 0.1% (coming soon)
+                  </p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">Lighting payment w/o lightning channel</p>
+                  <p class="gridItem">Liquid network fee + 0.1%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">
+                    Lighting payment with lightning channel (using trampoline)
+                  </p>
+                  <p class="gridItem">1%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">
+                    Lighting payment with lightning channel (not using
+                    trampoline)
+                  </p>
+                  <p class="gridItem">Variable (est. under 200 sats)</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">Liquid payment</p>
+                  <p class="gridItem">Variable (est. 250sats)</p>
+                </div>
+              </div>
+              <h4>Specialty</h4>
+              <div class="gridContainer">
+                <div class="gridRow">
+                  <h5 class="gridHeader">Event</h5>
+                  <h5 class="gridHeader">Fee</h5>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">Channel Open</p>
+                  <p class="gridItem">
+                    Variable (depends on Bitcoin network fees)
+                  </p>
+                </div>
+              </div>
+              <div class="seperator"></div>
+            </div>
+          </div>
+        </div>
+        <div class="expandContainer">
+          <div class="alwaysShow">
             <p>How does Blitz use Ecash?</p>
             <img
               src="../../src/assets/images/plusIcon.svg"

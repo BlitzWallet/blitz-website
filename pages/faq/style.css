@@ -85,8 +85,6 @@
 }
 .faq .questions .expandContainer .alwaysShow p {
   margin-right: auto;
-
-  font-size: 20px;
 }
 
 .faq .imageConstant {
@@ -128,4 +126,75 @@
   /* opacity: 0; */
   /* transition: all 0.3s ease-in-out; */
   padding-bottom: 20px;
+}
+
+.faq .dropdownContent h4 {
+  margin-bottom: 10px;
+}
+.faq .dropdownContent table {
+  width: 100%;
+  color: var(--dm-text);
+  font-family: var(--other_font);
+  /* border: 1px solid gray; */
+  row-gap: 10px;
+  display: grid;
+}
+.faq .dropdownContent .gridContainer {
+  width: 100%;
+  color: var(--dm-text);
+  font-family: var(--other_font);
+  border-top: 1px solid gray;
+  border-left: 1px solid gray;
+  border-right: 1px solid gray;
+  margin-bottom: 20px;
+  display: grid;
+}
+
+.faq .dropdownContent .gridContainer p {
+  font-size: 12px;
+}
+.faq .dropdownContent .gridContainer .gridRow {
+  display: grid;
+  grid-template-columns: 1.25fr 0.75fr;
+  border-bottom: 1px solid gray;
+}
+.faq .dropdownContent .gridContainer .gridRow:nth-child(2n) {
+  background-color: var(--dm-backgroundOffset);
+}
+
+.faq .dropdownContent .gridContainer .gridRow .gridHeader {
+  text-align: center;
+  padding: 10px 0;
+}
+.faq .dropdownContent .gridContainer .gridRow .gridHeader:first-child {
+  border-right: 1px solid gray;
+}
+.faq .dropdownContent .gridContainer .gridRow .gridItem:first-child {
+  border-right: 1px solid gray;
+}
+.faq .dropdownContent .gridContainer .gridRow .gridItem {
+  padding: 10px;
+}
+
+.faq .dropdownContent table thead {
+  text-align: center;
+  font-weight: bold;
+  background-color: var(--dm-backgroundOffset);
+  border: 1px solid gray;
+}
+.faq .dropdownContent table thead td {
+  padding: 10px 0;
+}
+.faq .dropdownContent table tbody tr {
+  height: 50px;
+}
+.faq .dropdownContent table tbody td {
+  border-bottom: 1px solid gray;
+}
+.faq .dropdownContent table tbody td:first-child {
+  border-right: 1px solid gray;
+}
+
+.faq .dropdownContent .seperator {
+  height: 1px;
 }
