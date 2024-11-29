@@ -18,21 +18,21 @@ export async function handler(event, context) {
 
     const isAuthenticated = JWTAuth(token);
 
-    // if (!token)
-    //   return {
-    //     statusCode: 400,
-    //     body: JSON.stringify({
-    //       error: "Error no authentication token provided",
-    //     }),
-    //   };
+    if (!token)
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          error: "Error no authentication token provided",
+        }),
+      };
 
-    // if (!isAuthenticated)
-    //   return {
-    //     statusCode: 400,
-    //     body: JSON.stringify({
-    //       error: "Incorrect authenticatoin token",
-    //     }),
-    //   };
+    if (!isAuthenticated)
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          error: "Incorrect authenticatoin token",
+        }),
+      };
 
     try {
       const url = "https://api.ppq.ai/chat/completions";
