@@ -55,7 +55,7 @@ export async function initializeFirebase() {
     if (!app || !db || !auth) {
       throw new Error("Failed to initialize Firebase services");
     }
-    return { db, auth, app };
+    return { db, auth, app, admin };
   } catch (error) {
     console.error("Firebase initialization error: ", error);
     throw error;
