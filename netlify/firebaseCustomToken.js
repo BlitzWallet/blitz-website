@@ -5,6 +5,12 @@ import { JWTAuth } from "../middleware/JWTAuth";
 import { initializeFirebase } from "../db";
 
 export async function handler(event, context) {
+  return {
+    statusCode: 400,
+    body: JSON.stringify({
+      error: "not set up yet",
+    }),
+  };
   if (event.httpMethod === "POST") {
     const Data = event.body ? JSON.parse(event.body) : null; //sanitation
     const token = event.headers.authorization;
