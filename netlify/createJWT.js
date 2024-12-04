@@ -51,6 +51,13 @@ export async function handler(event, context) {
         };
       }
 
+      if ((new Date() - decryptedContent.sendTime) / (1000 * 60) > 1) {
+        return {
+          statusCode: 200,
+          body: JSON.stringify({ message: "Invalid date" }),
+        };
+      }
+
       const token = jwt.sign(
         { checkHash: decryptedContent.checkHash },
         process.env.JWT_SECRET_KEY,
