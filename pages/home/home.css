@@ -170,12 +170,12 @@ main {
 /* --------------------------------- */
 /* Features section */
 /* --------------------------------- */
-.appView {
+.sponsorOrIntegration {
   width: 95%;
   margin: 150px auto;
 }
 
-.appView .gridContainer {
+.sponsorOrIntegration .gridContainer {
   width: 95%;
   max-width: 1200px;
   margin: 0 auto;
@@ -240,23 +240,36 @@ main {
 .gridContainer .sliderBTNs img:first-child {
   transform: rotate(180deg);
 }
-
-.appView .sponsorsHeader {
-  font-size: 60px;
+.sponsorOrIntegration {
+  margin: 50px 0;
+}
+.sponsorOrIntegration .sponsorsHeader {
+  font-size: 40px;
   text-align: center;
-  margin: 0px 0 30px;
 }
 
-.appView .sponsorContainer {
+.sponsorOrIntegration .sponsorContainer {
   width: 95%;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  column-gap: 30px;
+  column-gap: 80px;
+  row-gap: 50px;
   text-align: center;
-  margin: 0 auto;
+  margin: 60px auto;
   font-size: 30px;
+  align-items: center;
 }
+.sponsorOrIntegration .sponsorContainer a img {
+  width: auto;
+  height: 50px;
+}
+.sponsorOrIntegration .openSatsLogo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
 /* --------------------------------- */
 /* Blitz Wallet featues */
 /* --------------------------------- */
@@ -287,14 +300,19 @@ main {
 }
 .features .appImage {
   max-width: 400px;
-  background: #93edd9;
-  background: linear-gradient(0deg, #93edd9, #7ecdd7);
-  padding: 40px;
-  border-radius: 20px;
-  margin-right: 150px;
+
+  position: relative;
 }
-.features .appImage img {
+.features .appImage img:first-child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
+  height: 100%;
+}
+.features .appImage img:last-child {
+  width: 80%;
   height: auto;
 }
 
@@ -505,7 +523,7 @@ main {
   }
 }
 @media screen and (max-width: 900px) {
-  .appView .gridContainer {
+  .sponsorOrIntegration .gridContainer {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
@@ -527,10 +545,10 @@ main {
   }
 }
 @media screen and (max-width: 800px) {
-  .appView .sponsorsHeader {
+  .sponsorOrIntegration .sponsorsHeader {
     font-size: 35px;
   }
-  .appView .sponsorContainer {
+  .sponsorOrIntegration .sponsorContainer {
     font-size: 18px;
   }
   .features .sectionHeader {
@@ -572,7 +590,7 @@ main {
     flex-direction: column;
     height: 320px;
   }
-  .appView h2 {
+  .sponsorOrIntegration h2 {
     margin: 50px 0 30px;
   }
 }
@@ -591,9 +609,8 @@ main {
     height: 400px;
     width: 200px;
   }
-  .appView .sponsorContainer {
+  .sponsorOrIntegration .sponsorContainer {
     flex-direction: column;
-    row-gap: 20px;
   }
 }
 
