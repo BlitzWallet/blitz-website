@@ -6,6 +6,12 @@ import { JWTAuth } from "../middleware/JWTAuth";
 const openai = new OpenAI({ apiKey: process.env.OPEN_AI_KEY });
 
 export async function handler(event, context) {
+  return {
+    statusCode: 400,
+    body: JSON.stringify({
+      error: "Not a valid endpoint anymore",
+    }),
+  };
   if (event.httpMethod === "POST") {
     const Data = event.body ? JSON.parse(event.body) : null; //sanitation
     const token = event.headers.authorization;
