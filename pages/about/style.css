@@ -5,11 +5,11 @@ main {
   display: flex;
   flex-direction: column;
 }
-.pageHeader {
+.sectionHeaders {
   width: 95%;
-  font-size: 17vw;
+  font-size: 120px;
   text-align: center;
-  margin: 0 auto;
+  margin: 60px auto 0;
 }
 .visionDescription {
   width: 95%;
@@ -21,11 +21,31 @@ main {
 .valuesSection {
   width: 95%;
   max-width: 1300px;
+  margin: 0 auto;
+}
+.valuesSection .valuesContainer {
+  width: 100%;
   margin: 100px auto 0;
   display: flex;
   justify-content: space-between;
 }
+
+.valuesSection .imageContainer {
+  width: max-content;
+  background-color: var(--dm-text);
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.valuesSection .imageContainer img {
+  width: 30px;
+  height: 30px;
+  height: auto;
+}
 .valuesSection .value {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 45%;
 }
 .valuesSection .value h2 {
@@ -42,7 +62,19 @@ main {
 .purposeSection {
   width: 95%;
   max-width: 1300px;
-  margin: 200px auto 0;
+  height: 80dvh;
+  margin: 0 auto;
+  min-height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.purposeSection .contentContainer {
+  background-color: var(--dm-backgroundOffset);
+  padding: 20px;
+  border-radius: 8px;
+  margin: 20px auto 0;
 }
 .purposeSection .purposeContianer {
   width: 100%;
@@ -155,7 +187,7 @@ main {
 }
 
 @media screen and (max-width: 800px) {
-  .valuesSection {
+  .valuesSection .valuesContainer {
     flex-direction: column;
     align-items: center;
     margin: 100px auto 0;
@@ -200,6 +232,11 @@ main {
     align-self: center;
   }
 }
+@media screen and (max-width: 700px) {
+  .sectionHeaders {
+    font-size: 70px;
+  }
+}
 
 @media screen and (max-width: 500px) {
   .valuesSection .value h2 {
@@ -217,6 +254,9 @@ main {
   }
   .purposeSection .purposeContianer .purposeDescription {
     text-align: center;
+  }
+  .sectionHeaders {
+    font-size: 40px;
   }
 }
 
