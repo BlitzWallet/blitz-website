@@ -307,6 +307,9 @@ main {
   margin-right: 150px;
 
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .features .appImage img:first-child {
   position: absolute;
@@ -318,7 +321,7 @@ main {
   display: none;
 }
 .features .appImage img:last-child {
-  width: 100%;
+  width: 80%;
   height: auto;
 }
 
