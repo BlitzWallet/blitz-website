@@ -55,8 +55,8 @@ nav .downloadModal {
 
 nav .mobile {
   display: none;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   cursor: pointer;
   margin-left: auto;
 }
@@ -320,10 +320,6 @@ footer .navItems {
 @media screen and (max-width: 600px) {
   nav .wordmark {
     width: 230px;
-  }
-  nav .mobile {
-    width: 40px;
-    height: 40px;
   }
 
   footer .navItems {
