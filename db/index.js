@@ -1,5 +1,10 @@
 import * as admin from "firebase-admin";
-import { getAuth, initializeAuth, signInWithCustomToken } from "firebase/auth";
+import {
+  getAuth,
+  initializeAuth,
+  signInAnonymously,
+  signInWithCustomToken,
+} from "firebase/auth";
 import { getApps, initializeApp } from "firebase/app";
 import {
   getFirestore,
@@ -168,6 +173,7 @@ export async function getSignleContact(
   console.log(collectionName, wantedName);
   try {
     const didSignIn = await signIn();
+    console.log(didSignIn, "DID SIGN IN");
     if (!didSignIn) throw Error("Not signed in");
     const userProfilesRef = collection(db, collectionName);
 
@@ -279,10 +285,11 @@ export async function signIn() {
 
     // console.log(token);
 
+    await signInAnonymously(auth);
     console.log(retirevedTOken);
-    await signInWithCustomToken(auth, retirevedTOken);
-    if (!retirevedTOken) throw Error("NO CLAIM TOKEN CREATED");
-    return retirevedTOken;
+    // await signInWithCustomToken(auth, retirevedTOken);
+    // if (!retirevedTOken) throw Error("NO CLAIM TOKEN CREATED");
+    return true;
   } catch (error) {
     console.error("Error signing in anonymously", error);
     return false;
