@@ -3,6 +3,7 @@ import "dotenv/config";
 import { JWTAuth } from "../middleware/JWTAuth";
 import { decryptMessage, encryptMessage } from "../middleware/newEncription";
 import { getTBCaccessCode } from "../middleware/getTBCaccessCode";
+import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
 
 const serverURL =
   process.env.ENVIRONMENT === "liquid"
@@ -11,6 +12,9 @@ const serverURL =
 export async function handler(event, context) {
   if (event.httpMethod === "POST") {
     try {
+      // const appCheckToken = event.headers["x-firebase-appcheck"];
+
+      // await verifyAppCheckToken(appCheckToken);
       const postData = event.body ? JSON.parse(event.body) : null; //sanitation
       const token = event.headers.authorization;
       //   const decryptedContent = JSON.parse(

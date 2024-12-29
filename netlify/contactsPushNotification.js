@@ -4,6 +4,7 @@ import { decrypt } from "../middleware/encription";
 import { sendContactNotification } from "../middleware/sendContactNotification";
 import { JWTAuth } from "../middleware/JWTAuth";
 import { Expo } from "expo-server-sdk";
+import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
 
 let expo = new Expo({
   accessToken: process.env.EXPO_ACCESS_TOKEN,
@@ -13,6 +14,9 @@ export async function handler(event, context) {
   const data = event.body ? JSON.parse(event.body) : null; //sanitation
   if (event.httpMethod === "POST") {
     try {
+      // const appCheckToken = event.headers["x-firebase-appcheck"];
+
+      // await verifyAppCheckToken(appCheckToken);
       if (!data)
         return {
           statusCode: 400,

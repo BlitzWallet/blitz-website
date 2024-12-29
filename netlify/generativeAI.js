@@ -2,6 +2,7 @@
 import "dotenv/config";
 
 import { JWTAuth } from "../middleware/JWTAuth";
+import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
 
 // claude-3.5-sonnet
 // gpt-4o
@@ -17,51 +18,60 @@ export async function handler(event, context) {
     const token = event.headers.authorization;
 
     const isAuthenticated = JWTAuth(token);
-
-    if (!token)
-      return {
-        statusCode: 400,
-        body: JSON.stringify({
-          error: "Error no authentication token provided",
-        }),
-      };
-
-    if (!isAuthenticated)
-      return {
-        statusCode: 400,
-        body: JSON.stringify({
-          error: "Incorrect authenticatoin token",
-        }),
-      };
-
     try {
-      const url = "https://api.ppq.ai/chat/completions";
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${process.env.GENERATIVE_AI_KEY}`,
-      };
+      // const appCheckToken = event.headers["x-firebase-appcheck"];
 
-      //   const data = {
-      //     model: "claude-3.5-sonnet",
-      //     messages: [{ role: "user", content: "Hello, how are you?" }],
-      //   };
+      // await verifyAppCheckToken(appCheckToken);
+      if (!token)
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            error: "Error no authentication token provided",
+          }),
+        };
 
-      const response = await fetch(url, {
-        method: "POST",
-        headers: headers,
-        body: JSON.stringify(Data.data),
-      });
-      const responseData = await response.json();
+      if (!isAuthenticated)
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            error: "Incorrect authenticatoin token",
+          }),
+        };
 
-      return {
-        statusCode: 200,
-        body: JSON.stringify(responseData),
-      };
+      try {
+        const url = "https://api.ppq.ai/chat/completions";
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.GENERATIVE_AI_KEY}`,
+        };
+
+        //   const data = {
+        //     model: "claude-3.5-sonnet",
+        //     messages: [{ role: "user", content: "Hello, how are you?" }],
+        //   };
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: headers,
+          body: JSON.stringify(Data.data),
+        });
+        const responseData = await response.json();
+
+        return {
+          statusCode: 200,
+          body: JSON.stringify(responseData),
+        };
+      } catch (err) {
+        console.log(err);
+        return {
+          statusCode: 400,
+          body: JSON.stringify(err),
+        };
+      }
     } catch (err) {
-      console.log(err);
       return {
         statusCode: 400,
-        body: JSON.stringify(err),
+        body: JSON.stringify({ error: "Not authenticated" }),
       };
     }
   } else {

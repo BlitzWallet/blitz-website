@@ -13,6 +13,7 @@ import {
 } from "../db";
 import { decryptMessage, encryptMessage } from "../middleware/newEncription";
 import { JWTAuth } from "../middleware/JWTAuth";
+import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
 
 export async function handler(event, context) {
   if (event.httpMethod === "POST") {
@@ -42,6 +43,9 @@ export async function handler(event, context) {
       };
 
     try {
+      // const appCheckToken = event.headers["x-firebase-appcheck"];
+
+      // await verifyAppCheckToken(appCheckToken);
       if (databaseMethod === "adddata") {
         const didAddData = await addDataToCollection(
           postData.dataObject,

@@ -4,12 +4,17 @@ import "dotenv/config";
 import jwt from "jsonwebtoken";
 import { decryptMessage } from "../middleware/newEncription";
 import { getDataFromCollection } from "../db";
+import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
 
 export async function handler(event, context) {
   if (event.httpMethod === "POST") {
     const data = event.body ? JSON.parse(event.body) : null; //sanitation
 
     try {
+      // const appCheckToken = event.headers["x-firebase-appcheck"];
+
+      // await verifyAppCheckToken(appCheckToken);
+
       const { appPubKey, checkContent, id } = data;
       if (!appPubKey && !checkContent && id) {
         const token = jwt.sign({ id: id }, process.env.JWT_SECRET_KEY, {
