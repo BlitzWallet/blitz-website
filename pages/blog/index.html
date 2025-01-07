@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blitz Wallet | Contact</title>
+
+    <link
+      rel="shortcut icon"
+      href="../../public/favicon.png"
+      type="image/x-icon"
+    />
+
+    <link rel="stylesheet" href="../../src/assets/styles/index.css" />
+    <link rel="stylesheet" href="../../src/assets/styles/navbar_footer.css" />
+    <link
+      rel="stylesheet"
+      href="../../src/components/downloadModal/style.css"
+    />
+
+    <link rel="stylesheet" href="./style.css" />
+    <script src="../../src/js/navbar.js" defer></script>
+    <script src="../../src/components/downloadModal/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </head>
+
+  <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet (beta)</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <p class="bitzName">Blitz Wallet.</p>
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/faq/">FAQ</a>
+            </li>
+            <li class="navItem activePage">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavDropdown-Container">
+        <ul class="navItems">
+          <li class="navItem">
+            <a href="/pages/about/">About</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/contact">Contact</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/faq/">FAQ</a>
+          </li>
+          <li class="navItem activePage">
+            <a href="/pages/blog">Blog</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <section class="blogContentContainer">
+      <h2 class="pageTitle">The latest from Blitz Wallet</h2>
+      <h4 class="pageSubTitle">Making bitcoin payments simple</h4>
+
+      <section class="postsContainer">
+        <a class="highlightedPost" href="./template">
+          <div class="highlightedPostImageContainer">
+            <img
+              class="highlightedPostImage"
+              src="../../public/wordmark.png"
+              alt="Blitz Wallet logo"
+            />
+          </div>
+          <div class="textContainer">
+            <h2>Introducing Blitz Wallet</h2>
+            <p>A bitcoin wallet making payments simple</p>
+            <time datetime="2025-01-07">January 7, 2025</time>
+          </div>
+        </a>
+        <div class="previousPosts"></div>
+      </section>
+    </section>
+
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            A self-custodial Bitcoin Lightning, Liquid, and Ecash wallet aiming
+            to simplify payments on the Bitcoin Network.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
+              <li><a href="/pages/faq/">FAQ</a></li>
+              <li><a href="/pages/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlakeKaufman/BlitzWallet">GitHub</a>
+              </li>
+              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
+              <li><a href="https://youtube.com/@BlitzWallet">YouTube</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          <a href="/pages/terms/">Terms of Usage</a>
+          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
+            >License</a
+          >
+        </div>
+        <p>&copy;2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+  </body>
+</html>

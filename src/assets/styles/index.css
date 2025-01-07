@@ -44,7 +44,8 @@ li,
 span,
 input,
 label,
-textarea {
+textarea,
+time {
   font-family: var(--other_font);
   color: var(--dm-text);
   letter-spacing: 0.5px;
