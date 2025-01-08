@@ -1,14 +1,66 @@
+nav .blogNav {
+  width: 95%;
+  max-width: 1300px;
+  display: flex;
+  min-height: 35px;
+  align-items: center;
+  margin: 10px auto 20px;
+  justify-content: center;
+  position: relative;
+}
+
+nav .blogNav .locationTab {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+nav .blogNav .locationTab .imgContainer {
+  width: 35px;
+  height: 35px;
+  background-color: var(--lm-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+nav .blogNav .locationTab .imgContainer img {
+  width: 20px;
+  height: 20px;
+}
+
+nav .blogNav .postTypeSelector {
+  display: flex;
+  align-items: center;
+}
+nav .blogNav .postTypeSelector a {
+  margin: 0 10px;
+  transition: opacity 0.3s ease-in;
+  opacity: 0.7;
+  cursor: pointer;
+  color: var(--lm-background);
+}
+nav .blogNav .postTypeSelector .activeNav {
+  opacity: 1;
+}
+/* //////////////////////////////// */
 .blogContentContainer {
   min-height: calc(100dvh - 60px - 400px);
 }
 .pageTitle {
+  width: 95%;
   text-align: center;
   font-size: 30px;
-  margin-top: 50px;
+  margin: 50px auto 0;
 }
 .pageSubTitle {
+  width: 95%;
   text-align: center;
-  margin-top: 10px;
+
+  margin: 10px auto 0;
 }
 .postsContainer {
   display: flex;
@@ -16,35 +68,135 @@
   align-items: center;
   margin-top: 80px;
 }
-.postsContainer .highlightedPost {
+.highlightedPostContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+#highlightedPost {
   width: 95%;
   max-width: 1300px;
   height: 600px;
-  border: 1px solid gainsboro;
+  border: 1px solid rgba(220, 220, 220, 0.355);
   border-radius: 8px;
   cursor: pointer;
   padding: 50px;
   display: flex;
   flex-direction: column;
 }
-.postsContainer .highlightedPost:hover {
+#highlightedPost:hover {
   border: 1px solid var(--primary_color);
 }
-.postsContainer .highlightedPost .highlightedPostImageContainer {
+#highlightedPost:hover .textContainer h2 {
+  color: var(--primary_color);
+}
+
+#highlightedPost .highlightedPostImageContainer {
   width: 100%;
   height: auto;
   margin: auto auto 0;
 }
-.postsContainer .highlightedPost .highlightedPostImage {
+#highlightedPost .highlightedPostImage {
   width: 100%;
 }
 
-.postsContainer .highlightedPost .textContainer {
+#highlightedPost .textContainer {
   margin-top: auto;
 }
+/* ///////////////////////////////// */
+#previousPosts {
+  width: 95%;
+  max-width: 1300px;
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 20px;
+  column-gap: 10px;
+  margin: 20px auto 0;
+  justify-content: space-between;
+}
+#previousPosts .noContentText {
+  width: 95%;
+  text-align: center;
+  margin: 0 auto;
+}
+#previousPosts .blogPost {
+  width: 100%;
+  max-width: calc(33.333% - 10px);
+  height: 700px;
+  overflow: hidden;
+  padding: 20px;
+  border: 1px solid rgba(220, 220, 220, 0.355);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+#previousPosts .blogPost:hover {
+  border: 1px solid var(--primary_color);
+}
+#previousPosts .blogPost:hover .textContainer h2 {
+  color: var(--primary_color);
+}
+#previousPosts .postImageContainer {
+  margin: auto;
+}
+#previousPosts .postImage {
+  width: 200px;
+  height: 200px;
 
+  /* max-height: 50%; */
+}
+
+@media screen and (max-width: 1200px) {
+  #previousPosts .blogPost {
+    max-width: calc(50% - 10px);
+  }
+}
+
+@media screen and (max-width: 900px) {
+  nav .blogNav {
+    justify-content: end;
+  }
+  nav .blogNav p {
+    display: block;
+  }
+}
+@media screen and (max-width: 800px) {
+  #previousPosts .blogPost {
+    max-width: 100%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .pageTitle {
+    font-size: 25px;
+  }
+
+  nav .blogNav .postTypeSelector {
+    display: none;
+  }
+}
 @media screen and (max-width: 425px) {
-  .postsContainer .highlightedPost {
+  #highlightedPost {
     padding: 20px;
   }
+}
+/* GLOBAL STYLES FOR THE PAGE */
+.postTypeContainer {
+  display: flex;
+  align-items: center;
+}
+
+.postTypeContainer .imgContainer {
+  width: 35px;
+  height: 35px;
+  background-color: var(--lm-background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+.postTypeContainer .imgContainer img {
+  width: 20px;
+  height: 20px;
 }

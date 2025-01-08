@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blitz Wallet | Contact</title>
+    <title>Blitz Wallet | Blog</title>
 
     <link
       rel="shortcut icon"
@@ -22,6 +22,8 @@
     <script src="../../src/js/navbar.js" defer></script>
     <script src="../../src/components/downloadModal/index.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script type="module" src="./blog.js"></script>
 
     <script
       async
@@ -89,6 +91,25 @@
         </div>
         <p class="downloadModal">Download</p>
       </div>
+      <div class="blogNav">
+        <div class="locationTab">
+          <div class="imgContainer">
+            <img
+              src="../../src/assets/images/blog-pencil.svg"
+              alt="blog pencil"
+            />
+          </div>
+          <a href="/pages/blog">
+            <p>Blog</p>
+          </a>
+        </div>
+        <div class="postTypeSelector">
+          <a href="/pages/blog/">All</a>
+          <a href="/pages/blog/?category=Releases">Releases</a>
+          <a href="/pages/blog/?category=Tutorials">Tutorials</a>
+          <a href="/pages/blog/?category=Podcasts">Podcasts</a>
+        </div>
+      </div>
     </nav>
     <div class="mobileNavDropdown">
       <div class="mobileNavDropdown-Container">
@@ -113,21 +134,12 @@
       <h4 class="pageSubTitle">Making bitcoin payments simple</h4>
 
       <section class="postsContainer">
-        <a class="highlightedPost" href="./template">
-          <div class="highlightedPostImageContainer">
-            <img
-              class="highlightedPostImage"
-              src="../../public/wordmark.png"
-              alt="Blitz Wallet logo"
-            />
-          </div>
-          <div class="textContainer">
-            <h2>Introducing Blitz Wallet</h2>
-            <p>A bitcoin wallet making payments simple</p>
-            <time datetime="2025-01-07">January 7, 2025</time>
-          </div>
-        </a>
-        <div class="previousPosts"></div>
+        <div class="highlightedPostContainer">
+          <!-- Container where a highlighted blog post goes -->
+        </div>
+        <div id="previousPosts">
+          <!-- Container where a all other blog post goes -->
+        </div>
       </section>
     </section>
 
