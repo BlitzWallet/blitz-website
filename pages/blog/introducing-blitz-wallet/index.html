@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blitz Wallet | Template Blog</title>
+    <title>Blitz Wallet | Blog post</title>
+    <!-- Title is Pulled in from javascript -->
 
     <link
       rel="shortcut icon"
@@ -21,10 +22,12 @@
       href="../../../src/components/downloadModal/style.css"
     />
 
-    <link rel="stylesheet" href="./style.css" />
     <script src="../../../src/js/navbar.js" defer></script>
     <script src="../../../src/components/downloadModal/index.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script type="module" src="../pageSetup.js"></script>
+    <link rel="stylesheet" href="../masterBlogTheme.css" />
+    <link rel="stylesheet" href="./style.css" />
 
     <script
       async
@@ -92,6 +95,24 @@
         </div>
         <p class="downloadModal">Download</p>
       </div>
+      <div class="blogNav">
+        <div class="locationTab">
+          <div class="imgContainer">
+            <img
+              id="blogTypeImage"
+              src="../../../public/favicon.png"
+              alt="blog pencil"
+            />
+          </div>
+          <a href="/pages/blog">
+            <p>Blog</p>
+          </a>
+          <p class="blogTypeSeperator">|</p>
+          <p id="blogTypeText">
+            <!-- Pulled in from javascript -->
+          </p>
+        </div>
+      </div>
     </nav>
     <div class="mobileNavDropdown">
       <div class="mobileNavDropdown-Container">
@@ -112,7 +133,49 @@
       </div>
     </div>
     <section class="blogContentContainer">
-      <h2 class="pageTitle">Template Blog</h2>
+      <div class="postHead">
+        <h1 id="blogTitle">
+          <!-- Pulled in from javascript -->
+        </h1>
+        <p id="blogSubHeader">
+          <!-- Pulled in from javascript -->
+        </p>
+        <div class="postDataContainerOuter">
+          <div class="imageContainer">
+            <img
+              id="authorProfilePicture"
+              src="../../../public/favicon.png"
+              alt="Profile image of the author"
+            />
+            <!-- Img src in from javascript -->
+          </div>
+          <div class="dataContainer">
+            <p rel="author" id="authorName">
+              <!-- Pulled in from javascript -->
+            </p>
+            <div class="postDataContainerInner">
+              <p id="postReadTime">
+                <!-- Pulled in from javascript -->
+              </p>
+              <p class="postDataSeperator">|</p>
+              <p id="postDate">
+                <!-- Pulled in from javascript -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="postBody">
+        <h4></h4>
+        <p></p>
+
+        <img
+          class="conetentImage"
+          src="../../../src/assets/images/BlitzArchitecture.png"
+          alt=""
+        />
+      </section>
     </section>
 
     <footer>
