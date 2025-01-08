@@ -1,3 +1,48 @@
+/* ///////////////////////////// */
+/* CHANGING GLOBAL THEME */
+body {
+  background-color: var(--lm-background);
+}
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+a,
+li,
+span,
+input,
+label,
+textarea,
+time {
+  color: var(--lm-text);
+}
+nav {
+  border-bottom: 1px solid #2a2a2a23;
+}
+.navigationIcon {
+  filter: brightness(0) saturate(100%) invert(0%) sepia(100%) saturate(7500%)
+    hue-rotate(59deg) brightness(89%) contrast(111%);
+}
+.mobileNavDropdown .mobileNavDropdown-Container {
+  background-color: var(--lm-background);
+}
+
+.modal {
+  background-color: var(--lm-backgroundOffset);
+}
+.modal h2,
+.modal p {
+  color: var(--lm-text);
+}
+.modalContainer .active {
+  background-color: black;
+  color: var(--dm-text);
+}
+.modal .qr-container {
+  background-color: black;
+}
 /* ////////////////////////////// */
 nav .blogNav {
   width: 95%;
@@ -21,7 +66,7 @@ nav .blogNav .locationTab {
 nav .blogNav .locationTab .imgContainer {
   width: 35px;
   height: 35px;
-  background-color: var(--lm-background);
+  background-color: var(--lm-backgroundOffset);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,11 +140,11 @@ nav .blogTypeSeperator {
   display: flex;
   flex-direction: column;
 }
-#postBody p,
-h1,
-h2,
-h3,
-h4 {
+#postBody > p,
+#postBody > h1,
+#postBody > h2,
+#postBody > h3,
+#postBody > h4 {
   width: 100%;
   max-width: 700px;
   margin: 0 auto;
