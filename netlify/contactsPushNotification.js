@@ -5,6 +5,7 @@ import { sendContactNotification } from "../middleware/sendContactNotification";
 import { JWTAuth } from "../middleware/JWTAuth";
 import { Expo } from "expo-server-sdk";
 import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
+import { decryptMessage } from "../middleware/newEncription";
 
 let expo = new Expo({
   accessToken: process.env.EXPO_ACCESS_TOKEN,
@@ -14,9 +15,9 @@ export async function handler(event, context) {
   const data = event.body ? JSON.parse(event.body) : null; //sanitation
   if (event.httpMethod === "POST") {
     try {
-      // const appCheckToken = event.headers["x-firebase-appcheck"];
+      const appCheckToken = event.headers["x-firebase-appcheck"];
 
-      // await verifyAppCheckToken(appCheckToken);
+      if (appCheckToken) await verifyAppCheckToken(appCheckToken);
       if (!data)
         return {
           statusCode: 400,
@@ -24,15 +25,8 @@ export async function handler(event, context) {
             error: "Must have a body",
           }),
         };
-      if (!data.token)
-        return {
-          statusCode: 400,
-          body: JSON.stringify({
-            error: "",
-          }),
-        };
 
-      const isAuthenticated = JWTAuth(data.token);
+      const isAuthenticated = appCheckToken ? true : JWTAuth(data.token);
 
       if (!isAuthenticated)
         return {
@@ -42,17 +36,26 @@ export async function handler(event, context) {
           }),
         };
       const devicePushKey = data.devicePushKey;
+      const decryptPubKey = data?.decryptPubKey;
       const deviceType = data.deviceType;
       const message = data.message;
 
-      const decryptedPushKey = decrypt(devicePushKey);
+      const decryptedPushKey =
+        typeof devicePushKey != "string"
+          ? Promise.resolve(decrypt(devicePushKey))
+          : decryptMessage(
+              process.env.BACKEND_PRIV_KEY,
+              decryptPubKey,
+              devicePushKey
+            );
+      const handledDecryptPromise = await decryptedPushKey;
 
-      console.log(decryptedPushKey, deviceType, message);
+      console.log(handledDecryptPromise, deviceType, message);
       const messages =
         deviceType === "ios"
           ? [
               {
-                to: `${decryptedPushKey}`,
+                to: `${handledDecryptPromise}`,
                 sound: "default",
                 body: message,
                 // _contentAvailable: true,
@@ -61,7 +64,7 @@ export async function handler(event, context) {
             ]
           : [
               {
-                to: `${decryptedPushKey}`,
+                to: `${handledDecryptPromise}`,
                 sound: "default",
                 body: message,
               },
@@ -71,7 +74,7 @@ export async function handler(event, context) {
       console.log("Push notification response:", response);
 
       // sendContactNotification({
-      //   devicePushKey: decryptedPushKey,
+      //   devicePushKey: handledDecryptPromise,
       //   deviceType: deviceType,
       //   message: message,
       // });
@@ -83,6 +86,13 @@ export async function handler(event, context) {
       };
     } catch (err) {
       console.log(err);
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          status: "ERROR",
+          reason: String(err),
+        }),
+      };
     }
   } else
     return {

@@ -12,9 +12,9 @@ const serverURL =
 export async function handler(event, context) {
   if (event.httpMethod === "POST") {
     try {
-      // const appCheckToken = event.headers["x-firebase-appcheck"];
+      const appCheckToken = event.headers["x-firebase-appcheck"];
 
-      // await verifyAppCheckToken(appCheckToken);
+      if (appCheckToken) await verifyAppCheckToken(appCheckToken);
       const postData = event.body ? JSON.parse(event.body) : null; //sanitation
       const token = event.headers.authorization;
       //   const decryptedContent = JSON.parse(

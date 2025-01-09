@@ -17,18 +17,11 @@ export async function handler(event, context) {
     const Data = event.body ? JSON.parse(event.body) : null; //sanitation
     const token = event.headers.authorization;
 
-    const isAuthenticated = JWTAuth(token);
     try {
-      // const appCheckToken = event.headers["x-firebase-appcheck"];
+      const appCheckToken = event.headers["x-firebase-appcheck"];
 
-      // await verifyAppCheckToken(appCheckToken);
-      if (!token)
-        return {
-          statusCode: 400,
-          body: JSON.stringify({
-            error: "Error no authentication token provided",
-          }),
-        };
+      if (appCheckToken) await verifyAppCheckToken(appCheckToken);
+      const isAuthenticated = appCheckToken ? true : JWTAuth(token);
 
       if (!isAuthenticated)
         return {

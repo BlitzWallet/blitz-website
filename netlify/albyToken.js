@@ -9,9 +9,9 @@ const realtime = new Ably.Realtime(process.env.ABLY_API_KEY);
 export async function handler(event, context) {
   if (event.httpMethod === "GET") {
     try {
-      // const appCheckToken = event.headers["x-firebase-appcheck"];
+      const appCheckToken = event.headers["x-firebase-appcheck"];
 
-      // await verifyAppCheckToken(appCheckToken);
+      if (appCheckToken) await verifyAppCheckToken(appCheckToken);
       const authToken = await realtime.auth.createTokenRequest();
 
       //  function (err, tokenRequest ) {
@@ -43,7 +43,7 @@ export async function handler(event, context) {
     } catch (err) {
       return {
         statusCode: 500,
-        body: JSON.stringify(authToken),
+        body: String(err),
       };
     }
   }
