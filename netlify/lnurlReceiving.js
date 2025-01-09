@@ -8,6 +8,13 @@ const client = new MongoClient(uri);
 let expo = new Expo({ accessToken: process.env.PUSH_NOTIFICATION_SECRET });
 
 export async function handler(event, context) {
+  return {
+    statusCode: 400,
+    body: JSON.stringify({
+      status: "ERROR",
+      reason: "This is not ready yet",
+    }),
+  };
   if (event.httpMethod === "GET") {
     const Parameters = event.queryStringParameters
       ? event.queryStringParameters
