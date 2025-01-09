@@ -1,12 +1,14 @@
+"use strict";
 import { initializeFirebase } from "../db";
 
-export default async function verifyAppCheckToken(token) {
+export async function verifyAppCheckToken(token) {
   try {
     const { admin } = await initializeFirebase();
 
     await admin.appCheck().verifyToken(token);
+    console.log("DID VERIFY");
     return true;
   } catch (err) {
-    throw new Error("Not valid app check token");
+    throw new Error(String(err));
   }
 }

@@ -2,7 +2,7 @@
 import "dotenv/config";
 
 import { JWTAuth } from "../middleware/JWTAuth";
-import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
+import { verifyAppCheckToken } from "../middleware/verifyAppCheckToken";
 
 // claude-3.5-sonnet
 // gpt-4o
@@ -64,7 +64,10 @@ export async function handler(event, context) {
     } catch (err) {
       return {
         statusCode: 400,
-        body: JSON.stringify({ error: "Not authenticated" }),
+        body: JSON.stringify({
+          error: "Not authenticated",
+          realError: String(err),
+        }),
       };
     }
   } else {

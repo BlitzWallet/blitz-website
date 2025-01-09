@@ -3,7 +3,7 @@ import "dotenv/config";
 import { JWTAuth } from "../middleware/JWTAuth";
 import { decryptMessage, encryptMessage } from "../middleware/newEncription";
 import { getTBCaccessCode } from "../middleware/getTBCaccessCode";
-import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
+import { verifyAppCheckToken } from "../middleware/verifyAppCheckToken";
 
 const serverURL =
   process.env.ENVIRONMENT === "liquid"

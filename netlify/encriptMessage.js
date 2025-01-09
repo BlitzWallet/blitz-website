@@ -1,7 +1,7 @@
 "use strict";
 import "dotenv/config";
 import { decrypt, encrypt } from "../middleware/encription";
-import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
+import { verifyAppCheckToken } from "../middleware/verifyAppCheckToken";
 
 export async function handler(event, context) {
   try {

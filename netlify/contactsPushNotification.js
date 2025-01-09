@@ -4,7 +4,7 @@ import { decrypt } from "../middleware/encription";
 import { sendContactNotification } from "../middleware/sendContactNotification";
 import { JWTAuth } from "../middleware/JWTAuth";
 import { Expo } from "expo-server-sdk";
-import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
+import { verifyAppCheckToken } from "../middleware/verifyAppCheckToken";
 import { decryptMessage } from "../middleware/newEncription";
 
 let expo = new Expo({

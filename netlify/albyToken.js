@@ -3,7 +3,7 @@ import "dotenv/config";
 // import { sha256 } from "liquidjs-lib/src/crypto";
 // import Crypto from "crypto";
 import Ably from "ably";
-import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
+import { verifyAppCheckToken } from "../middleware/verifyAppCheckToken";
 const realtime = new Ably.Realtime(process.env.ABLY_API_KEY);
 
 export async function handler(event, context) {

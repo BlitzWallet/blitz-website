@@ -4,7 +4,7 @@ import "dotenv/config";
 import jwt from "jsonwebtoken";
 import { decryptMessage } from "../middleware/newEncription";
 import { getDataFromCollection } from "../db";
-import verifyAppCheckToken from "../middleware/verifyAppCheckToken";
+import { verifyAppCheckToken } from "../middleware/verifyAppCheckToken";
 
 export async function handler(event, context) {
   if (event.httpMethod === "POST") {
