@@ -3,6 +3,7 @@ import "dotenv/config";
 import { Expo } from "expo-server-sdk";
 import { getSignleContact } from "../db";
 import { decrypt } from "../middleware/encription";
+import { decryptMessage } from "../middleware/newEncription";
 
 let expo = new Expo({ accessToken: process.env.PUSH_NOTIFICATION_SECRET });
 
@@ -25,7 +26,14 @@ export async function handler(event, context) {
         "blitzWalletUsers",
         Parameters.token.toLowerCase()
       );
-      if (!contact[0]?.pushNotifications?.key?.encriptedText) {
+      if (!contact.length) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({ error: "Unable to get contact" }),
+        };
+      }
+      const [retrivedContact] = contact;
+      if (!retrivedContact?.pushNotifications?.key?.encriptedText) {
         return {
           statusCode: 400,
           body: JSON.stringify({
@@ -34,9 +42,18 @@ export async function handler(event, context) {
           }),
         };
       }
-      const devicePushKey = decrypt(
-        contact[0].pushNotifications.key.encriptedText
-      );
+      const handleDecryption =
+        typeof retrivedContact.pushNotifications.key.encriptedText === "string"
+          ? decryptMessage(
+              process.env.BACKEND_PRIV_KEY,
+              retrivedContact.uuid,
+              retrivedContact.pushNotifications.key.encriptedText
+            )
+          : Promise.resolve(
+              decrypt(retrivedContact.pushNotifications.key.encriptedText)
+            );
+
+      const devicePushKey = await handleDecryption;
       await expo.sendPushNotificationsAsync([
         {
           to: `${devicePushKey}`,
