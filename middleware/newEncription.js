@@ -1,5 +1,6 @@
 import { Buffer } from "buffer";
 import * as secp from "@noble/secp256k1";
+import * as crypto from "crypto";
 
 // Encoding and decoding base64 using the web standard functions
 const btoa = (str) => Buffer.from(str, "binary").toString("base64");
@@ -86,10 +87,10 @@ async function decryptMessage(privkey, pubkey, encryptedText) {
 
     // Decode the decrypted message as UTF-8
     const decoder = new TextDecoder();
-    return decoder.decode(decryptedBuffer);
+    return { didWork: true, text: decoder.decode(decryptedBuffer) };
   } catch (err) {
     console.error(err);
-    return null;
+    return { didWork: false, error: String(err) };
   }
 }
 
