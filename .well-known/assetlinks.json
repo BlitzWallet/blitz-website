@@ -1,11 +1,15 @@
 [
   {
-    "relation": ["delegate_permission/common.handle_all_urls"],
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
     "target": {
       "namespace": "android_app",
       "package_name": "com.blitzwallet",
       "sha256_cert_fingerprints": [
-        "A:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C"
+        "A:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C",
+        "E0:C8:25:F8:0A:E3:21:D0:D2:EF:6D:8D:BF:D4:04:E9:7B:D7:26:8B:54:EF:FB:57:E4:E0:6D:E2:22:ED:17:21"
       ]
     }
   }
