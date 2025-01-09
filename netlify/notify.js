@@ -54,25 +54,55 @@ export async function handler(event, context) {
             );
 
       const devicePushKey = await handleDecryption;
-      await expo.sendPushNotificationsAsync([
-        {
-          to: `${devicePushKey}`,
-          sound: "default",
-          // aps: {
-          //   "content-available": 1,
-          // },
-          _contentAvailable: true,
-          mutableContent: true,
-          priority: "high",
-          title: "Blitz Wallet",
 
-          body: "Handling payment in the background",
-          data: Data,
-        },
-      ]);
+      if (!devicePushKey.didWork) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            error: "Unable to decrypt push token",
+            message: devicePushKey.error,
+          }),
+        };
+      }
+
+      // return {
+      //   statusCode: 200,
+      //   body: JSON.stringify({
+      //     uuid: retrivedContact.uuid,
+      //     text: retrivedContact.pushNotifications.key.encriptedText,
+      //     pushKey: devicePushKey,
+      //     Parameters: Parameters,
+      //     pushKeyType:
+      //       typeof retrivedContact.pushNotifications.key.encriptedText,
+      //   }),
+      // };
+      const messages =
+        Parameters?.platform?.toLowerCase() === "ios"
+          ? [
+              {
+                to: `${devicePushKey.text}`,
+                sound: "default",
+                body: "Handling payment in the background",
+                _contentAvailable: true,
+              },
+            ]
+          : [
+              {
+                to: `${devicePushKey.text}`,
+                sound: "default",
+                body: "Handling payment in the background",
+              },
+            ];
+      const [response] = await expo.sendPushNotificationsAsync(messages);
+      console.log("Push notification response:", response);
       return {
         statusCode: 200,
-        body: JSON.stringify({ error: "Working" }),
+        body: JSON.stringify({
+          error: "Working",
+          responseStatus: response.status,
+          id: response.id,
+          errorMessage: JSON.stringify(response.details),
+        }),
       };
     } catch (err) {
       console.log(err);

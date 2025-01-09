@@ -49,13 +49,21 @@ export async function handler(event, context) {
               devicePushKey
             );
       const handledDecryptPromise = await decryptedPushKey;
-
+      if (!handledDecryptPromise.didWork) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            error: "Unable to decrypt push token",
+            message: devicePushKey.error,
+          }),
+        };
+      }
       console.log(handledDecryptPromise, deviceType, message);
       const messages =
         deviceType === "ios"
           ? [
               {
-                to: `${handledDecryptPromise}`,
+                to: `${handledDecryptPromise.text}`,
                 sound: "default",
                 body: message,
                 // _contentAvailable: true,
@@ -64,7 +72,7 @@ export async function handler(event, context) {
             ]
           : [
               {
-                to: `${handledDecryptPromise}`,
+                to: `${handledDecryptPromise.text}`,
                 sound: "default",
                 body: message,
               },
