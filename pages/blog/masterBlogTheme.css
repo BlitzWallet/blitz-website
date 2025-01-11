@@ -81,6 +81,9 @@ nav .blogTypeSeperator {
   margin: 0 5px;
 }
 
+nav .blogNav p {
+  display: block;
+}
 #blogTypeText {
   opacity: 0.7;
 }
