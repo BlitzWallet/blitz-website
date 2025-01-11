@@ -87,7 +87,7 @@ nav .blogTypeSeperator {
 /* ////////////////////////////////////////////// */
 
 .blogContentContainer {
-  width: 95%;
+  width: 90%;
   /* max-width: 700px; */
   margin: 0 auto;
 }
@@ -144,17 +144,20 @@ nav .blogTypeSeperator {
 #postBody > h1,
 #postBody > h2,
 #postBody > h3,
-#postBody > h4 {
+#postBody > h4,
+#postBody > ul,
+#postBody > ol {
   width: 100%;
   max-width: 700px;
   margin: 0 auto;
 }
 
-#postBody p {
-  margin-top: 20px;
-  margin-bottom: 20px;
+#postBody p,
+#postBody li {
   font-size: 18px;
   line-height: 1.5em;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 #postBody a {
   font-size: 18px;
@@ -163,6 +166,16 @@ nav .blogTypeSeperator {
 #postBody h4 {
   font-size: 25px;
   font-weight: 500;
+}
+#postBody ul,
+#postBody ol {
+  padding-left: 50px;
+}
+#postBody h1,
+#postBody h2,
+#postBody h3,
+#postBody h4 {
+  margin: 10px auto;
 }
 #postBody .bld {
   font-weight: 500;
@@ -173,8 +186,20 @@ nav .blogTypeSeperator {
   max-width: 1300px;
   margin: 0 auto;
 }
+
+#postBody .conetentImage {
+  width: auto;
+  /* height: auto; */
+  max-height: calc(100dvh - 150px);
+  /* max-width: 900px; */
+  border-radius: 8px;
+}
+#postBody .conetentImageLong {
+  width: 100%;
+  height: auto;
+  max-width: 700px;
+  border-radius: 8px;
+  margin: 0 auto;
+}
 @media screen and (max-width: 800px) {
-  #postBody .conetentImage {
-    width: 100%;
-  }
 }

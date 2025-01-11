@@ -167,14 +167,245 @@
       </div>
 
       <section id="postBody">
-        <h4></h4>
-        <p></p>
+        <img
+          class="conetentImageLong"
+          src="./assets/thumbnailUrl.png"
+          alt="Image of Biltz store page"
+        />
+        <p>
+          Hello everybody. Today we are excited to talk about Blitz Wallet: a
+          Bitcoin-only wallet that integrates Lightning, Liquid, and eCash to
+          deliver a seamless user experience tailored to individual needs. Most
+          people in Bitcoin can agree that Bitcoin has revolutionized the way we
+          think about money and financial independence. Yet, as important as
+          that financial independence is, the usability gap remains a challenge
+          new people trying to use Bitcoin in its original purpose: a currency.
+        </p>
+        <p>
+          Let’s dive deeper into how Blitz Wallet works and how it’s reshaping
+          the way users interact with Bitcoin.
+        </p>
+        <h2>How Blitz Wallet Works</h2>
+        <p>Blitz Wallet uses three Bitcoin technologies:</p>
+        <ul>
+          <li>Lightning Network for non-permissionless cheap payments.</li>
+          <li>
+            Liquid Network for lightning channel liquidity management + offline
+            payments + beginner nodeless lightning experience.
+          </li>
+          <li>eCash for small micropayments with no lightning channel.</li>
+        </ul>
+        <p>
+          Our wallet has tied together these three technologies to maximize user
+          experience and minimizing technical expertise.
+        </p>
+        <h3>Step 1: Onboarding</h3>
+        <p>
+          The most critical step in any Bitcoiners journey is when they send and
+          receive their first Bitcoin payment.
+        </p>
+        <p>
+          When a user first downloads Blitz Wallet, they can immediately start
+          sending and receiving Bitcoin payments without the need to open a
+          Lightning channel. This is because Blitz Wallet leverages Boltz Atomic
+          Liquid swaps to seamlessly convert Bitcoin on-chain or lightning
+          payments to Liquid BTC. This allows users to bypass the lightning
+          network initial channel open fee which may not be economical based on
+          the amount of the first transaction. The beauty in this beginning
+          nodeless environment is the removal of complex lightning topics for
+          new Bitcoiners.
+        </p>
+        <p>
+          However, there was a problem with this setup. Because Boltz has a
+          minimum swap amount of 1000 sats or .00001000 Bitcoin, this excludes
+          users from being able to take advantage of the Lightning networks
+          micropayments feature. That is why we added an Experimental eCash
+          feature, which provides the ability to send and receive micropayments
+          for users while they do not have a Lightning channel open.
+        </p>
+        <h3>Step 2: The Custodial Ladder</h3>
+        <p>
+          Our philosophy at Blitz is user choice. Some users might want a less
+          complex payment experience while others might want to maximize how
+          permissionless there money is. As users grow more comfortable with
+          using Bitcoin and their balances increase, Blitz Wallet introduces the
+          “custodial ladder” to help them transition to full self-custody.
+        </p>
+        <p>
+          Here are a couple of main ways you can customize your payment
+          experience in Blitz Wallet.
+        </p>
+        <ul>
+          <li>
+            Toggling Lightning: By default, the use of Lighting is turned off.
+            This is because, when off, the wallet is not dependent on the
+            lighting node reducing the chance of connectivity issues. However,
+            when a user learns more about Lightning, they can turn it on in
+            settings at any time.
+          </li>
+          <li>
+            Threshold-Based Channel Opening: Once a user’s balance reaches a
+            preset threshold of 500,000 sats and Lightning is turned on, Blitz
+            Wallet automatically attempts to open a Lightning channel. The user
+            can configure this threshold as well as the maximum fee they’re
+            willing to pay for opening a channel. If the fee conditions are met,
+            the channel is opened, giving the user 100% self-custody of their
+            funds.
+          </li>
+          <li>
+            Liquidity Management: One of the biggest challenges with Lightning
+            is managing liquidity. Blitz Wallet solves this by dynamically
+            balancing funds when the rebalance amount is over a set threshold
+            (default is 10,000 sats). For example:
+          </li>
+          <ul>
+            <li>
+              If a user receives more Bitcoin than their inbound liquidity
+              allows, Blitz Wallet automatically generates a Lightning-to-Liquid
+              invoice to ensure payment completion.
+            </li>
+            <li>
+              If a user spends funds from their Lightning channel, creating
+              enough outbound capacity, Blitz Wallet swaps Liquid BTC back into
+              the channel to maintain balance.
+            </li>
+            <li>
+              A user can also manually perform swaps in settings if liquidity
+              needs to be freed up for an incoming transaction.
+            </li>
+          </ul>
+        </ul>
+        <p>
+          By providing choice to the user, we can give various payment
+          experiences all from a singular app. Say goodbye to onboarding your
+          friend to a custodial solution only for them to need to download a new
+          self-custodial app later. These features also ensure that less
+          technical users can seamlessly send and receive payments without
+          running into liquidity issues when using the lightning network.
+        </p>
+        <h2>Blitz Wallet Features</h2>
+        <h3>Integrations Are King</h3>
 
+        <p>
+          One of the most common questions we hear from newcomers to Bitcoin is,
+          “What can I actually do with it?” While there are plenty of online
+          platforms where Bitcoin can be used, these platforms aren’t integrated
+          directly into most wallets. Instead, most wallets rely on webviews to
+          link users to these platforms, which often disrupts the user
+          experience.
+        </p>
+        <p>
+          To address this, we introduced a native store feature in Blitz Wallet.
+          Instead of relying on webviews, we use APIs (Application Programming
+          Interfaces) to seamlessly connect users to Bitcoin-accepting services
+          directly within the app. This approach keeps the experience smooth and
+          consistent without requiring users to leave the app. Currently, Blitz
+          Wallet supports four key integrations.
+        </p>
         <img
           class="conetentImage"
-          src="./assets/BlitzIntroPostArch.png"
-          alt=""
+          src="./assets/storeImage.PNG"
+          alt="Image of Biltz store page"
         />
+        <ul>
+          <li>
+            Gift Cards: Through an in-app integration with The Bitcoin Company,
+            users can buy gift cards to various stores. The number of gift cards
+            available varies depending on the user’s location, enabling Bitcoin
+            to be spent at local retailers.
+          </li>
+          <li>
+            VPN Services: Privacy-conscious users can use their Bitcoin to
+            purchase VPN, enhancing their online security.
+          </li>
+          <li>
+            Generative AI Credits: Users can purchase credits for cutting-edge
+            AI services, including Claude-3.5-Sonnet, GPT-4o, GPT-4o-Mini, and
+            Gemini-Flash-1.5. This opens up exciting possibilities for
+            leveraging AI tools using Bitcoin.
+          </li>
+          <li>
+            Anonymous Text Messages: For those seeking privacy in communication,
+            Blitz Wallet allows users to send anonymous text messages directly
+            from the app.
+          </li>
+        </ul>
+        <p>
+          This built-in utility ensures that Bitcoin becomes immediately useful
+          for new users, showcasing the usability of Bitcoin as a currency.
+        </p>
+        <h3>Reaching Who Matters</h3>
+        <p>
+          One big challenge with using Bitcoin is how hard it is to pay friends
+          easily. We like to call this the “QR code problem.” Right now, most
+          Bitcoin transactions between people rely on QR codes—not because
+          they’re convenient, but because manually typing out a Bitcoin address
+          is nearly impossible.
+        </p>
+        <p>
+          While LNURL Pay was a step forward in solving this, most LNURL
+          services are custodial. This is because receiving funds in a
+          self-custodial way on mobile devices requires the app to always be
+          online or rely on notifications, which can be unreliable.
+        </p>
+        <img
+          class="conetentImage"
+          src="./assets/chatMenu.PNG"
+          alt="Image of Biltz store page"
+        />
+        <p>
+          To address this, we created an internal contacts payment system that
+          simplifies the process of paying a friend to just using their name.
+          Inspired by Venmo’s simple and user-friendly design, this system
+          removes all the technical details of Bitcoin transactions.
+        </p>
+        <p>
+          To ensure Blitz Wallet works seamlessly with other Lightning wallets,
+          we also allow users to add LNURL Lightning addresses. This means you
+          can pay other Lightning wallets just as easily as you would pay a
+          Blitz contact.
+        </p>
+        <p>
+          Blitz’s internal contacts system addresses key user experience
+          challenges:
+        </p>
+        <ul>
+          <li>
+            Generating Payment Addresses: Without Blitz, paying a friend who
+            doesn’t already have an LNURL address requires them to manually
+            generate an invoice for every transaction, which is inefficient and
+            creates a poor user experience.
+          </li>
+          <li>
+            Address Complexity: Bitcoin Lightning addresses are often long and
+            intimidating for new users. Bitcoin and Liquid addresses can feel
+            even more daunting, especially for those unfamiliar with the
+            technology.
+          </li>
+          <li>
+            Simplifying Transactions: By managing contacts behind the scenes,
+            Blitz ensures that users only see simple "Send" and "Request"
+            buttons, eliminating the need to deal with intimidating payment
+            addresses.
+          </li>
+        </ul>
+        <p>
+          This streamlined approach makes transacting intuitive and stress-free,
+          especially for newcomers. This decreases the payment barrier and
+          allows more people to start paying each other in Bitcoin.
+        </p>
+        <h2>The Vision for the Future</h2>
+        <p>
+          Our mission is to make Bitcoin more accessible to everyone regardless
+          of technical expertise. The benefits of Bitcoin come in its use, but
+          that use can only happen when it becomes simple enough. So, whether
+          you’re a beginner making your first Bitcoin transaction or an advanced
+          user managing multiple channels, Blitz Wallet provides the tools you
+          need to succeed.
+        </p>
+
+        <p>Best,</p>
+        <p>Blitz Team</p>
       </section>
     </section>
 

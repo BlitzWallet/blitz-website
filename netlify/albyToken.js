@@ -37,13 +37,13 @@ export async function handler(event, context) {
       } else {
         return {
           statusCode: 500,
-          body: "ERROR",
+          body: JSON.stringify("No Token Created"),
         };
       }
     } catch (err) {
       return {
         statusCode: 500,
-        body: String(err),
+        body: JSON.stringify(String(err)),
       };
     }
   }
