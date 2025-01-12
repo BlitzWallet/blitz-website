@@ -266,7 +266,7 @@
             </li>
             <li>
               If a user spends funds from their Lightning channel, creating
-              enough outbound capacity, Blitz Wallet swaps Liquid BTC back into
+              enough inbound capacity, Blitz Wallet swaps Liquid BTC back into
               the channel to maintain balance.
             </li>
             <li>
@@ -290,9 +290,8 @@
           One of the most common questions we hear from newcomers to Bitcoin is,
           “What can I actually do with it?” While there are plenty of online
           platforms where Bitcoin can be used, these platforms aren’t integrated
-          directly into most wallets. Instead, most wallets rely on webviews to
-          link users to these platforms, which often disrupts the user
-          experience.
+          directly into most wallets. Instead, wallets rely on webviews to link
+          users to these platforms, which often disrupts the user experience.
         </p>
         <p>
           To address this, we introduced a native store feature in Blitz Wallet.
@@ -345,8 +344,8 @@
         <p>
           While LNURL Pay was a step forward in solving this, most LNURL
           services are custodial. This is because receiving funds in a
-          self-custodial way on mobile devices requires the app to always be
-          online or rely on notifications, which can be unreliable.
+          self-custodial way on mobile devices either requires the app to always
+          be online or app wake up notifications, which can be unreliable.
         </p>
         <img
           class="conetentImage"
