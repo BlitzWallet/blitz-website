@@ -1,4 +1,0 @@
-This is a Brave Creators publisher verification file.
-
-Domain: blitz-wallet.com
-Token: a2d7bd727fa6da1d6c5251b3ac948d45f4645a0456b3726c0659dcea822c2938
