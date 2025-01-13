@@ -37,14 +37,15 @@ export async function getTBCaccessCode() {
       .find({ id: process.env.BLITZ_ORG_DB_REF })
       .toArray();
 
-    const decryptedContent = orgData
-      ? JSON.parse(decrypt(orgData.content))
-      : false;
+    const decryptedContent = orgData ? decrypt(orgData.content) : false;
+
+    if (!decryptedContent.didWork) return false;
+    const parsedContent = JSON.parse(decryptedContent.text);
 
     if (
       !orgData ||
-      isMoreThan40MinOld(decryptedContent?.lastRotatedAccessToken) ||
-      isMoreThan21Days(decryptedContent?.lastRotatedrefreshToken)
+      isMoreThan40MinOld(parsedContent?.lastRotatedAccessToken) ||
+      isMoreThan21Days(parsedContent?.lastRotatedrefreshToken)
     ) {
       const response = await fetch(`${serverURL}/auth/login`, {
         method: "POST",
@@ -87,7 +88,7 @@ export async function getTBCaccessCode() {
 
       return data.result.accessToken;
     } else {
-      return decryptedContent.accessToken;
+      return parsedContent.accessToken;
     }
   } catch (err) {
     console.log(err);

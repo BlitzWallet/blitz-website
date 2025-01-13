@@ -26,6 +26,15 @@ export async function handler(event, context) {
       //   );
 
       const access_token = await getTBCaccessCode();
+      if (!access_token) {
+        return {
+          statusCode: 400,
+          body: JSON.stringify({
+            error: "Error getting invoice",
+          }),
+        };
+      }
+
       if (postData.type === "listGiftCards") {
         try {
           const response = await fetch(`${serverURL}/giftcards`, {
@@ -337,6 +346,7 @@ export async function handler(event, context) {
         }
       } else if (postData.type === "buyGiftCard") {
         try {
+          console.log("GETTING INVOICE");
           const response = await fetch(
             `${serverURL}/giftcards/purchase/bitcoin`,
             {
@@ -360,6 +370,7 @@ export async function handler(event, context) {
             }
           );
           const data = await response.json();
+          console.log(data);
 
           if (data.statusCode === 400)
             return {
@@ -478,11 +489,6 @@ export async function handler(event, context) {
       //       error: "Incorrect authenticatoin token",
       //     }),
       //   };
-
-      return {
-        statusCode: 200,
-        body: JSON.stringify("WORKIGN"),
-      };
     } catch (err) {
       return {
         statusCode: 400,
