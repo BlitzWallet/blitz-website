@@ -10,7 +10,7 @@ export const postList = [
     pageMetaDescription:
       "Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet!",
     readingLengthEST: 5, //In minutes
-    time: "1736275644454", // January 8, 2025
+    time: "1736994574819", // January 8, 2025
     author: "Blitz Team",
     authorImage: "../../../public/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Tutorial and Microphone is for podcast
