@@ -43,20 +43,22 @@ export async function handler(event, context) {
         )
       );
 
-      if (decryptedContent.databaseCopy) {
+      if (decryptedContent.text?.databaseCopy) {
         return {
           statusCode: 200,
           body: JSON.stringify({ message: "Invalid content provided" }),
         };
       }
-      if (decryptedContent.checkHash !== savedCheckValue.checkHash) {
+      if (
+        decryptedContent.text?.checkHash !== savedCheckValue.text?.checkHash
+      ) {
         return {
           statusCode: 200,
           body: JSON.stringify({ message: "Invalid hash provided" }),
         };
       }
 
-      if ((new Date() - decryptedContent.sendTime) / (1000 * 60) > 1) {
+      if ((new Date() - decryptedContent.text?.sendTime) / (1000 * 60) > 1) {
         return {
           statusCode: 200,
           body: JSON.stringify({ message: "Invalid date" }),
@@ -64,7 +66,7 @@ export async function handler(event, context) {
       }
 
       const token = jwt.sign(
-        { checkHash: decryptedContent.checkHash },
+        { checkHash: decryptedContent.text?.checkHash },
         process.env.JWT_SECRET_KEY,
         {
           expiresIn: "2h",
