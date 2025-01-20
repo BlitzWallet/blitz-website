@@ -67,7 +67,13 @@ function createPostElement(post) {
         post.isFeatured ? "highlightedPostImageContainer" : "postImageContainer"
       }">
       <img class=${
-        post.isFeatured ? "highlightedPostImage" : "postImage"
+        post.isFeatured
+          ? post.isVertical
+            ? "highlightedPostImageVertical"
+            : "highlightedPostImage"
+          : post.isVertical
+          ? "postImageVertical"
+          : "postImage"
       } src="${post.thumbnailUrl}" alt="${post.title}" />
       </div>
       <div class="textContainer">

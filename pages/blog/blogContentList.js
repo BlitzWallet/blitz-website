@@ -17,6 +17,23 @@ export const postList = [
     thumbnailUrl: "./introducing-blitz-wallet/assets/thumbnailUrlWhite.png", //Scoped to blog index.html
     isFeatured: true, // usualy will be set to false
   },
+  {
+    type: "Release", // Can be "Release", "Tutorial", or "Podcast"
+    title: "The Bridge Update",
+    description: "We've rebuilt how you pay your contacts.",
+    htmlPageLink: "./blitz-jan-20-release",
+    searchName: "blitz-jan-20-release",
+    pageMetaDescription:
+      "Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet!",
+    readingLengthEST: 2, //In minutes
+    time: "1737387865917", // January 8, 2025
+    author: "Blitz Team",
+    authorImage: "../../../public/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Tutorial and Microphone is for podcast
+    thumbnailUrl: "./blitz-jan-20-release/assets/contactsImages.png", //Scoped to blog index.html
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
 ];
 
 // Helper functions

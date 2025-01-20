@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blitz Wallet | Blog post</title>
+    <!-- Title is Pulled in from javascript -->
+
+    <!-- for cards -->
+    <meta property="og:title" content="Introducing Blitz Wallet" />
+    <meta
+      property="og:description"
+      content="Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet."
+    />
+    <meta
+      property="og:image"
+      content="https://blitz-wallet.com/pages/blog/introducing-blitz-wallet/assets/twitterCard.png"
+    />
+    <meta
+      property="og:url"
+      content="https://blitz-wallet.com/pages/blog/introducing-blitz-wallet/"
+    />
+
+    <!-- Twitter specific tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@BlitzWalletApp" />
+    <meta name="twitter:title" content="Introducing Blitz Wallet" />
+    <meta
+      name="twitter:description"
+      content="Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet."
+    />
+    <meta
+      name="twitter:image"
+      content="https://blitz-wallet.com/pages/blog/introducing-blitz-wallet/assets/twitterCard.png"
+    />
+
+    <!-- Favicon and Apple touch icon for iOS -->
+    <link rel="apple-touch-icon" href="../../../public/favicon.png" />
+
+    <link
+      rel="shortcut icon"
+      href="../../../public/favicon.png"
+      type="image/x-icon"
+    />
+
+    <link rel="stylesheet" href="../../../src/assets/styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="../../../src/assets/styles/navbar_footer.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../src/components/downloadModal/style.css"
+    />
+
+    <script src="../../../src/js/navbar.js" defer></script>
+    <script src="../../../src/components/downloadModal/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script type="module" src="../pageSetup.js"></script>
+    <link rel="stylesheet" href="../masterBlogTheme.css" />
+    <link rel="stylesheet" href="./style.css" />
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </head>
+
+  <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet (beta)</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <p class="bitzName">Blitz Wallet.</p>
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/faq/">FAQ</a>
+            </li>
+            <li class="navItem activePage">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+      <div class="blogNav">
+        <div class="locationTab">
+          <div class="imgContainer">
+            <img
+              id="blogTypeImage"
+              src="../../../public/favicon.png"
+              alt="blog pencil"
+            />
+          </div>
+          <a href="/pages/blog">
+            <p>Blog</p>
+          </a>
+          <p class="blogTypeSeperator">|</p>
+          <p id="blogTypeText">
+            <!-- Pulled in from javascript -->
+          </p>
+        </div>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavDropdown-Container">
+        <ul class="navItems">
+          <li class="navItem">
+            <a href="/pages/about/">About</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/contact">Contact</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/faq/">FAQ</a>
+          </li>
+          <li class="navItem activePage">
+            <a href="/pages/blog">Blog</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <section class="blogContentContainer">
+      <div class="postHead">
+        <h1 id="blogTitle">
+          <!-- Pulled in from javascript -->
+        </h1>
+        <p id="blogSubHeader">
+          <!-- Pulled in from javascript -->
+        </p>
+        <div class="postDataContainerOuter">
+          <div class="imageContainer">
+            <img
+              id="authorProfilePicture"
+              src="../../../public/favicon.png"
+              alt="Profile image of the author"
+            />
+            <!-- Img src in from javascript -->
+          </div>
+          <div class="dataContainer">
+            <p rel="author" id="authorName">
+              <!-- Pulled in from javascript -->
+            </p>
+            <div class="postDataContainerInner">
+              <p id="postReadTime">
+                <!-- Pulled in from javascript -->
+              </p>
+              <p class="postDataSeperator">|</p>
+              <p id="postDate">
+                <!-- Pulled in from javascript -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="postBody">
+        <p>
+          Today we’re excited to announce a new update to Blitz Wallet that
+          brings significant improvements to your user experience. At Blitz
+          Wallet, our mission is to be the simplest wallet ever, and this
+          release reflects our ongoing commitment to just that.
+        </p>
+        <img
+          class="conetentImage verticalSpacing"
+          src="./assets/contactsImages.png"
+          alt="Image of Biltz store page"
+        />
+        <p>Let’s dive into the details:</p>
+
+        <h2>A Fresh Start for Contact Payments</h2>
+        <p>
+          The contacts feature in Blitz Wallet delivers a simple and seamless
+          payment experience for users. However, the previous system for
+          managing sending and receiving messages lacked the flexibility needed
+          to provide the best possible experience.
+        </p>
+        <p>
+          That's why we've completely redesigned how contact payments work in
+          Blitz Wallet. This update introduces a more robust system for
+          retrieving offline messages and allows for more customizable messages
+          displayed to users.
+        </p>
+        <p>Here’s what you need to know:</p>
+        <ul>
+          <li>
+            <strong
+              >Important Note: Due to these changes, any contact payments sent
+              before this update will no longer appear in your transaction
+              history.</strong
+            >
+          </li>
+          <li>
+            <strong>Faster and More Reliable Messaging:</strong> We’ve replaced
+            the previous Ably messaging system and individual payment message
+            storage to make contact payments more efficient and seamless.
+          </li>
+          <li>
+            <strong>Improved Offline Support:</strong> The new system ensures
+            that contacts can retrieve offline messages, solving a common pain
+            point for our users.
+          </li>
+          <li>
+            <strong>Future-Proofing Features:</strong> With this update, we’re
+            laying the groundwork for exciting new capabilities in future
+            releases.
+          </li>
+        </ul>
+
+        <h2>Other Enhancements:</h2>
+        <h3>Decluttering the Homepage: Removed Internal Transfer Payments</h3>
+        <p>
+          In our previous update, we introduced manual internal Bitcoin
+          transfers. This feature allows users to manually rebalance their
+          Lightning channels or Liquid balances instead of relying on the app to
+          handle it automatically.
+        </p>
+        <p>
+          However, some users pointed out that these transactions cluttered the
+          homepage transaction list and should be hidden. In response to this
+          feedback, internal transfer payments will no longer appear on the
+          homepage. This update streamlines the main payments screen by removing
+          unnecessary transaction records, allowing you to focus on the payments
+          that matter most.
+        </p>
+        <h3>Migrating to Firebase Functions</h3>
+        <p>
+          We’ve moved our backend operations from Netlify to Firebase Functions.
+          This migration enhances the robustness and reliability of our
+          server-side processes, ensuring smoother performance and faster
+          response times for users.
+        </p>
+        <h3>Globalized Liquid and Lightning Event Listeners</h3>
+        <p>
+          We found a problem with how the app was checking for incoming
+          payments. Previously, we initialized the functions to look for new
+          payments while you were on the loading screen. However, once you moved
+          to other screens in the app, this system became unreliable because of
+          how phones handle screens that aren't currently being used.
+        </p>
+        <p>
+          To solve this, we created a new system that constantly watches for
+          payments no matter which screen you're using in the app. This means
+          you'll now receive all your payment notifications reliably, regardless
+          of what you're doing in the app.
+        </p>
+        <h3>General Bug Fixes</h3>
+        <p>
+          This update includes several under-the-hood improvements to boost
+          overall app stability and provide a more dependable user experience.
+        </p>
+
+        <p>Happy transacting,</p>
+        <p>Blitz Team</p>
+      </section>
+    </section>
+
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            A self-custodial Bitcoin Lightning, Liquid, and Ecash wallet aiming
+            to simplify payments on the Bitcoin Network.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
+              <li><a href="/pages/faq/">FAQ</a></li>
+              <li><a href="/pages/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlakeKaufman/BlitzWallet">GitHub</a>
+              </li>
+              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
+              <li><a href="https://youtube.com/@BlitzWallet">YouTube</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          <a href="/pages/terms/">Terms of Usage</a>
+          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
+            >License</a
+          >
+        </div>
+        <p>&copy;2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+  </body>
+</html>
