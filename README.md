@@ -12,7 +12,7 @@ Welcome to the official PR website repository for **Blitz Wallet**. Blitz Wallet
 
 ## 🔗 Related Repositories
 
-- **[Blitz Wallet](https://github.com/BlakeKaufman/BlitzWallet)**: The main repository for the Blitz Wallet, including all core wallet functionalities.
+- **[Blitz Wallet](https://github.com/BlitzWallet/BlitzWallet)**: The main repository for the Blitz Wallet, including all core wallet functionalities.
 - **[Blitz Wallet POS](https://github.com/BlakeKaufman/blitz-wallet-pos)**: A Point of Sale (POS) terminal app designed to work alongside Blitz Wallet, enabling merchants to accept payments in Bitcoin, Lightning, Liquid, and Ecash.
 
 ## 🚀 Getting Started

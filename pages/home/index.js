@@ -14,7 +14,7 @@
 //     window.open(
 //       !isAndroid()
 //         ? "https://testflight.apple.com/join/r8MfbNa6"
-//         : "https://github.com/BlakeKaufman/BlitzWallet/tags",
+//         : "https://github.com/BlitzWallet/BlitzWallet/tags",
 //       "_self"
 //     );
 //     return;
@@ -55,7 +55,7 @@
 //   qrcode.makeCode(
 //     Array.from(targetElement.classList).includes("IOS")
 //       ? "https://testflight.apple.com/join/r8MfbNa6"
-//       : "https://github.com/BlakeKaufman/BlitzWallet/tags"
+//       : "https://github.com/BlitzWallet/BlitzWallet/tags"
 //   );
 // }
 
