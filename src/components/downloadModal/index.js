@@ -14,7 +14,7 @@ function toggleModal(e) {
     window.open(
       !isAndroid()
         ? "https://testflight.apple.com/join/r8MfbNa6"
-        : "https://github.com/BlitzWallet/BlitzWallet/tags",
+        : "https://play.google.com/store/apps/details?id=com.blitzwallet",
       "_self"
     );
     return;
@@ -55,7 +55,7 @@ function toggleQRContentType(e) {
   qrcode.makeCode(
     Array.from(targetElement.classList).includes("IOS")
       ? "https://testflight.apple.com/join/r8MfbNa6"
-      : "https://github.com/BlitzWallet/BlitzWallet/tags"
+      : "https://play.google.com/store/apps/details?id=com.blitzwallet"
   );
 }
 
