@@ -1,13 +1,13 @@
 "use strict";
 
-const header = document.querySelector(".header");
 const blitzLinkButton = document.querySelector("#blitzLink");
 
 function router() {
-  const path = window.location.pathname;
-  const userName = path.split("/").pop();
-
-  blitzLinkButton.click();
+  try {
+    blitzLinkButton.click();
+  } catch (err) {
+    console.log(err);
+  }
 }
 
-router();
+document.addEventListener("DOMContentLoaded", router);
