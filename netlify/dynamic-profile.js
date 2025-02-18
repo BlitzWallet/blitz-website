@@ -12,22 +12,27 @@ export async function handler(event, context) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="/favicon.png"/>
+    <link rel="icon" type="image/x-icon" href="/public/favicon.png" />
     <title>Blitz Wallet | ${username}</title>
-    <meta property="og:title" content="Blitz Wallet | ${username}" />
-    <meta property="og:description" content="Blitz Wallet is a digital wallet that lets you make payments with friends. Download the IOS or Android app today." />
     <meta
       name="description"
       content="Blitz Wallet is a digital wallet that lets you make payments with friends. Download the IOS or Android app today."
     />
-    <meta property="og:image" content="https://blitz-wallet.com/public/favicon.png" />
-    <meta property="og:url" content="https://blitz-wallet.com/${username}" />
     
     <!-- Twitter Meta Tags -->
-    <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content="Blitz Wallet | ${username}" />
     <meta property="twitter:description" content="Check out the Blitz Wallet profile of ${username}." />
-    <meta property="twitter:image" content="https://blitz-wallet.com/public/favicon.png" />
+   
+
+    <!-- Open Graph Meta for Apple -->
+    <meta property="og:title" content="${username}" />
+    <meta property="og:site_name" content="Blitz Wallet" />
+    <meta property="og:description" content="Check out ${username} on Blitz Wallet." />
+    <meta property="og:url" content="https://blitz-wallet.com/u/${username}" />
+
+
+    <!-- Apple Icon -->
+    <link rel="apple-touch-icon" href="/public/favicon.png" />
 
     <script src="/u/index.js" defer></script>
 
