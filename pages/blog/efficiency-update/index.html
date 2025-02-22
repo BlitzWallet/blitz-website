@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blitz Wallet | Blog post</title>
+    <!-- Title is Pulled in from javascript -->
+
+    <!-- for cards -->
+    <meta property="og:title" content="Introducing Blitz Wallet" />
+    <meta
+      property="og:description"
+      content="Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet."
+    />
+    <meta
+      property="og:image"
+      content="https://blitz-wallet.com/pages/blog/introducing-blitz-wallet/assets/twitterCard.png"
+    />
+    <meta
+      property="og:url"
+      content="https://blitz-wallet.com/pages/blog/introducing-blitz-wallet/"
+    />
+
+    <!-- Twitter specific tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@BlitzWalletApp" />
+    <meta name="twitter:title" content="Introducing Blitz Wallet" />
+    <meta
+      name="twitter:description"
+      content="Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet."
+    />
+    <meta
+      name="twitter:image"
+      content="https://blitz-wallet.com/pages/blog/introducing-blitz-wallet/assets/twitterCard.png"
+    />
+
+    <!-- Favicon and Apple touch icon for iOS -->
+    <link rel="apple-touch-icon" href="../../../public/favicon.png" />
+
+    <link
+      rel="shortcut icon"
+      href="../../../public/favicon.png"
+      type="image/x-icon"
+    />
+
+    <link rel="stylesheet" href="../../../src/assets/styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="../../../src/assets/styles/navbar_footer.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../src/components/downloadModal/style.css"
+    />
+
+    <script src="../../../src/js/navbar.js" defer></script>
+    <script src="../../../src/components/downloadModal/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script type="module" src="../pageSetup.js"></script>
+    <link rel="stylesheet" href="../masterBlogTheme.css" />
+    <link rel="stylesheet" href="./style.css" />
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </head>
+
+  <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet (beta)</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <p class="bitzName">Blitz Wallet.</p>
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/faq/">FAQ</a>
+            </li>
+            <li class="navItem activePage">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+      <div class="blogNav">
+        <div class="locationTab">
+          <div class="imgContainer">
+            <img
+              id="blogTypeImage"
+              src="../../../public/favicon.png"
+              alt="blog pencil"
+            />
+          </div>
+          <a href="/pages/blog">
+            <p>Blog</p>
+          </a>
+          <p class="blogTypeSeperator">|</p>
+          <p id="blogTypeText">
+            <!-- Pulled in from javascript -->
+          </p>
+        </div>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavDropdown-Container">
+        <ul class="navItems">
+          <li class="navItem">
+            <a href="/pages/about/">About</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/contact">Contact</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/faq/">FAQ</a>
+          </li>
+          <li class="navItem activePage">
+            <a href="/pages/blog">Blog</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <section class="blogContentContainer">
+      <div class="postHead">
+        <h1 id="blogTitle">
+          <!-- Pulled in from javascript -->
+        </h1>
+        <p id="blogSubHeader">
+          <!-- Pulled in from javascript -->
+        </p>
+        <div class="postDataContainerOuter">
+          <div class="imageContainer">
+            <img
+              id="authorProfilePicture"
+              src="../../../public/favicon.png"
+              alt="Profile image of the author"
+            />
+            <!-- Img src in from javascript -->
+          </div>
+          <div class="dataContainer">
+            <p rel="author" id="authorName">
+              <!-- Pulled in from javascript -->
+            </p>
+            <div class="postDataContainerInner">
+              <p id="postReadTime">
+                <!-- Pulled in from javascript -->
+              </p>
+              <p class="postDataSeperator">|</p>
+              <p id="postDate">
+                <!-- Pulled in from javascript -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="postBody">
+        <img
+          class="conetentImage verticalSpacing"
+          src="./assets/homepage.png"
+          alt="Image of Biltz homepage"
+        />
+        <p>
+          We’re excited to bring you a new Blitz Wallet update that enhances
+          performance and improves usability. Our mission is to make Blitz
+          Wallet the simplest wallet ever, and this update reflects that
+          commitment.
+        </p>
+        <p>Let’s dive into the details:</p>
+
+        <h2>Better Fiat Display for Clearer Transactions</h2>
+        <p>
+          We’ve improved how fiat currencies are displayed in the app. Before,
+          the currency name (e.g., “USD” or “EUR”) appeared as plain text after
+          the number. Now, we display the actual currency symbol (e.g., “$” for
+          USD, “€” for EUR) in the correct position, following the proper
+          decimal and comma formatting for each currency. This makes
+          transactions easier to read and more intuitive at a glance for the
+          user.
+        </p>
+        <h2>Optimized Global Contexts for Faster Performance</h2>
+        <p>
+          Blitz Wallet now loads faster thanks to a more efficient handling of
+          global contexts. In the past, some pages were re-rendering
+          unnecessarily, leading to slowdowns and lag. We’ve optimized how data
+          is shared across the app, reducing unnecessary re-renders and
+          improving overall responsiveness.
+        </p>
+        <h2>Optimized Transaction Sorting</h2>
+        <p>
+          Blitz Wallet supports multiple networks (Lightning, Liquid, and
+          eCash), which means every time you open the app or receive a new
+          transaction, all your payments need to be combined and sorted
+          seamlessly. To make this process faster and more efficient, we’ve
+          introduced a new max-heap sorting method that significantly reduces
+          memory usage, ensuring a smoother experience with less lag.
+        </p>
+        <h2>Improved Connection to Your Node</h2>
+        <p>
+          Thanks to Breez new update, connecting to your liquid and lightning
+          node is now faster than ever. We’ve also streamlined the process,
+          reducing the initial connection time so you can get up and running
+          with your wallet more quickly.
+        </p>
+        <h2>Important Bug Fixes & Enhancements:</h2>
+        <ul>
+          <li>
+            <strong>Database Freeze Fix:</strong> Some users experienced a brief
+            freeze (about one second) when writing data to the database. This
+            has been fixed, making transactions and other database-heavy actions
+            much smoother.
+          </li>
+          <li>
+            <strong>Send Max Button Fix:</strong> The logic behind the Send Max
+            option has been improved, ensuring a more correct maximum amount is
+            calculated when swapping between Liquid and Lightning.
+          </li>
+          <li>
+            <strong>Authentication Update:</strong> We’ve removed Firebase App
+            Check, which was causing compatibility issues with Huawei devices.
+          </li>
+          <li>
+            <strong>Style & UI Enhancements:</strong> We’ve made small styling
+            adjustments for a cleaner, more consistent interface, ensuring that
+            the wallet remains intuitive and easy to navigate.
+          </li>
+        </ul>
+
+        <p>Best,</p>
+        <p>Blitz Team</p>
+      </section>
+    </section>
+
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            A self-custodial Bitcoin Lightning, Liquid, and Ecash wallet aiming
+            to simplify payments on the Bitcoin Network.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
+              <li><a href="/pages/faq/">FAQ</a></li>
+              <li><a href="/pages/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
+              </li>
+              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
+              <li><a href="https://youtube.com/@BlitzWallet">YouTube</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          <a href="/pages/terms/">Terms of Usage</a>
+          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
+            >License</a
+          >
+        </div>
+        <p>&copy;2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+  </body>
+</html>

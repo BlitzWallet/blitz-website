@@ -34,6 +34,23 @@ export const postList = [
     isVertical: true,
     isFeatured: false, // usualy will be set to false
   },
+  {
+    type: "Release", // Can be "Release", "Tutorial", or "Podcast"
+    title: "The Efficiency Update",
+    description: "Saying goodbye to long load times.",
+    htmlPageLink: "./efficiency-update",
+    searchName: "efficiency-update",
+    pageMetaDescription:
+      "Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet!",
+    readingLengthEST: 2, //In minutes
+    time: "1740237953923",
+    author: "Blitz Team",
+    authorImage: "../../../public/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Tutorial and Microphone is for podcast
+    thumbnailUrl: "./efficiency-update/assets/homepage.png", //Scoped to blog index.html
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
 ];
 
 // Helper functions
