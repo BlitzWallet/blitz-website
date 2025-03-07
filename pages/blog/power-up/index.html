@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blitz Wallet | Bridge Update</title>
+    <title>Blitz Wallet | Power Up</title>
     <!-- Title is Pulled in from javascript -->
 
     <!-- for cards -->
-    <meta property="og:title" content="Bridge Update" />
+    <meta property="og:title" content="Power Up" />
     <meta
       property="og:description"
       content="Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet."
@@ -18,13 +18,13 @@
     />
     <meta
       property="og:url"
-      content="https://blitz-wallet.com/pages/blog/bridge-update/"
+      content="https://blitz-wallet.com/pages/blog/power-up/"
     />
 
     <!-- Twitter specific tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@BlitzWalletApp" />
-    <meta name="twitter:title" content="Bridge Update" />
+    <meta name="twitter:title" content="Power Up" />
     <meta
       name="twitter:description"
       content="Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet."
@@ -198,100 +198,134 @@
       </div>
 
       <section id="postBody">
+        <h1>Hello everyone!</h1>
         <p>
-          Today we’re excited to announce a new update to Blitz Wallet that
-          brings significant improvements to your user experience. At Blitz
-          Wallet, our mission is to be the simplest wallet ever, and this
-          release reflects our ongoing commitment to just that.
+          In our last release, we focused on significant improvements to the
+          contacts feature and loading times to enhance your overall experience.
+          In this update, we’re continuing that momentum with a major upgrade to
+          eCash, expanded functionality for our point-of-sale system, and a
+          range of bug fixes and UI improvements—all in line with our mission to
+          be the simplest Bitcoin wallet ever.
         </p>
+
+        <h2>eCash Revamp, More Flexibility, Better Security</h2>
         <img
           class="conetentImage verticalSpacing"
-          src="./assets/contactsImages.png"
-          alt="Image of Biltz store page"
+          src="./assets/restoreProofs.webp"
+          alt="Image of restore ecash proofs page"
         />
-        <p>Let’s dive into the details:</p>
+        <p>
+          Micropayments are a key advantage of the Bitcoin Lightning Network.
+          However, because micropayments require an open Lightning channel to
+          send and receive payments, users without a channel must rely on Boltz
+          Liquid Atomic swaps, which have a minimum send/receive amount of 1,000
+          sats (currently ~$0.89 USD). To address this, we previously introduced
+          a simple eCash feature that enables Lightning micropayments without
+          requiring an open channel.
+        </p>
 
-        <h2>A Fresh Start for Contact Payments</h2>
         <p>
-          The contacts feature in Blitz Wallet delivers a simple and seamless
-          payment experience for users. However, the previous system for
-          managing sending and receiving messages lacked the flexibility needed
-          to provide the best possible experience.
+          With this release, we’ve made a fundamental shift in how eCash is
+          stored and restored:
         </p>
-        <p>
-          That's why we've completely redesigned how contact payments work in
-          Blitz Wallet. This update introduces a more robust system for
-          retrieving offline messages and allows for more customizable messages
-          displayed to users.
-        </p>
-        <p>Here’s what you need to know:</p>
         <ul>
           <li>
-            <strong
-              >Important Note: Due to these changes, any contact payments sent
-              before this update will no longer appear in your transaction
-              history.</strong
-            >
+            <strong>Deterministic Proofs:</strong> eCash proofs are now linked
+            to your Blitz Wallet seed phrase, allowing you to restore new proofs
+            effortlessly if you ever need to reinstall the app.
           </li>
           <li>
-            <strong>Faster and More Reliable Messaging:</strong> We’ve replaced
-            the previous Ably messaging system and individual payment message
-            storage to make contact payments more efficient and seamless.
+            <strong>New SQL Storage System:</strong> Instead of encrypting
+            proofs in a database, Blitz Wallet now uses a local SQL database
+            directly on your device for better reliability and flexibility.
           </li>
           <li>
-            <strong>Improved Offline Support:</strong> The new system ensures
-            that contacts can retrieve offline messages, solving a common pain
-            point for our users.
+            <strong>Cross-Wallet Portability:</strong> This update allows you to
+            upload and migrate your eCash proofs between different
+            eCash-compatible wallets.
           </li>
           <li>
-            <strong>Future-Proofing Features:</strong> With this update, we’re
-            laying the groundwork for exciting new capabilities in future
-            releases.
+            <strong>Laying the Groundwork for Higher Limits:</strong> With this
+            new system in place, we’re preparing to increase the eCash storage
+            limit, currently capped at 5,000 sats.
           </li>
         </ul>
 
-        <h2>Other Enhancements:</h2>
-        <h3>Decluttering the Homepage: Removed Internal Transfer Payments</h3>
+        <h3>Important Note: Manual Migration Required</h3>
         <p>
-          In our previous update, we introduced manual internal Bitcoin
-          transfers. This feature allows users to manually rebalance their
-          Lightning channels or Liquid balances instead of relying on the app to
-          handle it automatically.
+          To transition to the new system, you’ll need to manually migrate your
+          existing eCash proofs. This can be done via
+          <strong>Settings > Experimental Features</strong>. We highly recommend
+          sending out your eCash before migrating to prevent any loss of funds.
+          Also, only newly generated proofs after migration will be restorable
+          using your seed phrase.
         </p>
+
+        <h2>
+          Point-of-Sale Enhancements: More Customization and Tipping Support
+        </h2>
+
         <p>
-          However, some users pointed out that these transactions cluttered the
-          homepage transaction list and should be hidden. In response to this
-          feedback, internal transfer payments will no longer appear on the
-          homepage. This update streamlines the main payments screen by removing
-          unnecessary transaction records, allowing you to focus on the payments
-          that matter most.
+          Onboarding businesses to Bitcoin Lightning point-of-sale systems can
+          be complex, so we created a companion Point-of-Sale (PoS) system that
+          works directly with your Blitz Wallet to make accepting payments
+          seamless. In this update, we’ve made two major upgrades:
         </p>
-        <h3>Migrating to Firebase Functions</h3>
+        <img
+          class="conetentImage verticalSpacing"
+          src="./assets/posFormatCurrency.webp"
+          alt="Image of blitz wallet point-of-sale web app Customizable display currency screen"
+        />
+        <ul>
+          <li>
+            <strong>Customizable Currency Display:</strong> You can now toggle
+            between displaying amounts in sats or fiat currency (e.g., USD, EUR,
+            etc.). We’ve also refined fiat currency formatting to allow either
+            symbols (e.g., $) or text (e.g., USD) with proper regional
+            formatting (comma or period-based decimal separators).
+          </li>
+          <li>
+            <strong>Integrated Tipping System:</strong> When using the PoS
+            system, employees will now be prompted to enter their name. After a
+            transaction is completed, the business owner can view a detailed
+            transaction history, including tip amounts, via
+            <strong
+              >Settings > Point-of-Sale > List Icon (top right corner)</strong
+            >. From there, tips can be distributed to employees accordingly.
+          </li>
+        </ul>
+        <img
+          class="conetentImage verticalSpacing"
+          src="./assets/posTransactions.webp"
+          alt="Image of blitz wallet app point-of-sale transactions page"
+        />
+
+        <h2>UI and Bug Fixes: A More Polished Blitz Wallet</h2>
         <p>
-          We’ve moved our backend operations from Netlify to Firebase Functions.
-          This migration enhances the robustness and reliability of our
-          server-side processes, ensuring smoother performance and faster
-          response times for users.
+          Beyond these major updates, we’ve rolled out several style
+          improvements and bug fixes to enhance the overall app experience:
         </p>
-        <h3>Globalized Liquid and Lightning Event Listeners</h3>
-        <p>
-          We found a problem with how the app was checking for incoming
-          payments. Previously, we initialized the functions to look for new
-          payments while you were on the loading screen. However, once you moved
-          to other screens in the app, this system became unreliable because of
-          how phones handle screens that aren't currently being used.
-        </p>
-        <p>
-          To solve this, we created a new system that constantly watches for
-          payments no matter which screen you're using in the app. This means
-          you'll now receive all your payment notifications reliably, regardless
-          of what you're doing in the app.
-        </p>
-        <h3>General Bug Fixes</h3>
-        <p>
-          This update includes several under-the-hood improvements to boost
-          overall app stability and provide a more dependable user experience.
-        </p>
+
+        <h3>Standardized UI Adjustments:</h3>
+        <ul>
+          <li>
+            Improved keyboard handling to prevent content from being hidden.
+          </li>
+          <li>Unified settings page widths for a consistent layout.</li>
+          <li>Enhanced dark mode color schemes for better readability.</li>
+        </ul>
+
+        <h3>Performance and Bug Fixes:</h3>
+        <ul>
+          <li>
+            Removed manual mempool fee fetching and switched to SDK-based
+            fetching for more accuracy.
+          </li>
+          <li>
+            Modularized payment decoding for easier maintenance and future
+            upgrades.
+          </li>
+        </ul>
 
         <p>Best,</p>
         <p>Blitz Team</p>

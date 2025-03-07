@@ -8,7 +8,7 @@ export const postList = [
     htmlPageLink: "./introducing-blitz-wallet",
     searchName: "introducing-blitz-wallet",
     pageMetaDescription:
-      "Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet!",
+      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
     readingLengthEST: 5, //In minutes
     time: "1736994574819", // January 8, 2025
     author: "Blitz Team",
@@ -24,7 +24,7 @@ export const postList = [
     htmlPageLink: "./bridge-update",
     searchName: "bridge-update",
     pageMetaDescription:
-      "Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet!",
+      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
     readingLengthEST: 2, //In minutes
     time: "1737590535347",
     author: "Blitz Team",
@@ -41,13 +41,30 @@ export const postList = [
     htmlPageLink: "./efficiency-update",
     searchName: "efficiency-update",
     pageMetaDescription:
-      "Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet!",
+      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
     readingLengthEST: 2, //In minutes
     time: "1740237953923",
     author: "Blitz Team",
     authorImage: "../../../public/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Tutorial and Microphone is for podcast
     thumbnailUrl: "./efficiency-update/assets/homepage.png", //Scoped to blog index.html
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Release", // Can be "Release", "Tutorial", or "Podcast"
+    title: "The Power Up",
+    description: "Ecash overhall, POS Tip Tracking & More!",
+    htmlPageLink: "./power-up",
+    searchName: "power-up",
+    pageMetaDescription:
+      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+    readingLengthEST: 4, //In minutes
+    time: "1741383361036",
+    author: "Blitz Team",
+    authorImage: "../../../public/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Tutorial and Microphone is for podcast
+    thumbnailUrl: "./power-up/assets/posTransactions.png", //Scoped to blog index.html
     isVertical: true,
     isFeatured: false, // usualy will be set to false
   },

@@ -1,0 +1,5 @@
+/* This is a place to put local styles */
+/* Be very carful as this will override all other sytles */
+#postBody .verticalSpacing {
+  margin: 20px auto;
+}
