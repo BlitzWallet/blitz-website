@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blitz Wallet | What Is a Self-Custodial Wallet?</title>
+    <!-- Title is Pulled in from javascript -->
+
+    <!-- for cards -->
+    <meta property="og:title" content="What Is a Self-Custodial Wallet?" />
+    <meta
+      property="og:description"
+      content="Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet."
+    />
+    <meta
+      property="og:image"
+      content="https://blitz-wallet.com/pages/blog/assets/images/twitterCard.png"
+    />
+    <meta
+      property="og:url"
+      content="https://blitz-wallet.com/pages/blog/power-up/"
+    />
+
+    <!-- Twitter specific tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@BlitzWalletApp" />
+    <meta name="twitter:title" content="What Is a Self-Custodial Wallet?" />
+    <meta
+      name="twitter:description"
+      content="Learn how Blitz Wallet simplifies self-custodial Bitcoin Lightning transactions. This guide dives into its innovative features, and seamless integration with the Bitcoin Lightning Network. Explore why Blitz Wallet is the ultimate self-custodial Bitcoin Lightning wallet."
+    />
+    <meta
+      name="twitter:image"
+      content="https://blitz-wallet.com/pages/blog/assets/images/twitterCard.png"
+    />
+
+    <!-- Favicon and Apple touch icon for iOS -->
+    <link rel="apple-touch-icon" href="../../../public/favicon.png" />
+
+    <link
+      rel="shortcut icon"
+      href="../../../public/favicon.png"
+      type="image/x-icon"
+    />
+
+    <link rel="stylesheet" href="../../../src/assets/styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="../../../src/assets/styles/navbar_footer.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../src/components/downloadModal/style.css"
+    />
+
+    <script src="../../../src/js/navbar.js" defer></script>
+    <script src="../../../src/components/downloadModal/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script type="module" src="../pageSetup.js"></script>
+    <link rel="stylesheet" href="../masterBlogTheme.css" />
+    <link rel="stylesheet" href="./style.css" />
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </head>
+
+  <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet (beta)</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <p class="bitzName">Blitz Wallet.</p>
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/faq/">FAQ</a>
+            </li>
+            <li class="navItem activePage">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+      <div class="blogNav">
+        <div class="locationTab">
+          <div class="imgContainer">
+            <img
+              id="blogTypeImage"
+              src="../../../public/favicon.png"
+              alt="blog pencil"
+            />
+          </div>
+          <a href="/pages/blog">
+            <p>Blog</p>
+          </a>
+          <p class="blogTypeSeperator">|</p>
+          <p id="blogTypeText">
+            <!-- Pulled in from javascript -->
+          </p>
+        </div>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavDropdown-Container">
+        <ul class="navItems">
+          <li class="navItem">
+            <a href="/pages/about/">About</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/contact">Contact</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/faq/">FAQ</a>
+          </li>
+          <li class="navItem activePage">
+            <a href="/pages/blog">Blog</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <section class="blogContentContainer">
+      <div class="postHead">
+        <h1 id="blogTitle">
+          <!-- Pulled in from javascript -->
+        </h1>
+        <p id="blogSubHeader">
+          <!-- Pulled in from javascript -->
+        </p>
+        <div class="postDataContainerOuter">
+          <div class="imageContainer">
+            <img
+              id="authorProfilePicture"
+              src="../../../public/favicon.png"
+              alt="Profile image of the author"
+            />
+            <!-- Img src in from javascript -->
+          </div>
+          <div class="dataContainer">
+            <p rel="author" id="authorName">
+              <!-- Pulled in from javascript -->
+            </p>
+            <div class="postDataContainerInner">
+              <p id="postReadTime">
+                <!-- Pulled in from javascript -->
+              </p>
+              <p class="postDataSeperator">|</p>
+              <p id="postDate">
+                <!-- Pulled in from javascript -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section id="postBody">
+        <h1>
+          What Is a Self-Custodial Wallet? Your Guide to Financial Freedom with
+          Blitz Wallet
+        </h1>
+        <p>
+          One of the most important tools for safeguarding your wealth is
+          Bitcoin, especially in regions with economic instability, inflation,
+          or capital controls. True self-sovereignty and security are only
+          possible through self-custody. There are several methods to securely
+          store your Bitcoin:
+        </p>
+
+        <h2>Offline Storage Methods:</h2>
+        <ul>
+          <li>
+            <strong>Hardware wallets:</strong> Devices like
+            <a href="https://www.ledger.com/">Ledger</a>,
+            <a href="https://trezor.io/">Trezor</a>,
+            <a href="https://coldcard.com/">Coldcard</a>,
+            <a href="https://bitbox.swiss/">BitBox</a>,
+            <a href="https://seedsigner.com/">SeedSigner</a> keep your private
+            keys offline, reducing exposure to hacks.
+          </li>
+          <li>
+            <strong>Paper backups:</strong> Write your seed phrase on paper and
+            store it securely in a waterproof and fireproof location.
+          </li>
+          <li>
+            <strong>Steel backups:</strong> Engrave or stamp your seed phrase
+            onto metal (e.g.,
+            <a href="https://cryptosteel.com/">Cryptosteel</a>,
+            <a href="https://shop.ledger.com/products/the-billfodl">Billfodl</a
+            >, <a href="https://bitbox.swiss/steelwallet/">SteelWallet</a>) for
+            protection against fire, water, and physical damage.
+          </li>
+          <li>
+            <strong>Air-gapped wallets:</strong> Use devices that never connect
+            to the internet, such as
+            <a href="https://coldcard.com/">Coldcard</a> and
+            <a href="https://seedsigner.com/">SeedSigner</a>, to enhance
+            security against hacks.
+          </li>
+          <li>
+            <strong>Multisig cold storage:</strong> Set up multiple hardware or
+            offline wallets with multisignature security for added protection
+            (e.g., with <a href="https://specter.solutions/">Specter</a>,
+            <a href="https://nunchuk.io/">Nunchuk</a>, or
+            <a href="https://unchained.com/caravan/">Caravan</a>).
+          </li>
+        </ul>
+
+        <h2>Online Storage Methods:</h2>
+        <ul>
+          <li>
+            <strong>Self-custodial mobile wallets:</strong> Apps like
+            <a href="https://muun.com/">Muun</a>,
+            <a href="https://bluewallet.io/">BlueWallet</a>,
+            <a href="https://phoenix.acinq.co/">Phoenix Wallet</a>,
+            <a href="https://blitz-wallet.com/">Blitz Wallet</a>,
+            <a href="https://breez.technology/">Breez</a>.
+          </li>
+          <li>
+            <strong>Self-custodial desktop wallets:</strong> Examples include
+            <a href="https://sparrowwallet.com/">Sparrow Wallet</a>,
+            <a href="https://www.getalby.com/">Alby</a>, and
+            <a href="https://nunchuk.io/">Nunchuk</a>.
+          </li>
+        </ul>
+
+        <h2>Understanding Self-Custodial Bitcoin Wallets</h2>
+        <p>
+          A self-custodial Bitcoin wallet, also known as a non-custodial Bitcoin
+          wallet, is a type of digital Bitcoin wallet that gives you full
+          control over your private keys.
+        </p>
+        <h3>What are Private Keys?</h3>
+        <p>
+          Private keys are cryptographic codes that grant access to your Bitcoin
+          funds. Unlike custodial wallets, where a third party holds your
+          private keys on your behalf, self-custodial wallets ensure that you,
+          and only you, have access to your keys and funds.
+        </p>
+
+        <h2>Key Features of Self-Custodial Wallets</h2>
+        <ul>
+          <li>
+            <strong>Full Ownership:</strong> You have complete control over your
+            funds, transactions, and data.
+          </li>
+          <li>
+            <strong>Enhanced Security:</strong> No third party holds your
+            private keys, eliminating centralized risks.
+          </li>
+          <li>
+            <strong>Decentralized Access:</strong> Interacts directly with
+            blockchain networks, bypassing intermediaries.
+          </li>
+          <li>
+            <strong>Backup and Recovery:</strong> A seed phrase (12-24 words)
+            allows fund recovery.
+          </li>
+          <li>
+            <strong>Privacy:</strong> Transactions are more private, with no
+            centralized entity collecting personal information.
+          </li>
+        </ul>
+
+        <h2>Why Choose Blitz Wallet?</h2>
+        <p>
+          Blitz Wallet is a user-friendly, secure, and versatile self-custodial
+          wallet designed for both beginners and advanced users.
+        </p>
+        <ul>
+          <li>
+            <strong>Usability:</strong> Simplifies Bitcoin self-custody with an
+            intuitive design.
+          </li>
+          <li>
+            <strong>Ease of Use:</strong> A straightforward interface for easy
+            transactions and wallet management.
+          </li>
+          <li>
+            <strong>No Abstraction:</strong> Designed without unnecessary
+            complexities.
+          </li>
+          <li>
+            <strong>Transparency:</strong> Open-source philosophy for public
+            verification.
+          </li>
+          <li>
+            <strong>24/7 Support:</strong> A dedicated support team is always
+            available.
+          </li>
+        </ul>
+
+        <h2>Benefits of Self-Custodial Wallets</h2>
+        <ul>
+          <li>
+            <strong>Control and Freedom:</strong> Full authority over funds
+            without third-party reliance.
+          </li>
+          <li>
+            <strong>Security:</strong> Protection from centralized hacks and
+            mismanagement.
+          </li>
+          <li>
+            <strong>Transparency:</strong> Verified transactions directly on the
+            blockchain.
+          </li>
+          <li>
+            <strong>Global Access:</strong> Funds are accessible from anywhere
+            with private keys.
+          </li>
+        </ul>
+
+        <h2>Conclusion</h2>
+        <p>
+          A self-custodial wallet is a powerful tool that provides full
+          ownership of your Bitcoin. By eliminating intermediaries and placing
+          control in your hands, it embodies Bitcoin’s principles of
+          decentralization, security, and financial sovereignty.
+        </p>
+        <p>
+          With Blitz Wallet, self-custody has never been easier. Whether you’re
+          a beginner or a seasoned Bitcoiner, Blitz Wallet provides the tools
+          and support you need to securely manage your funds.
+        </p>
+
+        <p>Best,</p>
+        <p>Blitz Team</p>
+      </section>
+    </section>
+
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            A self-custodial Bitcoin Lightning, Liquid, and Ecash wallet aiming
+            to simplify payments on the Bitcoin Network.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
+              <li><a href="/pages/faq/">FAQ</a></li>
+              <li><a href="/pages/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
+              </li>
+              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
+              <li><a href="https://youtube.com/@BlitzWallet">YouTube</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          <a href="/pages/terms/">Terms of Usage</a>
+          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
+            >License</a
+          >
+        </div>
+        <p>&copy;2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+  </body>
+</html>
