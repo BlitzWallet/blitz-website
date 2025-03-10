@@ -28,6 +28,7 @@ window.addEventListener("load", () => {
   blogTitle.textContent = post.title;
   blogSubHeader.textContent = post.description;
   authorProfilePicture.src = post.authorImage;
+  authorProfilePicture.style.padding = post.customAuthor ? "0px" : "10px";
   authorName.textContent = post.author;
   postReadTime.textContent = `${post.readingLengthEST} minutes`;
   postDate.textContent = formatDate(post.time);

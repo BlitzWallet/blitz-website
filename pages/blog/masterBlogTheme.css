@@ -43,6 +43,7 @@ nav {
 .modal .qr-container {
   background-color: black;
 }
+
 /* ////////////////////////////// */
 nav .blogNav {
   width: 95%;
@@ -94,6 +95,7 @@ nav .blogNav p {
   /* max-width: 700px; */
   margin: 0 auto;
 }
+
 .blogContentContainer .postHead {
   width: 100%;
   max-width: 700px;
@@ -117,8 +119,9 @@ nav .blogNav p {
   height: 45px;
   border-radius: 25px;
   background-color: white;
-  padding: 10px;
+  /* padding: 10px; */
   margin-right: 10px;
+  overflow: hidden;
 }
 .blogContentContainer .imageContainer img {
   width: 100%;
@@ -135,6 +138,9 @@ nav .blogNav p {
   margin: 0 10px;
 }
 
+.blogContentContainer a:visited {
+  color: var(--primary_color);
+}
 /* ///////////////////////////////////// */
 /* All blog custom theme elemtnts */
 #postBody {

@@ -76,14 +76,15 @@ export const postList = [
     searchName: "self-custodial-wallet",
     pageMetaDescription:
       "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
-    readingLengthEST: 4, //In minutes
-    time: "1741383361036",
+    readingLengthEST: 7, //In minutes
+    time: "1741611775672",
     author: "Destiny Smart",
-    authorImage: "../../../public/favicon.png", //Scoped to blog post page or public depending on image
+    authorImage: "../../../public/authorImages/destiny_smart.webp", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/info.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
     thumbnailUrl: "./self-custodial-wallet/assets/self_custody.png", //Scoped to blog index.html
     isVertical: true,
     isFeatured: false, // usualy will be set to false
+    customAuthor: true,
   },
 ];
 
