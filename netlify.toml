@@ -5,7 +5,7 @@
   "*" = { timeout = 20 } # Increase timeout limit
   
 [[redirects]]
-  from = "/u/*"
+  from = "/u/:username"
   to = "/.netlify/functions/dynamic-profile"
   status = 200
 
