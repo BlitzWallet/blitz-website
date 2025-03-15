@@ -3,3 +3,16 @@
 #postBody .verticalSpacing {
   margin: 20px auto;
 }
+#postBody .horizontalImage {
+  width: 100%;
+  height: auto;
+}
+
+@media screen and (max-width: 500px) {
+  #postBody .verticalSpacing {
+    margin: 20px auto;
+    width: 100%;
+    height: auto;
+    /* max-width: calc(100dvh - 150px); */
+  }
+}
