@@ -1,18 +1,2 @@
 /* This is a place to put local styles */
 /* Be very carful as this will override all other sytles */
-#postBody .verticalSpacing {
-  margin: 20px auto;
-}
-#postBody .horizontalImage {
-  width: 100%;
-  height: auto;
-}
-
-@media screen and (max-width: 500px) {
-  #postBody .verticalSpacing {
-    margin: 20px auto;
-    width: 100%;
-    height: auto;
-    /* max-width: calc(100dvh - 150px); */
-  }
-}
