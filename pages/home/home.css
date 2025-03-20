@@ -1,179 +1,127 @@
-body {
-  width: 100%;
-  background-color: var(--dm-background);
-  overflow-x: hidden;
-}
-
-main {
-  width: 100%;
-  /* height: 2000px; */
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.hero {
-  width: 100%;
-  min-height: 500px;
-
-  /* padding-top: 80px; */
-}
-
 /* Hero section */
-
 .hero .CTA {
   width: 95%;
   margin: 0 auto;
   display: flex;
+  align-items: center;
+  margin-top: 70px;
+  justify-content: center;
+}
+.hero .CTA .textContainer {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
   flex-direction: column;
   align-items: center;
-  overflow: hidden;
-  /* justify-content: center; */
+  justify-content: center;
+  margin-bottom: auto;
+  margin-top: 75px;
+  margin-right: 50px;
 }
-.hero .icon {
-  width: 50px;
-  height: 50px;
-  background-color: var(--dm-text);
-  padding: 10px;
-  border-radius: 10px;
-  margin-top: 85px;
-}
+
 .hero h1 {
-  width: 100%;
   max-width: 700px;
   font-size: 60px;
   color: whitesmoke;
-  text-align: center;
+  /* text-align: center; */
   margin: 50px auto 20px;
 }
 .hero .headerP {
-  max-width: 500px;
   margin-bottom: 20px;
-  text-align: center;
   color: var(--dm-text);
   line-height: 1.25em;
   letter-spacing: 0.5px;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.3;
+  font-size: 18px;
+  opacity: 0.8;
 }
-.hero .buttonsContianer {
+.hero .buttonsContainer {
+  width: 100%;
   display: flex;
   margin-top: 30px;
-}
-.hero .appContainer a {
-  text-decoration: none;
-}
-
-.hero .button:not(:last-child) {
-  margin-right: 15px;
-}
-
-.hero .appCards {
-  width: 95%;
-  max-width: max-content;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin: auto auto;
-  padding-bottom: 20px;
-}
-.hero .appCards .card {
-  border-radius: 8px;
-  padding: 10px;
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+}
+
+.hero .buttonsContainer button {
+  display: flex;
+  align-items: center;
+  border-radius: 40px;
+  padding: 20px 30px;
+  border: 2px solid var(--dm-text);
+  margin-right: 15px;
   position: relative;
-  margin: 10px;
-  text-decoration: none;
+  overflow: hidden;
+  background-color: unset;
   cursor: pointer;
 }
-.hero .appCards .card {
-  width: 280px;
-  height: 120px;
-
-  border-radius: 8px;
-  padding: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  background: linear-gradient(
-      251.51deg,
-      rgba(3, 117, 246, 0.2) 0%,
-      rgba(3, 117, 246, 0) 100%
-    ),
-    rgba(255, 255, 255, 0.04);
-
-  position: relative;
+.hero .buttonsContainer button:hover .hoverContainer {
+  bottom: 0;
 }
-.hero .appCards .card img {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7460%)
+.hero .buttonsContainer button:hover .downloadText {
+  color: var(--lm-text);
+}
+.hero .buttonsContainer button:hover .seperator {
+  background-color: var(--lm-text);
+}
+.hero .buttonsContainer button:hover img {
+  filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7460%)
     hue-rotate(144deg) brightness(115%) contrast(102%);
 }
-.hero .appCards .card p {
-  width: max-content;
-  font-size: 30px;
-  color: white;
-}
 
-.hero .appCards .card .flagTip {
+.hero .buttonsContainer .hoverContainer {
+  width: 100%;
+  height: 100%;
+  background-color: var(--dm-text);
   position: absolute;
-  top: 0;
-  right: 41px;
-  width: 30px;
-  height: 28.5px;
-  clip-path: polygon(73% 46%, 100% 99.5%, 100% 0%);
-
-  background-color: var(--primary_color);
-}
-.hero .appCards .card .beta_p {
-  width: max-content;
-  padding: 5px;
-  position: absolute;
-  top: 0;
+  bottom: 100%;
   right: 0;
+  z-index: -1;
+  transition: bottom 0.5s ease-in-out;
+}
+.hero .buttonsContainer button .seperator {
+  width: 1px;
+  height: 20px;
+  background-color: var(--dm-text);
+  margin: 0 10px;
+  transform: rotate(15deg);
+  transition: background-color 0.5s ease-in-out;
+}
 
-  font-size: 15px;
-  color: white;
-  border-top-right-radius: 8px;
-
-  background-color: var(--primary_color);
+.hero .buttonsContainer button .downloadText {
+  margin-left: 20px;
+  font-size: 16px;
+  transition: color 0.5s ease-in-out;
+}
+.hero .buttonsContainer img {
+  width: 25px;
+  height: 25px;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7460%)
+    hue-rotate(144deg) brightness(115%) contrast(102%);
+  transition: filter 0.5s ease-in-out;
+}
+.hero .buttonsContainer .warningText {
+  opacity: 0.8;
+  font-size: 13px;
 }
 
 .hero .iphoneTemplateWrapper {
   width: 100%;
-  margin: 70px 0;
+  max-width: 450px;
   position: relative;
   z-index: -1;
   display: flex;
 }
-.hero .backgroundBlur {
-  width: 100dvw;
-  height: auto;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+
 .hero .blitzHomepage {
   width: 100%;
-  max-width: 310px;
   height: auto;
-  margin: 0 auto;
 }
 /* --------------------------------- */
 /* Features section */
 /* --------------------------------- */
 .sponsorOrIntegration {
   width: 95%;
-  height: calc(100dvh - 250px);
-  min-height: 800px;
+  height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -281,278 +229,96 @@ main {
   align-items: center;
   display: flex;
   flex-direction: column;
+  margin: 100px 0;
 }
 .features .sectionHeader {
   font-size: 60px;
   text-align: center;
   max-width: 700px;
-  margin: 30px auto;
   letter-spacing: 0.5;
+}
+.features .sectionHeader:nth-child(2) {
+  margin-bottom: 30px;
+  color: var(--primary_color);
 }
 .features .sectionDescription {
   width: 90%;
   text-align: center;
-  margin-bottom: 100px;
+  margin-bottom: 50px;
 }
 .features .featuresContainer {
   display: flex;
-
-  width: 95%;
-  margin: 50px auto;
-  justify-content: center;
-}
-.features .appImage {
-  max-width: 400px;
-
-  margin-right: 150px;
-
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.features .appImage img:first-child {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 100%;
-  height: 100%;
-  display: none;
-}
-.features .appImage img:last-child {
-  width: 80%;
-  height: auto;
-}
-
-.features .featuresText {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 560px;
-}
-.features .header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 30px;
-}
-.features .header img {
-  width: 35px;
-  height: 35px;
-  padding: 5px;
-  border-radius: 5px;
-  background-color: var(--dm-text);
-  /* filter: invert(98%) sepia(98%) saturate(0%) hue-rotate(313deg)
-    brightness(101%) contrast(103%); */
-  margin-right: 15px;
-}
-.features .header h3 {
-  font-weight: 500;
-}
-.features .featuresText h2 {
-  max-width: 350px;
-  font-size: 35px;
-  margin-bottom: 30px;
-}
-.features .featuresText p {
-  width: 100%;
-}
-.features .leftContainer {
-  display: flex;
-}
-.features .rightContainer {
-  flex-direction: row-reverse;
-  margin: 150px 0;
-}
-.features .rightContainer .appImage {
-  margin-right: 0;
-  margin-left: 150px;
-}
-.features .appBTN {
-  width: max-content;
-  margin-top: 30px;
-}
-
-/* --------------------------------- */
-/* How does Blitz Wallet work */
-/* --------------------------------- */
-.blitzWalletComponenets {
-  width: 95%;
-  max-width: 900px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0 auto;
-}
-
-.blitzWalletComponenets .componentsDiagram {
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-}
-.blitzWalletComponenets h2 {
-  margin-bottom: 30px;
-}
-.blitzWalletComponenets p {
-  margin-bottom: 30px;
-}
-.blitzWalletComponenets li {
-  margin-bottom: 30px;
-  line-height: 2em;
-}
-
-/* --------------------------------- */
-/* what is blitz wallet section */
-/* --------------------------------- */
-
-.about {
-  width: 95%;
-  max-width: 1000px;
-  padding: 30px;
-  border-radius: 8px;
-
-  color: white;
-}
-.about h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  font-family: var(--title_font);
-  text-align: center;
-}
-.about p {
-  width: 100%;
-  font-size: 18px;
-
-  line-height: 30px;
-}
-.about p:not(:last-child) {
-  margin-bottom: 20px;
-}
-.about .quickDesc {
-  font-weight: bold;
-  color: var(--text_contrast_to_secondary);
-  text-align: center;
-}
-.about .blueHighlight {
-  font-weight: bold;
-  color: var(--text_contrast_to_secondary);
-}
-
-.about table {
-  font-family: var(--title_font) sans-serif;
-  font-size: 30px;
-
-  row-gap: 10px;
-  column-gap: 10px;
-}
-.about table tr td:first-child {
-  margin-right: 10px;
-}
-
-/* --------------------------------- */
-/* Powered By */
-/* --------------------------------- */
-
-.poweredBy {
   width: 95%;
   max-width: 1200px;
+  margin: 50px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* breakpoitn with media qurries */
+  row-gap: 20px;
+  column-gap: 20px;
+}
+.features .featuresContainer .feature {
+  display: flex;
+  width: 100%;
+
   display: flex;
   flex-direction: column;
-  align-items: center;
-  margin: 100px 0;
+  background-color: var(--dm-backgroundOffset);
+  padding: 50px 30px 30px 30px;
+  border-radius: 8px;
 }
-
-.poweredBy h2 {
+.features .featuresContainer .feature .icon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 15px;
+}
+.features .featuresContainer .feature img {
   width: 100%;
-  font-size: 55px;
-  margin-bottom: 50px;
-  color: whitesmoke;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
-.poweredBy img {
-  width: 200px;
-  height: auto;
+.features .featuresContainer .feature h2 {
+  margin-bottom: 15px;
 }
-.poweredBy .breezFilter {
-  filter: brightness(0) saturate(100%) invert(44%) sepia(59%) saturate(6017%)
-    hue-rotate(193deg) brightness(103%) contrast(102%);
+.features .featuresContainer .feature span {
+  opacity: 0.6;
 }
-.poweredBy .companyContainer {
-  width: 100%;
-  max-width: 800px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.features .featuresContainer .feature h2,
+span {
+  font-size: 16px;
 }
 
-/* --------------------------------- */
-/* Our Mission */
-/* --------------------------------- */
-
-.ourMission {
-  width: 95%;
-  max-width: 1000px;
-
-  padding: 20px;
-  margin: 100px 0;
-}
-
-.ourMission h2 {
-  font-size: 45px;
-  margin-bottom: 20px;
-}
-.ourMission .top_p,
-.bottom_p {
-  margin-left: 20px;
-  line-height: 35px;
-}
-.ourMission .top_p:not(:last-child) {
-  margin-bottom: 20px;
-}
-.ourMission h4 {
-  font-size: 25px;
-  margin-bottom: 20px;
+@media screen and (max-width: 1100px) {
+  .hero .CTA {
+    flex-direction: column;
+    margin-top: 0;
+  }
+  .hero .CTA .textContainer {
+    margin-right: 0;
+    margin-bottom: 50px;
+  }
+  .hero h1 {
+    text-align: center;
+    margin-top: 0;
+  }
+  .hero .headerP {
+    text-align: center;
+  }
+  .hero .buttonsContainer {
+    justify-content: center;
+  }
 }
 
 @media screen and (max-width: 1000px) {
-  .hero {
-    flex-direction: column-reverse;
-  }
-
   .hero h1 {
     text-align: center;
   }
+  .features .featuresContainer {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-@media screen and (max-width: 930px) {
-  .features .appImage {
-    margin-right: 50px;
-  }
-  .features .rightContainer .appImage {
-    margin-left: 50px;
-  }
-}
-@media screen and (max-width: 900px) {
-  .sponsorOrIntegration .gridContainer {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-  }
-  .gridContainer .gridItem:last-child {
-    margin-bottom: 50px;
-  }
-  .gridContainer .gridItem:first-child {
-    margin-right: 0;
-  }
-  .gridContainer .gridItem:first-child h2 {
-    font-size: 30px;
-    text-align: center;
-  }
-  .gridContainer .gridItem:first-child p {
-    width: 100%;
-    text-align: center;
-    margin: 0 auto 50px;
-  }
-}
 @media screen and (max-width: 800px) {
   .sponsorOrIntegration .sponsorsHeader {
     font-size: 35px;
@@ -563,76 +329,38 @@ main {
   .features .sectionHeader {
     font-size: 30px;
   }
-  .features .appImage {
-    margin-right: 0;
-  }
-  .features .rightContainer .appImage {
-    margin-left: 0;
-  }
-  .features .featuresContainer {
-    flex-direction: column-reverse;
-    align-items: center;
-    margin: 60px 0;
-  }
-  .features .featuresText {
-    align-items: center;
-    text-align: center;
-    margin-bottom: 50px;
-  }
-  .features .featuresText h2 {
-    max-width: unset;
-  }
-  .features .featuresText {
-    width: 100%;
-  }
 }
 @media screen and (max-width: 730px) {
-  .hero .CTA {
-    width: 95%;
-  }
   .hero h1 {
     font-size: 40px;
-    text-wrap: wrap;
+  }
+  .hero .headerP {
+    font-size: 14px;
   }
 
-  .poweredBy .companyContainer {
-    flex-direction: column;
-    height: 320px;
+  .features .featuresContainer {
+    grid-template-columns: 1fr;
   }
   .sponsorOrIntegration h2 {
     margin: 50px 0 30px;
   }
 }
 @media screen and (max-width: 600px) {
-  .hero .CTA {
-    width: 95%;
-  }
-  .hero h1 {
-    font-size: 35px;
-    text-wrap: wrap;
-  }
-  .hero h2 {
-    font-size: 18px;
-  }
-  .hero .phone {
-    height: 400px;
-    width: 200px;
-  }
   .sponsorOrIntegration .sponsorContainer {
     flex-direction: column;
   }
+  .hero .buttonsContainer {
+    flex-direction: column;
+  }
+  .hero .buttonsContainer button {
+    margin-bottom: 20px;
+    margin-right: 0;
+  }
+  .hero .buttonsContainer .warningText {
+    text-align: center;
+  }
 }
 
-@media screen and (max-width: 430px) {
-  .hero h2 {
-    font-size: 16px;
-  }
-  .hero .appContainer {
-    height: 100px;
-    flex-direction: column;
-    align-items: center;
-  }
-}
 @media screen and (max-width: 375px) {
   .hero .buttonsContianer {
     flex-direction: column;
@@ -640,6 +368,13 @@ main {
   .hero .button:not(:last-child) {
     margin-right: 0;
     margin-bottom: 20px;
+  }
+  .hero .buttonsContainer button .downloadText {
+    font-size: 14px;
+  }
+  .hero .buttonsContainer img {
+    width: 20px;
+    height: 20px;
   }
 }
 
