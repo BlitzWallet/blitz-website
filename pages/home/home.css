@@ -9,7 +9,7 @@
 }
 .hero .CTA .textContainer {
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,9 +19,9 @@
   margin-right: 50px;
 }
 
-.hero h1 {
-  max-width: 700px;
-  margin: 50px auto 20px;
+.hero .titleContainer {
+  width: 100%;
+  margin: 50px auto;
 }
 .hero .headerP {
   margin-bottom: 20px;
@@ -218,11 +218,14 @@
 /* Blitz Wallet featues */
 /* --------------------------------- */
 .features {
-  width: 100%;
+  width: 95%;
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin: 100px 0;
+  margin: 100px auto;
+}
+.features h2 {
+  text-align: center;
 }
 
 .features .sectionHeaders:nth-child(2) {
@@ -258,7 +261,6 @@
 .features .featuresContainer .feature .icon {
   width: 30px;
   height: 30px;
-  margin-bottom: 15px;
 }
 .features .featuresContainer .feature img {
   width: 100%;
@@ -266,13 +268,13 @@
   object-fit: cover;
   object-position: center;
 }
-.features .featuresContainer .feature h2 {
-  margin-bottom: 15px;
+.features .featuresContainer .feature h3 {
+  margin: 20px 0;
 }
 .features .featuresContainer .feature span {
-  opacity: 0.6;
+  opacity: 0.9;
 }
-.features .featuresContainer .feature h2,
+.features .featuresContainer .feature h3,
 span {
   font-size: 16px;
 }
@@ -353,6 +355,14 @@ span {
   }
   .hero .buttonsContainer .warningText {
     text-align: center;
+  }
+}
+@media screen and (max-width: 500px) {
+  .hero .titleContainer {
+    margin: 20px auto;
+  }
+  .hero .CTA .textContainer {
+    margin-top: 50px;
   }
 }
 

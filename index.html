@@ -40,8 +40,9 @@
     <link rel="apple-touch-icon" href="./public/favicon.png" />
 
     <script src="./src/js/navbar.js" defer></script>
-    <script src="./src/components/downloadModal/index.js" defer></script>
+    <!-- <script src="./src/components/downloadModal/index.js" defer></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="./pages/home/index.js" defer></script>
     <script src="./pages/home/slideshow.js" defer></script>
     <title>Blitz Wallet | Bitcoin Lightning Wallet</title>
     <!-- Google tag (gtag.js) -->
@@ -134,7 +135,10 @@
       <section class="hero">
         <div class="CTA">
           <div class="textContainer">
-            <h1 class="sectionHeaders">The Simplest Bitcoin Wallet Ever.</h1>
+            <div class="titleContainer">
+              <h1 class="sectionHeaders">The Simplest</h1>
+              <h1 class="sectionHeaders">Bitcoin Wallet Ever.</h1>
+            </div>
             <p class="sectionHeadersDescription headerP">
               Blitz Wallet is a self-custodial Bitcoin and Lightning wallet
               focusing on making Bitcoin payments simple. Just downlaod an
@@ -142,7 +146,7 @@
             </p>
 
             <div class="buttonsContainer">
-              <button>
+              <button id="downloadButton">
                 <div class="hoverContainer"></div>
                 <img
                   src="/src//assets/images/apple.svg"
@@ -166,7 +170,7 @@
           <div class="iphoneTemplateWrapper">
             <img
               class="blitzHomepage"
-              src="./src/assets/images/blitzHomepage.webp"
+              src="./src/assets/images/blitzHomepage.png"
               alt="Image of iPhones"
             />
           </div>
@@ -186,72 +190,75 @@
             <div class="icon">
               <img src="public/favicon.png" alt="" srcset="" />
             </div>
-            <h2 class="featureTitle">Effortlessly Pay Friends.</h2>
+            <h3 class="featureTitle">Effortlessly Pay Friends.</h3>
             <span class="featureDescription"
-              >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum
-              ipsa, tempore libero ab architecto tempora molestiae corrupti
-              mollitia dolorem laudantium id laborum magni sed minus repellendus
-              odio eligendi, iste accusantium?</span
+              >Paying friends with Bitcoin should be simple. With Blitz Wallet,
+              there’s no need to deal with invoices, QR codes, or copying long
+              addresses—we handle the details so you can focus on what matters:
+              sending Bitcoin seamlessly.</span
             >
           </div>
           <div class="feature">
             <div class="icon">
               <img src="/public/favicon.png" alt="" srcset="" />
             </div>
-            <h2 class="featureTitle">Easily Spend Bitcoin.</h2>
+            <h3 class="featureTitle">Easily Spend Bitcoin.</h3>
             <span class="featureDescription"
-              >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum
-              ipsa, tempore libero ab architecto tempora molestiae corrupti
-              mollitia dolorem laudantium id laborum magni sed minus repellendus
-              odio eligendi, iste accusantium? lor</span
+              >One of the biggest challenges with Bitcoin is finding places to
+              spend it. That’s why Blitz Wallet includes a built-in store where
+              you can use Bitcoin directly. Purchase gift cards—including Visa
+              gift cards—subscribe to premium AI tools without sharing personal
+              information, or buy a VPN for private browsing. With Blitz Wallet,
+              your Bitcoin isn’t just for holding—it’s for using.</span
             >
           </div>
           <div class="feature">
             <div class="icon">
               <img src="/public/favicon.png" alt="" srcset="" />
             </div>
-            <h2 class="featureTitle">Onboard Any Business.</h2>
+            <h3 class="featureTitle">Onboard Any Business.</h3>
             <span class="featureDescription"
-              >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum
-              ipsa, tempore libero ab architecto tempora molestiae corrupti
-              mollitia dolorem laudantium id laborum magni sed minus repellendus
-              odio eligendi, iste accusantium?</span
+              >More businesses should accept Bitcoin, and Blitz Wallet makes it
+              easy. Every user gets a built-in point-of-sale system, allowing
+              any business to start accepting Bitcoin in just a few taps.
+              Whether you’re a store owner or helping your favorite shop,
+              onboarding Bitcoin payments has never been easier.</span
             >
           </div>
           <div class="feature">
             <div class="icon">
               <img src="/public/favicon.png" alt="" srcset="" />
             </div>
-            <h2 class="featureTitle">Self-custodial.</h2>
+            <h3 class="featureTitle">Self-custodial.</h3>
             <span class="featureDescription"
-              >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum
-              ipsa, tempore libero ab architecto tempora molestiae corrupti
-              mollitia dolorem laudantium id laborum magni sed minus repellendus
-              odio eligendi, iste accusantium?</span
+              >Your Bitcoin belongs to you—no banks, no middlemen, no
+              third-party control. Blitz Wallet is fully self-custodial, meaning
+              only you have access to your funds. Whether you’re saving or
+              spending, your money stays in your hands.</span
             >
           </div>
           <div class="feature">
             <div class="icon">
               <img src="/public/favicon.png" alt="" srcset="" />
             </div>
-            <h2 class="featureTitle">Customizable Payment Experince.</h2>
+            <h3 class="featureTitle">Customizable Payment Experince.</h3>
             <span class="featureDescription"
-              >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum
-              ipsa, tempore libero ab architecto tempora molestiae corrupti
-              mollitia dolorem laudantium id laborum magni sed minus repellendus
-              odio eligendi, iste accusantium?</span
+              >Bitcoin isn't one-size-fits-all, and Blitz Wallet gives you
+              options. Easily send and receive Bitcoin using eCash, Liquid, or
+              Lightning—all in one app. Need to switch networks? Internal
+              transfers make it effortless.</span
             >
           </div>
           <div class="feature">
             <div class="icon">
               <img src="/public/favicon.png" alt="" srcset="" />
             </div>
-            <h2 class="featureTitle">Built for simplicity.</h2>
+            <h3 class="featureTitle">Built for simplicity.</h3>
             <span class="featureDescription"
-              >Lorem ipsum, dolor sit amet consectetur adipisicing elit. Nostrum
-              ipsa, tempore libero ab architecto tempora molestiae corrupti
-              mollitia dolorem laudantium id laborum magni sed minus repellendus
-              odio eligendi, iste accusantium?</span
+              >Bitcoin can seem complex, but it doesn’t have to be. Blitz Wallet
+              is designed for everyone—whether you’re new to Bitcoin or an
+              experienced user. No complicated setups, just an easy way to send,
+              spend, and manage your Bitcoin.</span
             >
           </div>
         </div>
