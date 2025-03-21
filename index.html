@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./src/assets/styles/navbar_footer.css" />
     <link rel="stylesheet" href="../src/components/downloadModal/style.css" />
     <link rel="stylesheet" href="./pages/home/home.css" />
+    <link rel="stylesheet" href="./pages/home/faqStyles.css" />
 
     <meta
       name="description"
@@ -40,8 +41,10 @@
     <link rel="apple-touch-icon" href="./public/favicon.png" />
 
     <script src="./src/js/navbar.js" defer></script>
-    <script src="./src/components/downloadModal/index.js" defer></script>
+    <!-- <script src="./src/components/downloadModal/index.js" defer></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="./pages/home/index.js" defer></script>
+    <script src="./pages/home/expandContent.js" defer></script>
     <script src="./pages/home/slideshow.js" defer></script>
     <title>Blitz Wallet | Bitcoin Lightning Wallet</title>
     <!-- Google tag (gtag.js) -->
@@ -75,9 +78,6 @@
               <a href="./pages/contact">Contact</a>
             </li>
             <li class="navItem">
-              <a href="./pages/faq/">FAQ</a>
-            </li>
-            <li class="navItem">
               <a href="./pages/blog">Blog</a>
             </li>
           </ul>
@@ -107,9 +107,6 @@
             <a href="./pages/contact">Contact</a>
           </li>
           <li class="navItem">
-            <a href="./pages/faq/">FAQ</a>
-          </li>
-          <li class="navItem">
             <a href="./pages/blog">Blog</a>
           </li>
         </ul>
@@ -133,27 +130,40 @@
       </div>
       <section class="hero">
         <div class="CTA">
-          <img
-            class="icon"
-            src="./public/favicon.png"
-            alt="Blitz Wallet B logo"
-          />
-          <h1>The Simplest Wallet Ever.</h1>
-          <p class="headerP">
-            Blitz Wallet makes it easy to manage your Bitcoin, pay instantly,
-            and stay in control with self-custodial security.
-          </p>
+          <div class="textContainer">
+            <div class="titleContainer">
+              <h1 class="sectionHeaders">The Simplest</h1>
+              <h1 class="sectionHeaders">Bitcoin Wallet Ever.</h1>
+            </div>
+            <p class="sectionHeadersDescription headerP">
+              Blitz Wallet is a self-custodial Bitcoin and Lightning wallet that
+              makes payments simple. Download the app, send money to friends,
+              and spend Bitcoin on gift cards, services, and more.
+            </p>
 
-          <div class="buttonsContainer">
-            <p class="button downloadModal">Download</p>
+            <div class="buttonsContainer">
+              <div class="downloadButton">
+                <div class="hoverContainer"></div>
+                <img
+                  src="/src//assets/images/apple.svg"
+                  alt="Apple app store icon"
+                />
+                <div class="seperator"></div>
+                <img
+                  src="/src//assets/images/google-play.svg"
+                  alt="Google Playstore icon"
+                />
+                <h2 class="downloadText">Download now</h2>
+              </div>
+              <div>
+                <p class="warningText">
+                  Blitz Wallet is currently in beta testing.
+                </p>
+                <p class="warningText">Use amounts you are willing to lose</p>
+              </div>
+            </div>
           </div>
-
           <div class="iphoneTemplateWrapper">
-            <img
-              class="backgroundBlur"
-              src="./src/assets/images/backgroundBlur.webp"
-              alt="Image of iPhones"
-            />
             <img
               class="blitzHomepage"
               src="./src/assets/images/blitzHomepage.webp"
@@ -163,135 +173,339 @@
         </div>
       </section>
 
-      <section class="sponsorOrIntegration">
-        <h2 class="sponsorsHeader">Integrations</h2>
-        <div class="sponsorContainer firstSponsorContianer">
-          <a href="https://boltz.exchange/">
-            <img
-              src="./src/assets/images/boltz-1395d097.svg"
-              alt="Boltz logo icon"
-            />
-          </a>
-          <a class="logo" href="https://blockstream.com/">
-            <img
-              src="https://blockstream.com/img/icons/logo_blks.png"
-              alt="Logo"
-            />
-          </a>
-
-          <a href="https://breez.technology/">
-            <img
-              src="./src/assets/images/logo-breez-header.svg"
-              alt="Breez logo icon"
-            />
-          </a>
-        </div>
-        <h2 class="sponsorsHeader">Sponsors</h2>
-        <div class="sponsorContainer">
-          <a href="https://opensats.org" class="openSatsLogo">
-            <img
-              src="./src/assets/images/openSats.svg"
-              alt="Open Sats logo icon"
-            />
-            <h3 style="color: rgb(255, 107, 1)">Open Sats</h3>
-          </a>
-        </div>
-      </section>
-
-      <section class="features">
-        <h2 class="sectionHeader">Make Bitcoin Easy. Unlock Freedom.</h2>
-
-        <p class="sectionDescription">
+      <section id="features">
+        <h2 class="sectionHeaders">Make Bitcoin Easy.</h2>
+        <h2 class="sectionHeaders">Unlock Freedom.</h2>
+        <p class="sectionHeadersDescription sectionDescription">
           A simple solution for Bitcoin payments to help you boost your savings
           and security.
         </p>
-        <div class="leftContainer featuresContainer">
-          <div class="appImage">
-            <img
-              class="backgroundBlur"
-              src="./src/assets/images/backgroundBlur.webp"
-              alt="Image of iPhones"
-            />
-            <img
-              src="./src/assets/images/blitzStorePage.webp"
-              alt="Image of a store page"
-            />
-          </div>
-          <div class="featuresText">
-            <div class="header">
-              <img
-                src="./src/assets/images/shoppingBag.svg"
-                alt="Shopping bag"
-              />
-              <h3>Shop</h3>
-            </div>
 
-            <h2>Easily Spend Bitcoin.</h2>
-            <p>
-              Shopping made easy. With our in-app store experience, you can
-              browse, pay, and enjoy secure, wallet-integrated shopping.
-            </p>
-            <span class="appBTN downloadModal button">Download</span>
+        <div class="featuresContainer">
+          <div class="feature">
+            <div class="icon">
+              <img
+                src="/src/assets/images/handshake.svg"
+                alt="Handshake to signify paying contacts"
+              />
+            </div>
+            <h3 class="featureTitle">Effortlessly Pay Friends.</h3>
+            <span class="featureDescription"
+              >Paying friends with Bitcoin should be simple. With Blitz Wallet,
+              there’s no need to deal with invoices, QR codes, or copying long
+              addresses—we handle the details so you can focus on what matters:
+              sending Bitcoin seamlessly.</span
+            >
+          </div>
+          <div class="feature">
+            <div class="icon">
+              <img
+                src="/src/assets/images/shopping-cart.svg"
+                alt="A shoppping cart to show that you can use blitz to spend at stores"
+              />
+            </div>
+            <h3 class="featureTitle">Easily Spend Bitcoin.</h3>
+            <span class="featureDescription"
+              >One of the biggest challenges with Bitcoin is finding places to
+              spend it. That’s why Blitz Wallet includes a built-in store where
+              you can use Bitcoin directly. Purchase gift cards—including Visa
+              gift cards—subscribe to premium AI tools without sharing personal
+              information, or buy a VPN for private browsing. With Blitz Wallet,
+              your Bitcoin isn’t just for holding—it’s for using.</span
+            >
+          </div>
+          <div class="feature">
+            <div class="icon">
+              <img
+                src="/src/assets/images/shop.svg"
+                alt="A shop to show that you can onboard buisness to blitz point-of-sale"
+              />
+            </div>
+            <h3 class="featureTitle">Onboard Any Business.</h3>
+            <span class="featureDescription"
+              >More businesses should accept Bitcoin, and Blitz Wallet makes it
+              easy. Every user gets a built-in point-of-sale system, allowing
+              any business to start accepting Bitcoin in just a few taps.
+              Whether you’re a store owner or helping your favorite shop,
+              onboarding Bitcoin payments has never been easier.</span
+            >
+          </div>
+          <div class="feature">
+            <div class="icon">
+              <img
+                src="/src/assets/images/lock.svg"
+                alt="A lock to show that blitz is self-custodial"
+              />
+            </div>
+            <h3 class="featureTitle">Self-custodial.</h3>
+            <span class="featureDescription"
+              >Your Bitcoin belongs to you—no banks, no middlemen, no
+              third-party control. Blitz Wallet is fully self-custodial, meaning
+              only you have access to your funds. Whether you’re saving or
+              spending, your money stays in your hands.</span
+            >
+          </div>
+          <div class="feature">
+            <div class="icon">
+              <img
+                src="/src/assets/images/exchange-alt.svg"
+                alt="Arrows to show that you can move bettween differnt networks"
+              />
+            </div>
+            <h3 class="featureTitle">Customizable Payment Experince.</h3>
+            <span class="featureDescription"
+              >Bitcoin isn't one-size-fits-all, and Blitz Wallet gives you
+              options. Easily send and receive Bitcoin using eCash, Liquid, or
+              Lightning—all in one app. Need to switch networks? Internal
+              transfers make it effortless.</span
+            >
+          </div>
+          <div class="feature">
+            <div class="icon">
+              <img
+                src="/src/assets/images/time-fast.svg"
+                alt="A clock to show that blitz simplicty saves you time"
+              />
+            </div>
+            <h3 class="featureTitle">Built for simplicity.</h3>
+            <span class="featureDescription"
+              >Bitcoin can seem complex, but it doesn’t have to be. Blitz Wallet
+              is designed for everyone—whether you’re new to Bitcoin or an
+              experienced user. No complicated setups, just an easy way to send,
+              spend, and manage your Bitcoin.</span
+            >
           </div>
         </div>
-        <div class="rightContainer featuresContainer">
-          <div class="appImage">
-            <img
-              class="backgroundBlur"
-              src="./src/assets/images/backgroundBlur.webp"
-              alt="Image of iPhones"
-            />
-            <img
-              src="./src/assets/images/blitzContactPage.webp"
-              alt="Image of a contact page"
-            />
-          </div>
-          <div class="featuresText">
-            <div class="header">
-              <img
-                src="./src/assets/images/contactsIcon.svg"
-                alt="Contacts icon"
-              />
-              <h3>Contacts</h3>
-            </div>
+      </section>
+      <section id="questions">
+        <h2 class="sectionHeaders">Your Questions.</h2>
+        <h2 class="sectionHeaders">Answered.</h2>
 
-            <h2>Effortlessly Pay Friends.</h2>
+        <div class="expandContainer">
+          <div class="alwaysShow">
+            <p>What is Blitz Wallet?</p>
+            <img
+              src="../../src/assets/images/plusIcon.svg"
+              alt="A plus icon to expand a dropdown"
+              class="icon imageConstant"
+            />
+            <div class="expandContainerCover"></div>
+          </div>
+
+          <div class="dropdownContent">
             <p>
-              Payments made easy. Just add your friends' contacts to send and
-              receive payments with just a tap, making peer-to-peer transactions
-              more convenient than ever.
+              Blitz Wallet is a self-custodial Bitcoin-only wallet, meaning only
+              you control your funds. It combines multiple technologies to offer
+              a seamless payment experience—letting you send Bitcoin to friends,
+              spend it on gift cards and services, and even accept payments with
+              a built-in point-of-sale system.
             </p>
-            <span class="appBTN downloadModal button">Download</span>
           </div>
         </div>
-        <div class="leftContainer featuresContainer">
-          <div class="appImage">
+        <div class="expandContainer">
+          <div class="alwaysShow">
+            <p>How is Blitz Wallet different?</p>
             <img
-              class="backgroundBlur"
-              src="./src/assets/images/backgroundBlur.webp"
-              alt="Image of iPhones"
+              src="../../src/assets/images/plusIcon.svg"
+              alt="A plus icon to expand a dropdown"
+              class="icon imageConstant"
             />
-            <img
-              src="./src/assets/images/posPage.webp"
-              alt="Image of a point-of-sale page"
-            />
+            <div class="expandContainerCover"></div>
           </div>
-          <div class="featuresText">
-            <div class="header">
-              <img
-                src="./src/assets/images/pointOfSale.svg"
-                alt="Point-of-sale icon"
-              />
-              <h3>Point-of-Sale</h3>
-            </div>
 
-            <h2>Onboard Any Business.</h2>
+          <div class="dropdownContent">
             <p>
-              Easily set up a simple point-of-sale terminal, allowing any
-              business to accept Bitcoin.
+              Blitz Wallet is built for simplicity. Unlike other self-custodial
+              wallets, it features a Contacts section for easy transactions with
+              friends and a built-in shop to spend Bitcoin on gift cards and
+              services—all without extra apps. Plus, Blitz manages Lightning
+              channel liquidity for you and integrates eCash, Liquid, and
+              Lightning to minimize each network’s trade-offs, ensuring the best
+              Bitcoin payment experience.
             </p>
-            <span class="appBTN downloadModal button">Download</span>
           </div>
+        </div>
+        <div class="expandContainer">
+          <div class="alwaysShow">
+            <p>What payment types does Blitz Wallet offer?</p>
+            <img
+              src="../../src/assets/images/plusIcon.svg"
+              alt="A plus icon to expand a dropdown"
+              class="icon imageConstant"
+            />
+            <div class="expandContainerCover"></div>
+          </div>
+
+          <div class="dropdownContent">
+            <p>
+              Currently Blitz Wallet supports receiving Bitcoin, Lightning, and
+              Liquid payments and sending Bitcoin, Lightning, and Liquid
+              payments.
+            </p>
+          </div>
+        </div>
+        <div class="expandContainer">
+          <div class="alwaysShow">
+            <p>What are Blitz Wallet fees?</p>
+            <img
+              src="../../src/assets/images/plusIcon.svg"
+              alt="A plus icon to expand a dropdown"
+              class="icon imageConstant"
+            />
+            <div class="expandContainerCover"></div>
+          </div>
+
+          <div class="dropdownContent">
+            <div class="heightContainer">
+              <p class="gridTitle">Receiving</p>
+              <div class="gridContainer">
+                <div class="gridRow">
+                  <p class="gridHeader">Event</p>
+                  <p class="gridHeader">Fee</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">On-chain transaction</p>
+                  <p class="gridItem">Liquid network fee + 0.1%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">
+                    Lightning payment w/o lightning channel.
+                  </p>
+                  <p class="gridItem">Liquid network fee + 0.25%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">
+                    Lightning payment with lightning channel
+                  </p>
+                  <p class="gridItem">none</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">Liquid payment</p>
+                  <p class="gridItem">none</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">Lightning payment with eCash</p>
+                  <p class="gridItem">none</p>
+                </div>
+              </div>
+              <p class="gridTitle">Sending</p>
+              <div class="gridContainer">
+                <div class="gridRow">
+                  <p class="gridHeader">Event</p>
+                  <p class="gridHeader">Fee</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">On-chain transaction (form liquid)</p>
+                  <p class="gridItem">Bitcoin network fee + 0.1%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">On-chain transaction (from lightning)</p>
+                  <p class="gridItem">Bitcoin network fee + 0.5%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">
+                    Lightning payment w/o lightning channel
+                  </p>
+                  <p class="gridItem">Liquid network fee + 0.1%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">
+                    Lightning payment with lightning channel (using trampoline)
+                  </p>
+                  <p class="gridItem">1%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">
+                    Lightning payment with lightning channel (not using
+                    trampoline)
+                  </p>
+                  <p class="gridItem">
+                    Variable (est. under 200 sats or 19 cents)
+                  </p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">Liquid payment</p>
+                  <p class="gridItem">Variable (est. 26 sats or 2 cents)</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">eCash payment</p>
+                  <p class="gridItem">Variable</p>
+                </div>
+              </div>
+              <p class="gridTitle">Specialty</p>
+              <div class="gridContainer">
+                <div class="gridRow">
+                  <p class="gridHeader">Event</p>
+                  <p class="gridHeader">Fee</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">Channel open</p>
+                  <p class="gridItem">
+                    Variable (depends on Bitcoin network fees)
+                  </p>
+                </div>
+              </div>
+              <div class="seperator"></div>
+            </div>
+          </div>
+        </div>
+        <div class="expandContainer">
+          <div class="alwaysShow">
+            <p>Why is my lightning channel not opening?</p>
+            <img
+              src="../../src/assets/images/plusIcon.svg"
+              alt="A plus icon to expand a dropdown"
+              class="icon imageConstant"
+            />
+            <div class="expandContainerCover"></div>
+          </div>
+
+          <div class="dropdownContent">
+            <p>
+              To avoid opening a Lightning channel when on-chain fees are too
+              high, Blitz Wallet includes a ‘Max Channel Open Fee’ setting. If
+              you have enough balance but a channel hasn’t opened, you may need
+              to increase this limit. You can find the setting under Settings
+              (⚙️) > Bank > Settings.
+            </p>
+          </div>
+        </div>
+        <div class="expandContainer">
+          <div class="alwaysShow">
+            <p>Can I send or receive eCash?</p>
+            <img
+              src="../../src/assets/images/plusIcon.svg"
+              alt="A plus icon to expand a dropdown"
+              class="icon imageConstant"
+            />
+            <div class="expandContainerCover"></div>
+          </div>
+
+          <div class="dropdownContent">
+            <p>
+              No, Blitz Wallet offers eCash as a way to interact with the
+              Lightning Network. In the future, support for sending and
+              receiving eCash may be added.
+            </p>
+          </div>
+        </div>
+      </section>
+      <section id="dowloadToday">
+        <h2 class="sectionHeaders">Bitcoin, Made Simple.</h2>
+        <p>
+          Blitz Wallet makes Bitcoin easy. Send and receive payments instantly,
+          spend Bitcoin effortlessly, and stay in full control with a secure,
+          self-custodial wallet.
+        </p>
+        <div class="downloadButton">
+          <div class="hoverContainer"></div>
+          <img src="/src//assets/images/apple.svg" alt="Apple app store icon" />
+          <div class="seperator"></div>
+          <img
+            src="/src//assets/images/google-play.svg"
+            alt="Google Playstore icon"
+          />
+          <h2 class="downloadText">Download now</h2>
         </div>
       </section>
     </main>
@@ -310,7 +524,6 @@
             <ul>
               <li><a href="/pages/about/">About</a></li>
               <li><a href="/pages/contact/">Contact</a></li>
-              <li><a href="/pages/faq/">FAQ</a></li>
               <li><a href="/pages/blog/">Blog</a></li>
             </ul>
           </div>

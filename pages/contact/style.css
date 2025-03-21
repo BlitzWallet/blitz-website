@@ -5,7 +5,7 @@
 }
 .formContainer {
   width: 95%;
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 50px auto;
   display: flex;
   justify-content: space-between;
@@ -18,7 +18,7 @@
 }
 
 .formContainer form {
-  width: calc(100% - 575px);
+  width: calc(100% - 600px);
   display: flex;
   flex-direction: column;
 }
@@ -54,13 +54,13 @@ textarea {
   font-size: 18px;
   cursor: pointer;
 }
-@media screen and (max-width: 900px) {
+@media screen and (max-width: 950px) {
   .formContainer .questionContainer {
     display: none;
   }
   .formContainer form {
     width: 100%;
-    max-width: 500px;
+    max-width: 800px;
     margin: 0 auto;
   }
   .formContainer button {

@@ -140,7 +140,7 @@ nav .hidden {
 }
 
 .navItems {
-  width: 330px;
+  width: 300px;
   display: flex;
   list-style: none;
   align-items: center;
@@ -228,6 +228,9 @@ footer .privcyContent {
   flex-direction: column;
   text-align: center;
   align-items: baseline;
+}
+footer .privcyContent a {
+  margin: 5px 0;
 }
 
 footer .privcyContent p:first-child {

@@ -1,91 +1,97 @@
-// "use strict";
-// const modalContainer = document.querySelector(".modalContainer");
-// const modal = document.querySelector(".modal");
-// const appCards = document.querySelectorAll(".downloadModal");
-// const qrCode = document.getElementById("qr-code");
-// const qrContentType = document.querySelector(".downloadTypeInModal");
-// const initialQRText = "https://testflight.apple.com/join/r8MfbNa6";
+"use strict";
+const downloadBTN = document.querySelectorAll(".downloadButton");
 
-// function toggleModal(e) {
-//   const isUsingMobile = isMobileCheck();
-//   console.log(isUsingMobile);
-//   console.log(isAndroid());
-//   if (isUsingMobile) {
-//     window.open(
-//       !isAndroid()
-//         ? "https://testflight.apple.com/join/r8MfbNa6"
-//         : "https://github.com/BlitzWallet/BlitzWallet/tags",
-//       "_self"
-//     );
-//     return;
-//   }
-//   e.preventDefault();
-//   console.log(e);
-//   console.log("test");
-//   modalContainer.style.display =
-//     modalContainer.style.display === "flex" ? "none" : "flex";
-//   document.body.style.overflow =
-//     modalContainer.style.display === "flex" ? "hidden" : "scroll";
+console.log();
+const modalContainer = document.querySelector(".modalContainer");
+const modal = document.querySelector(".modal");
+const appCards = document.querySelectorAll(".downloadModal");
+const qrCode = document.getElementById("qr-code");
+const qrContentType = document.querySelector(".downloadTypeInModal");
+const initialQRText = "https://testflight.apple.com/join/r8MfbNa6";
 
-//   modalContainer.style.top = `${window.scrollY}px`;
-// }
+function toggleModal(e) {
+  const isUsingMobile = isMobileCheck();
+  console.log(isUsingMobile);
+  console.log(isAndroid());
+  if (isUsingMobile) {
+    window.open(
+      !isAndroid()
+        ? "https://testflight.apple.com/join/r8MfbNa6"
+        : "https://play.google.com/store/apps/details?id=com.blitzwallet",
+      "_self"
+    );
+    return;
+  }
+  e.preventDefault();
+  console.log(e);
+  console.log("test");
+  modalContainer.style.display =
+    modalContainer.style.display === "flex" ? "none" : "flex";
+  document.body.style.overflow =
+    modalContainer.style.display === "flex" ? "hidden" : "scroll";
 
-// // Create QR code
-// const qrcode = new QRCode(document.getElementById("qr-code"), {
-//   text: initialQRText,
-//   width: 256,
-//   height: 256,
-//   colorDark: "#000000",
-//   colorLight: "#ffffff",
-//   correctLevel: QRCode.CorrectLevel.H,
-// });
+  modalContainer.style.top = `${window.scrollY}px`;
+}
 
-// function toggleQRContentType(e) {
-//   const targetElement = e.target;
-//   const parentElement = targetElement.parentNode;
-//   console.log(targetElement.classList, "TEST");
-//   if (Array.from(targetElement.classList).includes("downloadTypeInModal"))
-//     return;
-//   Array.from(parentElement.children).forEach((child) => {
-//     child.classList.remove("active");
-//   });
-//   targetElement.classList.add("active");
+// Create QR code
+const qrcode = new QRCode(document.getElementById("qr-code"), {
+  text: initialQRText,
+  width: 256,
+  height: 256,
+  colorDark: "#000000",
+  colorLight: "#ffffff",
+  correctLevel: QRCode.CorrectLevel.H,
+});
 
-//   qrcode.clear();
-//   qrcode.makeCode(
-//     Array.from(targetElement.classList).includes("IOS")
-//       ? "https://testflight.apple.com/join/r8MfbNa6"
-//       : "https://github.com/BlitzWallet/BlitzWallet/tags"
-//   );
-// }
+function toggleQRContentType(e) {
+  const targetElement = e.target;
+  const parentElement = targetElement.parentNode;
+  console.log(targetElement.classList, "TEST");
+  if (Array.from(targetElement.classList).includes("downloadTypeInModal"))
+    return;
+  Array.from(parentElement.children).forEach((child) => {
+    child.classList.remove("active");
+  });
+  targetElement.classList.add("active");
 
-// function isMobileCheck() {
-//   let isMobile;
-//   if ("maxTouchPoints" in navigator) {
-//     isMobile = navigator.maxTouchPoints > 0;
-//   } else if ("msMaxTouchPoints" in navigator) {
-//     isMobile = navigator.msMaxTouchPoints > 0;
-//   } else {
-//     isMobile =
-//       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-//         navigator.userAgent
-//       );
-//   }
-//   return isMobile;
-// }
+  qrcode.clear();
+  qrcode.makeCode(
+    Array.from(targetElement.classList).includes("IOS")
+      ? "https://testflight.apple.com/join/r8MfbNa6"
+      : "https://play.google.com/store/apps/details?id=com.blitzwallet"
+  );
+}
 
-// // Check if device is Android
-// function isAndroid() {
-//   return /Android/i.test(navigator.userAgent);
-// }
-// appCards.forEach((card) => {
-//   card.addEventListener("click", toggleModal);
-// });
+function isMobileCheck() {
+  let isMobile;
+  if ("maxTouchPoints" in navigator) {
+    isMobile = navigator.maxTouchPoints > 0;
+  } else if ("msMaxTouchPoints" in navigator) {
+    isMobile = navigator.msMaxTouchPoints > 0;
+  } else {
+    isMobile =
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      );
+  }
+  return isMobile;
+}
 
-// qrContentType.addEventListener("click", toggleQRContentType);
+// Check if device is Android
+function isAndroid() {
+  return /Android/i.test(navigator.userAgent);
+}
+appCards.forEach((card) => {
+  card.addEventListener("click", toggleModal);
+});
+downloadBTN.forEach((child) => {
+  child.addEventListener("click", toggleModal);
+});
 
-// modalContainer.addEventListener("click", toggleModal);
+qrContentType.addEventListener("click", toggleQRContentType);
 
-// modal.addEventListener("click", (e) => {
-//   e.stopPropagation();
-// });
+modalContainer.addEventListener("click", toggleModal);
+
+modal.addEventListener("click", (e) => {
+  e.stopPropagation();
+});
