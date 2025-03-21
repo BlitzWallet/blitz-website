@@ -111,88 +111,236 @@
     </div>
 
     <main>
-      <!-- </section> -->
-      <section class="valuesSection">
-        <h2 class="sectionHeaders">Our Vision</h2>
-        <!-- <section class="bitcoinThesisSection contentSection"> -->
-        <p class="visionDescription">
-          At Blitz, we have a simple vision: to become the leading payment
-          solutions platform in Bitcoin, with the ultimate goal of bringing
-          Bitcoin payments to the masses. To achieve this, we are focusing on
-          two key areas: usability and abstraction.
-        </p>
-        <div class="valuesContainer">
-          <div class="value">
-            <div class="imageContainer">
-              <img
-                src="../../src/assets/images/usabilityIconContacts.svg"
-                alt="A group of people inside of a hand"
-              />
-            </div>
-            <h2>Usabilty</h2>
-            <p class="visionDescription">
-              For us, usability means that anyone, from a Bitcoin expert to your
-              grandmother, can easily use the app. We strive to achieve this
-              usability through minimalistic design, extensive user testing, and
-              simplifying technical features.
+      <section class="whitePaper">
+        <p class="sectionHeaders">Our Whitepaper</p>
+
+        <p class="tableOfContentsHeader">Table of contents</p>
+        <ol class="tableOfContentsContainer">
+          <li><a href="#abstract">Abstract</a></li>
+          <li><a href="#problem">Problem</a></li>
+          <li><a href="#solution">Solution</a></li>
+          <li><a href="#use-cases">Use Cases</a></li>
+          <li><a href="future-roadmap">Future Roadmap</a></li>
+          <li><a href="#conclusion">Conclusion</a></li>
+        </ol>
+        <h1>Blitz Wallet: The Simplest Self-Custodial Bitcoin Wallet</h1>
+        <div class="contentContainer">
+          <div id="abstract" class="sectionContainer">
+            <h2>Abstract</h2>
+            <p>
+              Blitz Wallet is a next-generation self-custodial Bitcoin wallet
+              designed to simplify Bitcoin payments and solve key challenges in
+              the Bitcoin space: Bitcoin is slow for payments, it’s unclear how
+              to use, and it can feel too complex. By focusing on usability and
+              simplicity, Blitz Wallet integrates the Bitcoin Lightning Network,
+              Liquid sidechain, and eCash to balance their trade-offs and make
+              self-custodial payments easier. The wallet addresses key barriers
+              such as complex invoices, dinner paradox, and liquidity
+              management. With features like a native contacts system, store to
+              enable use of your Bitcoin, automated liquidity handling, and a
+              gradual transition to self-custody, Blitz Wallet creates an
+              intuitive experience for both beginners and experienced users. Our
+              mission is to create the simplest, most user-friendly Bitcoin
+              wallet. We envision a world where everyone has full control over
+              their money and can transact freely and effortlessly with others.
             </p>
           </div>
-          <div class="value">
-            <div class="imageContainer">
-              <img
-                src="../../src/assets/images/abstractionIconAbout.svg"
-                alt="A group of people inside of a hand"
-              />
-            </div>
-            <h2>Abstraction</h2>
-            <p class="visionDescription">
-              Users should not need to understand how a product works to use it.
-              With this in mind, we have removed the complexities of the
-              technologies we use to simplify the user experience.
+          <div id="problem" class="sectionContainer">
+            <h2>1. Problem</h2>
+            <p>
+              A major hurdle that Bitcoin has yet to overcome is usability for
+              day-to-day payments. This issue is evident in what we call the QR
+              code problem. Currently, the most common way to share Bitcoin
+              addresses or Lightning invoices is through QR codes. While
+              effective, over-reliance on QR codes introduces two major
+              challenges:
+            </p>
+            <ol>
+              <li>
+                Finality of payments – Bitcoin transactions are irreversible, so
+                manually entering an address increases the risk of errors and
+                potential loss of funds
+              </li>
+              <li>
+                Complexity of addresses – Bitcoin addresses and Lightning
+                invoices are long and difficult to read, which can be
+                intimidating for new users.
+              </li>
+            </ol>
+            <p>
+              While QR codes help mitigate these risks, they also create
+              usability friction. Traditional payment networks use simple
+              identifiers like usernames or phone numbers, making payments
+              seamless. Bitcoin, in contrast, often feels like a step backward
+              in user experience.
+            </p>
+            <p>
+              Another challenge is the complexity of Layer 2 solutions designed
+              to improve Bitcoin’s payment throughput. These solutions introduce
+              technical quirks not seen in traditional payment networks, such
+              as:
+            </p>
+            <ul>
+              <li>
+                Lightning Network channel capacity – Users can only receive
+                payments if their channel has enough inbound liquidity.
+              </li>
+              <li>
+                Invoice limitations – Lightning invoices expire and can only be
+                used once.
+              </li>
+              <li>
+                Node uptime – Lightning nodes must remain online to send and
+                receive payments.
+              </li>
+            </ul>
+            <p>
+              These constraints require users to understand the underlying
+              protocol before they can effectively use Bitcoin, creating a
+              significant barrier to adoption. Given these usability challenges,
+              there is a clear need for a wallet that seamlessly integrates
+              Bitcoin’s scaling technologies into a simple, intuitive
+              experience.
+            </p>
+          </div>
+          <div id="solution" class="sectionContainer">
+            <h2>2. Solution</h2>
+            <p>
+              Blitz Wallet addresses Bitcoin's usability challenges by
+              integrating multiple technologies—Lightning Network, Liquid
+              Network, and eCash—to offer a seamless and user-friendly
+              experience. Here's how Blitz Wallet tackles these issues:
+            </p>
+            <ol>
+              <li>
+                Simplified Onboarding New users can start sending and receiving
+                Bitcoin payments immediately without the need to open a
+                Lightning channel. By leveraging Boltz Atomic Liquid swaps,
+                Bitcoin on-chain or Lightning payments are automatically
+                converted to Liquid BTC. This eliminates the complexity of
+                channel management and reduces onboarding friction.<br />
+                <br />
+                While Boltz swaps have a minimum swap amount of 1,000 sats,
+                Blitz Wallet also integrates eCash for micropayments, allowing
+                users to send and receive small transactions without
+                limitations. This ensures a smooth and flexible payment
+                experience.
+              </li>
+              <li>
+                Simple Payments Traditional payment apps like Venmo or Cash App
+                succeed due to their simplicity in connecting users. Blitz
+                Wallet embraces this by implementing a native contacts system,
+                allowing users to add each other via usernames. This eliminates
+                the need for exchanging invoices and greatly reduces friction in
+                everyday transactions. <br /><br />
+                By simplifying payments, Blitz Wallet resolves the "Dinner
+                Paradox", where splitting bills in Bitcoin becomes cumbersome
+                due to invoice-based transactions.
+              </li>
+              <li>
+                Customizable Transition to Self-Custody Blitz Wallet introduces
+                a "custodial ladder" to help users transition to full
+                self-custody at their own pace: o Beginning:
+                <ul>
+                  <li>
+                    Users leverage Liquid atomic swaps to facilitate payments
+                    and can optionally enable eCash for micropayments.
+                  </li>
+                  <li>
+                    Middle: As users gain knowledge about Bitcoin and the
+                    importance of self-custody, they begin swapping eCash for
+                    Liquid.
+                  </li>
+                  <li>
+                    End: Users can enable Lightning Network support when ready,
+                    with the wallet automatically opening a Lightning channel
+                    when their balance reaches a configurable threshold
+                    (default: 500,000 sats).
+                  </li>
+                </ul>
+              </li>
+              <li>
+                Automated Liquidity Management Managing liquidity on the
+                Lightning Network can be complex. Blitz Wallet simplifies this
+                with:
+
+                <ul>
+                  <li>
+                    Dynamic Balancing: Automatically adjusts funds between
+                    Lightning and Liquid networks based on user activity.
+                  </li>
+                  <li>
+                    Swap Invoices: Automatically generates swap invoices when
+                    inbound capacity is low, preventing failed payments due to
+                    liquidity constraints.
+                  </li>
+                </ul>
+              </li>
+            </ol>
+          </div>
+          <div id="use-cases" class="sectionContainer">
+            <h2>3. Use Cases</h2>
+            <p>
+              A perfect example of Blitz Wallet’s power comes from its creator,
+              Blake Kaufman. During a holiday, his mother wanted to send money
+              to him and his brothers for dinner. She logged onto Venmo and sent
+              them each $20. However, for Blake, she used Blitz Wallet and sent
+              him Bitcoin—without needing an invoice or prior coordination.
+            </p>
+            <p>
+              Despite not being highly technical, she was able to send Bitcoin
+              just as easily as using Venmo. This story highlights the
+              simplicity of Blitz Wallet in onboarding new users and removing
+              friction from Bitcoin transactions.
+            </p>
+          </div>
+          <div id="future-roadmap" class="sectionContainer">
+            <h2>4. Future Roadmap</h2>
+            <p>
+              Blitz Wallet is continuously evolving to improve user experience.
+              Upcoming features include:
+            </p>
+            <ul>
+              <li>
+                USDT integration over Liquid – Expanding stablecoin support for
+                more payment options.
+              </li>
+              <li>
+                Multi-language support – Translating the application to improve
+                accessibility for non-English speakers.
+              </li>
+              <li>
+                Additional features and optimizations – Enhancing Lightning
+                liquidity automation and further refining the user experience.
+              </li>
+            </ul>
+            <p>
+              Our goal remains the same: To create the simplest, most
+              user-friendly Bitcoin wallet.
+            </p>
+          </div>
+          <div id="conclusion" class="sectionContainer">
+            <h2>5. Conclusion</h2>
+            <p>
+              Blitz Wallet is a game-changer in the Bitcoin ecosystem, bridging
+              the gap between usability and financial sovereignty. By
+              integrating Lightning, Liquid, and eCash into a single, intuitive
+              wallet, Blitz Wallet makes self-custodial Bitcoin payments as
+              seamless as traditional financial apps. Through features like
+              automatic liquidity management, a native contacts system, and a
+              customizable transition to self-custody, Blitz Wallet removes
+              complexity and enhances user experience.
+            </p>
+            <p>
+              As we continue to innovate, we remain committed to our vision of
+              making Bitcoin simple, accessible, and practical for everyday use.
+              With Blitz Wallet, sending and receiving Bitcoin is finally as
+              easy as using Venmo or Cash App—without compromising on
+              self-custody and financial freedom.
             </p>
           </div>
         </div>
       </section>
-
-      <div class="purposeSection">
-        <h2 class="sectionHeaders">Our Strategy</h2>
-        <div class="contentContainer">
-          <div class="purposeContianer">
-            <h2 class="purposeHeader">Purpose</h2>
-            <p class="purposeDescription">
-              To empower users to easily send and receive payments across the
-              globe.
-            </p>
-          </div>
-          <div class="companyStrategy">
-            <div class="tripleItemRow">
-              <div class="item">
-                <h2><strong>People</strong></h2>
-                <p>
-                  Create a simple, KYC-free, and self-custodial application to
-                  enable people to transact freely and securely.
-                </p>
-              </div>
-
-              <div class="item">
-                <h2><strong>Planet</strong></h2>
-                <p>
-                  Remove payment barriers and economic inequalities between
-                  regions.
-                </p>
-              </div>
-
-              <div class="item">
-                <h2><strong>Transparency</strong></h2>
-                <p>
-                  Embrace the open-source philosophy in all business processes,
-                  including idea generation, code, and future plans.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </main>
 
     <footer>

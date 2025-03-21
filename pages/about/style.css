@@ -1,240 +1,66 @@
-main {
-  width: 100%;
-
-  min-height: calc(100dvh - 80px - 250px);
-  display: flex;
-  flex-direction: column;
-}
-.sectionHeaders {
+.whitePaper {
   width: 95%;
-  font-size: 120px;
-  text-align: center;
-  margin: 60px auto 0;
+  margin: 30px auto 0;
+  max-width: 900px;
 }
-.visionDescription {
-  width: 95%;
-  max-width: 1300px;
-  margin: 0 auto;
-  text-align: center;
-}
-
-.valuesSection {
-  width: 95%;
-  max-width: 1300px;
-  margin: 0 auto;
-}
-.valuesSection .valuesContainer {
-  width: 100%;
-  margin: 100px auto 0;
-  display: flex;
-  justify-content: space-between;
-}
-
-.valuesSection .imageContainer {
-  width: max-content;
-  background-color: var(--dm-text);
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-.valuesSection .imageContainer img {
-  width: 30px;
-  height: 30px;
-  height: auto;
-}
-.valuesSection .value {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 45%;
-}
-.valuesSection .value h2 {
+.whitePaper h1 {
   font-size: 40px;
-  text-align: center;
-  text-transform: uppercase;
-}
-.valuesSection .value p {
-  margin-top: 20px;
-  width: 100%;
-  max-width: 600px;
-  text-align: center;
-}
-.purposeSection {
-  width: 95%;
-  max-width: 1300px;
-  height: 80dvh;
-  margin: 0 auto;
-  min-height: fit-content;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-}
-.purposeSection .contentContainer {
-  background-color: var(--dm-backgroundOffset);
-  padding: 20px;
-  border-radius: 8px;
-  margin: 20px auto 0;
-}
-.purposeSection .purposeContianer {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.purposeHeader {
-  font-size: 40px;
-  text-align: center;
-  margin-right: 20px;
-  text-transform: uppercase;
-}
-
-.purposeDescription {
-  width: 95%;
-  max-width: max-content;
-}
-
-.companyStrategy {
-  width: 100%;
   margin-top: 75px;
 }
-.companyStrategy .tripleItemRow {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-
-  column-gap: 40px;
-  align-items: center;
-}
-.companyStrategy .tripleItemRow .item {
-  align-self: baseline;
-}
-.companyStrategy .tripleItemRow .item h2 {
+.whitePaper .tableOfContentsHeader {
+  margin-top: 30px;
   margin-bottom: 10px;
+  font-weight: 400;
   text-transform: uppercase;
-  text-align: center;
+  font-size: 25px;
 }
-.companyStrategy .tripleItemRow .item p:last-child {
-  text-align: center;
+.whitePaper .tableOfContentsContainer {
+  padding-left: 30px;
 }
-
-.companyStrategy .singleItemRow p:last-child {
-  text-align: center;
-}
-
-.contentSection {
-  align-items: center;
-  width: 95%;
-  max-width: 1000px;
-  margin: 50px auto 100px;
-}
-.contentSection h2 {
-  font-size: 40px;
-  margin-bottom: 30px;
-  text-align: center;
-}
-
-.header-p {
-  margin: 25px 0;
-  text-align: center;
+.whitePaper .tableOfContentsContainer li {
+  margin: 10px 0;
   font-size: 18px;
-  line-height: 40px;
 }
-.header-sponsor-BTN {
-  margin: 50px auto 0;
-  background-color: var(--dm-text);
-  padding: 8px 15px;
-  border: 0;
-  border-radius: 8px;
+.whitePaper .tableOfContentsContainer a {
+  margin: 10px 0;
   font-size: 18px;
-  cursor: pointer;
-  color: var(--dm-background);
-  text-decoration: none;
 }
-
-.sponsor-container {
-  width: 95%;
-  max-width: 1200px;
-  margin: 0 auto;
+.whitePaper #abstract {
+  margin-top: 50px;
 }
-
-.sponsor-container h1 {
-  font-size: 50px;
-  text-align: center;
-  margin-top: 80px;
-  margin-bottom: 20px;
+.whitePaper .sectionContainer {
+  margin: 50px 0;
 }
-.sponsor-container .sponsor-people-container {
+.whitePaper .sectionContainer h2 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+.whitePaper .sectionContainer p {
+  line-height: 32px;
+  margin: 20px 0;
+}
+.whitePaper .sectionContainer li {
+  line-height: 32px;
+  margin: 20px 0;
+}
+.whitePaper .sectionContainer ol {
+  padding-left: 30px;
+}
+.whitePaper .sectionContainer ul {
+  padding-left: 30px;
+}
+.whitePaper .sectionHeaders {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-.sponsor-container .sponsor {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-  background-color: aliceblue;
-  cursor: pointer;
-  transition: all 0.5s ease;
-  margin: 25px;
-}
-.sponsor-container .sponsor:hover {
-  transform: scale(1.1);
-}
-.sponsor-container p {
-  text-align: center;
+  font-size: 50px;
+  font-weight: 500;
 }
 
-@media screen and (max-width: 800px) {
-  .valuesSection .valuesContainer {
-    flex-direction: column;
-    align-items: center;
-    margin: 100px auto 0;
-  }
-  .valuesSection .value {
-    width: 100%;
-  }
-  .valuesSection .value:first-child {
-    margin-bottom: 50px;
-  }
-  .valuesSection .value .visionDescription {
-    max-width: unset;
-  }
-}
-@media screen and (max-width: 730px) {
-  .companyStrategy .singleItemRow {
-    display: flex;
-    flex-direction: column;
-    grid-template-columns: none;
-    margin: 0;
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  .companyStrategy .singleItemRow p:first-child {
-    margin-bottom: 10px;
-  }
-  .companyStrategy .tripleItemRow {
-    display: flex;
-    flex-direction: column;
-    grid-template-columns: none;
-    column-gap: 0;
-    margin: 0;
-    text-align: center;
-  }
-  .companyStrategy .tripleItemRow p:first-child {
-    margin-bottom: 10px;
-  }
-  .companyStrategy .tripleItemRow .item {
-    margin-bottom: 30px;
-  }
-  .companyStrategy .tripleItemRow .item {
-    align-self: center;
-  }
-}
 @media screen and (max-width: 700px) {
-  .sectionHeaders {
-    font-size: 70px;
+  .whitePaper h1 {
+    font-size: 30px;
+  }
+  .whitePaper .sectionHeaders {
+    font-size: 40px;
   }
 }
 
