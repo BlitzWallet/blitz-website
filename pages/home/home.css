@@ -100,6 +100,8 @@
 #features .featuresContainer .feature .icon {
   width: 30px;
   height: 30px;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7460%)
+    hue-rotate(144deg) brightness(115%) contrast(102%);
 }
 #features .featuresContainer .feature img {
   width: 100%;
