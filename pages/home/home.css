@@ -35,63 +35,6 @@
   flex-wrap: wrap;
 }
 
-.hero .buttonsContainer button {
-  display: flex;
-  align-items: center;
-  border-radius: 40px;
-  padding: 20px 30px;
-  border: 2px solid var(--dm-text);
-  margin-right: 15px;
-  position: relative;
-  overflow: hidden;
-  background-color: unset;
-  cursor: pointer;
-}
-.hero .buttonsContainer button:hover .hoverContainer {
-  bottom: 0;
-}
-.hero .buttonsContainer button:hover .downloadText {
-  color: var(--lm-text);
-}
-.hero .buttonsContainer button:hover .seperator {
-  background-color: var(--lm-text);
-}
-.hero .buttonsContainer button:hover img {
-  filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7460%)
-    hue-rotate(144deg) brightness(115%) contrast(102%);
-}
-
-.hero .buttonsContainer .hoverContainer {
-  width: 100%;
-  height: 100%;
-  background-color: var(--dm-text);
-  position: absolute;
-  bottom: 100%;
-  right: 0;
-  z-index: -1;
-  transition: bottom 0.5s ease-in-out;
-}
-.hero .buttonsContainer button .seperator {
-  width: 1px;
-  height: 20px;
-  background-color: var(--dm-text);
-  margin: 0 10px;
-  transform: rotate(15deg);
-  transition: background-color 0.5s ease-in-out;
-}
-
-.hero .buttonsContainer button .downloadText {
-  margin-left: 20px;
-  font-size: 16px;
-  transition: color 0.5s ease-in-out;
-}
-.hero .buttonsContainer img {
-  width: 25px;
-  height: 25px;
-  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7460%)
-    hue-rotate(144deg) brightness(115%) contrast(102%);
-  transition: filter 0.5s ease-in-out;
-}
 .hero .buttonsContainer .warningText {
   opacity: 0.8;
   font-size: 13px;
@@ -113,27 +56,27 @@
 /* --------------------------------- */
 /* Blitz Wallet featues */
 /* --------------------------------- */
-.features {
+#features {
   width: 95%;
   align-items: center;
   display: flex;
   flex-direction: column;
   margin: 100px auto;
 }
-.features h2 {
+#features h2 {
   text-align: center;
 }
 
-.features .sectionHeaders:nth-child(2) {
+#features .sectionHeaders:nth-child(2) {
   margin-bottom: 30px;
   color: var(--primary_color);
 }
-.features .sectionDescription {
+#features .sectionDescription {
   width: 90%;
   text-align: center;
   margin-bottom: 50px;
 }
-.features .featuresContainer {
+#features .featuresContainer {
   display: flex;
   width: 95%;
   max-width: 1200px;
@@ -144,7 +87,7 @@
   row-gap: 20px;
   column-gap: 20px;
 }
-.features .featuresContainer .feature {
+#features .featuresContainer .feature {
   display: flex;
   width: 100%;
 
@@ -154,25 +97,46 @@
   padding: 50px 30px 30px 30px;
   border-radius: 8px;
 }
-.features .featuresContainer .feature .icon {
+#features .featuresContainer .feature .icon {
   width: 30px;
   height: 30px;
 }
-.features .featuresContainer .feature img {
+#features .featuresContainer .feature img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
-.features .featuresContainer .feature h3 {
+#features .featuresContainer .feature h3 {
   margin: 20px 0;
 }
-.features .featuresContainer .feature span {
+#features .featuresContainer .feature span {
   opacity: 0.9;
 }
-.features .featuresContainer .feature h3,
+#features .featuresContainer .feature h3,
 span {
   font-size: 16px;
+}
+/* Dowload container */
+#dowloadToday {
+  width: 95%;
+  max-width: 900px;
+  margin: 100px auto 0;
+  background-color: var(--dm-backgroundOffset);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+#dowloadToday p {
+  width: 100%;
+  max-width: 620px;
+  margin: 20px auto 50px;
+}
+#dowloadToday .downloadButton {
+  margin-right: 0;
 }
 /* CONSTANTS */
 .sectionHeaders {
@@ -190,6 +154,7 @@ span {
   .hero .CTA .textContainer {
     margin-right: 0;
     margin-bottom: 50px;
+    margin-top: 0;
   }
   .hero h1 {
     text-align: center;
@@ -207,7 +172,7 @@ span {
   .hero h1 {
     text-align: center;
   }
-  .features .featuresContainer {
+  #features .featuresContainer {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -219,7 +184,7 @@ span {
   .sponsorOrIntegration .sponsorContainer {
     font-size: 18px;
   }
-  .features .sectionHeader {
+  #features .sectionHeader {
     font-size: 30px;
   }
 }
@@ -231,7 +196,7 @@ span {
     font-size: 14px;
   }
 
-  .features .featuresContainer {
+  #features .featuresContainer {
     grid-template-columns: 1fr;
   }
   .sponsorOrIntegration h2 {
@@ -251,14 +216,6 @@ span {
   }
   .hero .buttonsContainer .warningText {
     text-align: center;
-  }
-}
-@media screen and (max-width: 500px) {
-  .hero .titleContainer {
-    margin: 20px auto;
-  }
-  .hero .CTA .textContainer {
-    margin-top: 50px;
   }
 }
 
@@ -281,4 +238,67 @@ span {
 
 .pb {
   color: var(--primary_color);
+}
+
+/* CUSTOM STYLES */
+/* DOWLOAD BUTTON */
+.downloadButton {
+  width: max-content;
+  height: fit-content;
+  display: flex;
+  align-items: center;
+  border-radius: 40px;
+  padding: 20px 30px;
+  border: 2px solid var(--dm-text);
+  margin-right: 15px;
+  overflow: hidden;
+  background-color: unset;
+  cursor: pointer;
+  position: relative;
+  z-index: 1;
+}
+.downloadButton:hover .hoverContainer {
+  bottom: 0;
+}
+.downloadButton:hover .downloadText {
+  color: var(--lm-text);
+}
+.downloadButton:hover .seperator {
+  background-color: var(--lm-text);
+}
+.downloadButton:hover img {
+  filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7460%)
+    hue-rotate(144deg) brightness(115%) contrast(102%);
+}
+
+.downloadButton .hoverContainer {
+  width: 100%;
+  height: 100%;
+  background-color: var(--dm-text);
+  position: absolute;
+  bottom: 100%;
+  right: 0;
+  z-index: -1;
+  transition: bottom 0.5s ease-in-out;
+}
+.downloadButton .seperator {
+  width: 1px;
+  height: 20px;
+  background-color: var(--dm-text);
+  margin: 0 10px;
+  transform: rotate(15deg);
+  transition: background-color 0.5s ease-in-out;
+}
+
+.downloadButton .downloadText {
+  margin-left: 20px;
+  font-size: 16px;
+  transition: color 0.5s ease-in-out;
+}
+.downloadButton img {
+  width: 25px;
+  height: 25px;
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7460%)
+    hue-rotate(144deg) brightness(115%) contrast(102%);
+  transition: filter 0.5s ease-in-out;
 }

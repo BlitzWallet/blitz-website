@@ -136,13 +136,13 @@
               <h1 class="sectionHeaders">Bitcoin Wallet Ever.</h1>
             </div>
             <p class="sectionHeadersDescription headerP">
-              Blitz Wallet is a self-custodial Bitcoin and Lightning wallet
-              focusing on making Bitcoin payments simple. Just downlaod an
-              account, add your friend as a contact, and send and request money.
+              Blitz Wallet is a self-custodial Bitcoin and Lightning wallet that
+              makes payments simple. Download the app, send money to friends,
+              and spend Bitcoin on gift cards, services, and more.
             </p>
 
             <div class="buttonsContainer">
-              <button id="downloadButton">
+              <button class="downloadButton">
                 <div class="hoverContainer"></div>
                 <img
                   src="/src//assets/images/apple.svg"
@@ -173,7 +173,7 @@
         </div>
       </section>
 
-      <section class="features">
+      <section id="features">
         <h2 class="sectionHeaders">Make Bitcoin Easy.</h2>
         <h2 class="sectionHeaders">Unlock Freedom.</h2>
         <p class="sectionHeadersDescription sectionDescription">
@@ -259,7 +259,7 @@
           </div>
         </div>
       </section>
-      <section class="questions">
+      <section id="questions">
         <h2 class="sectionHeaders">Your Questions.</h2>
         <h2 class="sectionHeaders">Answered.</h2>
 
@@ -276,11 +276,11 @@
 
           <div class="dropdownContent">
             <p>
-              Blitz Wallet is a self-custodial Bitcoin-only wallet. This means
-              you, and only you, have control of the funds in your wallet. By
-              leveraging multiple technologies, we aim to provide a seamless
-              payment experience, allowing anyone to transact over the Bitcoin
-              network.
+              Blitz Wallet is a self-custodial Bitcoin-only wallet, meaning only
+              you control your funds. It combines multiple technologies to offer
+              a seamless payment experience—letting you send Bitcoin to friends,
+              spend it on gift cards and services, and even accept payments with
+              a built-in point-of-sale system.
             </p>
           </div>
         </div>
@@ -297,13 +297,13 @@
 
           <div class="dropdownContent">
             <p>
-              Blitz Wallet is designed with you in mind, offering custody and
-              security within a simple user interface. The Contacts section of
-              Blitz Wallet allows you to easily send and request payments from
-              friends, delivering a user experience unmatched by other
-              self-custodial wallets. Additionally, with a shop page built
-              directly into the wallet, you can live off Bitcoin without needing
-              to download any other apps.
+              Blitz Wallet is built for simplicity. Unlike other self-custodial
+              wallets, it features a Contacts section for easy transactions with
+              friends and a built-in shop to spend Bitcoin on gift cards and
+              services—all without extra apps. Plus, Blitz manages Lightning
+              channel liquidity for you and integrates eCash, Liquid, and
+              Lightning to minimize each network’s trade-offs, ensuring the best
+              Bitcoin payment experience.
             </p>
           </div>
         </div>
@@ -365,6 +365,10 @@
                   <p class="gridItem">Liquid payment</p>
                   <p class="gridItem">none</p>
                 </div>
+                <div class="gridRow">
+                  <p class="gridItem">Lightning payment with eCash</p>
+                  <p class="gridItem">none</p>
+                </div>
               </div>
               <h4>Sending</h4>
               <div class="gridContainer">
@@ -405,6 +409,10 @@
                   <p class="gridItem">Liquid payment</p>
                   <p class="gridItem">Variable (est. 26 sats or 2 cents)</p>
                 </div>
+                <div class="gridRow">
+                  <p class="gridItem">eCash payment</p>
+                  <p class="gridItem">Variable</p>
+                </div>
               </div>
               <h4>Specialty</h4>
               <div class="gridContainer">
@@ -436,11 +444,11 @@
 
           <div class="dropdownContent">
             <p>
-              Becuase we do not want to force open a lightning chanel in case
-              on-chain fees are too high we have added a max channel open fee
-              settings item. If you have a sufficent balance to open a channel
-              and it has not you may need to increase the limit. The setting can
-              be found in settings > bank > settings.
+              To avoid opening a Lightning channel when on-chain fees are too
+              high, Blitz Wallet includes a ‘Max Channel Open Fee’ setting. If
+              you have enough balance but a channel hasn’t opened, you may need
+              to increase this limit. You can find the setting under Settings
+              (⚙️) > Bank > Settings.
             </p>
           </div>
         </div>
@@ -457,30 +465,30 @@
 
           <div class="dropdownContent">
             <p>
-              No. Blitz wallet offers eCash as a way to interact with the
-              lightning network. In the future support for sending and receiving
-              eCash may be enabled.
+              No, Blitz Wallet offers eCash as a way to interact with the
+              Lightning Network. In the future, support for sending and
+              receiving eCash may be added.
             </p>
           </div>
         </div>
-        <div class="expandContainer">
-          <div class="alwaysShow">
-            <p>Who are our sponsors?</p>
-            <img
-              src="../../src/assets/images/plusIcon.svg"
-              alt="A plus icon to expand a dropdown"
-              class="icon imageConstant"
-            />
-            <div class="expandContainerCover"></div>
-          </div>
-
-          <div class="dropdownContent">
-            <p>
-              Thanks to Opensats we have received a one year grant to allow us
-              to develop and deploy Blitz Wallet.
-            </p>
-          </div>
-        </div>
+      </section>
+      <section id="dowloadToday">
+        <h2 class="sectionHeaders">Bitcoin, Made Simple.</h2>
+        <p>
+          Blitz Wallet makes Bitcoin easy. Send and receive payments instantly,
+          spend Bitcoin effortlessly, and stay in full control with a secure,
+          self-custodial wallet.
+        </p>
+        <button class="downloadButton">
+          <div class="hoverContainer"></div>
+          <img src="/src//assets/images/apple.svg" alt="Apple app store icon" />
+          <div class="seperator"></div>
+          <img
+            src="/src//assets/images/google-play.svg"
+            alt="Google Playstore icon"
+          />
+          <h2 class="downloadText">Download now</h2>
+        </button>
       </section>
     </main>
     <footer>
