@@ -1,5 +1,5 @@
 "use strict";
-const downloadBTN = document.querySelector("#downloadButton");
+const downloadBTN = document.querySelectorAll(".downloadButton");
 
 console.log();
 const modalContainer = document.querySelector(".modalContainer");
@@ -84,7 +84,9 @@ function isAndroid() {
 appCards.forEach((card) => {
   card.addEventListener("click", toggleModal);
 });
-downloadBTN.addEventListener("click", toggleModal);
+downloadBTN.forEach((child) => {
+  child.addEventListener("click", toggleModal);
+});
 
 qrContentType.addEventListener("click", toggleQRContentType);
 
