@@ -1,4 +1,4 @@
-.faq {
+.questions {
   width: 95%;
   max-width: 1300px;
   margin: 50px auto;
@@ -7,19 +7,19 @@
   align-items: center;
 }
 
-.faq .nav .questionsGrouping:not(:last-child) {
+.questions .nav .questionsGrouping:not(:last-child) {
   margin-bottom: 50px;
 }
-.faq .nav .questionsGrouping ul li {
+.questions .nav .questionsGrouping ul li {
   margin: 20px 0;
   cursor: pointer;
 }
-.faq .content {
+.questions .content {
   width: calc(100% - 320px);
   float: right;
 }
 
-.faq .warning {
+.questions .warning {
   width: 100%;
   max-width: 600px;
   background-color: var(--dm-backgroundOffset);
@@ -27,41 +27,39 @@
   border-radius: 8px;
   margin-bottom: 50px;
 }
-.faq .warning .header {
+.questions .warning .header {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
 }
-.faq .warning .header img {
+.questions .warning .header img {
   width: 30px;
   height: 30px;
   margin-right: 10px;
 }
-.faq .warning .listItemP:not(:last-child) {
+.questions .warning .listItemP:not(:last-child) {
   margin-bottom: 20px;
 }
-
-.faq .questions {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.questions h2 {
+  text-align: center;
 }
 
-.faq .questions h2 {
+.questions h2:nth-child(2) {
   margin-bottom: 75px;
+  color: var(--primary_color);
 }
-.faq .questions .expandContainer {
+
+.questions .expandContainer {
   width: 100%;
   max-width: 900px;
   border-bottom: 1px solid var(--dm-text);
   /* padding-bottom: 20px; */
 }
-.faq .questions .expandContainer:not(:last-child) {
+.questions .expandContainer:not(:last-child) {
   margin-bottom: 40px;
 }
 
-.faq .questions .expandContainer .alwaysShow {
+.questions .expandContainer .alwaysShow {
   width: 100%;
   display: flex;
   align-items: center;
@@ -69,7 +67,7 @@
   position: relative;
   margin-bottom: 40px;
 }
-.faq .questions .expandContainer .expandContainerCover {
+.questions .expandContainer .expandContainerCover {
   position: absolute;
   top: 0;
   left: 0;
@@ -77,17 +75,17 @@
   height: 100%;
   cursor: pointer;
 }
-.faq .questions .expandContainer .expandIconContainer {
+.questions .expandContainer .expandIconContainer {
   background-color: var(--dm-backgroundOffset);
   padding: 10px;
   border-radius: 8px;
   margin-right: 15px;
 }
-.faq .questions .expandContainer .alwaysShow p {
+.questions .expandContainer .alwaysShow p {
   margin-right: auto;
 }
 
-.faq .imageConstant {
+.questions .imageConstant {
   width: 20px;
   height: 20px;
   filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7460%)
@@ -128,10 +126,10 @@
   padding-bottom: 20px;
 }
 
-.faq .dropdownContent h4 {
+.questions .dropdownContent h4 {
   margin-bottom: 10px;
 }
-.faq .dropdownContent table {
+.questions .dropdownContent table {
   width: 100%;
   color: var(--dm-text);
   font-family: var(--other_font);
@@ -139,7 +137,7 @@
   row-gap: 10px;
   display: grid;
 }
-.faq .dropdownContent .gridContainer {
+.questions .dropdownContent .gridContainer {
   width: 100%;
   color: var(--dm-text);
   font-family: var(--other_font);
@@ -150,53 +148,53 @@
   display: grid;
 }
 
-.faq .dropdownContent .gridContainer p {
+.questions .dropdownContent .gridContainer p {
   font-size: 12px;
 }
-.faq .dropdownContent .gridContainer .gridRow {
+.questions .dropdownContent .gridContainer .gridRow {
   display: grid;
   grid-template-columns: 1.25fr 0.75fr;
   border-bottom: 1px solid gray;
 }
-.faq .dropdownContent .gridContainer .gridRow:nth-child(2n) {
+.questions .dropdownContent .gridContainer .gridRow:nth-child(2n) {
   background-color: var(--dm-backgroundOffset);
 }
 
-.faq .dropdownContent .gridContainer .gridRow .gridHeader {
+.questions .dropdownContent .gridContainer .gridRow .gridHeader {
   text-align: center;
   padding: 10px 0;
 }
-.faq .dropdownContent .gridContainer .gridRow .gridHeader:first-child {
+.questions .dropdownContent .gridContainer .gridRow .gridHeader:first-child {
   border-right: 1px solid gray;
 }
-.faq .dropdownContent .gridContainer .gridRow .gridItem:first-child {
+.questions .dropdownContent .gridContainer .gridRow .gridItem:first-child {
   border-right: 1px solid gray;
 }
-.faq .dropdownContent .gridContainer .gridRow .gridItem {
+.questions .dropdownContent .gridContainer .gridRow .gridItem {
   padding: 10px;
   display: flex;
   align-items: center;
 }
 
-.faq .dropdownContent table thead {
+.questions .dropdownContent table thead {
   text-align: center;
   font-weight: bold;
   background-color: var(--dm-backgroundOffset);
   border: 1px solid gray;
 }
-.faq .dropdownContent table thead td {
+.questions .dropdownContent table thead td {
   padding: 10px 0;
 }
-.faq .dropdownContent table tbody tr {
+.questions .dropdownContent table tbody tr {
   height: 50px;
 }
-.faq .dropdownContent table tbody td {
+.questions .dropdownContent table tbody td {
   border-bottom: 1px solid gray;
 }
-.faq .dropdownContent table tbody td:first-child {
+.questions .dropdownContent table tbody td:first-child {
   border-right: 1px solid gray;
 }
 
-.faq .dropdownContent .seperator {
+.questions .dropdownContent .seperator {
   height: 1px;
 }
