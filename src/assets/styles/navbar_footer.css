@@ -229,6 +229,9 @@ footer .privcyContent {
   text-align: center;
   align-items: baseline;
 }
+footer .privcyContent a {
+  margin: 5px 0;
+}
 
 footer .privcyContent p:first-child {
   margin-bottom: 10px;
