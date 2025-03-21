@@ -212,7 +212,7 @@ span {
   .hero .buttonsContainer {
     flex-direction: column;
   }
-  .hero .buttonsContainer button {
+  .hero .buttonsContainer .downloadButton {
     margin-bottom: 20px;
     margin-right: 0;
   }
@@ -225,11 +225,11 @@ span {
   .hero .buttonsContianer {
     flex-direction: column;
   }
-  .hero .button:not(:last-child) {
+  .hero .downloadButton:not(:last-child) {
     margin-right: 0;
     margin-bottom: 20px;
   }
-  .hero .buttonsContainer button .downloadText {
+  .hero .buttonsContainer .downloadButton .downloadText {
     font-size: 14px;
   }
   .hero .buttonsContainer img {
