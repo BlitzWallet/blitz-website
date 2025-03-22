@@ -54,6 +54,12 @@
   font-size: 50px;
   font-weight: 500;
 }
+.whitePaper .sectionContainer a {
+  text-decoration: underline;
+}
+.whitePaper .sectionContainer a:visited {
+  color: var(--primary_color);
+}
 
 @media screen and (max-width: 700px) {
   .whitePaper h1 {
