@@ -12,7 +12,7 @@ export const postList = [
     readingLengthEST: 4, //In minutes
     time: "1742057210850",
     author: "Blitz Team",
-    authorImage: "../../../public/favicon.png", //Scoped to blog post page or public depending on image
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
     thumbnailUrl: "./power-up/assets/posTransactions.webp", //Scoped to blog index.html
     isVertical: true,
@@ -29,7 +29,7 @@ export const postList = [
     readingLengthEST: 7, //In minutes
     time: "1741611775672",
     author: "Destiny Smart",
-    authorImage: "../../../public/authorImages/destiny_smart.webp", //Scoped to blog post page or public depending on image
+    authorImage: "/public/authorImages/destiny_smart.webp", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/info.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
     thumbnailUrl: "./self-custodial-wallet/assets/self_custody.png", //Scoped to blog index.html
     isVertical: true,
@@ -47,7 +47,7 @@ export const postList = [
     readingLengthEST: 2, //In minutes
     time: "1740237953923",
     author: "Blitz Team",
-    authorImage: "../../../public/favicon.png", //Scoped to blog post page or public depending on image
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
     thumbnailUrl: "./efficiency-update/assets/homepage.png", //Scoped to blog index.html
     isVertical: true,
@@ -64,7 +64,7 @@ export const postList = [
     readingLengthEST: 2, //In minutes
     time: "1737590535347",
     author: "Blitz Team",
-    authorImage: "../../../public/favicon.png", //Scoped to blog post page or public depending on image
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
     thumbnailUrl: "./bridge-update/assets/contactsImages.png", //Scoped to blog index.html
     isVertical: true,
@@ -81,7 +81,7 @@ export const postList = [
     readingLengthEST: 5, //In minutes
     time: "1736994574819", // January 8, 2025
     author: "Blitz Team",
-    authorImage: "../../../public/favicon.png", //Scoped to blog post page or public depending on image
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
     thumbnailUrl: "./introducing-blitz-wallet/assets/thumbnailUrlWhite.png", //Scoped to blog index.html
     isFeatured: true, // usualy will be set to false

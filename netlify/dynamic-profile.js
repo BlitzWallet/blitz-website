@@ -12,7 +12,7 @@ export async function handler(event, context) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="/public/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="/favicon.png" />
     <title>Blitz Wallet | ${username}</title>
     <meta
       name="description"
@@ -32,7 +32,7 @@ export async function handler(event, context) {
 
 
     <!-- Apple Icon -->
-    <link rel="apple-touch-icon" href="/public/favicon.png" />
+    <link rel="apple-touch-icon" href="/favicon.png" />
 
     <script src="/u/index.js" defer></script>
 
