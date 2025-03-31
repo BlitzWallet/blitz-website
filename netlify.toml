@@ -1,20 +1,63 @@
 [build]
   functions = "netlify"
-
+  
 [functions]
   "*" = { timeout = 20 } # Increase timeout limit
   
+# Main redirection for user profiles
 [[redirects]]
   from = "/u/:username"
   to = "/.netlify/functions/dynamic-profile"
   status = 200
-
-
+  
+  
+# Ensure favicon files are properly accessible
 [[redirects]]
-  from = "/static/*"
-  to = "/static/:splat"
+  from = "/favicon.ico"
+  to = "/public/favicon/favicon.ico"
   status = 200
-
+  
+[[redirects]]
+  from = "/favicon.svg"
+  to = "/public/favicon/favicon.svg"
+  status = 200
+  
+[[redirects]]
+  from = "/favicon-96x96.png"
+  to = "/public/favicon/favicon-96x96.png"
+  status = 200
+  
+[[redirects]]
+  from = "/apple-touch-icon.png"
+  to = "/public/favicon/favicon.ico"
+  status = 200
+  
+[[redirects]]
+  from = "/site.webmanifest"
+  to = "/public/favicon/site.webmanifest"
+  status = 200
+  
+# Handle static assets
+[[redirects]]
+  from = "/public/*"
+  to = "/public/:splat"
+  status = 200
+  
+[[redirects]]
+  from = "/src/*"
+  to = "/src/:splat"
+  status = 200
+  
+[[redirects]]
+  from = "/u/index.js"
+  to = "/u/index.js"
+  status = 200
+  
+[[redirects]]
+  from = "/u/index.css"
+  to = "/u/index.css"
+  status = 200
+  
 [[redirects]]
   from = "/.well-known/lnurlp/:username"
   to = "/.netlify/functions/lnurlp"
