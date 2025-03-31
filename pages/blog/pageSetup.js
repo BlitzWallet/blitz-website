@@ -15,7 +15,7 @@ window.addEventListener("load", () => {
 
   console.log(url, urlParams, postTitle);
   const [post] = getPostByName(postTitle);
-  document.title = `Blitz Wallet | ${post.title}`;
+  // document.title = `Blitz Wallet | ${post.title}`;
   blogTypeImage.src = `../${post.imageUrl}`;
   blogTypeImage.alt = `Image of a ${
     post.type.toLowerCase() === "release"
