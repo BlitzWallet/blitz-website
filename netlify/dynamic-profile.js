@@ -53,6 +53,7 @@ export async function handler(event, context) {
 
     <meta name="robots" content="index,nofollow"> 
     <meta name="googlebot" content="noindex,nofollow">
+    <script src="/src/js/font-loader.js" defer></script>
 
     <link rel="stylesheet" href="../src/assets/styles/index.css" />
     <link rel="stylesheet" href="./index.css" />
@@ -89,17 +90,23 @@ export async function handler(event, context) {
         
       });
     </script>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag("js", new Date());
-      gtag("config", "G-WNRJ7Y4RVE");
-    </script>
   </head>
   <body>
   <h1>Redirecting...</h1>
+   <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
   </body>
 </html>`,
   };

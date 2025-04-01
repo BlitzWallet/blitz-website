@@ -78,25 +78,16 @@
     />
 
     <script src="../../../src/js/navbar.js" defer></script>
+
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
     <script src="../../../src/components/downloadModal/index.js" defer></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script type="module" src="../pageSetup.js"></script>
     <link rel="stylesheet" href="../masterBlogTheme.css" />
     <link rel="stylesheet" href="./style.css" />
-
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-WNRJ7Y4RVE");
-    </script>
   </head>
 
   <body>
@@ -358,5 +349,19 @@
         <p>&copy;2023 Blitz Wallet LLC.</p>
       </div>
     </footer>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
   </body>
 </html>
