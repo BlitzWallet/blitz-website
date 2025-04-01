@@ -137,11 +137,13 @@ nav .blogNav .postTypeSelector .activeNav {
   color: var(--primary_color);
 }
 #previousPosts .postImageContainer {
+  width: 100%;
   height: calc(100% - 35px - 100px);
   margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 #previousPosts .postImage {
   width: 100%;

@@ -181,7 +181,7 @@
 
 #questions .dropdownContent table thead {
   text-align: center;
-  font-weight: bold;
+  font-weight: 500;
   background-color: var(--dm-backgroundOffset);
   border: 1px solid gray;
 }

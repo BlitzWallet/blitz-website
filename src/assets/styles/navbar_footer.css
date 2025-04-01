@@ -46,7 +46,7 @@ nav .downloadModal,
   border-bottom: unset;
 }
 nav .bitzName {
-  font-weight: bold;
+  font-weight: 500;
   text-align: left;
 }
 nav .downloadModal {

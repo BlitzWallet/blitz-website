@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Primary Meta Tags -->
+    <title>
+      Blitz Wallet eCash Update: Pay with eCash, Lightning, and Bitcoin in the
+      Store & Send to Contacts
+    </title>
+    <meta
+      name="title"
+      content="Blitz Wallet eCash Update: Pay with eCash, Lightning, and Bitcoin in the Store & Send to Contacts"
+    />
+    <meta
+      name="description"
+      content="Blitz Wallet has expanded its functionality. Learn how to pay with eCash in the Blitz Store, send eCash to Blitz contacts, and utilize Bitcoin Lightning for seamless transactions. Discover Lightning wallet and eCash features today!"
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitz-wallet.com/pages/blog/bridge-update/"
+    />
+    <meta
+      property="og:title"
+      content="Blitz Wallet eCash Update: Pay with eCash, Lightning, and Bitcoin in the Store & Send to Contacts"
+    />
+    <meta
+      property="og:description"
+      content="Blitz Wallet expands payment options with eCash, Lightning, and Bitcoin. Learn how to use eCash in the Blitz Store, send to contacts, and explore Bitcoin Lightning wallet features."
+    />
+    <meta property="og:image" content="/public/twitterCard.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://blitz-wallet.com/pages/blog/bridge-update/"
+    />
+    <meta
+      property="twitter:title"
+      content="Blitz Wallet eCash Update: Pay with eCash, Lightning, and Bitcoin in the Store & Send to Contacts"
+    />
+    <meta
+      property="twitter:description"
+      content="Blitz Wallet's latest update lets you pay with eCash, Lightning, and Bitcoin. Find out how to use your Bitcoin Lightning wallet to send payments and shop in the Blitz Store!"
+    />
+    <meta property="twitter:image" content="/public/twitterCard.png" />
+
+    <!-- Favicon -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+
+    <link rel="stylesheet" href="../../../src/assets/styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="../../../src/assets/styles/navbar_footer.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../src/components/downloadModal/style.css"
+    />
+
+    <script src="../../../src/js/navbar.js" defer></script>
+    <script src="../../../src/components/downloadModal/index.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script type="module" src="../pageSetup.js"></script>
+    <link rel="stylesheet" href="../masterBlogTheme.css" />
+    <link rel="stylesheet" href="./style.css" />
+
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </head>
+
+  <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet (beta)</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <p class="bitzName">Blitz Wallet.</p>
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+
+            <li class="navItem activePage">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+      <div class="blogNav">
+        <div class="locationTab">
+          <div class="imgContainer">
+            <img id="blogTypeImage" src="/favicon.png" alt="blog pencil" />
+          </div>
+          <a href="/pages/blog">
+            <p>Blog</p>
+          </a>
+          <p class="blogTypeSeperator">|</p>
+          <p id="blogTypeText">
+            <!-- Pulled in from javascript -->
+          </p>
+        </div>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavDropdown-Container">
+        <ul class="navItems">
+          <li class="navItem">
+            <a href="/pages/about/">About</a>
+          </li>
+          <li class="navItem">
+            <a href="/pages/contact">Contact</a>
+          </li>
+
+          <li class="navItem activePage">
+            <a href="/pages/blog">Blog</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <section class="blogContentContainer">
+      <div class="postHead">
+        <h1 id="blogTitle">
+          Blitz Wallet eCash Update: Pay with eCash, Lightning, and Bitcoin
+        </h1>
+        <p id="blogSubHeader">
+          Explore how Blitz Wallet improves payment options with eCash,
+          Lightning, and Bitcoin Lightning Network support for a seamless
+          experience.
+        </p>
+        <div class="postDataContainerOuter">
+          <div class="imageContainer">
+            <img
+              id="authorProfilePicture"
+              src="/favicon.png"
+              alt="Profile image of the author"
+            />
+            <!-- Img src in from javascript -->
+          </div>
+          <div class="dataContainer">
+            <p rel="author" id="authorName">
+              <!-- Pulled in from javascript -->
+            </p>
+            <div class="postDataContainerInner">
+              <p id="postReadTime">
+                <!-- Pulled in from javascript -->
+              </p>
+              <p class="postDataSeperator">|</p>
+              <p id="postDate">
+                <!-- Pulled in from javascript -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="postBody">
+        <p>
+          At Blitz Wallet, our mission is to provide a seamless and simple
+          Bitcoin experience. We're excited to introduce our latest update,
+          packed with enhancements that improve performance, expand
+          functionality, and refine the user interface. Let's explore the key
+          features and improvements in this release.
+        </p>
+        <p>Let’s dive into the details:</p>
+
+        <h2>
+          Optimized Transaction Sorting for Lightning, Liquid, and eCash
+          Payments
+        </h2>
+        <p>
+          Managing transactions across multiple networks—Lightning, Liquid, and
+          eCash—requires efficient processing to maintain a smooth user
+          experience. In this update, we've built upon our last update that uses
+          a max-heap sorting method. Now, instead of restoring every time you
+          reach the homepage + any updates outside of transactions we globalized
+          the sorting method as to only re-render when transaction data changes.
+          This significantly reduces the memory usage and improves transaction
+          sorting speed. This optimization ensures that your transaction history
+          loads faster and operates more smoothly, enhancing overall app
+          performance.
+        </p>
+        <h2>
+          Seamless Tipping with the Lightning Network (LNURL) or Blitz Contacts
+        </h2>
+        <p>
+          We're thrilled to see the overwhelming response to our Blitz Wallet
+          Point-of-Sale system! Based on your feedback, we're excited to
+          announce our latest update, which builds on the success of our
+          previous release.
+        </p>
+        <ul>
+          <li>
+            <strong>Streamlined Tipping Process:</strong> Before, when loading
+            the point-of-sale users were prompted to enter a generic name. Now,
+            our updated point-of-sale system now prompts users to enter either
+            an LNURL (Lightning Network URL) or a Blitz contact name, making it
+            easier to send tips directly to the intended recipient.
+          </li>
+          <li>
+            <strong>Improved Tip Tracking:</strong> When viewing point-of-sale
+            transactions within Blitz, you'll now see tips grouped by LNURL or
+            Blitz contact name, along with additional details, such as the date
+            and time of the transaction, number of paid tips, number of unpaid
+            tips, and total tip balance. You can also see individual tips and
+            mark them as paid or unpaid.
+          </li>
+          <li>
+            <strong> Simplified Payouts:</strong> Say goodbye to manual
+            invoicing! With this update, you can now directly pay out tips to
+            employees from within the app, eliminating the need for separate
+            invoicing processes.
+          </li>
+        </ul>
+
+        <h2>Improved App Access with Lightning Node Failures</h2>
+        <p>
+          While self-custodial Lightning is the goal, connecting to a Lightning
+          node involves more moving parts than connecting to a Liquid node.
+          Previously, if the Lightning connection failed, you couldn’t load the
+          Blitz Wallet app at all—resulting in a frustrating user experience.
+          We’ve fixed that.
+        </p>
+        <p>
+          With this update, if you have Lightning enabled and the app fails to
+          connect to the Lightning node, you can still access the app. This
+          ensures uninterrupted access to your wallet, even if there are
+          connectivity issues.
+        </p>
+        <p>
+          <strong>Note:</strong> You still won’t be able to use Lightning until
+          the connection is restored, but you can continue using the generative
+          AI store features, as well as make payments with Liquid or eCash.
+        </p>
+        <h2>Customizable eCash Limits for Greater Control</h2>
+        <p>
+          We heard your feedback—everyone wants eCash! While we’re excited to
+          offer a customizable payment experience that you can tailor to your
+          needs, we also believe it’s crucial to incentivize self-custody.
+          That’s why, while we’ve expanded the amounts you can hold and receive
+          in eCash, we’ve also introduced limits to ensure that large balances
+          aren't stored in a vulnerable place where funds could be stolen.
+        </p>
+        <p>
+          Previously, eCash payments were restricted to amounts below the
+          minimum Boltz swap amount of 1,000 sats, and your maximum eCash
+          balance was capped at 5,000 sats before it would be auto-swapped to
+          Liquid. Now, you can customize both your maximum receive and maximum
+          balance amounts for eCash. For example, if you set your max receive
+          limit to 10,000 sats, any invoice above that will use Liquid.
+          Similarly, if your max balance is 10,000 sats and your current balance
+          is 5,000 sats, you can only receive an additional 5,000 sats. This
+          customization gives you the flexibility to manage your eCash
+          transactions according to your preferences.
+        </p>
+        <p>
+          The reason for these limits is based on a basic economic calculation.
+          A Lightning payment of 10,000 sats incurs a fee of approximately 73
+          sats (0.73%). While eCash transactions have a 0 sat fee, that small
+          Lightning fee is the price you pay for the added benefits of
+          self-custody.
+        </p>
+        <h2>Expanded Manual Swap Options Including eCash</h2>
+        <p>
+          Blitz Wallet allows you to hold funds across multiple networks, so
+          it's essential to give you the flexibility to manage where those funds
+          are stored. We already support internal swaps between Lightning and
+          Liquid. Now, we've expanded that capability by adding eCash to the
+          manual swap page. You can now seamlessly move funds between Liquid and
+          eCash, eCash and Liquid, and even eCash and Lightning. This
+          enhancement gives you greater flexibility and control over how and
+          where you choose to store your funds.
+        </p>
+
+        <h2>Pay with eCash in the Blitz Store & to Contacts</h2>
+        <p>
+          We’ve expanded the utility of eCash by adding the ability to pay for
+          items in the Blitz Store using your eCash balance. This integration
+          enhances your shopping experience within the app, providing a
+          convenient payment option. Additionally, with the increased balance
+          limit for eCash, you can now pay Blitz contacts directly using eCash.
+          This means that all three payment options—Lightning, Liquid, and
+          eCash—are available for payments to Blitz contacts and within the
+          store.
+        </p>
+
+        <h2>Other Enhancements:</h2>
+        <h3>Delete Wallet Balance Fix</h3>
+        <p>
+          To ensure you have a complete view of your balance before deleting
+          your wallet, we've added the eCash balance to the remove wallet
+          feature. If eCash is enabled, your entire wallet balance, including
+          eCash, will be displayed, providing a comprehensive overview of your
+          funds.
+        </p>
+        <h3>Backend Enhancements for Improved Efficiency</h3>
+        <p>
+          We've made significant backend improvements to optimize performance by
+          switching from linear single requests during contact address changes
+          to bulk requests, reducing network usage by tenfold. This change
+          enhances efficiency and speeds up the update process.
+        </p>
+        <h3>User Interface and Style Improvements</h3>
+        <p>
+          A consistent and visually appealing interface enhances user
+          experience. In this update, we've standardized the colors of settings
+          items, ensuring a uniform look throughout the app. These style fixes
+          contribute to a more polished and intuitive interface.
+        </p>
+        <h3>Real-Time Payment Updates for SMS</h3>
+        <p>
+          Staying informed about what is happening while making a payment is
+          crucial. To enhance your store experience, and transparency, we have
+          added real time updates during the send SMS process. This means that
+          you will be show update messages for each step of the process ensuring
+          you're always aware of what's happening in the background.
+        </p>
+        <h3>General Bug Fixes</h3>
+        <p>
+          This update includes several under-the-hood improvements to boost
+          overall app stability and provide a more dependable user experience.
+        </p>
+
+        <p>Best,</p>
+        <p>Blitz Team</p>
+      </section>
+    </section>
+
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            A self-custodial Bitcoin Lightning, Liquid, and Ecash wallet aiming
+            to simplify payments on the Bitcoin Network.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
+
+              <li><a href="/pages/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
+              </li>
+              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
+              <li>
+                <a href="https://youtube.com/@BlitzWalletApp">YouTube</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          <a href="/pages/terms/">Terms of Usage</a>
+          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
+            >License</a
+          >
+        </div>
+        <p>&copy;2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+  </body>
+</html>
