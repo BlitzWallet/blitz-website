@@ -1,10 +1,10 @@
 # Blitz Wallet PR Website
 
-Welcome to the official PR website repository for **Blitz Wallet**. Blitz Wallet is a self-custodial wallet designed to provide users with a seamless experience for managing and transacting Bitcoin, Lightning, Liquid, and Ecash. This website serves as a promotional and informational platform for the wallet and its associated Point of Sale (POS) terminal app.
+Welcome to the official PR website repository for **Blitz Wallet**. Blitz Wallet is a self-custodial wallet designed to provide users with a seamless experience for managing and transacting Bitcoin, Lightning, Liquid, and eCash. This website serves as a promotional and informational platform for the wallet and its associated Point of Sale (POS) terminal app.
 
 ## 🌟 Features
 
-- **Multi-Network Support**: Manage Bitcoin, Lightning Network, Liquid Network, and Ecash all in one wallet.
+- **Multi-Network Support**: Manage Bitcoin, Lightning Network, Liquid Network, and eCash all in one wallet.
 - **Self-Custodial**: Maintain full control of your private keys, ensuring your digital assets remain secure.
 - **Lightning Fast Transactions**: Utilize the Bitcoin Lightning Network for instant, low-cost transactions.
 - **Confidential Transactions**: Use the Liquid Network for enhanced privacy and confidential transactions.
@@ -13,7 +13,7 @@ Welcome to the official PR website repository for **Blitz Wallet**. Blitz Wallet
 ## 🔗 Related Repositories
 
 - **[Blitz Wallet](https://github.com/BlitzWallet/BlitzWallet)**: The main repository for the Blitz Wallet, including all core wallet functionalities.
-- **[Blitz Wallet POS](https://github.com/BlakeKaufman/blitz-wallet-pos)**: A Point of Sale (POS) terminal app designed to work alongside Blitz Wallet, enabling merchants to accept payments in Bitcoin, Lightning, Liquid, and Ecash.
+- **[Blitz Wallet POS](https://github.com/BlakeKaufman/blitz-wallet-pos)**: A Point of Sale (POS) terminal app designed to work alongside Blitz Wallet, enabling merchants to accept payments in Bitcoin, Lightning, Liquid, and eCash.
 
 ## 🚀 Getting Started
 
