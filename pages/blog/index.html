@@ -70,7 +70,7 @@
       rel="stylesheet"
       href="../../src/components/downloadModal/style.css"
     />
-
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
     <link rel="stylesheet" href="./style.css" />
     <script src="../../src/js/navbar.js" defer></script>
 
@@ -78,7 +78,7 @@
       src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
       defer
     ></script>
-    <script src="../../src/components/downloadModal/index.js" defer></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
 
     <script type="module" src="./blog.js"></script>
     <script src="/src/js/font-loader.js" defer></script>
@@ -154,18 +154,41 @@
       </div>
     </nav>
     <div class="mobileNavDropdown">
-      <div class="mobileNavDropdown-Container">
-        <ul class="navItems">
-          <li class="navItem">
-            <a href="/pages/about/">About</a>
-          </li>
-          <li class="navItem">
-            <a href="/pages/contact">Contact</a>
-          </li>
-          <li class="navItem activePage">
-            <a href="/pages/blog">Blog</a>
-          </li>
-        </ul>
+      <div class="mobileNavInnerContainer">
+        <div class="mobileNavDropdown-Container">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="buttonsContainer">
+          <div class="downloadButton">
+            <div class="hoverContainer"></div>
+            <img
+              src="/src/assets/images/apple.svg"
+              alt="Apple app store icon"
+            />
+            <div class="seperator"></div>
+            <img
+              src="/src/assets/images/google-play.svg"
+              alt="Google Playstore icon"
+            />
+            <h2 class="downloadText">Download now</h2>
+          </div>
+          <div>
+            <p class="warningText">
+              Blitz Wallet is currently in beta testing.
+            </p>
+            <p class="warningText">Use amounts you are willing to lose</p>
+          </div>
+        </div>
       </div>
     </div>
     <section class="blogContentContainer">

@@ -25,8 +25,22 @@ nav {
   filter: brightness(0) saturate(100%) invert(0%) sepia(100%) saturate(7500%)
     hue-rotate(59deg) brightness(89%) contrast(111%);
 }
-.mobileNavDropdown .mobileNavDropdown-Container {
+
+.mobileNavDropdown {
+  height: calc(100dvh - 126px);
+
+  top: 126px;
+
   background-color: var(--lm-background);
+}
+.mobileNavDropdown .mobileNavDropdown-Container {
+  margin: 20px 0;
+}
+.downloadButton img {
+  filter: unset;
+}
+.downloadButton .seperator {
+  background-color: var(--lm-text);
 }
 
 .modal {

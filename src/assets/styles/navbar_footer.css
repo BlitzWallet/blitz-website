@@ -65,8 +65,6 @@ nav .mobile {
   width: 100vw;
   height: calc(100dvh - 61px);
 
-  align-items: center;
-
   display: none;
 
   position: fixed;
@@ -75,16 +73,26 @@ nav .mobile {
   left: 0;
   z-index: 99;
   background-color: var(--dm-background);
+}
+.mobileNavDropdown .mobileNavInnerContainer {
+  width: 95%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
 
   flex-direction: column;
+
+  overflow-y: scroll;
+
+  margin: 0 auto;
 }
 .mobileNavDropdown .mobileNavDropdown-Container {
-  height: 100%;
   width: 100%;
   max-width: 1200px;
   display: flex;
   justify-content: center;
-  background-color: var(--dm-background);
+  margin: 50px 0;
 }
 .mobileNavDropdown .navItems {
   height: calc(100dvh / 2);
@@ -329,4 +337,24 @@ footer .navItems {
     height: 250px;
     flex-direction: column;
   }
+}
+
+/* Download button */
+.mobileNavDropdown .buttonsContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 20px;
+  margin-top: auto;
+  flex-wrap: wrap;
+}
+.mobileNavDropdown .downloadButton {
+  margin-right: 0;
+  margin-bottom: 20px;
+}
+.mobileNavDropdown .buttonsContainer .warningText {
+  opacity: 0.8;
+  font-size: 13px;
+  text-align: center;
 }

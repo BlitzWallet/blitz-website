@@ -165,9 +165,6 @@ span {
   .hero .headerP {
     text-align: center;
   }
-  .hero .buttonsContainer {
-    justify-content: center;
-  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -209,98 +206,8 @@ span {
   .sponsorOrIntegration .sponsorContainer {
     flex-direction: column;
   }
-  .hero .buttonsContainer {
-    flex-direction: column;
-  }
-  .hero .buttonsContainer .downloadButton {
-    margin-bottom: 20px;
-    margin-right: 0;
-  }
-  .hero .buttonsContainer .warningText {
-    text-align: center;
-  }
-}
-
-@media screen and (max-width: 375px) {
-  .hero .buttonsContianer {
-    flex-direction: column;
-  }
-  .hero .downloadButton:not(:last-child) {
-    margin-right: 0;
-    margin-bottom: 20px;
-  }
-  .hero .buttonsContainer .downloadButton .downloadText {
-    font-size: 14px;
-  }
-  .hero .buttonsContainer img {
-    width: 20px;
-    height: 20px;
-  }
 }
 
 .pb {
   color: var(--primary_color);
-}
-
-/* CUSTOM STYLES */
-/* DOWLOAD BUTTON */
-.downloadButton {
-  width: max-content;
-  height: fit-content;
-  display: flex;
-  align-items: center;
-  border-radius: 40px;
-  padding: 20px 30px;
-  border: 2px solid var(--dm-text);
-  margin-right: 15px;
-  overflow: hidden;
-  background-color: unset;
-  cursor: pointer;
-  position: relative;
-  z-index: 1;
-}
-.downloadButton:hover .hoverContainer {
-  bottom: 0;
-}
-.downloadButton:hover .downloadText {
-  color: var(--lm-text);
-}
-.downloadButton:hover .seperator {
-  background-color: var(--lm-text);
-}
-.downloadButton:hover img {
-  filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7460%)
-    hue-rotate(144deg) brightness(115%) contrast(102%);
-}
-
-.downloadButton .hoverContainer {
-  width: 100%;
-  height: 100%;
-  background-color: var(--dm-text);
-  position: absolute;
-  bottom: 100%;
-  right: 0;
-  z-index: -1;
-  transition: bottom 0.5s ease-in-out;
-}
-.downloadButton .seperator {
-  width: 1px;
-  height: 20px;
-  background-color: var(--dm-text);
-  margin: 0 10px;
-  transform: rotate(15deg);
-  transition: background-color 0.5s ease-in-out;
-}
-
-.downloadButton .downloadText {
-  margin-left: 20px;
-  font-size: 16px;
-  transition: color 0.5s ease-in-out;
-}
-.downloadButton img {
-  width: 25px;
-  height: 25px;
-  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7460%)
-    hue-rotate(144deg) brightness(115%) contrast(102%);
-  transition: filter 0.5s ease-in-out;
 }

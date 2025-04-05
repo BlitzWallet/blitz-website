@@ -1,4 +1,5 @@
 "use strict";
+const downloadBTN = document.querySelectorAll(".downloadButton");
 const modalContainer = document.querySelector(".modalContainer");
 const modal = document.querySelector(".modal");
 const appCards = document.querySelectorAll(".downloadModal");
@@ -10,6 +11,7 @@ function toggleModal(e) {
   const isUsingMobile = isMobileCheck();
   console.log(isUsingMobile);
   console.log(isAndroid());
+
   if (isUsingMobile) {
     window.open(
       !isAndroid()
@@ -60,26 +62,19 @@ function toggleQRContentType(e) {
 }
 
 function isMobileCheck() {
-  let isMobile;
-  if ("maxTouchPoints" in navigator) {
-    isMobile = navigator.maxTouchPoints > 0;
-  } else if ("msMaxTouchPoints" in navigator) {
-    isMobile = navigator.msMaxTouchPoints > 0;
-  } else {
-    isMobile =
-      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-        navigator.userAgent
-      );
-  }
-  return isMobile;
+  return document.body.getBoundingClientRect().width < 800;
 }
 
-// Check if device is Android
 function isAndroid() {
-  return /Android/i.test(navigator.userAgent);
+  const ua = navigator.userAgent || navigator.vendor;
+
+  return /Android/i.test(ua) && !/iPhone|iPad|Macintosh|iPod/i.test(ua);
 }
 appCards.forEach((card) => {
   card.addEventListener("click", toggleModal);
+});
+downloadBTN.forEach((child) => {
+  child.addEventListener("click", toggleModal);
 });
 
 qrContentType.addEventListener("click", toggleQRContentType);
