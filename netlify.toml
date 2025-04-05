@@ -3,6 +3,15 @@
   
 [functions]
   "*" = { timeout = 20 } # Increase timeout limit
+
+
+[[redirects]]
+  from = "/getUserCount"
+  to = "https://totalusercount-6krimtymjq-uc.a.run.app"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
   
 # Main redirection for user profiles
 [[redirects]]
