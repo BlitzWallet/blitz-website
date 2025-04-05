@@ -8,6 +8,10 @@ nav .blogNav {
   justify-content: center;
   position: relative;
 }
+.mobileNavDropdown {
+  top: 126px;
+  height: calc(100dvh - 126px);
+}
 
 nav .blogNav .locationTab {
   display: flex;
