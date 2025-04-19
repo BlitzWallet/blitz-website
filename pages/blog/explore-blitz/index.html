@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Primary Meta Tags -->
+    <title>
+      Blitz Wallet Update – eCash offline claim improvements, downloads Tracking
+      & BOLT12 Pay Support
+    </title>
+    <meta
+      name="title"
+      content="Blitz Wallet Update – eCash offline claim improvements, downloads Tracking & BOLT12 Pay Support"
+    />
+    <meta
+      name="description"
+      content="This Blitz Wallet release introduces eCash offline claim improvements, BOLT12 pay support from Liquid, Blink QR integration, and a new Social Tracking feature to see Blitz’s user growth."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitz-wallet.com/pages/blog/explore-blitz/"
+    />
+    <meta
+      property="og:title"
+      content="Blitz Wallet Update – eCash offline claim improvements, downloads Tracking & BOLT12 Pay Support"
+    />
+    <meta
+      property="og:description"
+      content="This Blitz Wallet release introduces eCash offline claim improvements, BOLT12 pay support from Liquid, Blink QR integration, and a new Social Tracking feature to see Blitz’s user growth."
+    />
+    <meta property="og:image" content="/public/twitterCard.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://blitz-wallet.com/pages/blog/explore-blitz/"
+    />
+    <meta
+      property="twitter:title"
+      content="Blitz Wallet Update – eCash offline claim improvements, downloads Tracking & BOLT12 Pay Support"
+    />
+    <meta
+      property="twitter:description"
+      content="This Blitz Wallet release introduces eCash offline claim improvements, BOLT12 pay support from Liquid, Blink QR integration, and a new Social Tracking feature to see Blitz’s user growth."
+    />
+    <meta property="twitter:image" content="/public/twitterCard.png" />
+
+    <!-- Favicon -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+
+    <link rel="stylesheet" href="../../../src/assets/styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="../../../src/assets/styles/navbar_footer.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../src/components/downloadModal/style.css"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+
+    <script src="../../../src/js/navbar.js" defer></script>
+
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="../../../src/components/downloadModal/index.js" defer></script>
+    <script type="module" src="../pageSetup.js"></script>
+    <link rel="stylesheet" href="../masterBlogTheme.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet (beta)</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <p class="bitzName">Blitz Wallet.</p>
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+
+            <li class="navItem activePage">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+      <div class="blogNav">
+        <div class="locationTab">
+          <div class="imgContainer">
+            <img id="blogTypeImage" src="/favicon.png" alt="blog pencil" />
+          </div>
+          <a href="/pages/blog">
+            <p>Blog</p>
+          </a>
+          <p class="blogTypeSeperator">|</p>
+          <p id="blogTypeText">
+            <!-- Pulled in from javascript -->
+          </p>
+        </div>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavInnerContainer">
+        <div class="mobileNavDropdown-Container">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="buttonsContainer">
+          <div class="downloadButton">
+            <div class="hoverContainer"></div>
+            <img
+              src="/src/assets/images/apple.svg"
+              alt="Apple app store icon"
+            />
+            <div class="seperator"></div>
+            <img
+              src="/src/assets/images/google-play.svg"
+              alt="Google Playstore icon"
+            />
+            <h2 class="downloadText">Download now</h2>
+          </div>
+          <div>
+            <p class="warningText">
+              Blitz Wallet is currently in beta testing.
+            </p>
+            <p class="warningText">Use amounts you are willing to lose</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="blogContentContainer">
+      <div class="postHead">
+        <h1 id="blogTitle">
+          Blitz Wallet Update – eCash offline claim improvements, downloads
+          Tracking & BOLT12 Pay Support
+        </h1>
+        <p id="blogSubHeader">
+          This Blitz Wallet release introduces eCash offline claim improvements,
+          BOLT12 pay support from Liquid, Blink QR integration, and a new Social
+          Tracking feature to see Blitz’s user growth.
+        </p>
+        <div class="postDataContainerOuter">
+          <div class="imageContainer">
+            <img
+              id="authorProfilePicture"
+              src="/favicon.png"
+              alt="Profile image of the author"
+            />
+            <!-- Img src in from javascript -->
+          </div>
+          <div class="dataContainer">
+            <p rel="author" id="authorName">
+              <!-- Pulled in from javascript -->
+            </p>
+            <div class="postDataContainerInner">
+              <p id="postReadTime">
+                <!-- Pulled in from javascript -->
+              </p>
+              <p class="postDataSeperator">|</p>
+              <p id="postDate">
+                <!-- Pulled in from javascript -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="postBody">
+        <p>
+          We’ve been hard at work preparing Blitz Wallet for its official
+          release. This latest update fixes minor bugs found during testing,
+          includes small improvements, and enhances crash analytics, allowing us
+          to more easily maintain the application.
+        </p>
+        <p>Here’s everything that’s new:</p>
+
+        <h2>Improved eCash offline claiming payment security.</h2>
+        <p>
+          Since our mission is to become the simplest Bitcoin Lightning wallet,
+          we need to ensure users are protected from the loss of funds. With
+          this update, we’ve introduced key changes to prevent duplicate
+          payments and improve eCash offline claiming.
+        </p>
+        <ul>
+          <li>
+            <strong> No More Duplicate Payments: </strong>You can now rest easy
+            knowing eCash transactions can’t be paid twice. Every eCash
+            transaction now tracks the associated invoice, and a new
+            hasAlreadyPaidInvoice check ensures an invoice can't be reused.
+            Previously, the app didn’t track invoice data, which made it
+            impossible to prevent double-spending. That’s now fully resolved.
+          </li>
+          <li>
+            <strong>Improved Background Invoice Handling:</strong> If you’ve
+            ever started an eCash quote but didn’t finish paying before Blitz's
+            internal check timeout expired, the app used to try claiming it
+            during the next wallet load—using the wrong proof index. We’ve fixed
+            this so offline paid eCash invoices can be properly claimed.
+          </li>
+        </ul>
+        <h2>Upgraded Payment Experience</h2>
+        <p>
+          Sending and receiving sats should be simple, seamless, and fast. We’ve
+          made several improvements across the board.
+        </p>
+        <ul>
+          <li>
+            <strong>BOLT12 Pay Support from Liquid:</strong> You can now send to
+            BOLT12 invoices directly from your Liquid balance.
+          </li>
+          <li>
+            <strong>Blink QR Code Support:</strong> Blink QR codes can now be
+            paid directly inside Blitz with LNURL-pay support, mo more getting
+            kicked out to a web browser: scan, confirm, and pay.
+          </li>
+          <li>
+            <strong>Lower Limits for Lightning-to-Liquid Swaps:</strong> The
+            minimum receive amount for Lightning-to-Liquid payments has been
+            reduced to just 100 sats, making smaller swaps more accessible than
+            ever.
+          </li>
+        </ul>
+
+        <h2>App Enhancements & New Features</h2>
+        <ul>
+          <li>
+            <strong>Swipe to Sync:</strong> You can now manually trigger a node
+            sync just by swiping up on the wallet home screen. Simple,
+            intuitive, and always under your control.
+          </li>
+          <li>
+            <strong>Introducing Blitz Social Tracking:</strong> Curious how many
+            others are using Blitz? Head to settings to find our new Blitz
+            Social section. It shows real-time download stats and user growth as
+            a small way to feel the pulse of the Blitz community.
+          </li>
+          <li>
+            <strong>Crash Reporting with Privacy Control:</strong> We’ve
+            integrated Crashlytics to help track bugs and improve stability.
+            There’s a new settings toggle to opt-in or out of crash reporting
+            for total privacy.
+          </li>
+          <li>
+            <strong>Improved Half-Modal Popups:</strong> Popups can now be
+            dismissed more naturally—either tap outside or swipe down. This also
+            fixes a bug where users could accidentally close the modal without
+            meaning to.
+          </li>
+        </ul>
+
+        <h2>Bug Fixes & Stability</h2>
+        <p>
+          As always, this update includes a round of bug fixes and performance
+          improvements to keep your wallet running smoothly.
+        </p>
+
+        <p>Best,</p>
+        <p>Blitz Team</p>
+      </section>
+    </section>
+
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            A self-custodial Bitcoin Lightning, Liquid, and eCash wallet aiming
+            to simplify payments on the Bitcoin Network.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
+
+              <li><a href="/pages/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
+              </li>
+              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
+              <li>
+                <a href="https://youtube.com/@BlitzWalletApp">YouTube</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          <a href="/pages/terms/">Terms of Usage</a>
+          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
+            >License</a
+          >
+        </div>
+        <p>&copy;2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

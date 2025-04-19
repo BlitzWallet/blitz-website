@@ -3,6 +3,23 @@
 export const postList = [
   {
     type: "Release", // Can be "Release", "Learn", or "Podcast"
+    title: "Explore page & Crashlytics",
+    description: "Explore Blitz downloads, crash reporting & more!",
+    htmlPageLink: "./explore-blitz",
+    searchName: "explore-blitz",
+    pageMetaDescription:
+      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+    readingLengthEST: 4, //In minutes
+    time: "1745237600000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    thumbnailUrl: "./explore-blitz/assets/explore_blitz_stats.webp", //Scoped to blog index.html
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Release", // Can be "Release", "Learn", or "Podcast"
     title: "eCash & Point-of-sale",
     description: "eCash Expansion, POS Tip Optimization & More!",
     htmlPageLink: "./eCash-pos",
