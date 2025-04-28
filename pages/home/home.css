@@ -72,6 +72,7 @@
   color: var(--primary_color);
 }
 #features .sectionDescription {
+  max-width: 1000px;
   width: 90%;
   text-align: center;
   margin-bottom: 50px;
