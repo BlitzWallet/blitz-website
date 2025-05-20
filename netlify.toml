@@ -61,6 +61,6 @@
   
 [[redirects]]
   from = "/.well-known/lnurlp/:username"
-  to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app"
-  status = 301
+  to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app/:username"
+  status = 200
   force = true
