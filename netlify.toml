@@ -61,6 +61,6 @@
   
 [[redirects]]
   from = "/.well-known/lnurlp/:username"
-  to = "/.netlify/functions/lnurlp"
-  status = 200
+  to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app"
+  status = 301
   force = true
