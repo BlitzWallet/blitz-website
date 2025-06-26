@@ -28,6 +28,7 @@
   margin: 0;
   box-sizing: border-box;
   border-radius: 0;
+  font-family: var(--title_font);
 }
 body {
   height: fit-content;
