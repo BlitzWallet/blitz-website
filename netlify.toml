@@ -64,3 +64,9 @@
   to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app/:username"
   status = 200
   force = true
+
+[[redirects]]
+  from = "/.well-known/lnurlverify/:sparkIDCode"
+  to = "https://verifylnurlinvoice-6krimtymjq-uc.a.run.app/:sparkIDCode"
+  status = 200
+  force = true
