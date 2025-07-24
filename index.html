@@ -219,13 +219,11 @@
       </section>
 
       <section id="webApp">
-        <h2>All New (early beta)</h2>
-        <h2 class="sectionHeaders">Blitz Wallet Using Spark</h2>
+        <h2 class="sectionHeaders">Blitz Wallet Web</h2>
         <p>
-          Experience the power of self-custodial Bitcoin Lightning using Spark.
-          Try the new Spark web wallet — no app download required. Just click
-          the link, create your wallet, and start sending and receiving money
-          instantly. Prefer a native app? You can also download it on Android.
+          Try our new web wallet — no app download required. Just click the
+          link, create your wallet, and start sending and receiving money
+          instantly.
         </p>
         <div class="buttonContainer">
           <button
@@ -233,11 +231,11 @@
           >
             Try Web Version
           </button>
-          <button
+          <!-- <button
             onclick="window.location.href='https://github.com/BlitzWallet/BlitzWallet/releases/tag/Spark-v0.0.3-beta'"
           >
             Try Android Version
-          </button>
+          </button> -->
         </div>
       </section>
 
@@ -246,8 +244,7 @@
         <h2 class="sectionHeaders">Unlock Freedom.</h2>
         <p class="sectionHeadersDescription sectionDescription">
           Blitz Wallet is the simplest self-custodial Bitcoin wallet. Send
-          Bitcoin, spend at stores, accept payments, and switch between
-          Lightning, eCash, and Liquid networks—all in one app.
+          Bitcoin, spend at stores, accept payments all in one app.
         </p>
 
         <div class="featuresContainer">
@@ -317,17 +314,16 @@
           <div class="feature">
             <div class="icon">
               <img
-                src="/src/assets/images/exchange-alt.svg"
+                src="/src/assets/images/moon-stars.svg"
                 alt="Arrows to show that you can move bettween differnt networks"
               />
             </div>
-            <h3 class="featureTitle">Customizable Payment Experince.</h3>
+            <h3 class="featureTitle">Stress free payments.</h3>
             <span class="featureDescription"
-              >Bitcoin isn't one-size-fits-all, and Blitz Wallet gives you
-              options. Easily send and receive Bitcoin using eCash, Liquid, or
-              Lightning—all in one app. Need to switch networks? Internal
-              transfers make it effortless.</span
-            >
+              >Receiving Bitcoin shouldn’t be complicated. With Blitz Wallet,
+              there’s no need to stay online or manage channels—just create an
+              account and start receiving payments instantly.
+            </span>
           </div>
           <div class="feature">
             <div class="icon">
@@ -364,10 +360,10 @@
           <div class="dropdownContent">
             <p>
               Blitz Wallet is a self-custodial Bitcoin-only wallet, meaning only
-              you control your funds. It combines multiple technologies to offer
-              a seamless payment experience—letting you send Bitcoin to friends,
-              spend it on gift cards and services, and even accept payments with
-              a built-in point-of-sale system.
+              you control your funds. We use the Spark layer two network to
+              offer a seamless payment experience—letting you send Bitcoin to
+              friends, spend it on gift cards and services, and even accept
+              payments with a built-in point-of-sale system.
             </p>
           </div>
         </div>
@@ -387,10 +383,7 @@
               Blitz Wallet is built for simplicity. Unlike other self-custodial
               wallets, it features a Contacts section for easy transactions with
               friends and a built-in shop to spend Bitcoin on gift cards and
-              services—all without extra apps. Plus, Blitz manages Lightning
-              channel liquidity for you and integrates eCash, Liquid, and
-              Lightning to minimize each network’s trade-offs, ensuring the best
-              Bitcoin payment experience.
+              services—all without extra apps.
             </p>
           </div>
         </div>
@@ -407,15 +400,15 @@
 
           <div class="dropdownContent">
             <p>
-              Currently Blitz Wallet supports receiving Bitcoin, Lightning, and
-              Liquid payments and sending Bitcoin, Lightning, and Liquid
-              payments.
+              Currently Blitz Wallet supports receiving Bitcoin, Lightning,
+              Spark and Liquid payments and sending Bitcoin, Lightning, and
+              Spark payments.
             </p>
           </div>
         </div>
         <div class="expandContainer">
           <div class="alwaysShow">
-            <p>What are Blitz Wallet fees?</p>
+            <p>What are Network fees?</p>
             <img
               src="../../src/assets/images/plusIcon.svg"
               alt="A plus icon to expand a dropdown"
@@ -434,28 +427,27 @@
                 </div>
                 <div class="gridRow">
                   <p class="gridItem">On-chain transaction</p>
-                  <p class="gridItem">Liquid network fee + 0.1%</p>
+                  <p class="gridItem">none</p>
                 </div>
                 <div class="gridRow">
-                  <p class="gridItem">
-                    Lightning payment w/o lightning channel.
-                  </p>
-                  <p class="gridItem">Liquid network fee + 0.25%</p>
+                  <p class="gridItem">Spark</p>
+                  <p class="gridItem">none</p>
                 </div>
+
                 <div class="gridRow">
-                  <p class="gridItem">
-                    Lightning payment with lightning channel
-                  </p>
+                  <p class="gridItem">Lightning</p>
                   <p class="gridItem">none</p>
                 </div>
                 <div class="gridRow">
                   <p class="gridItem">Liquid payment</p>
-                  <p class="gridItem">none</p>
+                  <p class="gridItem">
+                    Liquid tx fee (~26sats) + Boltz swap fee
+                  </p>
                 </div>
-                <div class="gridRow">
+                <!-- <div class="gridRow">
                   <p class="gridItem">Lightning payment with eCash</p>
                   <p class="gridItem">none</p>
-                </div>
+                </div> -->
               </div>
               <p class="gridTitle">Sending</p>
               <div class="gridContainer">
@@ -464,20 +456,18 @@
                   <p class="gridHeader">Fee</p>
                 </div>
                 <div class="gridRow">
-                  <p class="gridItem">On-chain transaction (form liquid)</p>
-                  <p class="gridItem">Bitcoin network fee + 0.1%</p>
+                  <p class="gridItem">On-chain</p>
+                  <p class="gridItem">On-chain fee (vairable) X 2</p>
                 </div>
                 <div class="gridRow">
-                  <p class="gridItem">On-chain transaction (from lightning)</p>
-                  <p class="gridItem">Bitcoin network fee + 0.5%</p>
+                  <p class="gridItem">Spark</p>
+                  <p class="gridItem">None</p>
                 </div>
                 <div class="gridRow">
-                  <p class="gridItem">
-                    Lightning payment w/o lightning channel
-                  </p>
-                  <p class="gridItem">Liquid network fee + 0.1%</p>
+                  <p class="gridItem">Ligntning</p>
+                  <p class="gridItem">0.25% + routing fee</p>
                 </div>
-                <div class="gridRow">
+                <!-- <div class="gridRow">
                   <p class="gridItem">
                     Lightning payment with lightning channel (using trampoline)
                   </p>
@@ -499,9 +489,9 @@
                 <div class="gridRow">
                   <p class="gridItem">eCash payment</p>
                   <p class="gridItem">Variable</p>
-                </div>
+                </div> -->
               </div>
-              <p class="gridTitle">Specialty</p>
+              <!-- <p class="gridTitle">Specialty</p>
               <div class="gridContainer">
                 <div class="gridRow">
                   <p class="gridHeader">Event</p>
@@ -513,6 +503,81 @@
                     Variable (depends on Bitcoin network fees)
                   </p>
                 </div>
+              </div> -->
+              <div class="seperator"></div>
+            </div>
+          </div>
+        </div>
+        <div class="expandContainer">
+          <div class="alwaysShow">
+            <p>What are Blitz Wallet fees?</p>
+            <img
+              src="../../src/assets/images/plusIcon.svg"
+              alt="A plus icon to expand a dropdown"
+              class="icon imageConstant"
+            />
+            <div class="expandContainerCover"></div>
+          </div>
+
+          <div class="dropdownContent">
+            <div class="heightContainer">
+              <p class="gridTitle">Sending</p>
+              <p class="gridTitle">Ligntning</p>
+              <div class="gridContainer">
+                <div class="gridRow">
+                  <p class="gridHeader">Up To</p>
+                  <p class="gridHeader">Fee</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">50 SAT</p>
+                  <p class="gridItem">1 SAT + 0%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">1,000 SAT</p>
+                  <p class="gridItem">2 SAT + 0.1%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">30,000 SAT</p>
+                  <p class="gridItem">3 SAT + 0.1%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">No limit</p>
+                  <p class="gridItem">4 SAT + 0.2%</p>
+                </div>
+              </div>
+              <p class="gridTitle">Spark</p>
+              <div class="gridContainer">
+                <div class="gridRow">
+                  <p class="gridHeader">Up To</p>
+                  <p class="gridHeader">Fee</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">50 SAT</p>
+                  <p class="gridItem">1 SAT + 0%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">1,000 SAT</p>
+                  <p class="gridItem">2 SAT + 0.4%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">No limit</p>
+                  <p class="gridItem">4 SAT + 0.4%</p>
+                </div>
+              </div>
+              <p class="gridTitle">Bitcoin</p>
+              <div class="gridContainer">
+                <div class="gridRow">
+                  <p class="gridHeader">Up To</p>
+                  <p class="gridHeader">Fee</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">30,000 SAT</p>
+                  <p class="gridItem">3 SAT + 0.3%</p>
+                </div>
+                <div class="gridRow">
+                  <p class="gridItem">No limit</p>
+                  <p class="gridItem">4 SAT + 0.4%</p>
+                </div>
               </div>
               <div class="seperator"></div>
             </div>
@@ -520,7 +585,7 @@
         </div>
         <div class="expandContainer">
           <div class="alwaysShow">
-            <p>Why is my lightning channel not opening?</p>
+            <p>What is an LNURL address and how do I find it?</p>
             <img
               src="../../src/assets/images/plusIcon.svg"
               alt="A plus icon to expand a dropdown"
@@ -531,15 +596,15 @@
 
           <div class="dropdownContent">
             <p>
-              To avoid opening a Lightning channel when on-chain fees are too
-              high, Blitz Wallet includes a ‘Max Channel Open Fee’ setting. If
-              you have enough balance but a channel hasn’t opened, you may need
-              to increase this limit. You can find the setting under Settings
-              (⚙️) > Bank > Settings.
+              An LNURL address lets other wallets send you Bitcoin easily. It
+              looks like this: username@blitz-wallet.com. To find it, go to the
+              Receive page and tap the address below your QR code. You can also
+              update your username and profile image there. Your LNURL name is
+              the same as your Blitz contact name.
             </p>
           </div>
         </div>
-        <div class="expandContainer">
+        <!-- <div class="expandContainer">
           <div class="alwaysShow">
             <p>Can I send or receive eCash?</p>
             <img
@@ -557,7 +622,7 @@
               receiving eCash may be added.
             </p>
           </div>
-        </div>
+        </div> -->
       </section>
       <section id="dowloadToday">
         <h2 class="sectionHeaders">Bitcoin, Made Simple.</h2>
@@ -583,8 +648,8 @@
         <div class="text">
           <h2>Blitz Wallet.</h2>
           <p>
-            A self-custodial Bitcoin Lightning, Liquid, and eCash wallet aiming
-            to simplify payments on the Bitcoin Network.
+            The simplest self-custodial Bitcoin Lightning wallet—send, spend,
+            and accept BTC. Now in beta—use only what you're willing to lose.
           </p>
         </div>
         <div class="listItems">

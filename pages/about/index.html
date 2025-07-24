@@ -194,22 +194,14 @@
               simplify Bitcoin payments and solve key challenges in the Bitcoin
               space: Bitcoin is slow for payments, it’s unclear how to use, and
               it can feel too complex. By focusing on usability and simplicity,
-              Blitz Wallet integrates the Bitcoin Lightning Network,
-              <a
-                href="https://help.blockstream.com/hc/en-us/articles/900001408623-How-does-Liquid-Bitcoin-L-BTC-work"
-              >
-                Liquid sidechain</a
-              >, and <a href="https://cashu.space/">eCash</a> to balance their
-              trade-offs and make self-custodial payments easier. The wallet
-              addresses key barriers such as complex invoices, dinner paradox,
-              and liquidity management. With features like a native contacts
-              system, store to enable use of your Bitcoin, automated liquidity
-              handling, and a gradual transition to self-custody, Blitz Wallet
-              creates an intuitive experience for both beginners and experienced
-              users. Our mission is to create the simplest, most user-friendly
-              Bitcoin wallet. We envision a world where everyone has full
-              control over their money and can transact freely and effortlessly
-              with others.
+              Blitz Wallet aims to make self-custodial payments easier. The
+              wallet addresses key barriers such as complex invoices and the
+              dinner paradox. With features like a native contacts system, store
+              to enable use of your Bitcoin, Blitz Wallet creates an intuitive
+              experience for both beginners and experienced users. Our mission
+              is to create the simplest, most user-friendly Bitcoin wallet. We
+              envision a world where everyone has full control over their money
+              and can transact freely and effortlessly with others.
             </p>
           </div>
           <div id="problem" class="sectionContainer">
@@ -272,79 +264,45 @@
           </div>
           <div id="solution" class="sectionContainer">
             <h2>2. Solution</h2>
-            <p>
-              Blitz Wallet addresses Bitcoin's usability challenges by
-              integrating multiple technologies—Lightning Network, Liquid
-              Network, and eCash—to offer a seamless and user-friendly
-              experience. Here's how Blitz Wallet tackles these issues:
-            </p>
-            <ol>
-              <li>
-                Simplified Onboarding so new users can start sending and
-                receiving Bitcoin payments immediately without the need to open
-                a Lightning channel. By leveraging
-                <a href="https://boltz.exchange/"> Boltz Atomic Liquid swaps</a
-                >, Bitcoin on-chain or Lightning payments are automatically
-                converted to Liquid BTC. This eliminates the complexity of
-                channel management and reduces onboarding friction.<br />
-                <br />
-                While Boltz swaps have a minimum swap amount of 1,000 sats,
-                Blitz Wallet also integrates eCash for micropayments, allowing
-                users to send and receive small transactions without
-                limitations. This ensures a smooth and flexible payment
-                experience.
-              </li>
-              <li>
-                Simple Payments Traditional payment apps like Venmo or Cash App
-                succeed due to their simplicity in connecting users. Blitz
-                Wallet embraces this by implementing a native contacts system,
-                allowing users to add each other via usernames. This eliminates
-                the need for exchanging invoices and greatly reduces friction in
-                everyday transactions. <br /><br />
-                By simplifying payments, Blitz Wallet resolves the "Dinner
-                Paradox", where splitting bills in Bitcoin becomes cumbersome
-                due to invoice-based transactions.
-              </li>
-              <li>
-                Customizable Transition to Self-Custody Blitz Wallet introduces
-                a "custodial ladder" to help users transition to full
-                self-custody at their own pace:
-                <ul>
-                  <li>
-                    Beginning: Users leverage Liquid atomic swaps to facilitate
-                    payments and can optionally enable eCash for micropayments.
-                  </li>
-                  <li>
-                    Middle: As users gain knowledge about Bitcoin and the
-                    importance of self-custody, they begin swapping eCash for
-                    Liquid.
-                  </li>
-                  <li>
-                    End: Users can enable Lightning Network support when ready,
-                    with the wallet automatically opening a Lightning channel
-                    when their balance reaches a configurable threshold
-                    (default: 500,000 sats).
-                  </li>
-                </ul>
-              </li>
-              <li>
-                Automated Liquidity Management Managing liquidity on the
-                Lightning Network can be complex. Blitz Wallet simplifies this
-                with:
+            <div id="solution" class="sectionContainer">
+              <h2>2. Solution</h2>
+              <p>
+                Blitz Wallet simplifies Bitcoin payments by integrating a new
+                Layer 2 protocol called
+                <a
+                  href="https://docs.spark.money/spark/spark-tldr"
+                  target="_blank"
+                  >Spark</a
+                >. Spark is a Bitcoin-native network that enables instant,
+                low-friction, self-custodial transactions— without the usual
+                complexity of Lightning.
+              </p>
 
-                <ul>
-                  <li>
-                    Dynamic Balancing: Automatically adjusts funds between
-                    Lightning and Liquid networks based on user activity.
-                  </li>
-                  <li>
-                    Swap Invoices: Automatically generates swap invoices when
-                    inbound capacity is low, preventing failed payments due to
-                    liquidity constraints.
-                  </li>
-                </ul>
-              </li>
-            </ol>
+              <p>
+                Unlike traditional Lightning wallets, Spark doesn’t require
+                users to manage channels or maintain inbound liquidity. That
+                means you can receive payments instantly without being online or
+                having to set up anything in advance. This removes one of the
+                biggest hurdles in using Lightning for everyday payments.
+              </p>
+
+              <p>
+                Spark also alows Blitz to introduce human-readable addresses,
+                like
+                <code>username@blitz-wallet.com</code>, making sending Bitcoin
+                feel as familiar as sending an email. These LNURL addresses
+                replace complex invoices and QR codes with simple, reusable
+                identities—making Bitcoin more accessible for everyone.
+              </p>
+
+              <p>
+                With Spark, Blitz Wallet becomes the easiest way to send,
+                receive, and manage Bitcoin: instant payments, no node setup, no
+                channel balancing, and full self-custody. It's the bridge
+                between the power of Lightning and the simplicity users expect
+                from modern apps.
+              </p>
+            </div>
           </div>
           <div id="use-cases" class="sectionContainer">
             <h2>3. Use Cases</h2>
@@ -392,8 +350,8 @@
         <div class="text">
           <h2>Blitz Wallet.</h2>
           <p>
-            A self-custodial Bitcoin Lightning, Liquid, and eCash wallet aiming
-            to simplify payments on the Bitcoin Network.
+            The simplest self-custodial Bitcoin Lightning wallet—send, spend,
+            and accept BTC. Now in beta—use only what you're willing to lose.
           </p>
         </div>
         <div class="listItems">
