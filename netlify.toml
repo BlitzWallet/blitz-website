@@ -70,3 +70,11 @@
   to = "https://verifylnurlinvoice-6krimtymjq-uc.a.run.app/:sparkIDCode"
   status = 200
   force = true
+
+[[redirects]]
+  from = "/getNip5Data"
+  to = "https://handlenip5verification-6krimtymjq-uc.a.run.app"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "NIP5_VERIFICATION_STRING"
