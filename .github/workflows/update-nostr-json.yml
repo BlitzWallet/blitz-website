@@ -20,6 +20,8 @@ jobs:
         run: npm install
 
       - name: Generate nostr.json
+        env:
+          GITHUB_ACTIONS_KEY: ${{ secrets.ACTIONS_KEY }}
         run: node scripts/generate-nostr-json.js
 
       - - name: Commit changes

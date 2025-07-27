@@ -1,3 +1,4 @@
+import "dotenv/config";
 import { mkdirSync, writeFileSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
@@ -14,10 +15,15 @@ const defaultRelays = [
   "wss://eden.nostr.land",
   "wss://relay.primal.net",
 ];
-const url = "https://blitz-wallet.com/getNip5Data";
+
+const url = "https://handlenip5verification-6krimtymjq-uc.a.run.app";
 async function generate() {
   try {
-    const res = await fetch(url);
+    const res = await fetch(url, {
+      headers: {
+        "github-actions": process.env.GITHUB_ACTIONS_KEY,
+      },
+    });
 
     if (!res.ok) {
       throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
