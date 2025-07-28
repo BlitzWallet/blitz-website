@@ -17,22 +17,29 @@ const defaultRelays = [
 ];
 
 const url = "https://handlenip5verification-6krimtymjq-uc.a.run.app";
+const savedData = "https://blitz-wallet.com/.well-known/nostr.json";
 async function generate() {
   try {
-    const res = await fetch(url, {
-      headers: {
-        "github-actions": process.env.GITHUB_ACTIONS_KEY,
-      },
-    });
+    const [res, nostrJSONFile] = await Promise.all([
+      fetch(url, {
+        headers: {
+          "github-actions": process.env.GITHUB_ACTIONS_KEY,
+        },
+      }),
+      fetch(savedData),
+    ]);
 
-    if (!res.ok) {
+    if (!res.ok || !nostrJSONFile.ok) {
       throw new Error(`Failed to fetch data: ${res.status} ${res.statusText}`);
     }
 
     const accounts = await res.json();
+    const savedAccounts = await nostrJSONFile.json();
+    if (!accounts.length) return;
+    if (!savedAccounts) return;
 
-    const names = {};
-    const relays = {};
+    const names = savedAccounts.names;
+    const relays = savedAccounts.relays;
 
     // Assuming accounts is an array of objects with { name, pubkey }
     accounts.forEach(({ name, pubkey }) => {
