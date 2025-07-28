@@ -33,5 +33,6 @@ jobs:
           else
             git commit -m "chore: update nostr.json from Firestore"
             git push
+          fi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
