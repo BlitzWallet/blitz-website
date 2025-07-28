@@ -1,14 +1,18 @@
 name: Update nostr.json from Firestore
 on:
   schedule:
-    - cron: "0 0 * * *" # runs every day
+    - cron: "0 0 * * *"
   workflow_dispatch:
 jobs:
   generate-and-commit:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -29,4 +33,5 @@ jobs:
           else
             git commit -m "chore: update nostr.json from Firestore"
             git push
-          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
