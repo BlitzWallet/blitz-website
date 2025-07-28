@@ -1,7 +1,7 @@
 {
   "names": {
     "blitz": "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083",
-    "Blake": "npub1nhjnmg9kl6yvehemr9638nsyvtpjtt39r2ketlt7h77pd2y6dqqscnxfyh"
+    "Blake": "9de53da0b6fe88ccdf3b197513ce0462c325ae251aad95fd7ebfbc16a89a6801"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -12,7 +12,7 @@
       "wss://eden.nostr.land",
       "wss://relay.primal.net"
     ],
-    "npub1nhjnmg9kl6yvehemr9638nsyvtpjtt39r2ketlt7h77pd2y6dqqscnxfyh": [
+    "9de53da0b6fe88ccdf3b197513ce0462c325ae251aad95fd7ebfbc16a89a6801": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
