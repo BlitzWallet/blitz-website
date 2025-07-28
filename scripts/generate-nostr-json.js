@@ -41,9 +41,14 @@ async function generate() {
     const names = savedAccounts.names;
     const relays = savedAccounts.relays;
 
-    // Assuming accounts is an array of objects with { name, pubkey }
     accounts.forEach(({ name, pubkey }) => {
       if (name && pubkey) {
+        Object.keys(names).forEach((existingName) => {
+          if (names[existingName] === pubkey) {
+            delete names[existingName];
+          }
+        });
+
         names[name] = pubkey;
         relays[pubkey] = defaultRelays;
       }
