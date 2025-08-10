@@ -7,7 +7,6 @@
     "vexpertsystems": "4b9e6350130bc6bf3436f4062109e8dfbdbefbf7df7a36593129eb27e5d6ec89",
     "whoISjohngalt": "818e0e2d33b9a877a3d7a02988e2a3713ed7a32c5ce20fe9175259409235ecf4",
     "t": "47cd9101974742353488189a5421e0dcd7ccfcf7be13e9aebb325394b8677f28",
-    "culver": "68d9732ede041ef8d4ed9bcc7a2c885287e85e333f5dd62a8e74340f81909ed1",
     "kboom": "c4f076133f1cb058327a3ed6d27bacbe6f8880179073f7f3eda87093de21dfb4",
     "oshigood": "e096a89eeb90820895a6dfd7f369ec313654e5762e042d59ad06937659351479",
     "identity": "e978f71f7b48193875ae2a8e588b74e368995aa1fa9a8f1d75bcd8620e21fa74",
@@ -19,7 +18,16 @@
     "sat": "2a17258d74ef373a1d1a8d3b18948ce80ff85749f2cb32ae7ddca99330b0d3cc",
     "andi": "c23261ab4c6374e42e581f7a1b1c3842b60b596820ca1af76b7641254948d2c0",
     "netizen": "9a0e03611fdf70b1a3b3a9e9dabdba00790899953e4ff9798c1016fc27df7491",
-    "Satoshiii": "be5ad7960ca5a3499197477d58e2f34e2164a21bdd8221c84680e311c8586c96"
+    "Satoshiii": "be5ad7960ca5a3499197477d58e2f34e2164a21bdd8221c84680e311c8586c96",
+    "benculver": "68d9732ede041ef8d4ed9bcc7a2c885287e85e333f5dd62a8e74340f81909ed1",
+    "bullish": "a10260a2aa2f092d85e2c0b82e95eac5f8c60ea19c68e4898719b58ccaa23e3e",
+    "scott": "548aed73cf0bd94c0637872b6acd2c83977dde03d745db65c8af72516c7993d2",
+    "bitcoinsafe": "41797243b9d1d97639c0cfcec2e6632ed1588e755878386ba5456501bb53ffbf",
+    "pistol": "e23476c5f57bd535f9d18f7daf294171d4d57b616f3a7855e9711061b88639f8",
+    "Keywest": "c18c2b0a1debaaf530e2beaf2dfde5b4e487ea156154e48bafe32337e6062ba3",
+    "Gambit": "271b2c6edd87612e685308ff118481894dd8f2d546a091b22e3660b043378472",
+    "Chegarok": "2031f49af14175a7def2637a27533c711fc64d8def384e9790ab9771c958dd68",
+    "carnivore": "2f14c102677c4d5d0713f19a04de476da018fbec3f40b3180550fc48039d3a27"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -175,6 +183,70 @@
       "wss://relay.primal.net"
     ],
     "be5ad7960ca5a3499197477d58e2f34e2164a21bdd8221c84680e311c8586c96": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "a10260a2aa2f092d85e2c0b82e95eac5f8c60ea19c68e4898719b58ccaa23e3e": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "548aed73cf0bd94c0637872b6acd2c83977dde03d745db65c8af72516c7993d2": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "41797243b9d1d97639c0cfcec2e6632ed1588e755878386ba5456501bb53ffbf": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "e23476c5f57bd535f9d18f7daf294171d4d57b616f3a7855e9711061b88639f8": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "c18c2b0a1debaaf530e2beaf2dfde5b4e487ea156154e48bafe32337e6062ba3": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "271b2c6edd87612e685308ff118481894dd8f2d546a091b22e3660b043378472": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "2031f49af14175a7def2637a27533c711fc64d8def384e9790ab9771c958dd68": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "2f14c102677c4d5d0713f19a04de476da018fbec3f40b3180550fc48039d3a27": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
