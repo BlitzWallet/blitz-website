@@ -19,7 +19,6 @@
     "andi": "c23261ab4c6374e42e581f7a1b1c3842b60b596820ca1af76b7641254948d2c0",
     "netizen": "9a0e03611fdf70b1a3b3a9e9dabdba00790899953e4ff9798c1016fc27df7491",
     "Satoshiii": "be5ad7960ca5a3499197477d58e2f34e2164a21bdd8221c84680e311c8586c96",
-    "benculver": "68d9732ede041ef8d4ed9bcc7a2c885287e85e333f5dd62a8e74340f81909ed1",
     "bullish": "a10260a2aa2f092d85e2c0b82e95eac5f8c60ea19c68e4898719b58ccaa23e3e",
     "scott": "548aed73cf0bd94c0637872b6acd2c83977dde03d745db65c8af72516c7993d2",
     "bitcoinsafe": "41797243b9d1d97639c0cfcec2e6632ed1588e755878386ba5456501bb53ffbf",
@@ -32,7 +31,9 @@
     "Dude": "4c825f66056e4be6bba1b19e3bbb5e732657daf27540fcce469ba6ef16a6e032",
     "bpg": "ff2f4cd786e42b4323749c91517ec7baf22dfd035b7a101bea83b6e2bcbacd15",
     "bitmax": "aa8de34ff8b18ac3cc56decdfe56f17ec3007385993c834c9b99c839a6ffe696",
-    "imcaelestis": "43fb79ea24d26d5c85b66cc7153cd7e0a8f74972d004ddeaeb1940945a982b06"
+    "imcaelestis": "43fb79ea24d26d5c85b66cc7153cd7e0a8f74972d004ddeaeb1940945a982b06",
+    "Khanto": "f83bdccf7744f6ec81d0d76beecf13a03e00a8f8b841fdbdbfc77c3e0578d7f9",
+    "benculver": "68d9732ede041ef8d4ed9bcc7a2c885287e85e333f5dd62a8e74340f81909ed1"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -292,6 +293,14 @@
       "wss://relay.primal.net"
     ],
     "43fb79ea24d26d5c85b66cc7153cd7e0a8f74972d004ddeaeb1940945a982b06": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "f83bdccf7744f6ec81d0d76beecf13a03e00a8f8b841fdbdbfc77c3e0578d7f9": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
