@@ -25,6 +25,9 @@ h3 {
 .policyContent .mb_p {
   margin-bottom: 10px;
 }
+.policyContent .ml_p {
+  margin-left: 10px;
+}
 .policyContent .bld_p {
   font-weight: 500;
 }
