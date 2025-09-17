@@ -48,7 +48,7 @@ To run this project locally, follow these steps:
 
 ## 🌐 Live Demo
 
-Experience the live demo of the Blitz Wallet PR website [here](https:blitz-wallet.com).
+Experience the live demo of the Blitz Wallet PR website [here](https:blitzwalletapp.com).
 
 ## 🛠️ Contributing
 
@@ -71,7 +71,7 @@ We welcome contributions to the Blitz Wallet PR website! To contribute:
 
 ## 📞 Contact
 
-For any questions or feedback, visit the [Blitz Wallet official website](https://blitz-wallet.com) or contact us via email at [support@blitz-wallet.com](mailto:support@blitz-wallet.com).
+For any questions or feedback, visit the [Blitz Wallet official website](https://blitzwalletapp.com) or contact us via email at [support@blitzwalletapp.com](mailto:support@blitzwalletapp.com).
 
 ## 📜 License
 
