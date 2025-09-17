@@ -36,7 +36,6 @@ h3 {
 }
 
 .policyContent .contentSection ul {
-  height: 90px;
   width: 98%;
   list-style: none;
   display: flex;
@@ -44,4 +43,8 @@ h3 {
   justify-content: space-between;
   margin-bottom: 30px;
   margin-left: auto;
+}
+.policyContent .contentSection ul li {
+  margin: 5px 0;
+  line-height: 35px;
 }
