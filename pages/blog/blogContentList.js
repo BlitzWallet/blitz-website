@@ -8,7 +8,7 @@ export const postList = [
     htmlPageLink: "./explore-blitz",
     searchName: "explore-blitz",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 4, //In minutes
     time: "1745237600000",
     author: "Blitz Team",
@@ -25,7 +25,7 @@ export const postList = [
     htmlPageLink: "./eCash-pos",
     searchName: "eCash-pos",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 4, //In minutes
     time: "1743933891282",
     author: "Blitz Team",
@@ -42,7 +42,7 @@ export const postList = [
     htmlPageLink: "./power-up",
     searchName: "power-up",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 4, //In minutes
     time: "1742057210850",
     author: "Blitz Team",
@@ -59,7 +59,7 @@ export const postList = [
     htmlPageLink: "./self-custodial-wallet",
     searchName: "self-custodial-wallet",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 7, //In minutes
     time: "1741611775672",
     author: "Destiny Smart",
@@ -77,7 +77,7 @@ export const postList = [
     htmlPageLink: "./efficiency-update",
     searchName: "efficiency-update",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 2, //In minutes
     time: "1740237953923",
     author: "Blitz Team",
@@ -94,7 +94,7 @@ export const postList = [
     htmlPageLink: "./bridge-update",
     searchName: "bridge-update",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 2, //In minutes
     time: "1737590535347",
     author: "Blitz Team",
@@ -111,7 +111,7 @@ export const postList = [
     htmlPageLink: "./introducing-blitz-wallet",
     searchName: "introducing-blitz-wallet",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 5, //In minutes
     time: "1736994574819", // January 8, 2025
     author: "Blitz Team",
