@@ -41,7 +41,8 @@
     "tictac": "c18c2b0a1debaaf530e2beaf2dfde5b4e487ea156154e48bafe32337e6062ba3",
     "TreebeardsTreeBeard": "0f6aad5be860104c0e4bf1701db8bb214162e2c1229b7d201c24b002c6afd54a",
     "flemingfarm": "80bfd70e77ad84c01489e650c089ee81ef4111d9ed66a6d4498d9ad8a0abccdc",
-    "jojobear": "f10512dfdae6adf5c8b613bd2e423b4058fc862d743293bfa08471fcc9293bb3"
+    "jojobear": "f10512dfdae6adf5c8b613bd2e423b4058fc862d743293bfa08471fcc9293bb3",
+    "sav": "d6706bcd46861d25ab7b9abf0a149b83facb31af1457aab3cf0e5da625052680"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -373,6 +374,14 @@
       "wss://relay.primal.net"
     ],
     "f10512dfdae6adf5c8b613bd2e423b4058fc862d743293bfa08471fcc9293bb3": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "d6706bcd46861d25ab7b9abf0a149b83facb31af1457aab3cf0e5da625052680": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
