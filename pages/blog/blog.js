@@ -27,8 +27,9 @@ function changePostContent(selectedCategory) {
   if (filteredPosts.length) {
     filteredPosts.forEach((post) => {
       const postElement = createPostElement(post);
-      if (post.isFeatured) highlightedPostContainer.appendChild(postElement);
-      else postsContainer.appendChild(postElement);
+      // if (post.isFeatured) highlightedPostContainer.appendChild(postElement);
+      // else
+      postsContainer.appendChild(postElement);
     });
   } else {
     const element = createNoContentElement();
@@ -51,39 +52,29 @@ function changeNav(selectedCategory) {
 }
 function createPostElement(post) {
   const postElement = document.createElement("a");
-  postElement[post.isFeatured ? "id" : "className"] = post.isFeatured
-    ? "highlightedPost"
-    : "blogPost";
+  postElement.className = "post";
   postElement.href = post.htmlPageLink;
 
   postElement.innerHTML = `
-      <div class="postTypeContainer">
-      <div class="imgContainer">
-          <img src="${post.imageUrl}" alt="${post.type} icon" />
+    <article class="post-content">
+      <header class="post-header">
+        <span class="post-type">${post.type}</span>
+      </header>
+
+      <div class="post-body">
+        <h2 class="post-title">${post.title}</h2>
+        <p class="post-description">${post.description}</p>
       </div>
-      <p>${post.type}</p>
-      </div>
-      <div class="${
-        post.isFeatured ? "highlightedPostImageContainer" : "postImageContainer"
-      }">
-      <img class=${
-        post.isFeatured
-          ? post.isVertical
-            ? "highlightedPostImageVertical"
-            : "highlightedPostImage"
-          : post.isVertical
-          ? "postImageVertical"
-          : "postImage"
-      } src="${post.thumbnailUrl}" alt="${post.title}" />
-      </div>
-      <div class="textContainer">
-      <h2>${post.title}</h2>
-      <p>${post.description}</p>
-      <time datetime="${new Date(
-        parseInt(post.time)
-      ).toISOString()}">${formatDate(post.time)}</time>
-      </div>
-    `;
+
+      <footer class="post-footer">
+        <time datetime="${new Date(
+          parseInt(post.time)
+        ).toISOString()}" class="post-date">
+          ${formatDate(post.time)}
+        </time>
+      </footer>
+    </article>
+  `;
 
   return postElement;
 }
