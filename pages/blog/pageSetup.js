@@ -36,6 +36,7 @@ window.addEventListener("load", () => {
 });
 
 function setMetaDescription(newDescription) {
+  if (!newDescription) return;
   if (!document.querySelector('meta[name="description"]')) {
     const metaDescription = document.createElement("meta");
     metaDescription.name = "description";

@@ -2,6 +2,20 @@
 
 export const postList = [
   {
+    type: "Learn", // Can be "Release", "Learn", or "Podcast"
+    title: "What is Spark",
+    description: "Learn about the technology powering Blitz Wallet!",
+    htmlPageLink: "./what-is-spark",
+    searchName: "what-is-spark",
+    readingLengthEST: 4, //In minutes
+    time: "1758574845000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
     type: "Release", // Can be "Release", "Learn", or "Podcast"
     title: "Explore page & Crashlytics",
     description: "Explore Blitz downloads, crash reporting & more!",

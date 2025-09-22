@@ -21,7 +21,7 @@ window.addEventListener("load", () => {
 function changePostContent(selectedCategory) {
   postsContainer.innerHTML = "";
   highlightedPostContainer.innerHTML = "";
-  console.log(selectedCategory);
+
   const filteredPosts = getPostsByCategory(selectedCategory);
 
   if (filteredPosts.length) {
