@@ -205,23 +205,65 @@
               >Privacy Policy</a
             >.
           </p>
-          <p class="mb_p bld_p">Personal information: None</p>
-
-          <p class="mb_p ml_p">
-            We store push notification tokens in our database in order to
-            deliver transaction and wallet-related notifications. These tokens
-            are not linked to personally identifiable information and are only
-            used to provide app functionality.
-          </p>
-          <p class="mb_p ml_p">
-            We use Firebase Crashlytics to monitor app stability and improve
-            reliability. Crashlytics may collect certain non-personal device
-            information (such as device model, operating system version, and app
-            usage patterns). This data is only used for debugging and improving
-            the app. Crashlytics can be disabled at any time in the app settings
-            if you prefer not to share this information.
-          </p>
           <p class="bld_p mb_p">Cookies: None</p>
+          <p class="mb_p bld_p">
+            Below is a list of the types of information that may be stored in
+            the Blitz Wallet database. Not all items are required. We will
+            indicate which items are optional and which are necessary for core
+            functionality.
+          </p>
+
+          <ul>
+            <li>
+              <strong>Blitz Store Information:</strong> This includes purchases
+              such as gift cards, messaging services, VPNs, or generative AI.
+              All data is encrypted with your private key. For generative AI,
+              you can choose whether to save a chat or not. All other purchases
+              are automatically stored. You may delete gift cards, VPNs, and
+              messages from the database at any time.
+            </li>
+
+            <li>
+              <strong>Contacts:</strong> This includes both your saved contacts
+              and your contact profile. Contacts are encrypted with your private
+              key and cannot be viewed by others. Your profile, however, is
+              public. Profile data includes your bio, name, Spark address, Spark
+              identity public key, unique username, and UUID. The name and bio
+              are customizable, while the other fields are automatically stored
+              to enable LNURL addresses and contact lookups.
+            </li>
+
+            <li>
+              <strong>NIP-05:</strong> This includes a username and public key
+              associated with your NIP-05 (Nostr) address. Adding this is
+              completely optional.
+            </li>
+
+            <li>
+              <strong>Point-of-Sale:</strong> This includes your item list,
+              receiving address, store currency, and store name. Items are
+              optional, the store currency defaults to USD, and the store name
+              is automatically generated when you first load the app. You may
+              customize the name, currency, and items at any time.
+            </li>
+
+            <li>
+              <strong>Push Notifications:</strong> This includes notification
+              settings and your push token. The push token is encrypted with the
+              notification service’s key, so only your device and the backend
+              can access it. Push notifications are optional and can be disabled
+              at any time.
+            </li>
+
+            <li>
+              <strong>Crash Reporting:</strong> We use Firebase Crashlytics to
+              monitor app stability and improve reliability. Crashlytics may
+              collect non-personal device information (such as device model,
+              operating system version, and app usage patterns). This data is
+              used only for debugging and app improvement. You can disable
+              Crashlytics at any time in the app settings.
+            </li>
+          </ul>
         </div>
 
         <div class="contentSection">
