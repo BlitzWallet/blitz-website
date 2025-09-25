@@ -225,12 +225,19 @@
 
             <li>
               <strong>Contacts:</strong> This includes both your saved contacts
-              and your contact profile. Contacts are encrypted with your private
-              key and cannot be viewed by others. Your profile, however, is
-              public. Profile data includes your bio, name, Spark address, Spark
-              identity public key, unique username, and UUID. The name and bio
-              are customizable, while the other fields are automatically stored
-              to enable LNURL addresses and contact lookups.
+              and your contact profile. Any added contacts are encrypted with
+              your private key and cannot be viewed by others. Your profile,
+              however, is public. Profile data includes your bio, name, Spark
+              address, Spark identity public key, unique username, and UUID. The
+              name and bio are customizable, while the other fields are
+              automatically stored to enable LNURL addresses and contact
+              lookups.
+            </li>
+
+            <li>
+              <strong>Contact Profile Image:</strong> Users may optionally store
+              a profile image with Blitz. If provided, the image is saved in our
+              database.
             </li>
 
             <li>
@@ -262,6 +269,37 @@
               operating system version, and app usage patterns). This data is
               used only for debugging and app improvement. You can disable
               Crashlytics at any time in the app settings.
+            </li>
+          </ul>
+        </div>
+
+        <div class="contentSection">
+          <h2>Other Stored Information</h2>
+          <ul>
+            <li>
+              <strong>Blitz Contact Payments:</strong> To facilitate payments
+              between Blitz users, payment actions (such as sending, requesting,
+              accepting, or declining payments) are temporarily stored on Blitz
+              servers. Payment contents are encrypted using a shared key between
+              the users, ensuring that only the parties involved can decrypt the
+              information. All contact payment data is automatically deleted
+              after 7 days.
+            </li>
+
+            <li>
+              <strong>Point-of-Sale Payments:</strong> Sales made through the
+              Point-of-Sale feature are temporarily stored so that when the
+              admin wallet comes back online, payment details can be synced with
+              the user. All Point-of-Sale data is encrypted and can only be
+              accessed by the admin. Data is automatically deleted after 7 days.
+            </li>
+
+            <li>
+              <strong>LNURL Payments:</strong> LNURL payments are temporarily
+              stored until the user opens Blitz, at which point the payment data
+              is deleted from the database and saved locally on the user’s
+              device. This temporary storage is necessary to include payment
+              descriptions.
             </li>
           </ul>
         </div>
