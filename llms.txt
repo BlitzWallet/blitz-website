@@ -27,4 +27,4 @@ Reference these for in-depth explanations on Bitcoin, self-custodial wallets, Li
 - [Understanding Self-Custodial Bitcoin Wallets](https://blitz-wallet.com/pages/blog/self-custodial-wallet/): Explains self-custody vs. custodial options, benefits like ownership and privacy, risks, and how Blitz provides user-friendly self-custody
 - [What is Blitz Wallet](https://blitz-wallet.com/pages/blog/introducing-blitz-wallet/): Details Blitz's self-custodial features, Lightning for fast/low-cost transactions, simplicity for beginners, and integrations
 - [What is Spark](https://blitz-wallet.com/pages/blog/what-is-spark/): Overview of Spark, a Layer 2 protocol for instant, low-cost Bitcoin transactions with self-custody
-- [How to create a bitcoin wallet](https://blitz-wallet.com/pages/blog/how-to-create-a-bitcoin-wallet/): Overview of Spark, a Layer 2 protocol for instant, low-cost Bitcoin transactions with self-custody
+- [How to create a bitcoin wallet](https://blitz-wallet.com/pages/blog/how-to-create-a-bitcoin-wallet/): Overview on different types of Bitcoin Wallets and how to simply create one.
