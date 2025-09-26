@@ -3,6 +3,21 @@
 export const postList = [
   {
     type: "Learn", // Can be "Release", "Learn", or "Podcast"
+    title: "Day 1/14: Gift Cards in Seconds",
+    description:
+      "Turn your Bitcoin into real-world spending power instantly. With Blitz Wallet’s integration with the Bitcoin Company, you can buy gift cards in seconds—no exchanges, no middlemen, just seamless Bitcoin spending.",
+    htmlPageLink: "./gift-cards-in-seconds",
+    searchName: "gift-cards-in-seconds",
+    readingLengthEST: 2, //In minutes
+    time: "1758774845000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Learn", // Can be "Release", "Learn", or "Podcast"
     title: "What is Spark",
     description: "Learn about the technology powering Blitz Wallet!",
     htmlPageLink: "./what-is-spark",

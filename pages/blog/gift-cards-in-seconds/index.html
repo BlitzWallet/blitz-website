@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Primary Meta Tags -->
+    <title>
+      Day 1/14: Gift Cards in Seconds – Spend Bitcoin Instantly with Blitz
+      Wallet
+    </title>
+    <meta
+      name="title"
+      content="Day 1/14: Gift Cards in Seconds – Spend Bitcoin Instantly with Blitz Wallet"
+    />
+    <meta
+      name="description"
+      content="Turn your Bitcoin into real-world spending power in seconds. With Blitz Wallet and @theBTCco integration, you can buy gift cards instantly—no exchanges, no middlemen."
+    />
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/pages/blog/gift-cards-in-seconds/"
+    />
+    <meta
+      property="og:title"
+      content="Day 1/14: Gift Cards in Seconds – Spend Bitcoin Instantly with Blitz Wallet"
+    />
+    <meta
+      property="og:description"
+      content="Turn your Bitcoin into real-world spending power in seconds. With Blitz Wallet and @theBTCco integration, you can buy gift cards instantly—no exchanges, no middlemen."
+    />
+    <meta property="og:image"
+    content=https://blitzwalletapp.com/public/twitterCard.png />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta
+      property="twitter:url"
+      content="https://blitzwalletapp.com/pages/blog/gift-cards-in-seconds/"
+    />
+    <meta
+      property="twitter:title"
+      content="Day 1/14: Gift Cards in Seconds – Spend Bitcoin Instantly with Blitz Wallet"
+    />
+    <meta
+      property="twitter:description"
+      content="Turn your Bitcoin into real-world spending power in seconds. With Blitz Wallet and the Bitcoin company integration, you can buy gift cards instantly—no exchanges, no middlemen."
+    />
+
+    <link rel="stylesheet" href="../../../src/assets/styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="../../../src/assets/styles/navbar_footer.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../src/components/downloadModal/style.css"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+
+    <script src="../../../src/js/navbar.js" defer></script>
+
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="../../../src/components/downloadModal/index.js" defer></script>
+    <script type="module" src="../pageSetup.js"></script>
+    <link rel="stylesheet" href="../masterBlogTheme.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet (beta)</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <p class="bitzName">Blitz Wallet.</p>
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+
+            <li class="navItem activePage">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+      <div class="blogNav">
+        <div class="locationTab">
+          <div class="imgContainer">
+            <img id="blogTypeImage" src="/favicon.png" alt="blog pencil" />
+          </div>
+          <a href="/pages/blog">
+            <p>Blog</p>
+          </a>
+          <p class="blogTypeSeperator">|</p>
+          <p id="blogTypeText">
+            <!-- Pulled in from javascript -->
+          </p>
+        </div>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavInnerContainer">
+        <div class="mobileNavDropdown-Container">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="buttonsContainer">
+          <div class="downloadButton">
+            <div class="hoverContainer"></div>
+            <img
+              src="/src/assets/images/apple.svg"
+              alt="Apple app store icon"
+            />
+            <div class="seperator"></div>
+            <img
+              src="/src/assets/images/google-play.svg"
+              alt="Google Playstore icon"
+            />
+            <h2 class="downloadText">Download now</h2>
+          </div>
+          <div>
+            <p class="warningText">
+              Blitz Wallet is currently in beta testing.
+            </p>
+            <p class="warningText">Use amounts you are willing to lose</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="blogContentContainer">
+      <div class="postHead">
+        <h1 id="blogTitle">
+          <!-- Pulled in from javascript -->
+        </h1>
+        <p id="blogSubHeader">
+          <!-- Pulled in from javascript -->
+        </p>
+        <div class="postDataContainerOuter">
+          <div class="imageContainer">
+            <img
+              id="authorProfilePicture"
+              src="/favicon.png"
+              alt="Profile image of the author"
+            />
+            <!-- Img src in from javascript -->
+          </div>
+          <div class="dataContainer">
+            <p rel="author" id="authorName">
+              <!-- Pulled in from javascript -->
+            </p>
+            <div class="postDataContainerInner">
+              <p id="postReadTime">
+                <!-- Pulled in from javascript -->
+              </p>
+              <p class="postDataSeperator">|</p>
+              <p id="postDate">
+                <!-- Pulled in from javascript -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <section id="postBody">
+        <h1>Welcome to 14 Days of Blitz</h1>
+        <p>
+          We’re excited to kick off our <strong>14-day blog series</strong>,
+          where each day we’ll highlight one powerful feature that makes Blitz
+          Wallet the simplest way to send, spend, and live on Bitcoin. Today,
+          we’re starting with a feature that turns your Bitcoin into everyday
+          utility faster than ever: <em>Gift Cards in Seconds</em>.
+        </p>
+
+        <h2>The Problem with Traditional Gift Card Purchases</h2>
+        <p>
+          For most Bitcoin users, buying gift cards isn’t as seamless as it
+          should be. The usual path requires going through external service,
+          Instead of being instant, the process often feels clunky and slow,
+          making it hard to rely on Bitcoin for daily purchases.
+        </p>
+
+        <h2>The Blitz Wallet Solution</h2>
+        <p>
+          Blitz Wallet changes that. Thanks to our direct integration with
+          <strong>The Bitcoin Company</strong>, you can now purchase gift cards
+          <strong>instantly inside the app</strong>. No exchanges. No middlemen.
+          Just simple, secure, and lightning-fast access to real-world spending
+          power.
+        </p>
+        <p>
+          Whether it’s groceries, online shopping, entertainment, or sending a
+          last-minute gift, you can turn your Bitcoin into practical value in
+          just a few taps.
+        </p>
+
+        <h2>How It Works</h2>
+        <ul>
+          <li>Open Blitz Wallet</li>
+          <li>Tap on <strong>Store tab</strong> at the bottom of the screen</li>
+          <li>
+            Click <strong>Shop with Bitcoin</strong> at the top of the page
+          </li>
+          <li>Choose your favorite brand</li>
+          <li>Pay instantly with Bitcoin</li>
+          <li>Receive your digital card within seconds to your email</li>
+        </ul>
+        <p>
+          That’s it—no friction, no hassle. Just a direct bridge between your
+          Bitcoin and the things you need.
+        </p>
+
+        <h3>Demo</h3>
+        <p>
+          See it in action in our demo video:
+          <a href="https://www.youtube.com/watch?v=upHkqPbCtbs" target="_blank"
+            >Watch here</a
+          >.
+        </p>
+
+        <h2>Why It Matters</h2>
+        <p>
+          This feature isn’t just about convenience—it’s about unlocking the
+          true potential of Bitcoin as <em>everyday money</em>. By making it
+          this easy to buy gift cards, Blitz Wallet ensures your Bitcoin is more
+          than just an investment—it’s something you can spend today, anywhere.
+        </p>
+
+        <h2>Looking Ahead</h2>
+        <p>
+          This is only <strong>Day 1</strong> of our 14-day feature spotlight.
+          Over the next two weeks, we’ll explore how Blitz Wallet helps you
+          send, save, and spend Bitcoin in ways that are fast, practical, and
+          empowering. Stay tuned for tomorrow’s feature—you won’t want to miss
+          it.
+        </p>
+
+        <p>Best,</p>
+        <p>Blitz Team</p>
+      </section>
+    </section>
+
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            The simplest self-custodial Bitcoin Lightning wallet—send, spend,
+            and accept BTC. Now in beta—use only what you're willing to lose.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
+
+              <li><a href="/pages/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
+              </li>
+              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
+              <li>
+                <a href="https://youtube.com/@BlitzWalletApp">YouTube</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          <a href="/pages/terms/">Terms of Usage</a>
+          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
+            >License</a
+          >
+        </div>
+        <p>&copy;2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>
