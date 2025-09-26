@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blitz Wallet |How to create a Bitcoin Wallet</title>
+    <!-- Title is Pulled in from javascript -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+
+    <link rel="stylesheet" href="../../../src/assets/styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="../../../src/assets/styles/navbar_footer.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../src/components/downloadModal/style.css"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+
+    <script src="../../../src/js/navbar.js" defer></script>
+
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="../../../src/components/downloadModal/index.js" defer></script>
+    <script type="module" src="../pageSetup.js"></script>
+    <link rel="stylesheet" href="../masterBlogTheme.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet (beta)</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <p class="bitzName">Blitz Wallet.</p>
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+
+            <li class="navItem activePage">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+      <div class="blogNav">
+        <div class="locationTab">
+          <div class="imgContainer">
+            <img id="blogTypeImage" src="/favicon.png" alt="blog pencil" />
+          </div>
+          <a href="/pages/blog">
+            <p>Blog</p>
+          </a>
+          <p class="blogTypeSeperator">|</p>
+          <p id="blogTypeText">
+            <!-- Pulled in from javascript -->
+          </p>
+        </div>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavInnerContainer">
+        <div class="mobileNavDropdown-Container">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="buttonsContainer">
+          <div class="downloadButton">
+            <div class="hoverContainer"></div>
+            <img
+              src="/src/assets/images/apple.svg"
+              alt="Apple app store icon"
+            />
+            <div class="seperator"></div>
+            <img
+              src="/src/assets/images/google-play.svg"
+              alt="Google Playstore icon"
+            />
+            <h2 class="downloadText">Download now</h2>
+          </div>
+          <div>
+            <p class="warningText">
+              Blitz Wallet is currently in beta testing.
+            </p>
+            <p class="warningText">Use amounts you are willing to lose</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="blogContentContainer">
+      <div class="postHead">
+        <h1 id="blogTitle">
+          <!-- Pulled in from javascript -->
+        </h1>
+        <p id="blogSubHeader">
+          <!-- Pulled in from javascript -->
+        </p>
+        <div class="postDataContainerOuter">
+          <div class="imageContainer">
+            <img
+              id="authorProfilePicture"
+              src="/favicon.png"
+              alt="Profile image of the author"
+            />
+            <!-- Img src in from javascript -->
+          </div>
+          <div class="dataContainer">
+            <p rel="author" id="authorName">
+              <!-- Pulled in from javascript -->
+            </p>
+            <div class="postDataContainerInner">
+              <p id="postReadTime">
+                <!-- Pulled in from javascript -->
+              </p>
+              <p class="postDataSeperator">|</p>
+              <p id="postDate">
+                <!-- Pulled in from javascript -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="postBody">
+        <!-- THIS IS WHERE BLOG POST CONTENT GOES -->
+        <p>
+          Creating a Bitcoin wallet is as simple as downloading an app on your
+          phone or computer. Once installed, your wallet is ready to go. You can
+          start receiving, securely storing, and spending Bitcoin right away,
+          including fast Lightning Network payments.
+        </p>
+
+        <h2>Which Bitcoin wallet should I choose?</h2>
+        <p>There are many wallet options out there:</p>
+        <ul>
+          <li>
+            Software wallets: Applications that can be downloaded for free to
+            your phone or desktop.
+          </li>
+          <li>
+            Hardware wallets: Physical devices designed for storing Bitcoin.
+            They offer the best security because they are not connected to the
+            Internet.
+          </li>
+          <li>
+            Exchange wallets: These are custodial wallets often provided by an
+            exchange to make buying and selling easy.
+          </li>
+          <li>
+            Paper wallets: Printing your public and private keys onto paper for
+            offline storage.
+          </li>
+        </ul>
+
+        <h3>Software wallets</h3>
+        <p>
+          Software wallets, particularly mobile Lightning-enabled ones, are
+          ideal for everyday Bitcoin use—like buying, selling, storing, trading,
+          or zapping sats via Lightning. They're free apps you download to your
+          phone or desktop, letting you transact Bitcoin immediately after
+          setup.
+        </p>
+        <p>
+          Because a user's private keys are stored on the device and devices are
+          connected to the internet, software wallets are considered "hot
+          wallets." These wallets should avoid storing huge amounts of Bitcoin
+          long-term. But with strong PINs, they're plenty safe for regular
+          activity. The biggest risk? Losing access to your private keys (your
+          wallet's "password"), so always back them up securely.
+        </p>
+
+        <h3>Hardware wallets</h3>
+        <p>
+          For serious long-term Bitcoin holders, hardware wallets are the
+          ultimate secure choice. These physical devices (cold wallets) keep
+          your keys offline, making them nearly impossible to hack remotely.
+        </p>
+        <p>
+          They're perfect for HODLing large Bitcoin stacks but less convenient
+          for frequent Lightning payments, as you'll need to connect them to a
+          software interface. Still, many pair well with Lightning apps for
+          occasional on-chain funding.
+        </p>
+
+        <h3>Centralized exchange wallets</h3>
+        <p>
+          Centralized exchanges (CEXs) like Coinbase or Binance offer built-in
+          wallets that are great entry points for beginners, especially for
+          fiat-to-Bitcoin trades. They're user-friendly but come with big
+          caveats: the exchange controls your keys, exposing you to hacks,
+          outages, or even bankruptcy (like FTX).
+        </p>
+        <p>
+          You can't freely use Lightning here, and withdrawals often involve
+          delays and fees. Use CEX wallets just for quick buys, then move your
+          Bitcoin to a self-custodial Lightning wallet like Blitz for real
+          control and fast spending.
+        </p>
+
+        <h3>Paper wallets</h3>
+        <p>
+          Paper wallets provide secure, offline storage for Bitcoin by printing
+          your public and private keys on—well, paper.
+        </p>
+        <p>
+          To create one: download trusted offline software, generate a key pair,
+          print it, and fund the address. But for Lightning, this isn't ideal,
+          as it requires sweeping funds to a hot wallet first. Best for on-chain
+          storage, not daily use.
+        </p>
+
+        <h2>How do I create a Bitcoin wallet?</h2>
+        <p>
+          Now that you know what types of Bitcoin wallets exist, which is the
+          best option for you?
+        </p>
+        <p>
+          Generally, most people will use software wallets. Fortunately, one of
+          the easiest ways to get started is by using Blitz Wallet. Trusted by
+          thousands of users, Blitz is a self-custodial wallet that puts you in
+          full control of your Bitcoin. It supports seamless Lightning payments
+          for instant, low-fee transactions, with support to send on-chain if
+          your balance grows.
+        </p>
+
+        <h2>Start zapping with Blitz Wallet</h2>
+        <p>
+          Everything you need for self-custodial Bitcoin and Lightning in one
+          app. Download now:
+        </p>
+        <ul>
+          <li>
+            <a href="https://testflight.apple.com/join/r8MfbNa6"
+              >Apple App Store</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              >Google Play Store</a
+            >
+          </li>
+        </ul>
+        <p>Join the movement today!</p>
+
+        <p>Best,</p>
+        <p>Blitz Team</p>
+      </section>
+    </section>
+
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            The simplest self-custodial Bitcoin Lightning wallet—send, spend,
+            and accept BTC. Now in beta—use only what you're willing to lose.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
+
+              <li><a href="/pages/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
+              </li>
+              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
+              <li>
+                <a href="https://youtube.com/@BlitzWalletApp">YouTube</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          <a href="/pages/terms/">Terms of Usage</a>
+          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
+            >License</a
+          >
+        </div>
+        <p>&copy;2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>
