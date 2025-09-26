@@ -3,6 +3,21 @@
 export const postList = [
   {
     type: "Learn", // Can be "Release", "Learn", or "Podcast"
+    title: "Day 2/14: Send Gift Cards to Contacts",
+    description:
+      "Send gift cards to friends instantly — no codes, no emails, just wallet-to-phone. A first in Bitcoin wallets with Blitz.",
+    htmlPageLink: "./send-gifts-to-contacts",
+    searchName: "send-gifts-to-contacts",
+    readingLengthEST: 2, //In minutes
+    time: "1758874845000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Learn", // Can be "Release", "Learn", or "Podcast"
     title: "Day 1/14: Gift Cards in Seconds",
     description:
       "Turn your Bitcoin into real-world spending power instantly. With Blitz Wallet’s integration with the Bitcoin Company, you can buy gift cards in seconds—no exchanges, no middlemen, just seamless Bitcoin spending.",
