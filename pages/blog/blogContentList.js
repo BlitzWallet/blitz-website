@@ -3,6 +3,21 @@
 export const postList = [
   {
     type: "Learn", // Can be "Release", "Learn", or "Podcast"
+    title: "Day 3/14: Privacy On the Go – VPN Access with Bitcoin",
+    description:
+      "Protect your privacy with Blitz Wallet’s VPN integration via LNVPN. For the first time, you can buy VPN access directly with Bitcoin — pay by the hour or the quarter, no subscriptions, no hassle.",
+    htmlPageLink: "./vpn-access-with-bitcoin",
+    searchName: "vpn-access-with-bitcoin",
+    readingLengthEST: 2, //In minutes
+    time: "1758974845000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Learn", // Can be "Release", "Learn", or "Podcast"
     title: "Day 2/14: Send Gift Cards to Contacts",
     description:
       "Send gift cards to friends instantly — no codes, no emails, just wallet-to-phone. A first in Bitcoin wallets with Blitz.",
