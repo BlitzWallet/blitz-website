@@ -3,6 +3,21 @@
 export const postList = [
   {
     type: "Learn", // Can be "Release", "Learn", or "Podcast"
+    title: "Day 4 of 14: Anonymous SMS with Blitz Wallet",
+    description:
+      "Discover Blitz Wallet’s Anonymous SMS feature powered by sms4sats. Send and receive private texts without using your personal number.",
+    htmlPageLink: "./anonymous-sms-with-blitz",
+    searchName: "anonymous-sms-with-blitz",
+    readingLengthEST: 2, //In minutes
+    time: "1759061600000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Learn", // Can be "Release", "Learn", or "Podcast"
     title: "Day 3/14: Privacy On the Go – VPN Access with Bitcoin",
     description:
       "Protect your privacy with Blitz Wallet’s VPN integration via LNVPN. For the first time, you can buy VPN access directly with Bitcoin — pay by the hour or the quarter, no subscriptions, no hassle.",
