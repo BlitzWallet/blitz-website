@@ -1,19 +1,30 @@
 # Blitz Wallet PR Website
 
-Welcome to the official PR website repository for **Blitz Wallet**. Blitz Wallet is a self-custodial wallet designed to provide users with a seamless experience for managing and transacting Bitcoin, Lightning, Liquid, and eCash. This website serves as a promotional and informational platform for the wallet and its associated Point of Sale (POS) terminal app.
+Welcome to the official PR website repository for **Blitz Wallet**.  
+Blitz Wallet is the simplest Bitcoin Lightning wallet, designed to make Bitcoin easy for everyone.  
+Send, receive, and spend sats instantly—without the complexity.  
+This website serves as a promotional and informational platform for the wallet and its associated Point of Sale (POS) terminal app.
 
 ## 🌟 Features
 
-- **Multi-Network Support**: Manage Bitcoin, Lightning Network, Liquid Network, and eCash all in one wallet.
-- **Self-Custodial**: Maintain full control of your private keys, ensuring your digital assets remain secure.
-- **Lightning Fast Transactions**: Utilize the Bitcoin Lightning Network for instant, low-cost transactions.
-- **Confidential Transactions**: Use the Liquid Network for enhanced privacy and confidential transactions.
-- **POS Integration**: Seamlessly integrate with the Blitz Wallet POS terminal app for easy payments in stores.
+- **Send to Contacts Instantly**: Add friends once and pay them anytime—no more copying long Bitcoin addresses.
+- **Gift Cards & Shopping**: Turn your sats into everyday spending with gift cards and discover places that accept Bitcoin.
+- **Lightning-Powered Payments**: Enjoy fast, low-cost payments through **Spark** with no need to manage channels.
+- **Self-Custodial Security**: Your keys, your Bitcoin. Only you control your funds with a secure 12-word seed phrase.
+- **Easy Wallet Recovery**: Switch devices or lose your phone? Restore your wallet in seconds with your seed phrase.
+- **POS Integration**: A built-in Point-of-Sale terminal app makes it simple for merchants to accept Bitcoin payments.
+- **Other Features**:
+  - LNURL support
+  - Sub-accounts for flexible payment management
+  - Nostr Wallet Connect (NWC) integration
+  - Customizable display options
+
+Blitz Wallet is built for simplicity—whether you’re new to Bitcoin or a daily Lightning user. Start living on Bitcoin today with Blitz Wallet.
 
 ## 🔗 Related Repositories
 
 - **[Blitz Wallet](https://github.com/BlitzWallet/BlitzWallet)**: The main repository for the Blitz Wallet, including all core wallet functionalities.
-- **[Blitz Wallet POS](https://github.com/BlakeKaufman/blitz-wallet-pos)**: A Point of Sale (POS) terminal app designed to work alongside Blitz Wallet, enabling merchants to accept payments in Bitcoin, Lightning, Liquid, and eCash.
+- **[Blitz Wallet POS](https://github.com/BlakeKaufman/blitz-wallet-pos)**: A Point of Sale (POS) terminal app designed to work alongside Blitz Wallet, enabling merchants to accept payments in Lightning.
 
 ## 🚀 Getting Started
 
@@ -48,7 +59,7 @@ To run this project locally, follow these steps:
 
 ## 🌐 Live Demo
 
-Experience the live demo of the Blitz Wallet PR website [here](https:blitz-wallet.com).
+Experience the live demo of the Blitz Wallet PR website [here](https:blitzwalletapp.com).
 
 ## 🛠️ Contributing
 
@@ -71,7 +82,7 @@ We welcome contributions to the Blitz Wallet PR website! To contribute:
 
 ## 📞 Contact
 
-For any questions or feedback, visit the [Blitz Wallet official website](https://blitz-wallet.com) or contact us via email at [support@blitz-wallet.com](mailto:support@blitz-wallet.com).
+For any questions or feedback, visit the [Blitz Wallet official website](https://blitzwalletapp.com) or contact us via email at [support@blitzwalletapp.com](mailto:support@blitzwalletapp.com).
 
 ## 📜 License
 

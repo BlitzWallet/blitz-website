@@ -3,57 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Primary Meta Tags -->
-    <title>
-      Blitz Wallet Update – eCash offline claim improvements, downloads Tracking
-      & BOLT12 Pay Support
-    </title>
-    <meta
-      name="title"
-      content="Blitz Wallet Update – eCash offline claim improvements, downloads Tracking & BOLT12 Pay Support"
-    />
+    <title>Blitz Wallet | Blog post</title>
+    <!-- Title is Pulled in from javascript -->
     <meta
       name="description"
-      content="This Blitz Wallet release introduces eCash offline claim improvements, BOLT12 pay support from Liquid, Blink QR integration, and a new Social Tracking feature to see Blitz’s user growth."
+      content="Spark Network (Spark L2) is a Bitcoin Layer 2 that makes payments faster, cheaper, and non-custodial. Learn how Spark works, how it compares to Lightning, and why it matters for Bitcoin beginners."
     />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://blitzwalletapp.com/pages/blog/explore-blitz/"
-    />
-    <meta
-      property="og:title"
-      content="Blitz Wallet Update – eCash offline claim improvements, downloads Tracking & BOLT12 Pay Support"
-    />
-    <meta
-      property="og:description"
-      content="This Blitz Wallet release introduces eCash offline claim improvements, BOLT12 pay support from Liquid, Blink QR integration, and a new Social Tracking feature to see Blitz’s user growth."
-    />
-    <meta property="og:image"
-    content=https://blitzwalletapp.com/public/twitterCard.png />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta
-      property="twitter:image"
-      content="https://blitzwalletapp.com/public/twitterCard.png"
-    />
-    <meta
-      property="twitter:url"
-      content="https://blitzwalletapp.com/pages/blog/explore-blitz/"
-    />
-    <meta
-      property="twitter:title"
-      content="Blitz Wallet Update – eCash offline claim improvements, downloads Tracking & BOLT12 Pay Support"
-    />
-    <meta
-      property="twitter:description"
-      content="This Blitz Wallet release introduces eCash offline claim improvements, BOLT12 pay support from Liquid, Blink QR integration, and a new Social Tracking feature to see Blitz’s user growth."
-    />
-
-    <!-- Favicon -->
 
     <link
       rel="icon"
@@ -99,7 +54,7 @@
     <!-- download modal -->
     <div class="modalContainer">
       <div class="modal">
-        <h2>Download Blitz Wallet</h2>
+        <h2>Download Blitz Wallet (beta)</h2>
         <div class="downloadTypeInModal">
           <p class="selectorItem IOS active">App Store</p>
           <p class="selectorItem Android">Play Store</p>
@@ -188,19 +143,22 @@
             />
             <h2 class="downloadText">Download now</h2>
           </div>
+          <div>
+            <p class="warningText">
+              Blitz Wallet is currently in beta testing.
+            </p>
+            <p class="warningText">Use amounts you are willing to lose</p>
+          </div>
         </div>
       </div>
     </div>
     <section class="blogContentContainer">
       <div class="postHead">
         <h1 id="blogTitle">
-          Blitz Wallet Update – eCash offline claim improvements, downloads
-          Tracking & BOLT12 Pay Support
+          <!-- Pulled in from javascript -->
         </h1>
         <p id="blogSubHeader">
-          This Blitz Wallet release introduces eCash offline claim improvements,
-          BOLT12 pay support from Liquid, Blink QR integration, and a new Social
-          Tracking feature to see Blitz’s user growth.
+          <!-- Pulled in from javascript -->
         </p>
         <div class="postDataContainerOuter">
           <div class="imageContainer">
@@ -229,96 +187,153 @@
       </div>
 
       <section id="postBody">
-        <p>
-          We’ve been hard at work preparing Blitz Wallet for its official
-          release. This latest update fixes minor bugs found during testing,
-          includes small improvements, and enhances crash analytics, allowing us
-          to more easily maintain the application.
-        </p>
-        <p>Here’s everything that’s new:</p>
-
-        <h2>Improved eCash offline claiming payment security.</h2>
-        <p>
-          Since our mission is to become the simplest Bitcoin Lightning wallet,
-          we need to ensure users are protected from the loss of funds. With
-          this update, we’ve introduced key changes to prevent duplicate
-          payments and improve eCash offline claiming.
-        </p>
+        <h2>TL;DR</h2>
         <ul>
           <li>
-            <strong> No More Duplicate Payments: </strong>You can now rest easy
-            knowing eCash transactions can’t be paid twice. Every eCash
-            transaction now tracks the associated invoice, and a new
-            hasAlreadyPaidInvoice check ensures an invoice can't be reused.
-            Previously, the app didn’t track invoice data, which made it
-            impossible to prevent double-spending. That’s now fully resolved.
+            Spark is a new Layer 2 protocol built on Bitcoin for instant,
+            low-cost transactions without sacrificing security or self-custody.
           </li>
           <li>
-            <strong>Improved Background Invoice Handling:</strong> If you’ve
-            ever started an eCash quote but didn’t finish paying before Blitz's
-            internal check timeout expired, the app used to try claiming it
-            during the next wallet load—using the wrong proof index. We’ve fixed
-            this so offline paid eCash invoices can be properly claimed.
-          </li>
-        </ul>
-        <h2>Upgraded Payment Experience</h2>
-        <p>
-          Sending and receiving sats should be simple, seamless, and fast. We’ve
-          made several improvements across the board.
-        </p>
-        <ul>
-          <li>
-            <strong>BOLT12 Pay Support from Liquid:</strong> You can now send to
-            BOLT12 invoices directly from your Liquid balance.
+            It uses statechain technology to allow off-chain transfers of
+            Bitcoin ownership, making payments faster and cheaper than on the
+            main Bitcoin chain.
           </li>
           <li>
-            <strong>Blink QR Code Support:</strong> Blink QR codes can now be
-            paid directly inside Blitz with LNURL-pay support, mo more getting
-            kicked out to a web browser: scan, confirm, and pay.
-          </li>
-          <li>
-            <strong>Lower Limits for Lightning-to-Liquid Swaps:</strong> The
-            minimum receive amount for Lightning-to-Liquid payments has been
-            reduced to just 100 sats, making smaller swaps more accessible than
-            ever.
+            Spark integrates seamlessly with the Lightning Network, opening up
+            new possibilities for Bitcoin users.
           </li>
         </ul>
 
-        <h2>App Enhancements & New Features</h2>
+        <h2>What is the Spark Protocol?</h2>
+        <p>
+          Spark is an open-source Layer 2 solution developed to enhance
+          Bitcoin's capabilities, making it easier to handle high-volume
+          transactions efficiently. Think of it as an extension built on top of
+          Bitcoin's secure foundation, allowing for quicker and more affordable
+          payments while keeping your funds under your control.
+        </p>
+        <p>
+          Developed by the team at Lightspark, Spark combines innovative
+          technologies like statechains and atomic swaps to create a system
+          that's both powerful and user-friendly. It's particularly geared
+          toward enabling instant transfers of Bitcoin, all without relying on
+          centralized intermediaries.
+        </p>
+
+        <h2>How Does Spark Work?</h2>
+        <p>
+          At its core, Spark moves most transaction activity off the main
+          Bitcoin blockchain (known as "off-chain") to reduce congestion and
+          fees, while still anchoring everything to Bitcoin's security. Here's a
+          breakdown of the key concepts:
+        </p>
+
+        <h3>Statechain Technology</h3>
+        <p>
+          Statechains allow you to transfer ownership of Bitcoin fractions
+          (called UTXOs) without actually moving them on the blockchain each
+          time. It's like passing a digital key to a safe, the contents stay
+          put, but control changes hands instantly and privately.
+        </p>
+
+        <h3>Shared Signing Protocol</h3>
+        <p>
+          When you deposit Bitcoin into Spark, it's locked in a shared address
+          controlled by you and a network of Spark Operators. These operators
+          help facilitate transfers using a secure signing process, ensuring
+          transactions are validated without full on-chain confirmations.
+        </p>
+
+        <h3>On-Chain vs. Off-Chain</h3>
+        <p>
+          Your actual Bitcoin remains on the main chain for ultimate security,
+          but day-to-day activities happen off-chain for speed. You can always
+          exit back to the main chain if needed, either cooperatively (fast and
+          cheap) or unilaterally (if trust issues arise).
+        </p>
+
+        <h2>Key Features of Spark</h2>
         <ul>
           <li>
-            <strong>Swipe to Sync:</strong> You can now manually trigger a node
-            sync just by swiping up on the wallet home screen. Simple,
-            intuitive, and always under your control.
+            <strong>Instant Transactions:</strong> No waiting for blockchain
+            confirmations—transfers happen in seconds.
           </li>
           <li>
-            <strong>Introducing Blitz Social Tracking:</strong> Curious how many
-            others are using Blitz? Head to settings to find our new Blitz
-            Social section. It shows real-time download stats and user growth as
-            a small way to feel the pulse of the Blitz community.
+            <strong>Low Fees:</strong> Off-chain processing keeps costs minimal,
+            ideal for small payments.
           </li>
           <li>
-            <strong>Crash Reporting with Privacy Control:</strong> We’ve
-            integrated Crashlytics to help track bugs and improve stability.
-            There’s a new settings toggle to opt-in or out of crash reporting
-            for total privacy.
+            <strong>Self-Custodial:</strong> You retain control of your keys and
+            funds at all times.
           </li>
           <li>
-            <strong>Improved Half-Modal Popups:</strong> Popups can now be
-            dismissed more naturally—either tap outside or swipe down. This also
-            fixes a bug where users could accidentally close the modal without
-            meaning to.
+            <strong>Lightning Compatibility:</strong> Seamlessly send and
+            receive via the Lightning Network.
           </li>
         </ul>
 
-        <h2>Bug Fixes & Stability</h2>
+        <h2>The Spark Ecosystem</h2>
         <p>
-          As always, this update includes a round of bug fixes and performance
-          improvements to keep your wallet running smoothly.
+          Spark is made up of several interconnected parts that work together:
+        </p>
+        <ul>
+          <li>
+            <strong>Spark Entity (SE):</strong> The core group managing the
+            shared keys and operations.
+          </li>
+          <li>
+            <strong>Spark Operators (SO):</strong> Individual nodes that sign
+            and validate transfers.
+          </li>
+          <li>
+            <strong>Spark Service Providers (SSP):</strong> Services that handle
+            deposits, withdrawals, and integrations with other networks.
+          </li>
+        </ul>
+
+        <h2>Benefits for Users</h2>
+        <p>
+          <strong>For Everyday Users:</strong> Enjoy quick, affordable payments
+          without the hassle of high fees or slow confirmations.
         </p>
 
-        <p>Best,</p>
-        <p>Blitz Team</p>
+        <h2>Use Cases Enabled by Spark</h2>
+        <ul>
+          <li>Micropayments for content or services.</li>
+          <li>Non-custodial e-commerce payments.</li>
+          <li>Cross-border remittances with low costs.</li>
+        </ul>
+
+        <h2>Spark vs. Lightning Network: Key Differences</h2>
+        <p>
+          While both aim to scale Bitcoin, Spark acts as a complementary layer
+          that simplifies Lightning's complexities, like channel management, by
+          using statechains for easier onboarding and broader asset support.
+          Lightning focuses on payment channels, whereas Spark emphasizes
+          off-chain ownership transfers for more flexibility.
+        </p>
+
+        <h2>Get Started with Spark</h2>
+        <p>
+          Ready to explore? Check out our wallet to see it in action for
+          youself.
+        </p>
+
+        <h2>FAQs</h2>
+
+        <h2>How is Spark different from Lightning?</h2>
+        <p>
+          Spark builds on Lightning by adding statechain tech for simpler,
+          asset-inclusive transactions.
+        </p>
+
+        <h2>Is Spark secure?</h2>
+        <p>
+          With self-custody and minimal trust requirements, Spark leverages
+          Bitcoin's security while allowing always-open exits.
+        </p>
+
+        <p>Best,<br />Blitz team</p>
       </section>
     </section>
 
@@ -328,7 +343,7 @@
           <h2>Blitz Wallet.</h2>
           <p>
             The simplest self-custodial Bitcoin Lightning wallet—send, spend,
-            and accept BTC.
+            and accept BTC. Now in beta—use only what you're willing to lose.
           </p>
         </div>
         <div class="listItems">

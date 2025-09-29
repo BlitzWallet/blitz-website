@@ -38,7 +38,7 @@
     <meta property="og:type" content="website" />
     <meta
       property="og:url"
-      content="https://blitz-wallet.com/pages/privacypolicy/"
+      content="https://blitzwalletapp.com/pages/privacypolicy/"
     />
     <meta
       property="og:title"
@@ -49,13 +49,13 @@
       content="Understand how Blitz Wallet collects, uses, and protects your data, including information on third-party links and application permissions"
     />
     <meta property="og:image"
-    content=https://blitz-wallet.com/public/twitterCard.png />
+    content=https://blitzwalletapp.com/public/twitterCard.png />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta
       property="twitter:url"
-      content="https://blitz-wallet.com/pages/privacypolicy/"
+      content="https://blitzwalletapp.com/pages/privacypolicy/"
     />
     <meta
       property="twitter:title"
@@ -66,7 +66,7 @@
       content="Understand how Blitz Wallet collects, uses, and protects your data, including information on third-party links and application permissions"
     />
     <meta property="twitter:image"
-    content=https://blitz-wallet.com/public/twitterCard.png />
+    content=https://blitzwalletapp.com/public/twitterCard.png />
 
     <link rel="stylesheet" href="../../src/assets/styles/index.css" />
     <link rel="stylesheet" href="../../src/assets/styles/navbar_footer.css" />
@@ -175,16 +175,21 @@
           <p>
             Blitz Wallet, LLC created the Blitz app as a free app. The service
             for the app is provided by Blitz Wallet, LLC at no cost and is
-            intended for use as is.
+            intended for use as is. This Privacy Policy explains how Blitz
+            Wallet handles data in both the Blitz Wallet mobile application
+            (“App”) and the Blitz Wallet website (“Website”). These may differ
+            in scope, and each section below makes clear whether it applies to
+            the App, the Website, or both.
           </p>
         </div>
+
         <div class="contentSection">
           <h2>Information Collection</h2>
           <p class="mb_p">
             The Blitz Wallet app does not use any third-party services to
-            collect information. However, the Blitz Wallet website uses Google
-            Analytics to understand traffic sources and user demographics to
-            better position the website to reach as many people as possible.
+            collect personal information. However, the Blitz Wallet website uses
+            Google Analytics to understand traffic sources and user demographics
+            to better position the website to reach as many people as possible.
           </p>
           <p class="mb_p">
             Here is a link to Google Analytics'
@@ -194,9 +199,105 @@
               >Privacy Policy</a
             >.
           </p>
-          <p class="mb_p bld_p">Personal information: None</p>
-          <p class="bld_p">Cookies: None</p>
+          <p class="bld_p mb_p">Cookies: None</p>
+          <p class="mb_p bld_p">
+            Below is a list of the types of information that may be stored in
+            the Blitz Wallet database. Not all items are required. We will
+            indicate which items are optional and which are necessary for core
+            functionality.
+          </p>
+
+          <ul>
+            <li>
+              <strong>Blitz Store Information:</strong> This includes purchases
+              such as gift cards, messaging services, VPNs, or generative AI.
+              All data is encrypted with your private key. For generative AI,
+              you can choose whether to save a chat or not. All other purchases
+              are automatically stored. You may delete gift cards, VPNs, and
+              messages from the database at any time.
+            </li>
+
+            <li>
+              <strong>Contacts:</strong> This includes both your saved contacts
+              and your contact profile. Any added contacts are encrypted with
+              your private key and cannot be viewed by others. Your profile,
+              however, is public. Profile data includes your bio, name, Spark
+              address, Spark identity public key, unique username, and UUID. The
+              name and bio are customizable, while the other fields are
+              automatically stored to enable LNURL addresses and contact
+              lookups.
+            </li>
+
+            <li>
+              <strong>Contact Profile Image:</strong> Users may optionally store
+              a profile image with Blitz. If provided, the image is saved in our
+              database.
+            </li>
+
+            <li>
+              <strong>NIP-05:</strong> This includes a username and public key
+              associated with your NIP-05 (Nostr) address. Adding this is
+              completely optional.
+            </li>
+
+            <li>
+              <strong>Point-of-Sale:</strong> This includes your item list,
+              receiving address, store currency, and store name. Items are
+              optional, the store currency defaults to USD, and the store name
+              is automatically generated when you first load the app. You may
+              customize the name, currency, and items at any time.
+            </li>
+
+            <li>
+              <strong>Push Notifications:</strong> This includes notification
+              settings and your push token. The push token is encrypted with the
+              notification service’s key, so only your device and the backend
+              can access it. Push notifications are optional and can be disabled
+              at any time.
+            </li>
+
+            <li>
+              <strong>Crash Reporting:</strong> We use Firebase Crashlytics to
+              monitor app stability and improve reliability. Crashlytics may
+              collect non-personal device information (such as device model,
+              operating system version, and app usage patterns). This data is
+              used only for debugging and app improvement. You can disable
+              Crashlytics at any time in the app settings.
+            </li>
+          </ul>
         </div>
+
+        <div class="contentSection">
+          <h2>Other Stored Information</h2>
+          <ul>
+            <li>
+              <strong>Blitz Contact Payments:</strong> To facilitate payments
+              between Blitz users, payment actions (such as sending, requesting,
+              accepting, or declining payments) are temporarily stored on Blitz
+              servers. Payment contents are encrypted using a shared key between
+              the users, ensuring that only the parties involved can decrypt the
+              information. All contact payment data is automatically deleted
+              after 7 days.
+            </li>
+
+            <li>
+              <strong>Point-of-Sale Payments:</strong> Sales made through the
+              Point-of-Sale feature are temporarily stored so that when the
+              admin wallet comes back online, payment details can be synced with
+              the user. All Point-of-Sale data is encrypted and can only be
+              accessed by the admin. Data is automatically deleted after 7 days.
+            </li>
+
+            <li>
+              <strong>LNURL Payments:</strong> LNURL payments are temporarily
+              stored until the user opens Blitz, at which point the payment data
+              is deleted from the database and saved locally on the user’s
+              device. This temporary storage is necessary to include payment
+              descriptions.
+            </li>
+          </ul>
+        </div>
+
         <div class="contentSection">
           <h2>Security</h2>
           <p>
@@ -207,29 +308,99 @@
             stored online, Blitz is considered a hot wallet and cannot be
             guaranteed to be 100% secure.
           </p>
-        </div>
-        <div class="contentSection">
-          <h2>Third-Party Links</h2>
           <p>
+            Blitz Wallet never transmits your seed phrase, private keys, or
+            wallet backup to Blitz servers. You are solely responsible for
+            securing and backing up your seed phrase offline. Transactions made
+            through the Bitcoin, or Spark networks are inherently public,
+            meaning wallet addresses and transaction details may be visible on
+            their respective blockchains.
+          </p>
+        </div>
+
+        <div class="contentSection">
+          <h2>Third-Party Links & Services</h2>
+          <p class="mb_p">
             Blitz Wallet links to multiple third-party websites. When you click
             on a link, you will be redirected to their page. Blitz Wallet does
             not control these websites. It is recommended that you read their
             Privacy Policies. Blitz Wallet assumes no responsibility for the
             content or practices of these third-party sites.
           </p>
+          <p class="mb_p">
+            The Blitz Wallet App uses the following third-party services:
+          </p>
+          <ul class="mb_p">
+            <li>
+              Boltz API – to facilitate swaps between Roostock and Lightning (<a
+                href="https://boltz.exchange/privacy"
+                target="_blank"
+                >Privacy Policy</a
+              >)
+            </li>
+            <li>
+              The Bitcoin Company – to purchase Gift cards (<a
+                href="https://thebitcoincompany.com/privacy.html"
+                target="_blank"
+                >Privacy Policy</a
+              >)
+            </li>
+            <li>
+              LNVPN – to purchase VPNs, eSIMS, cards (<a
+                href="https://lnvpn.net/"
+                target="_blank"
+                >Website</a
+              >)
+            </li>
+            <li>
+              sms4Sats – to send and receive SMS numbers anonymously (<a
+                href="https://sms4sats.com/"
+                target="_blank"
+                >Website</a
+              >)
+            </li>
+            <li>
+              Apple Push Notification service (APNs) – to deliver push
+              notifications
+            </li>
+            <li>
+              Google Firebase Cloud Messaging (FCM) – to deliver push
+              notifications (<a
+                href="https://firebase.google.com/support/privacy"
+                target="_blank"
+                >Privacy Policy</a
+              >)
+            </li>
+            <li>
+              Spark – required for sending and receiving Lightning payments.
+              Because payments are coordinated through Spark, your transactions
+              should not be considered private. Spark may have access to certain
+              transaction data as part of providing this service. If Spark's
+              services are unavailable, users may need to perform a unilateral
+              exit to recover funds. You can learn more here:
+              <a
+                href="https://docs.spark.money/wallet/developer-guide/unilateral-exit"
+                target="_blank"
+              >
+                LightSpark Unilateral Exit Guide </a
+              >.
+            </li>
+          </ul>
         </div>
+
         <div class="contentSection">
           <h2>Application Permissions</h2>
           <h3>Camera Access</h3>
           <p class="permission_p">
-            To scan Lightning payment requests, Blitz requires access to your
-            camera.
+            Blitz requires access to your camera to scan Lightning payment
+            requests, and Blitz contact details.
           </p>
           <h3>Network Access</h3>
           <p class="mb_p">This is necessary for:</p>
           <ul>
             <li>Connection to the Breez SDK</li>
             <li>Connection to Boltz API</li>
+            <li>Connection to Spark</li>
             <li>Linking to third-party sites</li>
           </ul>
           <h3>Microphone</h3>
@@ -249,76 +420,78 @@
             the Google Firebase Cloud Messaging service to fulfill this
             functionality.
           </p>
+          <p>
+            To enable notifications, Blitz Wallet stores a unique push
+            notification token in our database. This token is linked to your
+            device only and is used solely for delivering notifications. It does
+            not contain personal information and cannot be used to identify you.
+            You may disable notifications at any time in your device settings.
+          </p>
         </div>
+
+        <div class="contentSection">
+          <h2>Changes to this Privacy Policy</h2>
+          <p>
+            We may update our Privacy Policy from time to time. Any changes will
+            be posted on this page with a revised “Last Updated” date. We
+            encourage you to review this Privacy Policy periodically to stay
+            informed.
+          </p>
+        </div>
+
         <div class="contentSection">
           <h2>Contact Us</h2>
           <p>
             If you have any questions regarding our Privacy Policy, please
-            contact us.
+            contact us using the Contact form under the contact section of our
+            website.
           </p>
         </div>
       </section>
-
-      <footer>
-        <div class="top">
-          <div class="text">
-            <h2>Blitz Wallet.</h2>
-            <p>
-              A self-custodial Bitcoin Lightning, Liquid, and eCash wallet
-              aiming to simplify payments on the Bitcoin Network.
-            </p>
-          </div>
-          <div class="listItems">
-            <div class="list">
-              <h3>Company</h3>
-              <ul>
-                <li><a href="/pages/about/">About</a></li>
-                <li><a href="/pages/contact/">Contact</a></li>
-
-                <li><a href="/pages/blog/">Blog</a></li>
-              </ul>
-            </div>
-            <div class="list">
-              <h3>Social Media</h3>
-              <ul>
-                <li>
-                  <a href="https://github.com/BlitzWallet/BlitzWallet"
-                    >GitHub</a
-                  >
-                </li>
-                <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
-                <li>
-                  <a href="https://youtube.com/@BlitzWalletApp">YouTube</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div class="content">
-          <div class="privcyContent">
-            <a href="/pages/privacyPolicy/">Privacy Policy</a>
-            <a href="/pages/terms/">Terms of Usage</a>
-            <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
-              >License</a
-            >
-          </div>
-          <p>&copy;2023 Blitz Wallet LLC.</p>
-        </div>
-      </footer>
     </main>
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            The simplest self-custodial Bitcoin Lightning wallet—send, spend,
+            and accept BTC. Now in beta—use only what you're willing to lose.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
 
-      gtag("config", "G-WNRJ7Y4RVE");
-    </script>
+              <li><a href="/pages/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
+              </li>
+              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
+              <li>
+                <a href="https://youtube.com/@BlitzWalletApp">YouTube</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          <a href="/pages/terms/">Terms of Usage</a>
+          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
+            >License</a
+          >
+        </div>
+        <p>&copy;2023 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
   </body>
 </html>

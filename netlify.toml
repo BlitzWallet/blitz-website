@@ -4,6 +4,14 @@
 [functions]
   "*" = { timeout = 20 } # Increase timeout limit
 
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Prevent clickjacking
+    Content-Security-Policy = "frame-ancestors 'none';"
+    X-Frame-Options = "DENY"
+
+
 
 # Main redirection for user profiles
 [[redirects]]

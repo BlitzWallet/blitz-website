@@ -34,16 +34,16 @@ export async function handler(event, context) {
     />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:image" content="https://blitz-wallet.com/public/twitterCard.png" />
+    <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCard.png" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://blitz-wallet.com/u/${username}" />
+    <meta property="og:url" content="https://blitzwalletapp.com/u/${username}" />
     <meta property="og:title" content="Blitz Wallet | ${username}" />
     <meta property="og:description" content="Blitz Wallet is a self-custodial Bitcoin wallet that lets you make payments with friends, spend Bitcoin at stores, and simplifies Bitcoin payments. Download the IOS or Android app today." />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://blitz-wallet.com/public/twitterCard.png">
-    <meta property="twitter:url" content="https://blitz-wallet.com/u/${username}" />
+    <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCard.png">
+    <meta property="twitter:url" content="https://blitzwalletapp.com/u/${username}" />
     <meta property="twitter:title" content="Blitz Wallet | ${username}" />
     <meta property="twitter:description" content="Blitz Wallet is a self-custodial Bitcoin wallet that lets you make payments with friends, spend Bitcoin at stores, and simplifies Bitcoin payments. Check out ${username} on Blitz Wallet." />
     
@@ -52,7 +52,7 @@ export async function handler(event, context) {
     <meta property="og:title" content="${username}" />
     <meta property="og:site_name" content="Blitz Wallet" />
     <meta property="og:description" content="Check out ${username} on Blitz Wallet." />
-    <meta property="og:url" content="https://blitz-wallet.com/u/${username}" />
+    <meta property="og:url" content="https://blitzwalletapp.com/u/${username}" />
 
     <meta name="robots" content="index,nofollow"> 
     <meta name="googlebot" content="noindex,nofollow">

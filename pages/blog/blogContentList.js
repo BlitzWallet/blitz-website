@@ -2,13 +2,102 @@
 
 export const postList = [
   {
+    type: "Learn", // Can be "Release", "Learn", or "Podcast"
+    title: "Day 4 of 14: Anonymous SMS with Blitz Wallet",
+    description:
+      "Discover Blitz Wallet’s Anonymous SMS feature powered by sms4sats. Send and receive private texts without using your personal number.",
+    htmlPageLink: "./anonymous-sms-with-blitz",
+    searchName: "anonymous-sms-with-blitz",
+    readingLengthEST: 2, //In minutes
+    time: "1759061600000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Learn", // Can be "Release", "Learn", or "Podcast"
+    title: "Day 3/14: Privacy On the Go – VPN Access with Bitcoin",
+    description:
+      "Protect your privacy with Blitz Wallet’s VPN integration via LNVPN. For the first time, you can buy VPN access directly with Bitcoin — pay by the hour or the quarter, no subscriptions, no hassle.",
+    htmlPageLink: "./vpn-access-with-bitcoin",
+    searchName: "vpn-access-with-bitcoin",
+    readingLengthEST: 2, //In minutes
+    time: "1758974845000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Learn", // Can be "Release", "Learn", or "Podcast"
+    title: "Day 2/14: Send Gift Cards to Contacts",
+    description:
+      "Send gift cards to friends instantly — no codes, no emails, just wallet-to-phone. A first in Bitcoin wallets with Blitz.",
+    htmlPageLink: "./send-gifts-to-contacts",
+    searchName: "send-gifts-to-contacts",
+    readingLengthEST: 2, //In minutes
+    time: "1758874845000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Learn", // Can be "Release", "Learn", or "Podcast"
+    title: "Day 1/14: Gift Cards in Seconds",
+    description:
+      "Turn your Bitcoin into real-world spending power instantly. With Blitz Wallet’s integration with the Bitcoin Company, you can buy gift cards in seconds—no exchanges, no middlemen, just seamless Bitcoin spending.",
+    htmlPageLink: "./gift-cards-in-seconds",
+    searchName: "gift-cards-in-seconds",
+    readingLengthEST: 2, //In minutes
+    time: "1758774845000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Learn", // Can be "Release", "Learn", or "Podcast"
+    title: "What is Spark",
+    description: "Learn about the technology powering Blitz Wallet!",
+    htmlPageLink: "./what-is-spark",
+    searchName: "what-is-spark",
+    readingLengthEST: 4, //In minutes
+    time: "1758574845000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Learn", // Can be "Release", "Learn", or "Podcast"
+    title: "How to create a Bitcoin Wallet",
+    description:
+      "Lean how you can start sending and receiving Bitcoin instantly.",
+    htmlPageLink: "./how-to-create-a-bitcoin-wallet",
+    searchName: "how-to-create-a-bitcoin-wallet",
+    readingLengthEST: 3, //In minutes
+    time: "1745537600000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
     type: "Release", // Can be "Release", "Learn", or "Podcast"
     title: "Explore page & Crashlytics",
     description: "Explore Blitz downloads, crash reporting & more!",
     htmlPageLink: "./explore-blitz",
     searchName: "explore-blitz",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 4, //In minutes
     time: "1745237600000",
     author: "Blitz Team",
@@ -25,7 +114,7 @@ export const postList = [
     htmlPageLink: "./eCash-pos",
     searchName: "eCash-pos",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 4, //In minutes
     time: "1743933891282",
     author: "Blitz Team",
@@ -42,7 +131,7 @@ export const postList = [
     htmlPageLink: "./power-up",
     searchName: "power-up",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 4, //In minutes
     time: "1742057210850",
     author: "Blitz Team",
@@ -59,7 +148,7 @@ export const postList = [
     htmlPageLink: "./self-custodial-wallet",
     searchName: "self-custodial-wallet",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 7, //In minutes
     time: "1741611775672",
     author: "Destiny Smart",
@@ -77,7 +166,7 @@ export const postList = [
     htmlPageLink: "./efficiency-update",
     searchName: "efficiency-update",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 2, //In minutes
     time: "1740237953923",
     author: "Blitz Team",
@@ -94,7 +183,7 @@ export const postList = [
     htmlPageLink: "./bridge-update",
     searchName: "bridge-update",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 2, //In minutes
     time: "1737590535347",
     author: "Blitz Team",
@@ -111,7 +200,7 @@ export const postList = [
     htmlPageLink: "./introducing-blitz-wallet",
     searchName: "introducing-blitz-wallet",
     pageMetaDescription:
-      "Blitz Wallet is a fully open-source Bitcoin Lightning, Liquid, and eCash wallet that merges the fast capabilities of the Lightning Network with the security of self-custodial management at a price unmatched by competitors.",
+      "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 5, //In minutes
     time: "1736994574819", // January 8, 2025
     author: "Blitz Team",

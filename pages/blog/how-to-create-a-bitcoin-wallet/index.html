@@ -3,57 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Primary Meta Tags -->
-    <title>
-      Blitz Wallet Update – eCash offline claim improvements, downloads Tracking
-      & BOLT12 Pay Support
-    </title>
-    <meta
-      name="title"
-      content="Blitz Wallet Update – eCash offline claim improvements, downloads Tracking & BOLT12 Pay Support"
-    />
-    <meta
-      name="description"
-      content="This Blitz Wallet release introduces eCash offline claim improvements, BOLT12 pay support from Liquid, Blink QR integration, and a new Social Tracking feature to see Blitz’s user growth."
-    />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://blitzwalletapp.com/pages/blog/explore-blitz/"
-    />
-    <meta
-      property="og:title"
-      content="Blitz Wallet Update – eCash offline claim improvements, downloads Tracking & BOLT12 Pay Support"
-    />
-    <meta
-      property="og:description"
-      content="This Blitz Wallet release introduces eCash offline claim improvements, BOLT12 pay support from Liquid, Blink QR integration, and a new Social Tracking feature to see Blitz’s user growth."
-    />
-    <meta property="og:image"
-    content=https://blitzwalletapp.com/public/twitterCard.png />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta
-      property="twitter:image"
-      content="https://blitzwalletapp.com/public/twitterCard.png"
-    />
-    <meta
-      property="twitter:url"
-      content="https://blitzwalletapp.com/pages/blog/explore-blitz/"
-    />
-    <meta
-      property="twitter:title"
-      content="Blitz Wallet Update – eCash offline claim improvements, downloads Tracking & BOLT12 Pay Support"
-    />
-    <meta
-      property="twitter:description"
-      content="This Blitz Wallet release introduces eCash offline claim improvements, BOLT12 pay support from Liquid, Blink QR integration, and a new Social Tracking feature to see Blitz’s user growth."
-    />
-
-    <!-- Favicon -->
+    <title>Blitz Wallet |How to create a Bitcoin Wallet</title>
+    <!-- Title is Pulled in from javascript -->
 
     <link
       rel="icon"
@@ -99,7 +50,7 @@
     <!-- download modal -->
     <div class="modalContainer">
       <div class="modal">
-        <h2>Download Blitz Wallet</h2>
+        <h2>Download Blitz Wallet (beta)</h2>
         <div class="downloadTypeInModal">
           <p class="selectorItem IOS active">App Store</p>
           <p class="selectorItem Android">Play Store</p>
@@ -188,19 +139,22 @@
             />
             <h2 class="downloadText">Download now</h2>
           </div>
+          <div>
+            <p class="warningText">
+              Blitz Wallet is currently in beta testing.
+            </p>
+            <p class="warningText">Use amounts you are willing to lose</p>
+          </div>
         </div>
       </div>
     </div>
     <section class="blogContentContainer">
       <div class="postHead">
         <h1 id="blogTitle">
-          Blitz Wallet Update – eCash offline claim improvements, downloads
-          Tracking & BOLT12 Pay Support
+          <!-- Pulled in from javascript -->
         </h1>
         <p id="blogSubHeader">
-          This Blitz Wallet release introduces eCash offline claim improvements,
-          BOLT12 pay support from Liquid, Blink QR integration, and a new Social
-          Tracking feature to see Blitz’s user growth.
+          <!-- Pulled in from javascript -->
         </p>
         <div class="postDataContainerOuter">
           <div class="imageContainer">
@@ -229,93 +183,126 @@
       </div>
 
       <section id="postBody">
+        <!-- THIS IS WHERE BLOG POST CONTENT GOES -->
         <p>
-          We’ve been hard at work preparing Blitz Wallet for its official
-          release. This latest update fixes minor bugs found during testing,
-          includes small improvements, and enhances crash analytics, allowing us
-          to more easily maintain the application.
+          Creating a Bitcoin wallet is as simple as downloading an app on your
+          phone or computer. Once installed, your wallet is ready to go. You can
+          start receiving, securely storing, and spending Bitcoin right away,
+          including fast Lightning Network payments.
         </p>
-        <p>Here’s everything that’s new:</p>
 
-        <h2>Improved eCash offline claiming payment security.</h2>
-        <p>
-          Since our mission is to become the simplest Bitcoin Lightning wallet,
-          we need to ensure users are protected from the loss of funds. With
-          this update, we’ve introduced key changes to prevent duplicate
-          payments and improve eCash offline claiming.
-        </p>
+        <h2>Which Bitcoin wallet should I choose?</h2>
+        <p>There are many wallet options out there:</p>
         <ul>
           <li>
-            <strong> No More Duplicate Payments: </strong>You can now rest easy
-            knowing eCash transactions can’t be paid twice. Every eCash
-            transaction now tracks the associated invoice, and a new
-            hasAlreadyPaidInvoice check ensures an invoice can't be reused.
-            Previously, the app didn’t track invoice data, which made it
-            impossible to prevent double-spending. That’s now fully resolved.
+            Software wallets: Applications that can be downloaded for free to
+            your phone or desktop.
           </li>
           <li>
-            <strong>Improved Background Invoice Handling:</strong> If you’ve
-            ever started an eCash quote but didn’t finish paying before Blitz's
-            internal check timeout expired, the app used to try claiming it
-            during the next wallet load—using the wrong proof index. We’ve fixed
-            this so offline paid eCash invoices can be properly claimed.
-          </li>
-        </ul>
-        <h2>Upgraded Payment Experience</h2>
-        <p>
-          Sending and receiving sats should be simple, seamless, and fast. We’ve
-          made several improvements across the board.
-        </p>
-        <ul>
-          <li>
-            <strong>BOLT12 Pay Support from Liquid:</strong> You can now send to
-            BOLT12 invoices directly from your Liquid balance.
+            Hardware wallets: Physical devices designed for storing Bitcoin.
+            They offer the best security because they are not connected to the
+            Internet.
           </li>
           <li>
-            <strong>Blink QR Code Support:</strong> Blink QR codes can now be
-            paid directly inside Blitz with LNURL-pay support, mo more getting
-            kicked out to a web browser: scan, confirm, and pay.
+            Exchange wallets: These are custodial wallets often provided by an
+            exchange to make buying and selling easy.
           </li>
           <li>
-            <strong>Lower Limits for Lightning-to-Liquid Swaps:</strong> The
-            minimum receive amount for Lightning-to-Liquid payments has been
-            reduced to just 100 sats, making smaller swaps more accessible than
-            ever.
+            Paper wallets: Printing your public and private keys onto paper for
+            offline storage.
           </li>
         </ul>
 
-        <h2>App Enhancements & New Features</h2>
+        <h3>Software wallets</h3>
+        <p>
+          Software wallets, particularly mobile Lightning-enabled ones, are
+          ideal for everyday Bitcoin use—like buying, selling, storing, trading,
+          or zapping sats via Lightning. They're free apps you download to your
+          phone or desktop, letting you transact Bitcoin immediately after
+          setup.
+        </p>
+        <p>
+          Because a user's private keys are stored on the device and devices are
+          connected to the internet, software wallets are considered "hot
+          wallets." These wallets should avoid storing huge amounts of Bitcoin
+          long-term. But with strong PINs, they're plenty safe for regular
+          activity. The biggest risk? Losing access to your private keys (your
+          wallet's "password"), so always back them up securely.
+        </p>
+
+        <h3>Hardware wallets</h3>
+        <p>
+          For serious long-term Bitcoin holders, hardware wallets are the
+          ultimate secure choice. These physical devices (cold wallets) keep
+          your keys offline, making them nearly impossible to hack remotely.
+        </p>
+        <p>
+          They're perfect for HODLing large Bitcoin stacks but less convenient
+          for frequent Lightning payments, as you'll need to connect them to a
+          software interface. Still, many pair well with Lightning apps for
+          occasional on-chain funding.
+        </p>
+
+        <h3>Centralized exchange wallets</h3>
+        <p>
+          Centralized exchanges (CEXs) like Coinbase or Binance offer built-in
+          wallets that are great entry points for beginners, especially for
+          fiat-to-Bitcoin trades. They're user-friendly but come with big
+          caveats: the exchange controls your keys, exposing you to hacks,
+          outages, or even bankruptcy (like FTX).
+        </p>
+        <p>
+          You can't freely use Lightning here, and withdrawals often involve
+          delays and fees. Use CEX wallets just for quick buys, then move your
+          Bitcoin to a self-custodial Lightning wallet like Blitz for real
+          control and fast spending.
+        </p>
+
+        <h3>Paper wallets</h3>
+        <p>
+          Paper wallets provide secure, offline storage for Bitcoin by printing
+          your public and private keys on—well, paper.
+        </p>
+        <p>
+          To create one: download trusted offline software, generate a key pair,
+          print it, and fund the address. But for Lightning, this isn't ideal,
+          as it requires sweeping funds to a hot wallet first. Best for on-chain
+          storage, not daily use.
+        </p>
+
+        <h2>How do I create a Bitcoin wallet?</h2>
+        <p>
+          Now that you know what types of Bitcoin wallets exist, which is the
+          best option for you?
+        </p>
+        <p>
+          Generally, most people will use software wallets. Fortunately, one of
+          the easiest ways to get started is by using Blitz Wallet. Trusted by
+          thousands of users, Blitz is a self-custodial wallet that puts you in
+          full control of your Bitcoin. It supports seamless Lightning payments
+          for instant, low-fee transactions, with support to send on-chain if
+          your balance grows.
+        </p>
+
+        <h2>Start zapping with Blitz Wallet</h2>
+        <p>
+          Everything you need for self-custodial Bitcoin and Lightning in one
+          app. Download now:
+        </p>
         <ul>
           <li>
-            <strong>Swipe to Sync:</strong> You can now manually trigger a node
-            sync just by swiping up on the wallet home screen. Simple,
-            intuitive, and always under your control.
+            <a href="https://testflight.apple.com/join/r8MfbNa6"
+              >Apple App Store</a
+            >
           </li>
           <li>
-            <strong>Introducing Blitz Social Tracking:</strong> Curious how many
-            others are using Blitz? Head to settings to find our new Blitz
-            Social section. It shows real-time download stats and user growth as
-            a small way to feel the pulse of the Blitz community.
-          </li>
-          <li>
-            <strong>Crash Reporting with Privacy Control:</strong> We’ve
-            integrated Crashlytics to help track bugs and improve stability.
-            There’s a new settings toggle to opt-in or out of crash reporting
-            for total privacy.
-          </li>
-          <li>
-            <strong>Improved Half-Modal Popups:</strong> Popups can now be
-            dismissed more naturally—either tap outside or swipe down. This also
-            fixes a bug where users could accidentally close the modal without
-            meaning to.
+            <a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              >Google Play Store</a
+            >
           </li>
         </ul>
-
-        <h2>Bug Fixes & Stability</h2>
-        <p>
-          As always, this update includes a round of bug fixes and performance
-          improvements to keep your wallet running smoothly.
-        </p>
+        <p>Join the movement today!</p>
 
         <p>Best,</p>
         <p>Blitz Team</p>
@@ -328,7 +315,7 @@
           <h2>Blitz Wallet.</h2>
           <p>
             The simplest self-custodial Bitcoin Lightning wallet—send, spend,
-            and accept BTC.
+            and accept BTC. Now in beta—use only what you're willing to lose.
           </p>
         </div>
         <div class="listItems">

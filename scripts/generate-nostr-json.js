@@ -17,7 +17,7 @@ const defaultRelays = [
 ];
 
 const url = "https://handlenip5verification-6krimtymjq-uc.a.run.app";
-const savedData = "https://blitz-wallet.com/.well-known/nostr.json";
+const savedData = "https://blitzwalletapp.com/.well-known/nostr.json";
 async function generate() {
   try {
     const [res, nostrJSONFile] = await Promise.all([
