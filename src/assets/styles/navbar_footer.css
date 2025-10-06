@@ -59,6 +59,7 @@ nav .mobile {
   height: 40px;
   cursor: pointer;
   margin-left: auto;
+  padding: 5px;
 }
 
 .mobileNavDropdown {
@@ -95,7 +96,7 @@ nav .mobile {
   margin: 50px 0;
 }
 .mobileNavDropdown .navItems {
-  height: calc(100dvh / 2);
+  height: fit-content;
   min-height: 200px;
   flex-direction: column;
   margin: auto 0;
