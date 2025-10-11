@@ -51,7 +51,8 @@
     "Emx2008": "66baf3daf05a6955f8600df3facf075bf345b42776418d72d0bd207685a0a9ed",
     "user": "4a04ebbd9df127a2244c2e1ed6f25457c3934df5fcd15b92ee9555fd216e197f",
     "Bitcanario": "96fc29f376460d0402ceb3fee2d6f3264c8be36604d60d0e4139915cf14c6ba6",
-    "anthonyaccioly": "ee9d979e7e1418a9f7472baf82dc96082a0d4251b77bcb170a6ecec93fadff64"
+    "anthonyaccioly": "ee9d979e7e1418a9f7472baf82dc96082a0d4251b77bcb170a6ecec93fadff64",
+    "ponymontana": "3d03c53608415b1d718c7786ee10bdb4e67bced32207e32880ee9e44301a19ec"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -463,6 +464,14 @@
       "wss://relay.primal.net"
     ],
     "ee9d979e7e1418a9f7472baf82dc96082a0d4251b77bcb170a6ecec93fadff64": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "3d03c53608415b1d718c7786ee10bdb4e67bced32207e32880ee9e44301a19ec": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
