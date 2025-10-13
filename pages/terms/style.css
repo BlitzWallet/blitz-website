@@ -36,12 +36,15 @@ h3 {
 }
 
 .policyContent .contentSection ul {
-  height: 90px;
-  width: 98%;
-  list-style: none;
+  width: 95%;
+  /* list-style: ; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   margin-bottom: 30px;
   margin-left: auto;
+  line-height: 2rem;
+}
+.policyContent .contentSection ul li {
+  line-height: 2rem;
 }
