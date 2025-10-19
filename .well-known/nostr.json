@@ -55,7 +55,10 @@
     "ponymontana": "3d03c53608415b1d718c7786ee10bdb4e67bced32207e32880ee9e44301a19ec",
     "wormxcore": "947651813c94de221197f7339c745dbc039b494d2a849e23fb685d143fd81a27",
     "riham": "c25096a254edf5843da4c3308b274024a00cae04cf4cd1d8ecdc5c83b97a41a8",
-    "errant": "43b8cd4972f7248d0321bed50528f23c1823a0d8614d82cd3344f2433e4a7831"
+    "errant": "43b8cd4972f7248d0321bed50528f23c1823a0d8614d82cd3344f2433e4a7831",
+    "idsera": "619af6a60b3fe4c733aaca061c522cc9c7cf1d87ef4c908facc5ed936d3bdf23",
+    "Johann": "2b9b7519e71252eaa818edd60d12fe309bd2b0e0cfe288725d2a3b01c3cd59fe",
+    "bsn21m": "ffb2617726ed493cdc9f360edac1a1ba5c7a4e512359f60bcc63cd39c0baf4ce"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -499,6 +502,30 @@
       "wss://relay.primal.net"
     ],
     "43b8cd4972f7248d0321bed50528f23c1823a0d8614d82cd3344f2433e4a7831": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "619af6a60b3fe4c733aaca061c522cc9c7cf1d87ef4c908facc5ed936d3bdf23": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "2b9b7519e71252eaa818edd60d12fe309bd2b0e0cfe288725d2a3b01c3cd59fe": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "ffb2617726ed493cdc9f360edac1a1ba5c7a4e512359f60bcc63cd39c0baf4ce": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
