@@ -4,6 +4,19 @@
 [functions]
   "*" = { timeout = 20 } # Increase timeout limit
 
+
+[[headers]]
+  for = "/health"
+  [headers.values]
+    Cache-Control = "no-store, no-cache, must-revalidate"
+    Content-Type = "text/plain"
+
+[[redirects]]
+  from = "/health"
+  to = "/200.html"
+  status = 200
+  force = true
+
 [[headers]]
   for = "/.well-known/apple-app-site-association"
   [headers.values]
