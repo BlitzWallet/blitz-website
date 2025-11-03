@@ -61,7 +61,8 @@
     "Gahtzhu": "187b65e495d4ccbadd768203e8973d78943b06bb53896a309aee535a0e71e442",
     "LSULaw": "13c874759672e294bbed24553b12047c91860bbf7bbd1f95cd54bed379251505",
     "Satoshi": "be5ad7960ca5a3499197477d58e2f34e2164a21bdd8221c84680e311c8586c96",
-    "pepesan": "e80f10ffcdb307f4b3d59f09848234bb590e1a66fd474a50d1c939672c4b6dd7"
+    "pepesan": "e80f10ffcdb307f4b3d59f09848234bb590e1a66fd474a50d1c939672c4b6dd7",
+    "ecszk": "c7c05979335b456df24e80e2acd099d6dc57cc617b651c8fa546f6110afe96b6"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -553,6 +554,14 @@
       "wss://relay.primal.net"
     ],
     "e80f10ffcdb307f4b3d59f09848234bb590e1a66fd474a50d1c939672c4b6dd7": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "c7c05979335b456df24e80e2acd099d6dc57cc617b651c8fa546f6110afe96b6": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
