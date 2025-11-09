@@ -81,6 +81,12 @@
 
   column-gap: 20px;
 }
+#webApp .downloadButton {
+  margin-right: unset;
+}
+#webApp .downloadText {
+  margin-left: unset;
+}
 #webApp button {
   width: 100%;
   max-width: 200px;
