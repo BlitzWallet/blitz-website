@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon links -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+
+    <!-- SEO tags -->
+    <!-- Primary Meta Tags -->
+    <title>
+      The simplest self-custodial Bitcoin Lightning wallet—send, spend, and
+      accept BTC.
+    </title>
+    <meta
+      name="title"
+      content="The simplest self-custodial Bitcoin Lightning wallet—send, spend, and accept BTC."
+    />
+    <meta
+      name="description"
+      content="Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blitzwalletapp.com/" />
+    <meta
+      property="og:title"
+      content="The simplest self-custodial Bitcoin Lightning wallet—send, spend, and accept BTC."
+    />
+    <meta
+      property="og:description"
+      content="Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends,
+      and spend Bitcoin on gift cards, services, and more."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:url" content="https://blitzwalletapp.com/" />
+    <meta
+      property="twitter:title"
+      content="The simplest self-custodial Bitcoin Lightning wallet—send, spend, and accept BTC."
+    />
+    <meta
+      property="twitter:description"
+      content="Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends,
+      and spend Bitcoin on gift cards, services, and more."
+    />
+
+    <link rel="stylesheet" href="./src/assets/styles/index.css" />
+    <link rel="stylesheet" href="./pages/tips/tips.css" />
+    <link rel="stylesheet" href="./src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="../src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <script src="./src/js/navbar.js" defer></script>
+    <script src="./pages/tips/tips.js" defer></script>
+    <!-- <script src="./src/components/downloadModal/index.js" defer></script> -->
+
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+  </head>
+
+  <body>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <p class="bitzName">Blitz Wallet.</p>
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="./pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="./pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="./pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../src/assets/images/hamburger.svg"
+            alt="Hamburger icon for mobile navigation"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../src/assets/images/xIcon.svg"
+            alt="Close icon for mobile navigation"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavInnerContainer">
+        <div class="mobileNavDropdown-Container">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="buttonsContainer">
+          <div class="downloadButton">
+            <div class="hoverContainer"></div>
+            <img
+              src="/src/assets/images/apple.svg"
+              alt="Apple app store icon"
+            />
+            <div class="seperator"></div>
+            <img
+              src="/src/assets/images/google-play.svg"
+              alt="Google Playstore icon"
+            />
+            <h2 class="downloadText">Download now</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+      <div class="modalContainer">
+        <div class="modal">
+          <h2>Download Blitz Wallet</h2>
+          <div class="downloadTypeInModal">
+            <p class="selectorItem IOS active">App Store</p>
+            <p class="selectorItem Android">Play Store</p>
+          </div>
+
+          <div class="qr-container">
+            <div id="qr-code"></div>
+          </div>
+          <p>Scan with your mobile device</p>
+        </div>
+      </div>
+
+      <div class="tipsContainer">
+        <!-- Input Screen -->
+        <div class="input-screen" id="input-screen">
+          <h1 class="title">Pay</h1>
+
+          <div class="profile-section">
+            <div class="avatar-container">
+              <div class="avatar-large avatar" id="avatar">B</div>
+              <span class="username" id="username-display">username</span>
+            </div>
+          </div>
+
+          <div class="amount-section">
+            <div class="amount-display">
+              <span class="dollar-sign" id="currency-symbol">$</span>
+              <input
+                type="text"
+                class="amount-input"
+                id="amount-input"
+                placeholder="0"
+                inputmode="decimal"
+                value=""
+              />
+            </div>
+          </div>
+
+          <button class="tip-button" id="tip-button">Pay</button>
+          <button class="currency-button" id="currency-button">
+            Switch currency
+          </button>
+
+          <div class="currency-dropdown" id="currency-dropdown">
+            <input
+              type="text"
+              class="currency-search"
+              id="currency-search"
+              placeholder="Search currency..."
+            />
+            <div class="currency-list" id="currency-list"></div>
+          </div>
+        </div>
+
+        <!-- Invoice Screen -->
+        <div class="invoice-screen" id="invoice-screen">
+          <div class="header">
+            <div class="user-info">
+              <div class="avatar" id="invoice-avatar">B</div>
+              <span class="username" id="invoice-username">username</span>
+            </div>
+            <span class="page-title">Tip</span>
+            <div class="amount-badge" id="amount-badge">$0.00</div>
+          </div>
+
+          <div class="qr-container">
+            <div id="invoice-qr-code"></div>
+            <p class="qr-hint">Scan with a Bitcoin Lightning wallet.</p>
+          </div>
+          <p class="reverify-text" id="reverify-text"></p>
+
+          <div class="info-section">
+            <div class="info-row">
+              <span class="info-label">Amount</span>
+              <span class="info-value" id="display-amount">$0.00</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Estimated time</span>
+              <span class="info-value">Instant</span>
+            </div>
+          </div>
+
+          <button class="button" id="copy-button">Copy</button>
+          <button class="button secondary" id="cancel-button">Cancel</button>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            The simplest self-custodial Bitcoin Lightning wallet—send, spend,
+            and accept BTC.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
+              <li><a href="/pages/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
+              </li>
+              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
+              <li>
+                <a href="https://youtube.com/@BlitzWalletApp">YouTube</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="./pages/privacyPolicy/">Privacy Policy</a>
+          <a href="./pages/terms/">Terms of Usage</a>
+          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
+            >License</a
+          >
+        </div>
+        <p>&copy;2025 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>
