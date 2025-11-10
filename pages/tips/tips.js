@@ -635,8 +635,6 @@ function showInvoiceScreen(amount) {
     .querySelectorAll(".qr-container")[1]
     .getBoundingClientRect().width;
 
-  console.log(container);
-
   // Generate QR code
   document.getElementById("invoice-qr-code").innerHTML = "";
   new QRCode(document.getElementById("invoice-qr-code"), {
@@ -667,16 +665,14 @@ function startInvoiceVerification() {
   clearRunningItems();
 
   async function verifyInvoice() {
-    console.log("running", document.hidden);
     if (document.hidden) return; // only run when tab is visible
     try {
       const response = await fetch(verifyURL);
       const data = await response.json();
-      console.log("Verify response:", data);
 
       if (data?.preimage && data.settled) {
         clearRunningItems();
-        showPaidScreen();
+        showPaidScreen("Invoice Paid");
         return;
       }
     } catch (err) {
@@ -700,9 +696,9 @@ function startInvoiceVerification() {
   }, 1000);
 
   verifyInterval = setInterval(() => {
-    if (elapsed >= maxDuration) {
-      reverifyText.textContent = "Stopped verifying (time limit reached)";
-      clearInterval(verifyInterval);
+    if (elapsed <= maxDuration) {
+      clearRunningItems();
+      showPaidScreen("Stopped verifying (time limit reached)");
       return;
     }
     nextQueryCountdown = 10;
@@ -711,12 +707,12 @@ function startInvoiceVerification() {
 
   // Hard stop at 5 minutes
   verifyTimeout = setTimeout(() => {
-    clearInterval(verifyInterval);
-    reverifyText.textContent = "Stopped verifying (5 minutes elapsed)";
+    clearRunningItems();
+    showPaidScreen("Stopped verifying (time limit reached)");
   }, maxDuration * 1000);
 }
 
-function showPaidScreen() {
+function showPaidScreen(message) {
   const qrContainer = document.querySelectorAll(".qr-container")[1];
   const verifyText = document.getElementById("reverify-text");
   const cancelBTN = document.getElementById("cancel-button");
@@ -724,7 +720,7 @@ function showPaidScreen() {
   document.querySelector(".info-section").style.display = "none";
   document.getElementById("copy-button").style.display = "none";
   document.getElementById("cancel-button").textContent = "Pay again";
-  verifyText.textContent = "Invoice Paid";
+  verifyText.textContent = message;
   verifyText.classList.add("invoice-paid");
   cancelBTN.classList.remove("secondary");
   qrContainer.style.display = "none";
