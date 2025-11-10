@@ -753,6 +753,7 @@ document.getElementById("cancel-button").addEventListener("click", () => {
   tipButton.disabled = false;
   amountInput.value = "";
   tipButton.classList.remove("active");
+  scaleFontSize();
 });
 
 // Initialize
