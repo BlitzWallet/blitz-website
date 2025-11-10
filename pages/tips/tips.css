@@ -128,7 +128,7 @@ main {
 }
 
 .info-label {
-  color: #999;
+  color: white;
   font-size: 14px;
 }
 
@@ -244,14 +244,14 @@ main {
 }
 
 .amount-input::placeholder {
-  color: #3a3a3a;
+  color: #979797;
 }
 
 .tip-button {
   width: 100%;
   padding: 18px 32px;
   background: var(--dm-background);
-  color: #666;
+  color: #979797;
   border: none;
   border-radius: 12px;
   font-size: 18px;
