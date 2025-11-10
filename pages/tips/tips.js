@@ -696,7 +696,7 @@ function startInvoiceVerification() {
   }, 1000);
 
   verifyInterval = setInterval(() => {
-    if (elapsed <= maxDuration) {
+    if (elapsed >= maxDuration) {
       clearRunningItems();
       showPaidScreen("Stopped verifying (time limit reached)");
       return;
