@@ -755,7 +755,7 @@ document.getElementById("cancel-button").addEventListener("click", () => {
   document.getElementById("invoice-screen").classList.remove("active");
   tipButton.textContent = "Pay";
   tipButton.disabled = false;
-  amountInput.value = "0";
+  amountInput.value = "";
   tipButton.classList.remove("active");
 });
 
