@@ -2,8 +2,7 @@
   functions = "netlify"
   
 [functions]
-  "*" = { timeout = 20 } # Increase timeout limit
-
+  "*" = { timeout = 20 }
 
 [[headers]]
   for = "/health"
@@ -38,20 +37,16 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    # Prevent clickjacking
     Content-Security-Policy = "frame-ancestors 'none';"
     X-Frame-Options = "DENY"
-
-
 
 # Main redirection for user profiles
 [[redirects]]
   from = "/u/:username"
   to = "/.netlify/functions/dynamic-profile"
   status = 200
-  
-  
-# Ensure favicon files are properly accessible
+
+# Favicon redirects
 [[redirects]]
   from = "/favicon.ico"
   to = "/public/favicon/favicon.ico"
@@ -76,7 +71,7 @@
   from = "/site.webmanifest"
   to = "/public/favicon/site.webmanifest"
   status = 200
-  
+
 # Handle static assets
 [[redirects]]
   from = "/public/*"
@@ -97,7 +92,8 @@
   from = "/u/index.css"
   to = "/u/index.css"
   status = 200
-  
+
+# LNURL redirects
 [[redirects]]
   from = "/.well-known/lnurlp/:username"
   to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app/:username"
@@ -115,3 +111,17 @@
   to = "https://verifylnurlinvoice-6krimtymjq-uc.a.run.app/:sparkIDCode"
   status = 200
   force = true
+
+
+[[redirects]]
+  from = "/getInvoice"
+  to = "http://127.0.0.1:5001/blitz-wallet-82b39/us-central1/getInvoiceForTipFeature"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/:username"
+  to = "/tips_page.html"
+  status = 200
