@@ -380,7 +380,6 @@ let currentInvoice = "";
 let verifyURL = "";
 
 let verifyInterval = null;
-let countdownInterval = null;
 let verifyTimeout = null;
 
 // Extract username from URL
@@ -649,67 +648,89 @@ function showInvoiceScreen(amount) {
 }
 
 function clearRunningItems() {
-  if (verifyInterval) clearInterval(verifyInterval);
-  if (verifyTimeout) clearTimeout(verifyTimeout);
-  if (countdownInterval) clearInterval(countdownInterval);
+  if (verifyInterval) {
+    clearInterval(verifyInterval);
+    verifyInterval = null;
+  }
+  if (verifyTimeout) {
+    clearTimeout(verifyTimeout);
+    verifyTimeout = null;
+  }
 }
 
 function startInvoiceVerification() {
   const reverifyText = document.getElementById("reverify-text");
   const maxTime = document.getElementById("amount-badge");
   const maxDuration = 5 * 60; // 5 minutes in seconds
-  let nextQueryCountdown = 10;
-  let elapsed = 0;
+  const startTime = Date.now();
+  let nextCheckTime = Date.now() + 10000; // First check in 10s
 
-  // Clear any existing interval
   clearRunningItems();
 
   async function verifyInvoice() {
-    if (document.hidden) return; // only run when tab is visible
+    if (document.hidden) return;
+
     try {
       const response = await fetch(verifyURL);
       const data = await response.json();
+      console.log(data);
 
       if (data?.preimage && data.settled) {
-        clearRunningItems();
-        showPaidScreen("Invoice Paid");
-        return;
+        stopVerification("Invoice Paid");
+        return true;
       }
     } catch (err) {
       console.warn("Verification failed:", err);
     }
+    return false;
   }
 
-  function updateCountdown() {
-    reverifyText.textContent = `Reverifying if invoice is paid (${nextQueryCountdown}s)`;
-    maxTime.textContent = formatTime(maxDuration - elapsed);
-  }
+  function updateDisplay() {
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+    const remaining = Math.max(0, maxDuration - elapsed);
+    const countdown = Math.max(
+      0,
+      Math.ceil((nextCheckTime - Date.now()) / 1000)
+    );
 
-  // Run immediately, then every 10 s
-  verifyInvoice();
-  updateCountdown();
+    reverifyText.textContent = `Reverifying if invoice is paid (${countdown}s)`;
+    maxTime.textContent = formatTime(remaining);
 
-  countdownInterval = setInterval(() => {
-    nextQueryCountdown -= 1;
-    elapsed += 1;
-    updateCountdown();
-  }, 1000);
-
-  verifyInterval = setInterval(() => {
-    if (elapsed >= maxDuration) {
-      clearRunningItems();
-      showPaidScreen("Stopped verifying (time limit reached)");
-      return;
+    if (remaining <= 0) {
+      stopVerification("Stopped verifying (time limit reached)");
     }
-    nextQueryCountdown = 10;
-    verifyInvoice();
-  }, 10000);
+  }
 
-  // Hard stop at 5 minutes
-  verifyTimeout = setTimeout(() => {
+  function stopVerification(message) {
     clearRunningItems();
-    showPaidScreen("Stopped verifying (time limit reached)");
+    showPaidScreen(message);
+  }
+
+  verifyInterval = setInterval(updateDisplay, 1000);
+  updateDisplay();
+
+  verifyTimeout = setTimeout(() => {
+    stopVerification("Stopped verifying (time limit reached)");
   }, maxDuration * 1000);
+
+  // Main verification loop
+  async function checkLoop() {
+    while (true) {
+      const now = Date.now();
+
+      if (now >= nextCheckTime) {
+        const isPaid = await verifyInvoice();
+        if (isPaid) return;
+        nextCheckTime = Date.now() + 10000;
+      }
+
+      await new Promise((res) => setTimeout(res, 1000));
+
+      if (!verifyInterval) return;
+    }
+  }
+
+  checkLoop();
 }
 
 function showPaidScreen(message) {
