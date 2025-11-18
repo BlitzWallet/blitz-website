@@ -231,9 +231,8 @@ export async function handler(event, context) {
         const expiresDate = new Date(giftData.expireTime).toLocaleDateString();
 
         container.innerHTML = \`
-          <div class="gift-icon"><img style="width: 80px" src='http://localhost:8888/src/assets/images/giftBlue.png'/></div>
           <h1 class="gift-title">Bitcoin Gift Card</h1>
-          <div class="gift-amount">\${giftData.amount.toLocaleString()} sats</div>
+          <div class="gift-amount">\u20BF\${giftData.amount.toLocaleString()}</div>
           \${giftData.description ? \`<p class="gift-description">\${giftData.description}</p>\` : ''}
           
           <div class="info-grid">
