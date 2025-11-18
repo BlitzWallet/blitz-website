@@ -257,7 +257,7 @@ export async function handler(event, context) {
       }
 
       function claimGift() {
-        const deepLink = \`blitzwallet://gift/\${giftId}#\${fragment}\`;
+        const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
         const fallbackUrl = 'https://blitzwalletapp.com';
         
         window.location.href = deepLink;
