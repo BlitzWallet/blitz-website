@@ -46,6 +46,11 @@
   to = "/.netlify/functions/dynamic-profile"
   status = 200
 
+[[redirects]]
+  from = "/gift/:giftInfo"
+  to = "/.netlify/functions/handle-gift"
+  status = 200
+
 # Favicon redirects
 [[redirects]]
   from = "/favicon.ico"
