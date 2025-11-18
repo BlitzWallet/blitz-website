@@ -258,15 +258,9 @@ export async function handler(event, context) {
 
       function claimGift() {
         const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
-        const fallbackUrl = 'https://blitzwalletapp.com';
         
         window.location.href = deepLink;
         
-        setTimeout(() => {
-          if (confirm('Blitz Wallet is not installed. Would you like to download it?')) {
-            window.location.href = fallbackUrl;
-          }
-        }, 2000);
       }
 
       document.addEventListener('DOMContentLoaded', renderGiftCard);
