@@ -53,7 +53,7 @@ export async function handler(event, context) {
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
     
-    <title>Blitz Wallet Gift Card</title>
+    <title>Claim your ₿${giftData.amount} Gift!</title>
     <meta
       name="description"
       content="You've received a Bitcoin gift card! Claim it with Blitz Wallet."
@@ -63,14 +63,16 @@ export async function handler(event, context) {
     <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCard.png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/gift/${giftId}" />
-    <meta property="og:title" content="Blitz Wallet Gift Card" />
+    <meta property="og:title" content="Claim your ₿${giftData.amount} Gift!" />
     <meta property="og:description" content="You've received a Bitcoin gift card! Claim it with Blitz Wallet." />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCard.png">
     <meta property="twitter:url" content="https://blitzwalletapp.com/gift/${giftId}" />
-    <meta property="twitter:title" content="Blitz Wallet Gift Card" />
+    <meta property="twitter:title" content="Claim your ₿${
+      giftData.amount
+    } Gift!" />
     <meta property="twitter:description" content="You've received a Bitcoin gift card! Claim it with Blitz Wallet." />
 
     <meta name="robots" content="noindex,nofollow"> 
@@ -232,7 +234,7 @@ export async function handler(event, context) {
 
         container.innerHTML = \`
           <h1 class="gift-title">Bitcoin Gift Card</h1>
-          <div class="gift-amount">\u20BF\${giftData.amount.toLocaleString()}</div>
+          <div class="gift-amount">₿${giftData.amount.toLocaleString()}</div>
           \${giftData.description ? \`<p class="gift-description">\${giftData.description}</p>\` : ''}
           
           <div class="info-grid">
