@@ -65,7 +65,7 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
     } Gift!</title>
     <meta
       name="description"
-      content="You've received a Bitcoin gift card! Claim it with Blitz Wallet."
+      content="You've received a Bitcoin gift! Claim it with Blitz Wallet."
     />
 
     <!-- Open Graph / Facebook -->
@@ -75,7 +75,7 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
     <meta property="og:title" content="Claim your ${
       formattedAmount ? `₿${formattedAmount}` : "Bitcoin"
     } Gift!" />
-    <meta property="og:description" content="You've received a Bitcoin gift card! Claim it with Blitz Wallet." />
+    <meta property="og:description" content="You've received a Bitcoin gift! Claim it with Blitz Wallet." />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -84,7 +84,7 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
     <meta property="twitter:title" content="Claim your ${
       formattedAmount ? `₿${formattedAmount}` : "Bitcoin"
     } Gift!" />
-    <meta property="twitter:description" content="You've received a Bitcoin gift card! Claim it with Blitz Wallet." />
+    <meta property="twitter:description" content="You've received a Bitcoin gift! Claim it with Blitz Wallet." />
 
     <meta name="robots" content="noindex,nofollow"> 
     <meta name="googlebot" content="noindex,nofollow">
@@ -281,7 +281,7 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
 
           container.innerHTML = \`
             <div class="content-container">
-              <h1 class="gift-title">Bitcoin Gift Card</h1>
+              <h1 class="gift-title">Claim your Bitcoin Gift!</h1>
               <div class="gift-amount">₿\${formattedAmount}</div>
               \${giftData.description ? \`<p class="gift-description">\${giftData.description}</p>\` : ''}
               
