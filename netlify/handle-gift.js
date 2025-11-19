@@ -23,7 +23,7 @@ export async function handler(event, context) {
   try {
     const db = admin.firestore();
     const cardResponse = await db.collection("blitzGifts").doc(giftId).get();
-    if (!cardResponse.exists())
+    if (!cardResponse.exists)
       throw new Error("This Gift has already been claimed");
     const data = cardResponse.data();
     giftData = data;
