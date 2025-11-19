@@ -15,28 +15,33 @@ export async function handler(event, context) {
   const path = event.path;
   const giftId = path.split("/").pop();
 
-  // Fetch gift data from Firebase using Admin SDK
+  // Start fetching gift data asynchronously (won't block response)
   let giftData = null;
   let error = null;
+  let formattedAmount = null;
 
   try {
     const db = admin.firestore();
-    const cardResponse = await db.collection("blitzGifts").get(giftId);
-    if (cardResponse.empty) throw new Error("no data");
-    const [cardDoc] = cardResponse.docs;
-    giftData = cardDoc.data();
+    const cardResponse = await db.collection("blitzGifts").doc(giftId).get();
+    if (!cardResponse.exists) throw new Error("Gift card not found");
+    const data = cardResponse.data();
+    giftData = data;
+    formattedAmount = giftData?.amount?.toLocaleString();
   } catch (err) {
     error = err.message;
   }
-
-  const formattedAmount = giftData.amount?.toLocaleString();
 
   return {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
     },
-    body: `<!DOCTYPE html>
+    body: generateHTML(giftId, giftData, formattedAmount, error),
+  };
+}
+
+function generateHTML(giftId, giftData, formattedAmount, error) {
+  return `<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -55,7 +60,9 @@ export async function handler(event, context) {
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
     
-    <title>Claim your ₿${formattedAmount} Gift!</title>
+    <title>Claim your ${
+      formattedAmount ? `₿${formattedAmount}` : "Bitcoin"
+    } Gift!</title>
     <meta
       name="description"
       content="You've received a Bitcoin gift card! Claim it with Blitz Wallet."
@@ -65,14 +72,18 @@ export async function handler(event, context) {
     <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCard.png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/gift/${giftId}" />
-    <meta property="og:title" content="Claim your ₿${formattedAmount} Gift!" />
+    <meta property="og:title" content="Claim your ${
+      formattedAmount ? `₿${formattedAmount}` : "Bitcoin"
+    } Gift!" />
     <meta property="og:description" content="You've received a Bitcoin gift card! Claim it with Blitz Wallet." />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCard.png">
     <meta property="twitter:url" content="https://blitzwalletapp.com/gift/${giftId}" />
-    <meta property="twitter:title" content="Claim your ₿${formattedAmount} Gift!" />
+    <meta property="twitter:title" content="Claim your ${
+      formattedAmount ? `₿${formattedAmount}` : "Bitcoin"
+    } Gift!" />
     <meta property="twitter:description" content="You've received a Bitcoin gift card! Claim it with Blitz Wallet." />
 
     <meta name="robots" content="noindex,nofollow"> 
@@ -170,10 +181,46 @@ export async function handler(event, context) {
         padding: 20px;
         border-radius: 8px;
       }
+      
       .error-message p {
-       margin-top: 20px;
+        margin-top: 20px;
       }
 
+      .loading-spinner {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: var(--primary_color);
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+
+      .loading-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .loading-container.fade-out {
+        opacity: 0;
+      }
+
+      .content-container {
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .content-container.fade-in {
+        opacity: 1;
+      }
 
       @media screen and (max-width: 350px) {
         .gift-card {
@@ -183,21 +230,11 @@ export async function handler(event, context) {
         .gift-amount {
           font-size: 35px;
         }
-
-      .formContainer form {
-        width: 100%;
-        max-width: 800px;
-        margin: 0 auto;
       }
-      .formContainer button {
-        margin: 0 auto;
-      }
-    }
-
-  
     </style>
 
     <script>
+      // Data injected from server
       const giftData = ${giftData ? JSON.stringify(giftData) : "null"};
       const loadError = ${error ? JSON.stringify(error) : "null"};
       const giftId = '${giftId}';
@@ -206,63 +243,80 @@ export async function handler(event, context) {
       function renderGiftCard() {
         const container = document.getElementById('app');
         
-        if (loadError) {
-          container.innerHTML = \`
-            <div class="error-message">
-              <h2>Error Loading Gift Card</h2>
-              <p>\${loadError}</p>
-            </div>
-          \`;
-          return;
+        // Hide loading spinner with fade out
+        const loadingContainer = document.querySelector('.loading-container');
+        if (loadingContainer) {
+          loadingContainer.classList.add('fade-out');
         }
 
-        if (!giftData) {
+        setTimeout(() => {
+          if (loadError) {
+            container.innerHTML = \`
+              <div class="content-container fade-in">
+                <div class="error-message">
+                  <h2>Error Loading Gift Card</h2>
+                  <p>\${loadError}</p>
+                </div>
+              </div>
+            \`;
+            return;
+          }
+
+          if (!giftData) {
+            container.innerHTML = \`
+              <div class="content-container fade-in">
+                <div class="error-message">
+                  <h2>Gift Card Not Found</h2>
+                  <p>This gift card doesn't exist or has been removed.</p>
+                </div>
+              </div>
+            \`;
+            return;
+          }
+
+          const isExpired = Date.now() > giftData.expireTime;
+          const isClaimed = giftData.state === 'Claimed';
+          const formattedAmount = giftData.amount?.toLocaleString();
+          const expiresDate = new Date(giftData.expireTime).toLocaleDateString();
+
           container.innerHTML = \`
-            <div class="error-message">
-              <h2>Gift Card Not Found</h2>
-              <p>This gift card doesn't exist or has been removed.</p>
+            <div class="content-container">
+              <h1 class="gift-title">Bitcoin Gift Card</h1>
+              <div class="gift-amount">₿\${formattedAmount}</div>
+              \${giftData.description ? \`<p class="gift-description">\${giftData.description}</p>\` : ''}
+              
+              <div class="info-grid">
+                <div class="info-item">
+                  <span class="info-label">Expires</span>
+                  <span class="info-value">\${expiresDate}</span>
+                </div>
+              </div>
+
+              \${!isClaimed && !isExpired ? \`
+                <button class="claim-button" onclick="claimGift()">
+                  Claim in Blitz Wallet
+                </button>
+              \` : \`
+                <div class="error-message">
+                  <p>\${isClaimed ? 'This gift card has already been claimed.' : 'This gift card has expired.'}</p>
+                </div>
+              \`}
             </div>
           \`;
-          return;
-        }
 
-        const isExpired = Date.now() > giftData.expireTime;
-        const isClaimed = giftData.state === 'Claimed';
-        
-    
-        const expiresDate = new Date(giftData.expireTime).toLocaleDateString();
-
-        container.innerHTML = \`
-          <h1 class="gift-title">Bitcoin Gift Card</h1>
-          <div class="gift-amount">₿${formattedAmount}</div>
-          \${giftData.description ? \`<p class="gift-description">\${giftData.description}</p>\` : ''}
-          
-          <div class="info-grid">
-            <div class="info-item">
-              <span class="info-label">Expires</span>
-              <span class="info-value">\${expiresDate}</span>
-            </div>
-          </div>
-
-          \${!isClaimed && !isExpired ? \`
-            <button class="claim-button" onclick="claimGift()">
-              Claim in Blitz Wallet
-            </button>
-          \` : \`
-            <div class="error-message">
-              <p>\${isClaimed ? 'This gift card has already been claimed.' : 'This gift card has expired.'}</p>
-            </div>
-          \`}
-        \`;
+          // Trigger fade in
+          setTimeout(() => {
+            container.querySelector('.content-container').classList.add('fade-in');
+          }, 50);
+        }, 300); // Wait for fade out to complete
       }
 
       function claimGift() {
         const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
-        
         window.location.href = deepLink;
-        
       }
 
+      // Render immediately when DOM is ready
       document.addEventListener('DOMContentLoaded', renderGiftCard);
     </script>
   </head>
@@ -270,7 +324,10 @@ export async function handler(event, context) {
     <div class="gift-container">
       <div class="gift-card">
         <div id="app">
-          ${!giftData && !error ? "<p>Loading gift card...</p>" : ""}
+          <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <p>Loading gift card...</p>
+          </div>
         </div>
       </div>
     </div>
@@ -289,6 +346,5 @@ export async function handler(event, context) {
       gtag("config", "G-WNRJ7Y4RVE");
     </script>
   </body>
-</html>`,
-  };
+</html>`;
 }
