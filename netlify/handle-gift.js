@@ -23,7 +23,8 @@ export async function handler(event, context) {
   try {
     const db = admin.firestore();
     const cardResponse = await db.collection("blitzGifts").doc(giftId).get();
-    if (!cardResponse.exists) throw new Error("Gift card not found");
+    if (!cardResponse.exists)
+      throw new Error("This Gift has already been claimed");
     const data = cardResponse.data();
     giftData = data;
     formattedAmount = giftData?.amount?.toLocaleString();
@@ -254,7 +255,7 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
             container.innerHTML = \`
               <div class="content-container fade-in">
                 <div class="error-message">
-                  <h2>Error Loading Gift Card</h2>
+                  <h2>Error Loading the Gift</h2>
                   <p>\${loadError}</p>
                 </div>
               </div>
@@ -266,8 +267,8 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
             container.innerHTML = \`
               <div class="content-container fade-in">
                 <div class="error-message">
-                  <h2>Gift Card Not Found</h2>
-                  <p>This gift card doesn't exist or has been removed.</p>
+                  <h2>The Gift was Not Found</h2>
+                  <p>This Gift doesn't exist or has been removed.</p>
                 </div>
               </div>
             \`;
@@ -298,7 +299,7 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
                 </button>
               \` : \`
                 <div class="error-message">
-                  <p>\${isClaimed ? 'This gift card has already been claimed.' : 'This gift card has expired.'}</p>
+                  <p>\${isClaimed ? 'This Bitcoin Gift has already been claimed.' : 'This Bitcoin Gift has expired.'}</p>
                 </div>
               \`}
             </div>
@@ -326,7 +327,7 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
         <div id="app">
           <div class="loading-container">
             <div class="loading-spinner"></div>
-            <p>Loading gift card...</p>
+            <p>Loading Bitcoin Gift...</p>
           </div>
         </div>
       </div>
