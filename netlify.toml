@@ -126,6 +126,16 @@
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
 
+# Gifts redirct
+
+[[redirects]]
+  from = "/getBitcoinGiftDetails"
+  to = "http://127.0.0.1:5001/blitz-wallet-82b39/us-central1/getBitcoinGiftDetails"
+   status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
 [[redirects]]
   from = "/:username"
   to = "/tips_page.html"

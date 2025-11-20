@@ -1,47 +1,17 @@
-import admin from "firebase-admin";
-
-if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId: process.env.FIREBASE_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-    }),
-    databaseURL: process.env.FIREBASE_DATABASE_URL,
-  });
-}
-
 export async function handler(event, context) {
   const path = event.path;
   const giftId = path.split("/").pop();
-
-  // Start fetching gift data asynchronously (won't block response)
-  let giftData = null;
-  let error = null;
-  let formattedAmount = null;
-
-  try {
-    const db = admin.firestore();
-    const cardResponse = await db.collection("blitzGifts").doc(giftId).get();
-    if (!cardResponse.exists)
-      throw new Error("This Gift has already been claimed");
-    const data = cardResponse.data();
-    giftData = data;
-    formattedAmount = giftData?.amount?.toLocaleString();
-  } catch (err) {
-    error = err.message;
-  }
 
   return {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
     },
-    body: generateHTML(giftId, giftData, formattedAmount, error),
+    body: generateHTML(giftId),
   };
 }
 
-function generateHTML(giftId, giftData, formattedAmount, error) {
+function generateHTML(giftId) {
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -61,9 +31,7 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
     
-    <title>Claim your ${
-      formattedAmount ? `₿${formattedAmount}` : "Bitcoin"
-    } Gift!</title>
+    <title>Claim your Bitcoin Gift!</title>
     <meta
       name="description"
       content="You've received a Bitcoin gift! Claim it with Blitz Wallet."
@@ -73,18 +41,14 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
     <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCard.png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/gift/${giftId}" />
-    <meta property="og:title" content="Claim your ${
-      formattedAmount ? `₿${formattedAmount}` : "Bitcoin"
-    } Gift!" />
+    <meta property="og:title" content="Claim your Bitcoin Gift!" />
     <meta property="og:description" content="You've received a Bitcoin gift! Claim it with Blitz Wallet." />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCard.png">
     <meta property="twitter:url" content="https://blitzwalletapp.com/gift/${giftId}" />
-    <meta property="twitter:title" content="Claim your ${
-      formattedAmount ? `₿${formattedAmount}` : "Bitcoin"
-    } Gift!" />
+    <meta property="twitter:title" content="Claim your Bitcoin Gift!" />
     <meta property="twitter:description" content="You've received a Bitcoin gift! Claim it with Blitz Wallet." />
 
     <meta name="robots" content="noindex,nofollow"> 
@@ -235,13 +199,44 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
     </style>
 
     <script>
-      // Data injected from server
-      const giftData = ${giftData ? JSON.stringify(giftData) : "null"};
-      const loadError = ${error ? JSON.stringify(error) : "null"};
       const giftId = '${giftId}';
       const fragment = window.location.hash.substring(1);
 
-      function renderGiftCard() {
+      async function fetchGiftData() {
+        try {
+          const response = await fetch('/getBitcoinGiftDetails', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ giftUUID: giftId })
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to fetch gift data');
+          }
+
+          const data = await response.json();
+          return { data, error: null };
+        } catch (error) {
+          return { data: null, error: error.message };
+        }
+      }
+
+       function updateMetaTags(formattedAmount) {
+        const title = \`Claim your \${formattedAmount ? \`₿\${formattedAmount}\` : "Bitcoin"} Gift!\`;
+        
+        // Update title
+        document.title = title;
+        
+        // Update Open Graph tags
+        document.querySelector('meta[property="og:title"]').setAttribute('content', title);
+        
+        // Update Twitter tags
+        document.querySelector('meta[property="twitter:title"]').setAttribute('content', title);
+      }
+
+      function renderGiftCard(giftData, loadError) {
         const container = document.getElementById('app');
         
         // Hide loading spinner with fade out
@@ -268,7 +263,7 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
               <div class="content-container fade-in">
                 <div class="error-message">
                   <h2>The Gift was Not Found</h2>
-                  <p>This Gift doesn't exist or has been removed.</p>
+                  <p>This Gift doesn't exist or has been claimed.</p>
                 </div>
               </div>
             \`;
@@ -279,6 +274,7 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
           const isClaimed = giftData.state === 'Claimed';
           const formattedAmount = giftData.amount?.toLocaleString();
           const expiresDate = new Date(giftData.expireTime).toLocaleDateString();
+          updateMetaTags(formattedAmount);
 
           container.innerHTML = \`
             <div class="content-container">
@@ -317,8 +313,12 @@ function generateHTML(giftId, giftData, formattedAmount, error) {
         window.location.href = deepLink;
       }
 
-      // Render immediately when DOM is ready
-      document.addEventListener('DOMContentLoaded', renderGiftCard);
+      // Fetch and render when DOM is ready
+      document.addEventListener('DOMContentLoaded', async () => {
+        const { data, error } = await fetchGiftData();
+        const giftData = data?.data
+        renderGiftCard(giftData, error);
+      });
     </script>
   </head>
   <body>
