@@ -130,7 +130,7 @@
 
 [[redirects]]
   from = "/getBitcoinGiftDetails"
-  to = "http://127.0.0.1:5001/blitz-wallet-82b39/us-central1/getBitcoinGiftDetails"
+  to = "https://getbitcoingiftdetails-6krimtymjq-uc.a.run.app"
    status = 200
   force = true
   headers = {X-From = "Netlify"}
