@@ -89,7 +89,7 @@ function generateHTML(giftId) {
       .gift-amount {
         font-size: 48px;
         font-weight: 600;
-        color: var(--primary_color);
+        color: var(--dm-text);
         margin: 20px 0;
       }
 
@@ -140,6 +140,21 @@ function generateHTML(giftId) {
 
       .claim-button:hover {
         background-color: #b8b8b8;
+      }
+
+       .copy-button {
+        background-color: unset;
+        color: var(--dm-text);
+        padding: 14px 24px;
+        border: 0;
+        border-radius: 8px;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+        width: 100%;
+        margin-top: 20px;
+        textDecoration: underline;
       }
 
       .error-message {
@@ -293,6 +308,9 @@ function generateHTML(giftId) {
                 <button class="claim-button" onclick="claimGift()">
                   Claim in Blitz Wallet
                 </button>
+                <button class="copy-button" onclick="copyGift()">
+                  Copy Claim Link
+                </button>
               \` : \`
                 <div class="error-message">
                   <p>\${isClaimed ? 'This Bitcoin Gift has already been claimed.' : 'This Bitcoin Gift has expired.'}</p>
@@ -311,6 +329,16 @@ function generateHTML(giftId) {
       function claimGift() {
         const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
         window.location.href = deepLink;
+      }
+
+      function copyGift() {
+        const giftLink = \`https://blitzwalletapp.com/gift/\${giftId}#\${fragment}\`;
+
+        // Copy the text inside the text field
+        navigator.clipboard.writeText(giftLink);
+
+        // Alert the copied text
+        alert("You copied the claim link");
       }
 
       // Fetch and render when DOM is ready
