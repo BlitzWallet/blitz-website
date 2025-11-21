@@ -342,11 +342,18 @@ function generateHTML(giftId) {
       }
 
       // Fetch and render when DOM is ready
-      document.addEventListener('DOMContentLoaded', async () => {
+      document.addEventListener('DOMContentLoaded', () => {
+      // Try to open the deep link immediately
+      const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
+      window.location.href = deepLink;
+      
+      // Then fetch and render the fallback UI
+      setTimeout(async () => {
         const { data, error } = await fetchGiftData();
-        const giftData = data?.data
+        const giftData = data?.data;
         renderGiftCard(giftData, error);
-      });
+      }, 500);
+    });
     </script>
   </head>
   <body>
