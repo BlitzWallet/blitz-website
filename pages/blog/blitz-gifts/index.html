@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Primary Meta Tags -->
+    <title>
+      Discover how you can create and share Blitz Bitcoin gifts to easily
+      onboard any new Bitcoiner.
+    </title>
+    <meta
+      name="title"
+      content="Discover how you can create and share Blitz Bitcoin gifts to easily onboard any new Bitcoiner."
+    />
+    <meta
+      name="description"
+      content="Explore Blitz Wallet's latest update, featuring a redesigned contact payments system for improved messaging and offline support, decluttered homepage, migration to Firebase Functions for enhanced performance, and globalized payment listeners for reliable notifications."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/pages/blog/bridge-update/"
+    />
+    <meta
+      property="og:title"
+      content="Discover how you can create and share Blitz Bitcoin gifts to easily onboard any new Bitcoiner."
+    />
+    <meta
+      property="og:description"
+      content="Explore Blitz Wallet's latest update, featuring a redesigned contact payments system for improved messaging and offline support, decluttered homepage, migration to Firebase Functions for enhanced performance, and globalized payment listeners for reliable notifications."
+    />
+    <meta property="og:image"
+    content=https://blitzwalletapp.com/public/twitterCard.png />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta
+      property="twitter:url"
+      content="https://blitzwalletapp.com/pages/blog/bridge-update/"
+    />
+    <meta
+      property="twitter:title"
+      content="Discover how you can create and share Blitz Bitcoin gifts to easily onboard any new Bitcoiner."
+    />
+    <meta
+      property="twitter:description"
+      content="Explore Blitz Wallet's latest update, featuring a redesigned contact payments system for improved messaging and offline support, decluttered homepage, migration to Firebase Functions for enhanced performance, and globalized payment listeners for reliable notifications."
+    />
+
+    <!-- Favicon -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+
+    <link rel="stylesheet" href="../../../src/assets/styles/index.css" />
+    <link
+      rel="stylesheet"
+      href="../../../src/assets/styles/navbar_footer.css"
+    />
+    <link
+      rel="stylesheet"
+      href="../../../src/components/downloadModal/style.css"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <script src="../../../src/js/navbar.js" defer></script>
+
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="module" src="../pageSetup.js"></script>
+    <link rel="stylesheet" href="../masterBlogTheme.css" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <!-- download modal -->
+    <div class="modalContainer">
+      <div class="modal">
+        <h2>Download Blitz Wallet</h2>
+        <div class="downloadTypeInModal">
+          <p class="selectorItem IOS active">App Store</p>
+          <p class="selectorItem Android">Play Store</p>
+        </div>
+
+        <div class="qr-container">
+          <div id="qr-code"></div>
+        </div>
+        <p>Scan with your mobile device</p>
+      </div>
+    </div>
+    <nav>
+      <div class="navContent">
+        <a href="/">
+          <p class="bitzName">Blitz Wallet.</p>
+        </a>
+        <div class="desktopNav">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+
+            <li class="navItem activePage">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="mobile mobileNavBTN">
+          <img
+            class="navigationIcon shown"
+            src="../../../src/assets/images/hamburger.svg"
+            alt="hamburger icon for mobile nav"
+          />
+          <img
+            class="navigationIcon hidden"
+            src="../../../src/assets/images/xIcon.svg"
+            alt="hamburger icon for mobile nav"
+          />
+        </div>
+        <p class="downloadModal">Download</p>
+      </div>
+      <div class="blogNav">
+        <div class="locationTab">
+          <div class="imgContainer">
+            <img id="blogTypeImage" src="/favicon.png" alt="blog pencil" />
+          </div>
+          <a href="/pages/blog">
+            <p>Blog</p>
+          </a>
+          <p class="blogTypeSeperator">|</p>
+          <p id="blogTypeText">
+            <!-- Pulled in from javascript -->
+          </p>
+        </div>
+      </div>
+    </nav>
+    <div class="mobileNavDropdown">
+      <div class="mobileNavInnerContainer">
+        <div class="mobileNavDropdown-Container">
+          <ul class="navItems">
+            <li class="navItem">
+              <a href="/pages/about/">About</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/contact">Contact</a>
+            </li>
+            <li class="navItem">
+              <a href="/pages/blog">Blog</a>
+            </li>
+          </ul>
+        </div>
+        <div class="buttonsContainer">
+          <div class="downloadButton">
+            <div class="hoverContainer"></div>
+            <img
+              src="/src/assets/images/apple.svg"
+              alt="Apple app store icon"
+            />
+            <div class="seperator"></div>
+            <img
+              src="/src/assets/images/google-play.svg"
+              alt="Google Playstore icon"
+            />
+            <h2 class="downloadText">Download now</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+    <section class="blogContentContainer">
+      <div class="postHead">
+        <h1 id="blogTitle">
+          <!-- Pulled in from javascript -->
+        </h1>
+        <p id="blogSubHeader">
+          <!-- Pulled in from javascript -->
+        </p>
+        <div class="postDataContainerOuter">
+          <div class="imageContainer">
+            <img
+              id="authorProfilePicture"
+              src="/favicon.png"
+              alt="Profile image of the author"
+            />
+            <!-- Img src in from javascript -->
+          </div>
+          <div class="dataContainer">
+            <p rel="author" id="authorName">
+              <!-- Pulled in from javascript -->
+            </p>
+            <div class="postDataContainerInner">
+              <p id="postReadTime">
+                <!-- Pulled in from javascript -->
+              </p>
+              <p class="postDataSeperator">|</p>
+              <p id="postDate">
+                <!-- Pulled in from javascript -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="postBody">
+        <p>
+          Today we’re excited to announce a new update to Blitz Wallet that
+          brings significant improvements to your user experience. At Blitz
+          Wallet, our mission is to be the simplest wallet ever, and this
+          feature reflects our ongoing commitment to just that.
+        </p>
+        <p>Let’s dive into the details:</p>
+
+        <h2>TLDR on Bliz Bitcoin gifts</h2>
+        <p>
+          Blitz Gifts let you Gift Bitcoin to any Blitz user through a simple
+          link or QR code, no wallet knowledge required. You choose an amount,
+          optionally add a note, and share the gift — the recipient just taps
+          “Accept” and the sats appear in their balance. It’s a frictionless way
+          to introduce someone to Bitcoin without overwhelming them with setup
+          steps. Fast, lightweight, and friendly, it’s ideal for onboarding new
+          Bitcoiners. And fully non-custodial.
+        </p>
+        <h2>How to create your first Blitz Bitcoin gift</h2>
+        <h3>1. Start on the Gifts tab</h3>
+        <p>
+          At the bottom of the app you’ll find the tab bar. Tap the gift icon to
+          open the new Bitcoin Gifts section. This screen shows all active,
+          claimed, and previously created gifts. If you haven’t made any yet,
+          you’ll see a clean slate with a prompt to create your first one. Tap
+          Create Gift to begin.
+        </p>
+        <img
+          class="conetentImage verticalSpacing"
+          src="./assets/gifts.png"
+          alt="Image of Biltz store page"
+        />
+        <h3>2. Enter your gift details</h3>
+        <p>
+          You’ll land on a simple form that lets you choose how much Bitcoin you
+          want to include. The amount is required, but you can also add a short
+          message or description if you want the gift to feel more personal.
+          Once everything looks good, tap Create Gift.
+        </p>
+        <img
+          class="conetentImage verticalSpacing"
+          src="./assets/create.png"
+          alt="Image of Biltz store page"
+        />
+        <h3>3. Review and share your gift</h3>
+        <p>
+          After the gift is created, you’re taken to a confirmation screen. This
+          page includes everything you need to send your sats to someone else:
+        </p>
+        <ul>
+          <li>A QR code another Blitz user can scan</li>
+          <li>The amount and description you entered</li>
+          <li>
+            A unique claim link — this is what the recipient uses to receive the
+            Bitcoin
+          </li>
+          <li>
+            Options to share the link directly, create another gift, or exit
+            back to the main screen
+          </li>
+        </ul>
+        <p>
+          From here you can send the link to a friend, family member, or someone
+          who’s brand new to Bitcoin.
+        </p>
+        <img
+          class="conetentImage verticalSpacing"
+          src="./assets/confim.png"
+          alt="Image of Biltz store page"
+        />
+        <h3>4. Claiming a gift</h3>
+        <p>
+          Once the recipient opens the link, Blitz automatically routes them to
+          the Accept Gift screen showing the amount they’ll receive.
+        </p>
+        <p>
+          They can also manually paste the gift link into the Claim tab if
+          that’s easier. With one tap, the sats are added to their balance.
+        </p>
+        <img
+          class="conetentImage verticalSpacing"
+          src="./assets/claim.png"
+          alt="Image of Biltz store page"
+        />
+        <h3>5. Handling expired gifts</h3>
+        <p>
+          If a gift isn’t claimed before its expiration time, it doesn’t
+          disappear.
+        </p>
+        <p>
+          Instead, it moves to the Expired tab. When you visit that screen,
+          you’ll see any unclaimed gifts ready to be recovered. Tap the reclaim
+          button and the sats return to your balance instantly.
+        </p>
+        <img
+          class="conetentImage verticalSpacing"
+          src="./assets/expire.png"
+          alt="Image of Biltz store page"
+        />
+
+        <p>
+          Bitcoin gifting is now simple, quick, and intuitive — perfect for
+          onboarding someone new or sending a fun surprise to another Blitz
+          user.
+        </p>
+
+        <p>Best,</p>
+        <p>Blitz Team</p>
+      </section>
+    </section>
+
+    <footer>
+      <div class="top">
+        <div class="text">
+          <h2>Blitz Wallet.</h2>
+          <p>
+            The simplest self-custodial Bitcoin Lightning wallet—send, spend,
+            and accept BTC.
+          </p>
+        </div>
+        <div class="listItems">
+          <div class="list">
+            <h3>Company</h3>
+            <ul>
+              <li><a href="/pages/about/">About</a></li>
+              <li><a href="/pages/contact/">Contact</a></li>
+
+              <li><a href="/pages/blog/">Blog</a></li>
+            </ul>
+          </div>
+          <div class="list">
+            <h3>Social Media</h3>
+            <ul>
+              <li>
+                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
+              </li>
+              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
+              <li>
+                <a href="https://youtube.com/@BlitzWalletApp">YouTube</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content">
+        <div class="privcyContent">
+          <a href="/pages/privacyPolicy/">Privacy Policy</a>
+          <a href="/pages/terms/">Terms of Usage</a>
+          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
+            >License</a
+          >
+        </div>
+        <p>&copy;2025 Blitz Wallet LLC.</p>
+      </div>
+    </footer>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

@@ -2,6 +2,21 @@
 
 export const postList = [
   {
+    type: "Release", // Can be "Release", "Learn", or "Podcast"
+    title: "Blitz Gifts",
+    description:
+      "Discover how you can create and share Blitz Bitcoin gifts to easily onboard any new Bitcoiner.",
+    htmlPageLink: "./blitz-gifts",
+    searchName: "blitz-gifts",
+    readingLengthEST: 2, //In minutes
+    time: "1763970000000",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
     type: "Learn", // Can be "Release", "Learn", or "Podcast"
     title: "Day 4 of 14: Anonymous SMS with Blitz Wallet",
     description:
