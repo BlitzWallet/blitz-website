@@ -431,11 +431,13 @@ function generateHTML(giftId) {
 
       // Fetch and render when DOM is ready
       document.addEventListener('DOMContentLoaded', () => {
-        attemptDeepLinkWithFallback(true);
 
         // Then fetch and render the UI after a short delay
         setTimeout(async () => {
           const { data, error } = await fetchGiftData();
+          if (!error){
+            attemptDeepLinkWithFallback(true);
+          }
           const giftData = data?.data;
           renderGiftCard(giftData, error);
         }, 500);
