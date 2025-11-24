@@ -142,7 +142,7 @@ function generateHTML(giftId) {
         background-color: #b8b8b8;
       }
 
-       .copy-button {
+      .copy-button {
         background-color: unset;
         color: var(--dm-text);
         padding: 14px 24px;
@@ -154,7 +154,7 @@ function generateHTML(giftId) {
         transition: background-color 0.3s ease-in-out;
         width: 100%;
         margin-top: 20px;
-        textDecoration: underline;
+        text-decoration: underline;
       }
 
       .error-message {
@@ -214,9 +214,92 @@ function generateHTML(giftId) {
     </style>
 
     <script>
+      // --- CONFIGURATION ---
+      const IOS_STORE_URL = 'https://testflight.apple.com/join/r8MfbNa6';
+      const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
+      let pageHidden = false;
+      
+      // Time (in milliseconds) to wait before executing the fallback redirect.
+      const FALLBACK_TIMEOUT_MS = 1500; 
+
       const giftId = '${giftId}';
       const fragment = window.location.hash.substring(1);
 
+      /**
+       * Detects the user's mobile operating system.
+       * @returns {'ios' | 'android' | 'other'}
+       */
+      function detectOS() {
+          const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+          
+          if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+              return 'ios';
+          }
+          if (/android/i.test(userAgent)) {
+              return 'android';
+          }
+          return 'other';
+      }
+
+      /**
+       * Updates the content of the loading container to show a status message
+       * before the full gift card UI is rendered.
+       */
+      function updateLoadingStatus(message) {
+          const loadingContainer = document.querySelector('.loading-container p');
+          if (loadingContainer) {
+              loadingContainer.textContent = message;
+          }
+      }
+
+      /**
+       * Core function to attempt deep link launch with store redirect fallback.
+       */
+      function attemptDeepLinkWithFallback(onlyPreNaigate = false) {
+          const os = detectOS();
+          const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
+          
+          let storeUrl = '';
+          if (os === 'ios') {
+              storeUrl = IOS_STORE_URL;
+          } else if (os === 'android') {
+              storeUrl = ANDROID_STORE_URL;
+          } else {
+              // For desktop/other, just try the deep link, but no fallback needed.
+              updateLoadingStatus('This link is optimized for mobile devices. Trying to open the app...');
+              window.location.href = deepLink;
+              return;
+          }
+
+          updateLoadingStatus('Attempting to open the Blitz Wallet app...');
+          
+          // 1. Attempt Deep Link Navigation
+          // If successful, the user leaves the page and the timer is naturally stopped.
+          window.location.href = deepLink;
+
+          if (onlyPreNaigate) return
+
+          // 2. Set Fallback Timer
+          // If the app is NOT installed, the browser remains on this page, and the timer fires.
+          const fallbackTimer = setTimeout(() => {
+            if (pageHidden) {
+              // App opened → tab got backgrounded → do not redirect
+              return;
+            }
+              
+            updateLoadingStatus(\`App not detected. Redirecting you to the \${os === 'ios' ? 'App Store' : 'Play Store'}...\`);
+
+            // Redirect after a moment to read the message
+            setTimeout(() => {
+              if (!pageHidden) window.location.href = storeUrl;
+            }, 1000); 
+
+          }, FALLBACK_TIMEOUT_MS);
+          
+          // Return the timer ID in case we need to clear it (e.g., if we confirm app launch quickly, though less reliable).
+          return fallbackTimer;
+      }
+      
       async function fetchGiftData() {
         try {
           const response = await fetch('/getBitcoinGiftDetails', {
@@ -238,7 +321,7 @@ function generateHTML(giftId) {
         }
       }
 
-       function updateMetaTags(formattedAmount) {
+      function updateMetaTags(formattedAmount) {
         const title = \`Claim your \${formattedAmount ? \`₿\${formattedAmount}\` : "Bitcoin"} Gift!\`;
         
         // Update title
@@ -264,9 +347,9 @@ function generateHTML(giftId) {
           if (loadError) {
             container.innerHTML = \`
               <div class="content-container fade-in">
-                <div class="error-message">
-                  <h2>Error Loading the Gift</h2>
-                  <p>\${loadError}</p>
+                <div class="error-message gift-card" style="box-shadow: none;">
+                  <h2 class="gift-title">Error Loading the Gift</h2>
+                  <p class="gift-description">\${loadError}</p>
                 </div>
               </div>
             \`;
@@ -276,9 +359,9 @@ function generateHTML(giftId) {
           if (!giftData) {
             container.innerHTML = \`
               <div class="content-container fade-in">
-                <div class="error-message">
-                  <h2>The Gift was Not Found</h2>
-                  <p>This Gift doesn't exist or has been claimed.</p>
+                <div class="error-message gift-card" style="box-shadow: none;">
+                  <h2 class="gift-title">The Gift was Not Found</h2>
+                  <p class="gift-description">This Gift doesn't exist or has been claimed.</p>
                 </div>
               </div>
             \`;
@@ -313,7 +396,7 @@ function generateHTML(giftId) {
                 </button>
               \` : \`
                 <div class="error-message">
-                  <p>\${isClaimed ? 'This Bitcoin Gift has already been claimed.' : 'This Bitcoin Gift has expired.'}</p>
+                  <p class="gift-description">\${isClaimed ? 'This Bitcoin Gift has already been claimed.' : 'This Bitcoin Gift has expired.'}</p>
                 </div>
               \`}
             </div>
@@ -327,8 +410,7 @@ function generateHTML(giftId) {
       }
 
       function claimGift() {
-        const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
-        window.location.href = deepLink;
+        attemptDeepLinkWithFallback();
       }
 
       function copyGift() {
@@ -337,23 +419,33 @@ function generateHTML(giftId) {
         // Copy the text inside the text field
         navigator.clipboard.writeText(giftLink);
 
-        // Alert the copied text
-        alert("You copied the claim link");
+        const button = document.querySelector('.copy-button');
+        if (button) {
+          const originalText = button.textContent;
+          button.textContent = 'Link Copied!';
+          setTimeout(() => {
+            button.textContent = originalText;
+          }, 2000);
+        }
       }
 
       // Fetch and render when DOM is ready
       document.addEventListener('DOMContentLoaded', () => {
-      // Try to open the deep link immediately
-      const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
-      window.location.href = deepLink;
-      
-      // Then fetch and render the fallback UI
-      setTimeout(async () => {
-        const { data, error } = await fetchGiftData();
-        const giftData = data?.data;
-        renderGiftCard(giftData, error);
-      }, 500);
-    });
+        attemptDeepLinkWithFallback(true);
+
+        // Then fetch and render the UI after a short delay
+        setTimeout(async () => {
+          const { data, error } = await fetchGiftData();
+          const giftData = data?.data;
+          renderGiftCard(giftData, error);
+        }, 500);
+      });
+
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'hidden') {
+          pageHidden = true;
+        }
+      });
     </script>
   </head>
   <body>
