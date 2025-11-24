@@ -435,7 +435,7 @@ function generateHTML(giftId) {
         // Then fetch and render the UI after a short delay
         setTimeout(async () => {
           const { data, error } = await fetchGiftData();
-          if (!error){
+          if (!error && data.data){
             attemptDeepLinkWithFallback(true);
           }
           const giftData = data?.data;
