@@ -67,7 +67,8 @@
     "hhking": "c7e300eb1e297c5331cf57ae1304b48e5adeeb56c492d9f450494b39e94ebe38",
     "karakualker": "a838e802efebc32ff2d77cdae1053cb93754fd789575759ae4b925cfb42362cd",
     "nunodduarte": "00cfe60de4f1aac1dd7d1b0dd3a5f6ad2bc5658bcac93915c3b2379d2819cc65",
-    "conan": "2a18b7e71900a561e7e91cb4a82b10f91841bfb9f1a575950e8b65f647c37b35"
+    "conan": "2a18b7e71900a561e7e91cb4a82b10f91841bfb9f1a575950e8b65f647c37b35",
+    "Of": "30ed8be46559a7115e0b89d741752b6b7dcdecfc6994160edca7e6ea51b0daeb"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -607,6 +608,14 @@
       "wss://relay.primal.net"
     ],
     "2a18b7e71900a561e7e91cb4a82b10f91841bfb9f1a575950e8b65f647c37b35": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "30ed8be46559a7115e0b89d741752b6b7dcdecfc6994160edca7e6ea51b0daeb": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
