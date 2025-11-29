@@ -35,6 +35,14 @@
     Access-Control-Allow-Origin = "*"
 
 [[headers]]
+  for = "/.well-known/nostr.json"
+  [headers.values]
+    Content-Type = "application/json"
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET"
+    Access-Control-Allow-Headers = "Content-Type"
+
+[[headers]]
   for = "/*"
   [headers.values]
     Content-Security-Policy = "frame-ancestors 'none';"
