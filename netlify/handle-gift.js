@@ -38,7 +38,7 @@ function generateHTML(giftId) {
     />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCard.png" />
+    <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCardPresent.png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/gift/${giftId}" />
     <meta property="og:title" content="Claim your Bitcoin Gift!" />
@@ -46,7 +46,7 @@ function generateHTML(giftId) {
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCard.png">
+    <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCardPresent.png">
     <meta property="twitter:url" content="https://blitzwalletapp.com/gift/${giftId}" />
     <meta property="twitter:title" content="Claim your Bitcoin Gift!" />
     <meta property="twitter:description" content="You've received a Bitcoin gift! Claim it with Blitz Wallet." />

@@ -34,7 +34,7 @@ export async function handler(event, context) {
     />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCard.png" />
+    <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCardAddContact.png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/u/${username}" />
     <meta property="og:title" content="Blitz Wallet | ${username}" />
@@ -42,7 +42,7 @@ export async function handler(event, context) {
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCard.png">
+    <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCardAddContact.png">
     <meta property="twitter:url" content="https://blitzwalletapp.com/u/${username}" />
     <meta property="twitter:title" content="Blitz Wallet | ${username}" />
     <meta property="twitter:description" content="Blitz Wallet is a self-custodial Bitcoin wallet that lets you make payments with friends, spend Bitcoin at stores, and simplifies Bitcoin payments. Check out ${username} on Blitz Wallet." />
