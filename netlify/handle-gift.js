@@ -215,7 +215,7 @@ function generateHTML(giftId) {
 
     <script>
       // --- CONFIGURATION ---
-      const IOS_STORE_URL = 'https://testflight.apple.com/join/r8MfbNa6';
+      const IOS_STORE_URL = 'https://apps.apple.com/us/app/blitz-wallet/id6476810582';
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
       let pageHidden = false;
       

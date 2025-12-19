@@ -5,7 +5,7 @@ const modal = document.querySelector(".modal");
 const appCards = document.querySelectorAll(".downloadModal");
 const qrCode = document.getElementById("qr-code");
 const qrContentType = document.querySelector(".downloadTypeInModal");
-const initialQRText = "https://testflight.apple.com/join/r8MfbNa6";
+const initialQRText = "https://apps.apple.com/us/app/blitz-wallet/id6476810582";
 
 function toggleModal(e) {
   const isUsingMobile = isMobileCheck();
@@ -15,7 +15,7 @@ function toggleModal(e) {
   if (isUsingMobile) {
     window.open(
       !isAndroid()
-        ? "https://testflight.apple.com/join/r8MfbNa6"
+        ? "https://apps.apple.com/us/app/blitz-wallet/id6476810582"
         : "https://play.google.com/store/apps/details?id=com.blitzwallet",
       "_self"
     );
@@ -56,7 +56,7 @@ function toggleQRContentType(e) {
   qrcode.clear();
   qrcode.makeCode(
     Array.from(targetElement.classList).includes("IOS")
-      ? "https://testflight.apple.com/join/r8MfbNa6"
+      ? "https://apps.apple.com/us/app/blitz-wallet/id6476810582"
       : "https://play.google.com/store/apps/details?id=com.blitzwallet"
   );
 }
