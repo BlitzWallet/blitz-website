@@ -84,7 +84,9 @@
     "Isisguineafowl21": "a29cbe2885ed1df17aac39fb7fc14603d152c502a48cf775656250600a4917f4",
     "petola": "b1f63e4c334bdea574e90229ffcf5c41d79bab21f0404bc956be73289d03023b",
     "pokeland": "be7d2a917eeb7566bfc4982c506ee9027eed5540b4ba80326ace6cb00fe57a71",
-    "zeus": "0968c658b1ef9fff61c781d9f02367a2dac95c98cce5eee9a9d5dc18e80efd2c"
+    "zeus": "0968c658b1ef9fff61c781d9f02367a2dac95c98cce5eee9a9d5dc18e80efd2c",
+    "Kunark": "47446024c7fb416477ed146ff765aabc66e1276eeb2c60c60594740ba459ff5b",
+    "ctrlxcvz": "bc80df628b36f8b40c9453159fda63a6297af65c895f7fbefda8d3c8a4986626"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -760,6 +762,22 @@
       "wss://relay.primal.net"
     ],
     "0968c658b1ef9fff61c781d9f02367a2dac95c98cce5eee9a9d5dc18e80efd2c": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "47446024c7fb416477ed146ff765aabc66e1276eeb2c60c60594740ba459ff5b": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "bc80df628b36f8b40c9453159fda63a6297af65c895f7fbefda8d3c8a4986626": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
