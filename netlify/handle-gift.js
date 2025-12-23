@@ -322,7 +322,7 @@ function generateHTML(giftId) {
       }
 
       function updateMetaTags(formattedAmount) {
-        const title = \`Claim your \${formattedAmount ? \`₿\${formattedAmount}\` : "Bitcoin"} Gift!\`;
+        const title = \`Claim your \${formattedAmount ? \`\${formattedAmount}\` : "Bitcoin"} Gift!\`;
         
         // Update title
         document.title = title;
@@ -370,14 +370,15 @@ function generateHTML(giftId) {
 
           const isExpired = Date.now() > giftData.expireTime;
           const isClaimed = giftData.state === 'Claimed';
-          const formattedAmount = giftData.amount?.toLocaleString();
+          const useSatSymbol = giftData.satDisplay === 'symbol' || !giftData.satDisplay
+          const formattedAmount =(useSatSymbol?'₿':'') + giftData.amount?.toLocaleString() + (useSatSymbol?'':' SAT');
           const expiresDate = new Date(giftData.expireTime).toLocaleDateString();
           updateMetaTags(formattedAmount);
 
           container.innerHTML = \`
             <div class="content-container">
               <h1 class="gift-title">Claim your Bitcoin Gift!</h1>
-              <div class="gift-amount">₿\${formattedAmount}</div>
+              <div class="gift-amount">\${formattedAmount}</div>
               \${giftData.description ? \`<p class="gift-description">\${giftData.description}</p>\` : ''}
               
               <div class="info-grid">
