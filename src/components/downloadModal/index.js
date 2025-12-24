@@ -74,7 +74,13 @@ appCards.forEach((card) => {
   card.addEventListener("click", toggleModal);
 });
 downloadBTN.forEach((child) => {
-  child.addEventListener("click", toggleModal);
+  if (child.textContent.includes("Try Web Version")) {
+    child.addEventListener("click", () => {
+      window.location.href = "https://wallet.blitzwalletapp.com";
+    });
+  } else {
+    child.addEventListener("click", toggleModal);
+  }
 });
 
 qrContentType.addEventListener("click", toggleQRContentType);
