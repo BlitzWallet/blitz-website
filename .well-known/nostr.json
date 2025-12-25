@@ -86,7 +86,8 @@
     "pokeland": "be7d2a917eeb7566bfc4982c506ee9027eed5540b4ba80326ace6cb00fe57a71",
     "zeus": "0968c658b1ef9fff61c781d9f02367a2dac95c98cce5eee9a9d5dc18e80efd2c",
     "Kunark": "47446024c7fb416477ed146ff765aabc66e1276eeb2c60c60594740ba459ff5b",
-    "ctrlxcvz": "bc80df628b36f8b40c9453159fda63a6297af65c895f7fbefda8d3c8a4986626"
+    "ctrlxcvz": "bc80df628b36f8b40c9453159fda63a6297af65c895f7fbefda8d3c8a4986626",
+    "osho": "d5ad84f8be25337f68187c590eb8bb3df13f1e31a446264cff579227dbc1b196"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -778,6 +779,14 @@
       "wss://relay.primal.net"
     ],
     "bc80df628b36f8b40c9453159fda63a6297af65c895f7fbefda8d3c8a4986626": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "d5ad84f8be25337f68187c590eb8bb3df13f1e31a446264cff579227dbc1b196": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
