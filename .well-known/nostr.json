@@ -95,7 +95,10 @@
     "fb001": "316748091a990b3b78877d06fc21e2f6d1cd5298a5df3b1e26c74277ff31ab6e",
     "callum": "a0315a0bf80a5763e4a7d52ef452ca113f140dad1bd474b4650fefeb439e735c",
     "Morfeo": "ed4b6b7f5d61f04b98e0df522fc86d608f9cad34776062dbdbe2b5c5b91999aa",
-    "FreedomTech": "4dbfcb7c5ddb8249f9c7eb8c21e019f08fbfb7ec5ded5408b614590beb8d1695"
+    "FreedomTech": "4dbfcb7c5ddb8249f9c7eb8c21e019f08fbfb7ec5ded5408b614590beb8d1695",
+    "Componente08": "f18571e72c93044670953ee53f03e6a500a6d97689b6ffcfe1cdcccf9da08ff4",
+    "ok3e": "91bea5cd9361504c409aaf459516988f68a2fcd482762fd969a7cdc71df4451c",
+    "criptontolpijo": "967eab24b5faee70c3bdc965f0e1913a35ec8ca605a259a759bfa43c7d5bfaa2"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -859,6 +862,30 @@
       "wss://relay.primal.net"
     ],
     "4dbfcb7c5ddb8249f9c7eb8c21e019f08fbfb7ec5ded5408b614590beb8d1695": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "f18571e72c93044670953ee53f03e6a500a6d97689b6ffcfe1cdcccf9da08ff4": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "91bea5cd9361504c409aaf459516988f68a2fcd482762fd969a7cdc71df4451c": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "967eab24b5faee70c3bdc965f0e1913a35ec8ca605a259a759bfa43c7d5bfaa2": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
