@@ -31,25 +31,25 @@ function generateHTML(giftId) {
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
     
-    <title>Claim your Bitcoin Gift!</title>
+    <title>Claim your Gift!</title>
     <meta
       name="description"
-      content="You've received a Bitcoin gift! Claim it with Blitz Wallet."
+      content="You've received a gift! Claim it with Blitz Wallet."
     />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCardPresent.png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/gift/${giftId}" />
-    <meta property="og:title" content="Claim your Bitcoin Gift!" />
-    <meta property="og:description" content="You've received a Bitcoin gift! Claim it with Blitz Wallet." />
+    <meta property="og:title" content="Claim your Gift!" />
+    <meta property="og:description" content="You've received a gift! Claim it with Blitz Wallet." />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCardPresent.png">
     <meta property="twitter:url" content="https://blitzwalletapp.com/gift/${giftId}" />
-    <meta property="twitter:title" content="Claim your Bitcoin Gift!" />
-    <meta property="twitter:description" content="You've received a Bitcoin gift! Claim it with Blitz Wallet." />
+    <meta property="twitter:title" content="Claim your Gift!" />
+    <meta property="twitter:description" content="You've received a gift! Claim it with Blitz Wallet." />
 
     <meta name="robots" content="noindex,nofollow"> 
     <meta name="googlebot" content="noindex,nofollow">
@@ -321,8 +321,8 @@ function generateHTML(giftId) {
         }
       }
 
-      function updateMetaTags(formattedAmount) {
-        const title = \`Claim your \${formattedAmount ? \`\${formattedAmount}\` : "Bitcoin"} Gift!\`;
+      function updateMetaTags(formattedAmount, denomination) {
+        const title = \`Claim your \${formattedAmount ? \`\${formattedAmount}\` : \`\${denomination === 'BTC' ? 'Bitcoin' : 'Dollar'}\`} Gift!\`;
         
         // Update title
         document.title = title;
@@ -371,13 +371,19 @@ function generateHTML(giftId) {
           const isExpired = Date.now() > giftData.expireTime;
           const isClaimed = giftData.state === 'Claimed';
           const useSatSymbol = giftData.satDisplay === 'symbol' || !giftData.satDisplay
-          const formattedAmount =(useSatSymbol?'₿':'') + giftData.amount?.toLocaleString() + (useSatSymbol?'':' SAT');
+          const denomination = giftData.denomination || 'BTC';
+          const frontSymbol = denomination === "BTC" ? '₿' : '$';
+          const backText = denomination === "BTC" ? ' SAT' : ' USD';
+          const giftAmount = denomination === 'BTC' ? giftData.amount : giftData.dollarAmount;
+          const formattedAmount = (useSatSymbol ? frontSymbol : '') + giftAmount?.toLocaleString() + (useSatSymbol ? '' : backText);
+          const giftType = denomination === 'BTC' ? 'Bitcoin' : 'Dollar';
           const expiresDate = new Date(giftData.expireTime).toLocaleDateString();
-          updateMetaTags(formattedAmount);
+          updateMetaTags(formattedAmount, denomination);
+          
 
           container.innerHTML = \`
             <div class="content-container">
-              <h1 class="gift-title">Claim your Bitcoin Gift!</h1>
+              <h1 class="gift-title">Claim your Gift!</h1>
               <div class="gift-amount">\${formattedAmount}</div>
               \${giftData.description ? \`<p class="gift-description">\${giftData.description}</p>\` : ''}
               
@@ -388,7 +394,7 @@ function generateHTML(giftId) {
                 </div>
               </div>
 
-              \${!isClaimed && !isExpired ? \`
+              \${(!isClaimed && !isExpired) ? \`
                 <button class="claim-button" onclick="claimGift()">
                   Claim in Blitz Wallet
                 </button>
@@ -397,7 +403,7 @@ function generateHTML(giftId) {
                 </button>
               \` : \`
                 <div class="error-message">
-                  <p class="gift-description">\${isClaimed ? 'This Bitcoin Gift has already been claimed.' : 'This Bitcoin Gift has expired.'}</p>
+                  <p class="gift-description">\${isClaimed ? \`This \${giftType} Gift has already been claimed.\` : \`This \${giftType} Gift has expired.\`}</p>
                 </div>
               \`}
             </div>
@@ -457,7 +463,7 @@ function generateHTML(giftId) {
         <div id="app">
           <div class="loading-container">
             <div class="loading-spinner"></div>
-            <p>Loading Bitcoin Gift...</p>
+            <p>Loading Gift...</p>
           </div>
         </div>
       </div>
