@@ -103,7 +103,8 @@
     "lodurr": "b0f019547540547641c9c550258e88b7287c2b24bfff5f2c82a1157bff52249c",
     "idealauncher": "e18c3c5716dbf94134bf82e979fc061aa5c7f156bb8e9c9a8d94bc7334008cf6",
     "leviathan": "ba0e2f4a250b03a2e32bad889383bd748f2315450d19c873554a8a762292467b",
-    "JamaMaria": "51b74e9b43006332cdff77e5d52be14f1d8d2351efb41a59a6e40409cebc5aa1"
+    "JamaMaria": "51b74e9b43006332cdff77e5d52be14f1d8d2351efb41a59a6e40409cebc5aa1",
+    "librekitty": "7055fc42c9a638ab56ad057016a2deface97b5eece31a3a7a46727ad847899e5"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -931,6 +932,14 @@
       "wss://relay.primal.net"
     ],
     "51b74e9b43006332cdff77e5d52be14f1d8d2351efb41a59a6e40409cebc5aa1": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "7055fc42c9a638ab56ad057016a2deface97b5eece31a3a7a46727ad847899e5": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
