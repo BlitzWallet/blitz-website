@@ -5,13 +5,13 @@ const navLinks = document.querySelector(".nav-links");
 mobileMenu.addEventListener("click", () => {
   navLinks.classList.toggle("active");
   const spans = mobileMenu.querySelectorAll("span");
-  spans[0].style.transform = navLinks.classList.contains("active")
-    ? "rotate(45deg) translateY(8px)"
-    : "";
-  spans[1].style.opacity = navLinks.classList.contains("active") ? "0" : "1";
-  spans[2].style.transform = navLinks.classList.contains("active")
-    ? "rotate(-45deg) translateY(-8px)"
-    : "";
+  const isActive = navLinks.classList.contains("active");
+
+  spans[0].style.transform = isActive ? "translateY(9px) rotate(45deg)" : "";
+
+  spans[1].style.opacity = isActive ? "0" : "1";
+
+  spans[2].style.transform = isActive ? "translateY(-9px) rotate(-45deg)" : "";
 });
 
 // Navbar scroll effect
