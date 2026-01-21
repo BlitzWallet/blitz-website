@@ -123,7 +123,7 @@ const currencySymbols = {
 const formatCurrency = ({ amount, code }) => {
   const commaFormatted = String(amount).replace(
     /(\d)(?=(\d{3})+(?!\d))/g,
-    "$1 "
+    "$1 ",
   );
   const periodFormatted = String(amount)
     .replace(".", ",")
@@ -389,7 +389,7 @@ const username = window.location.pathname.split("/").filter(Boolean)[0];
 document.title = `Tip ${username} - Blitz Wallet`;
 
 document
-  .querySelectorAll(".username")
+  .querySelectorAll(".username-display")
   .forEach((item) => (item.textContent = username));
 
 document
@@ -631,7 +631,7 @@ function showInvoiceScreen(amount) {
   document.getElementById("invoice-screen").classList.add("active");
   document.getElementById("display-amount").textContent = formattedAmount[0];
   const container = document
-    .querySelectorAll(".qr-container")[1]
+    .getElementById("qr-wrapper")
     .getBoundingClientRect().width;
 
   // Generate QR code
@@ -659,7 +659,7 @@ function clearRunningItems() {
 }
 
 function startInvoiceVerification() {
-  const reverifyText = document.getElementById("reverify-text");
+  const reverifyText = document.getElementById("verify-text");
   const maxTime = document.getElementById("amount-badge");
   const maxDuration = 5 * 60; // 5 minutes in seconds
   const startTime = Date.now();
@@ -690,7 +690,7 @@ function startInvoiceVerification() {
     const remaining = Math.max(0, maxDuration - elapsed);
     const countdown = Math.max(
       0,
-      Math.ceil((nextCheckTime - Date.now()) / 1000)
+      Math.ceil((nextCheckTime - Date.now()) / 1000),
     );
 
     reverifyText.textContent = `Reverifying if invoice is paid (${countdown}s)`;
@@ -734,8 +734,8 @@ function startInvoiceVerification() {
 }
 
 function showPaidScreen(message) {
-  const qrContainer = document.querySelectorAll(".qr-container")[1];
-  const verifyText = document.getElementById("reverify-text");
+  const qrContainer = document.getElementById("qr-wrapper");
+  const verifyText = document.getElementById("verify-text");
   const cancelBTN = document.getElementById("cancel-button");
 
   document.querySelector(".info-section").style.display = "none";

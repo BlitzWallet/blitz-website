@@ -1,92 +1,98 @@
 "use strict";
-const downloadBTN = document.querySelectorAll(".downloadButton");
-const modalContainer = document.querySelector(".modalContainer");
-const modal = document.querySelector(".modal");
-const appCards = document.querySelectorAll(".downloadModal");
-const qrCode = document.getElementById("qr-code");
-const qrContentType = document.querySelector(".downloadTypeInModal");
-const initialQRText = "https://apps.apple.com/us/app/blitz-wallet/id6476810582";
 
-function toggleModal(e) {
-  const isUsingMobile = isMobileCheck();
-  console.log(isUsingMobile);
-  console.log(isAndroid());
+// Download Modal Functionality
+const modalContainer = document.getElementById("modalContainer");
+const modalBackdrop = document.getElementById("modalBackdrop");
+const modalClose = document.getElementById("modalClose");
+const modalTabs = document.querySelectorAll(".modal-tab");
 
-  if (isUsingMobile) {
-    window.open(
-      !isAndroid()
-        ? "https://apps.apple.com/us/app/blitz-wallet/id6476810582"
-        : "https://play.google.com/store/apps/details?id=com.blitzwallet",
-      "_self"
-    );
-    return;
-  }
-  e.preventDefault();
-  console.log(e);
-  console.log("test");
-  modalContainer.style.display =
-    modalContainer.style.display === "flex" ? "none" : "flex";
-  document.body.style.overflow =
-    modalContainer.style.display === "flex" ? "hidden" : "scroll";
+let qrcode = null;
+const iosUrl = "https://apps.apple.com/us/app/blitz-wallet/id6476810582";
+const androidUrl =
+  "https://play.google.com/store/apps/details?id=com.blitzwallet";
 
-  modalContainer.style.top = `${window.scrollY}px`;
+// Initialize QR code
+function initQRCode(url) {
+  const qrElement = document.getElementById("qr-code");
+  qrElement.innerHTML = ""; // Clear existing QR code
+
+  qrcode = new QRCode(qrElement, {
+    text: url,
+    width: 200,
+    height: 200,
+    colorDark: "#000000",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.H,
+  });
 }
 
-// Create QR code
-const qrcode = new QRCode(document.getElementById("qr-code"), {
-  text: initialQRText,
-  width: 256,
-  height: 256,
-  colorDark: "#000000",
-  colorLight: "#ffffff",
-  correctLevel: QRCode.CorrectLevel.H,
+// Show modal
+function showModal() {
+  modalContainer.classList.add("active");
+  modalBackdrop.classList.add("active");
+  document.body.style.overflow = "hidden";
+
+  // Initialize QR code with iOS URL by default
+  if (!qrcode) {
+    initQRCode(iosUrl);
+  }
+}
+
+// Hide modal
+function hideModal() {
+  modalContainer.classList.remove("active");
+  modalBackdrop.classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+// Tab switching
+modalTabs.forEach((tab) => {
+  tab.addEventListener("click", () => {
+    // Remove active class from all tabs
+    modalTabs.forEach((t) => t.classList.remove("active"));
+    // Add active class to clicked tab
+    tab.classList.add("active");
+
+    // Update QR code
+    const platform = tab.dataset.platform;
+    const url = platform === "ios" ? iosUrl : androidUrl;
+    initQRCode(url);
+  });
 });
 
-function toggleQRContentType(e) {
-  const targetElement = e.target;
-  const parentElement = targetElement.parentNode;
-  console.log(targetElement.classList, "TEST");
-  if (Array.from(targetElement.classList).includes("downloadTypeInModal"))
-    return;
-  Array.from(parentElement.children).forEach((child) => {
-    child.classList.remove("active");
-  });
-  targetElement.classList.add("active");
+// Close modal
+modalClose.addEventListener("click", hideModal);
+modalBackdrop.addEventListener("click", hideModal);
 
-  qrcode.clear();
-  qrcode.makeCode(
-    Array.from(targetElement.classList).includes("IOS")
-      ? "https://apps.apple.com/us/app/blitz-wallet/id6476810582"
-      : "https://play.google.com/store/apps/details?id=com.blitzwallet"
+// Download button functionality
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent,
   );
 }
 
-function isMobileCheck() {
-  return document.body.getBoundingClientRect().width < 800;
-}
-
 function isAndroid() {
-  const ua = navigator.userAgent || navigator.vendor;
-
-  return /Android/i.test(ua) && !/iPhone|iPad|Macintosh|iPod/i.test(ua);
+  return /Android/i.test(navigator.userAgent);
 }
-appCards.forEach((card) => {
-  card.addEventListener("click", toggleModal);
-});
-downloadBTN.forEach((child) => {
-  if (child.textContent.includes("Try Web Version")) {
-    child.addEventListener("click", () => {
-      window.location.href = "https://wallet.blitzwalletapp.com";
-    });
-  } else {
-    child.addEventListener("click", toggleModal);
-  }
-});
 
-qrContentType.addEventListener("click", toggleQRContentType);
+function isIOS() {
+  return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+}
 
-modalContainer.addEventListener("click", toggleModal);
+document.querySelectorAll(".download-btn").forEach((btn) => {
+  btn.addEventListener("click", (e) => {
+    e.preventDefault();
 
-modal.addEventListener("click", (e) => {
-  e.stopPropagation();
+    if (isMobile()) {
+      // Mobile: Direct redirect
+      if (isAndroid()) {
+        window.location.href = androidUrl;
+      } else if (isIOS()) {
+        window.location.href = iosUrl;
+      }
+    } else {
+      // Desktop: Show modal
+      showModal();
+    }
+  });
 });

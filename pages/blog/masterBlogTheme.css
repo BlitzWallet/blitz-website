@@ -16,29 +16,14 @@ input,
 label,
 textarea,
 time {
-  color: var(--lm-text);
+  /* color: var(--lm-text); */
 }
-nav {
-  border-bottom: 1px solid #2a2a2a23;
-}
+
 .navigationIcon {
   filter: brightness(0) saturate(100%) invert(0%) sepia(100%) saturate(7500%)
     hue-rotate(59deg) brightness(89%) contrast(111%);
 }
 
-.mobileNavDropdown {
-  height: calc(100dvh - 126px);
-
-  top: 126px;
-
-  background-color: var(--lm-background);
-}
-.mobileNavDropdown .mobileNavDropdown-Container {
-  margin: 20px 0;
-}
-.downloadButton img {
-  filter: unset;
-}
 .downloadButton .seperator {
   background-color: var(--lm-text);
 }
@@ -108,6 +93,7 @@ nav .blogNav p {
   width: 90%;
   /* max-width: 700px; */
   margin: 0 auto;
+  padding: 8em 0;
 }
 
 .blogContentContainer .postHead {

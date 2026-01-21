@@ -31,10 +31,13 @@
   font-family: var(--title_font);
 }
 body {
-  height: fit-content;
-  background-color: var(--dm-background);
+  font-family: var(--description_font);
+  background: var(--lm-background);
+  color: var(--lm-text);
+  overflow-x: hidden;
 }
-h1,
+
+/* h1,
 h2,
 h3,
 h4 {
@@ -97,4 +100,4 @@ a {
   width: 20px;
   height: 20px;
   margin-left: 10px;
-}
+} */

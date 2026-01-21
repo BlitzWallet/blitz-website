@@ -4,7 +4,7 @@ import { postList, getPostsByCategory, formatDate } from "./blogContentList.js";
 
 const postsContainer = document.getElementById("previousPosts");
 const highlightedPostContainer = document.querySelector(
-  ".highlightedPostContainer"
+  ".highlightedPostContainer",
 );
 const navContainer = document.querySelector(".postTypeSelector");
 const URL_SEARCH_REGEX = /\?[^=]+=(.+)/;
@@ -14,7 +14,7 @@ window.addEventListener("load", () => {
   const urlParams = new URL(url.toString());
   const selectedCategory = urlParams.search.match(URL_SEARCH_REGEX)?.[1];
 
-  changeNav(selectedCategory);
+  // changeNav(selectedCategory);
   changePostContent(selectedCategory);
 });
 
@@ -68,7 +68,7 @@ function createPostElement(post) {
 
       <footer class="post-footer">
         <time datetime="${new Date(
-          parseInt(post.time)
+          parseInt(post.time),
         ).toISOString()}" class="post-date">
           ${formatDate(post.time)}
         </time>

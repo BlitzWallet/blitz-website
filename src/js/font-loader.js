@@ -1,5 +1,5 @@
 (function () {
-  // Create preconnect link elements
+  // Preconnects
   const preconnect1 = document.createElement("link");
   preconnect1.rel = "preconnect";
   preconnect1.href = "https://fonts.googleapis.com";
@@ -9,14 +9,14 @@
   preconnect2.href = "https://fonts.gstatic.com";
   preconnect2.crossOrigin = "true";
 
-  // Create preload link element
+  // Preload Google Font
   const preload = document.createElement("link");
   preload.rel = "preload";
   preload.as = "style";
   preload.href =
     "https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap";
 
-  // Create stylesheet link element
+  // Load Google Font stylesheet non-blocking
   const stylesheet = document.createElement("link");
   stylesheet.rel = "stylesheet";
   stylesheet.href =
@@ -26,9 +26,21 @@
     this.media = "all";
   };
 
-  // Add all elements to the head
+  // Lucide script
+  const lucideScript = document.createElement("script");
+  lucideScript.src = "https://unpkg.com/lucide@latest";
+  lucideScript.defer = true;
+  lucideScript.onload = function () {
+    // Initialize icons after load
+    if (window.lucide) {
+      lucide.createIcons();
+    }
+  };
+
+  // Append to head
   document.head.appendChild(preconnect1);
   document.head.appendChild(preconnect2);
   document.head.appendChild(preload);
   document.head.appendChild(stylesheet);
+  document.head.appendChild(lucideScript);
 })();

@@ -1,39 +1,41 @@
-// "use strict";
+// Mobile Menu Toggle
+const mobileMenu = document.getElementById("mobileMenu");
+const navLinks = document.querySelector(".nav-links");
 
-const hamburgerMenuBTN = document.querySelector(".mobileNavBTN");
-const mobileNavContent = document.querySelector(".mobileNavDropdown");
-const navigationIcon = document.querySelectorAll(".navigationIcon");
+mobileMenu.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+  const spans = mobileMenu.querySelectorAll("span");
+  const isActive = navLinks.classList.contains("active");
 
-console.log(navigationIcon);
-navigationIcon.forEach((item) => {
-  console.log(item);
+  spans[0].style.transform = isActive ? "translateY(9px) rotate(45deg)" : "";
+
+  spans[1].style.opacity = isActive ? "0" : "1";
+
+  spans[2].style.transform = isActive ? "translateY(-9px) rotate(-45deg)" : "";
 });
 
-function handleMobileNavClick() {
-  console.log(window.scrollY);
-  if (mobileNavContent.style.display === "flex") {
-    mobileNavContent.style.display = "none";
-    document.body.style.overflow = "scroll";
-    navigationIcon.forEach((item, index) => {
-      console.log(item);
-      item.classList.remove("shwon");
-      item.classList.remove("hidden");
-      if (index == 0) item.classList.add("shown");
-      else item.classList.add("hidden");
-    });
+// Navbar scroll effect
+const nav = document.querySelector("nav");
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 100) {
+    nav.classList.add("scrolled");
   } else {
-    mobileNavContent.style.display = "flex";
-    document.body.style.overflow = "hidden";
-    navigationIcon.forEach((item, index) => {
-      console.log(item);
-      item.classList.remove("shwon");
-      item.classList.remove("hidden");
-      if (index == 1) item.classList.add("shown");
-      else item.classList.add("hidden");
-    });
+    nav.classList.remove("scrolled");
   }
-}
-
-[hamburgerMenuBTN].forEach((btn) => {
-  btn.addEventListener("click", handleMobileNavClick);
 });
+
+// Scroll animations
+const observerOptions = {
+  threshold: 0.1,
+  rootMargin: "0px 0px -100px 0px",
+};
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
+  });
+}, observerOptions);
+
+document.querySelectorAll(".fade-in").forEach((el) => observer.observe(el));
