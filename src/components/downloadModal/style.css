@@ -1,7 +1,7 @@
 /* Download Modal */
 .modal-container {
   position: fixed;
-  bottom: -100%;
+  bottom: -200%;
   left: 0;
   right: 0;
   z-index: 9999;
