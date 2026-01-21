@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -31,8 +31,10 @@
       property="og:description"
       content="Explore Blitz Wallet's latest update, featuring a redesigned contact payments system for improved messaging and offline support, decluttered homepage, migration to Firebase Functions for enhanced performance, and globalized payment listeners for reliable notifications."
     />
-    <meta property="og:image"
-    content=https://blitzwalletapp.com/public/twitterCard.png />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
@@ -71,17 +73,11 @@
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
 
-    <link rel="stylesheet" href="../../../src/assets/styles/index.css" />
-    <link
-      rel="stylesheet"
-      href="../../../src/assets/styles/navbar_footer.css"
-    />
-    <link
-      rel="stylesheet"
-      href="../../../src/components/downloadModal/style.css"
-    />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
     <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
-    <script src="../../../src/js/navbar.js" defer></script>
+    <script src="/src//js/navbar.js" defer></script>
 
     <script src="/src/js/font-loader.js" defer></script>
     <script
@@ -89,107 +85,31 @@
       defer
     ></script>
     <script src="/src/components/downloadModal/index.js" defer></script>
-    <script type="module" src="../pageSetup.js"></script>
-    <link rel="stylesheet" href="../masterBlogTheme.css" />
-    <link rel="stylesheet" href="./style.css" />
+    <script type="module" src="/pages/blog/pageSetup.js"></script>
+    <link rel="stylesheet" href="/pages/blog/masterBlogTheme.css" />
+    <link rel="stylesheet" href="/pages/blog/blitz-gifts/style.css" />
   </head>
 
   <body>
-    <!-- download modal -->
-    <div class="modalContainer">
-      <div class="modal">
-        <h2>Download Blitz Wallet</h2>
-        <div class="downloadTypeInModal">
-          <p class="selectorItem IOS active">App Store</p>
-          <p class="selectorItem Android">Play Store</p>
-        </div>
-
-        <div class="qr-container">
-          <div id="qr-code"></div>
-        </div>
-        <p>Scan with your mobile device</p>
-      </div>
-    </div>
     <nav>
-      <div class="navContent">
-        <a href="/">
-          <p class="bitzName">Blitz Wallet.</p>
-        </a>
-        <div class="desktopNav">
-          <ul class="navItems">
-            <li class="navItem">
-              <a href="/pages/about/">About</a>
-            </li>
-            <li class="navItem">
-              <a href="/pages/contact">Contact</a>
-            </li>
-
-            <li class="navItem activePage">
-              <a href="/pages/blog">Blog</a>
-            </li>
-          </ul>
-        </div>
-        <div class="mobile mobileNavBTN">
-          <img
-            class="navigationIcon shown"
-            src="../../../src/assets/images/hamburger.svg"
-            alt="hamburger icon for mobile nav"
-          />
-          <img
-            class="navigationIcon hidden"
-            src="../../../src/assets/images/xIcon.svg"
-            alt="hamburger icon for mobile nav"
-          />
-        </div>
-        <p class="downloadModal">Download</p>
-      </div>
-      <div class="blogNav">
-        <div class="locationTab">
-          <div class="imgContainer">
-            <img id="blogTypeImage" src="/favicon.png" alt="blog pencil" />
-          </div>
-          <a href="/pages/blog">
-            <p>Blog</p>
-          </a>
-          <p class="blogTypeSeperator">|</p>
-          <p id="blogTypeText">
-            <!-- Pulled in from javascript -->
-          </p>
+      <div class="nav-container">
+        <a href="/" class="logo">Blitz Wallet</a>
+        <ul class="nav-links">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/pages/about/" class="active">About</a></li>
+          <li><a href="/pages/blog">Blog</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <div class="mobile-menu" id="mobileMenu">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
       </div>
     </nav>
-    <div class="mobileNavDropdown">
-      <div class="mobileNavInnerContainer">
-        <div class="mobileNavDropdown-Container">
-          <ul class="navItems">
-            <li class="navItem">
-              <a href="/pages/about/">About</a>
-            </li>
-            <li class="navItem">
-              <a href="/pages/contact">Contact</a>
-            </li>
-            <li class="navItem">
-              <a href="/pages/blog">Blog</a>
-            </li>
-          </ul>
-        </div>
-        <div class="buttonsContainer">
-          <div class="downloadButton">
-            <div class="hoverContainer"></div>
-            <img
-              src="/src/assets/images/apple.svg"
-              alt="Apple app store icon"
-            />
-            <div class="seperator"></div>
-            <img
-              src="/src/assets/images/google-play.svg"
-              alt="Google Playstore icon"
-            />
-            <h2 class="downloadText">Download now</h2>
-          </div>
-        </div>
-      </div>
-    </div>
     <section class="blogContentContainer">
       <div class="postHead">
         <h1 id="blogTitle">
@@ -337,49 +257,98 @@
     </section>
 
     <footer>
-      <div class="top">
-        <div class="text">
-          <h2>Blitz Wallet.</h2>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <h3>Blitz Wallet</h3>
           <p>
             The simplest self-custodial Bitcoin Lightning wallet—send, spend,
             and accept BTC.
           </p>
         </div>
-        <div class="listItems">
-          <div class="list">
-            <h3>Company</h3>
-            <ul>
-              <li><a href="/pages/about/">About</a></li>
-              <li><a href="/pages/contact/">Contact</a></li>
-
-              <li><a href="/pages/blog/">Blog</a></li>
-            </ul>
-          </div>
-          <div class="list">
-            <h3>Social Media</h3>
-            <ul>
-              <li>
-                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
-              </li>
-              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
-              <li>
-                <a href="https://youtube.com/@BlitzWalletApp">YouTube</a>
-              </li>
-            </ul>
-          </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/#products">Point of Sale</a></li>
+            <li><a href="/#products">Recovery Platform</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="content">
-        <div class="privcyContent">
-          <a href="/pages/privacyPolicy/">Privacy Policy</a>
-          <a href="/pages/terms/">Terms of Usage</a>
-          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
-            >License</a
-          >
-        </div>
-        <p>&copy;2025 Blitz Wallet LLC.</p>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Blitz Wallet LLC. All rights reserved.</p>
       </div>
     </footer>
+
+    <!-- Download Modal -->
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button class="modal-close" id="modalClose">
+          <i data-lucide="x"></i>
+        </button>
+
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i>
+            <span>iOS</span>
+          </button>
+          <button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i>
+            <span>Android</span>
+          </button>
+        </div>
+
+        <div class="modal-content">
+          <div class="qr-wrapper">
+            <div id="qr-code"></div>
+          </div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+            >
+              <i data-lucide="apple"></i>
+              <span>App Store</span>
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+            >
+              <i data-lucide="play"></i>
+              <span>Play Store</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Google tag (gtag.js) -->
     <script
       async

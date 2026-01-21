@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -22,31 +22,32 @@
 
     <!-- Primary Meta Tags -->
     <title>
-      The simplest self-custodial Bitcoin Lightning wallet—send, spend, and
-      accept BTC.
+      About Blitz Wallet - The simplest self-custodial Bitcoin Lightning wallet
     </title>
     <meta
       name="title"
-      content="The simplest self-custodial Bitcoin Lightning wallet—send, spend, and accept BTC."
+      content=" About Blitz Wallet - The simplest self-custodial Bitcoin Lightning wallet"
     />
     <meta
       name="description"
-      content="The simplest self-custodial Bitcoin Lightning wallet—send, spend, and accept BTC."
+      content="Learn how Blitz Wallet is revolutionizing Bitcoin payments with self-custodial simplicity. Our mission, vision, and the problem we're solving."
     />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/pages/about/" />
     <meta
       property="og:title"
-      content="The simplest self-custodial Bitcoin Lightning wallet—send, spend, and accept BTC."
+      content=" About Blitz Wallet - The simplest self-custodial Bitcoin Lightning wallet"
     />
     <meta
       property="og:description"
-      content="The simplest self-custodial Bitcoin Lightning wallet—send, spend, and accept BTC."
+      content="Learn how Blitz Wallet is revolutionizing Bitcoin payments with self-custodial simplicity."
     />
-    <meta property="og:image"
-    content=https://blitzwalletapp.com/public/twitterCard.png />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
@@ -56,330 +57,402 @@
     />
     <meta
       property="twitter:title"
-      content="The simplest self-custodial Bitcoin Lightning wallet—send, spend, and accept BTC."
+      content=" About Blitz Wallet - The simplest self-custodial Bitcoin Lightning wallet"
     />
     <meta
       property="twitter:description"
-      content="The simplest self-custodial Bitcoin Lightning wallet—send, spend, and accept BTC."
+      content="Learn how Blitz Wallet is revolutionizing Bitcoin payments with self-custodial simplicity."
     />
-    <meta property="twitter:image"
-    content=https://blitzwalletapp.com/public/twitterCard.png />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
 
-    <link rel="stylesheet" href="../../src/assets/styles/index.css" />
-    <link rel="stylesheet" href="../../src/assets/styles/navbar_footer.css" />
-    <link
-      rel="stylesheet"
-      href="../../src/components/downloadModal/style.css"
-    />
+    <!-- Global / shared styles -->
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
     <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
-    <link rel="stylesheet" href="./style.css" />
 
+    <!-- Component styles -->
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+
+    <!-- Page-specific style -->
+    <link rel="stylesheet" href="/pages/about/style.css" />
+
+    <!-- Scripts -->
     <script src="/src/js/navbar.js" defer></script>
-
     <script src="/src/js/font-loader.js" defer></script>
+
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
       defer
     ></script>
+
     <script src="/src/components/downloadModal/index.js" defer></script>
-
-    <!-- <script defer src="./index.js"></script> -->
   </head>
-
   <body>
-    <!-- download modal -->
-    <div class="modalContainer">
-      <div class="modal">
-        <h2>Download Blitz Wallet</h2>
-        <div class="downloadTypeInModal">
-          <p class="selectorItem IOS active">App Store</p>
-          <p class="selectorItem Android">Play Store</p>
-        </div>
-
-        <div class="qr-container">
-          <div id="qr-code"></div>
-        </div>
-        <p>Scan with your mobile device</p>
-      </div>
-    </div>
+    <!-- Navigation -->
     <nav>
-      <div class="navContent">
-        <a href="/">
-          <p class="bitzName">Blitz Wallet.</p>
-        </a>
-        <div class="desktopNav">
-          <ul class="navItems">
-            <li class="navItem activePage">
-              <a href="/pages/about/">About</a>
-            </li>
-            <li class="navItem">
-              <a href="/pages/contact">Contact</a>
-            </li>
-            <li class="navItem">
-              <a href="/pages/blog">Blog</a>
-            </li>
-          </ul>
+      <div class="nav-container">
+        <a href="/" class="logo">Blitz Wallet</a>
+        <ul class="nav-links">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/pages/about/" class="active">About</a></li>
+          <li><a href="/pages/blog">Blog</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <div class="mobile-menu" id="mobileMenu">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <div class="mobile mobileNavBTN">
-          <img
-            class="navigationIcon shown"
-            src="../../src/assets/images/hamburger.svg"
-            alt="hamburger icon for mobile nav"
-          />
-          <img
-            class="navigationIcon hidden"
-            src="../../src/assets/images/xIcon.svg"
-            alt="hamburger icon for mobile nav"
-          />
-        </div>
-        <p class="downloadModal">Download</p>
       </div>
     </nav>
-    <div class="mobileNavDropdown">
-      <div class="mobileNavInnerContainer">
-        <div class="mobileNavDropdown-Container">
-          <ul class="navItems">
-            <li class="navItem">
-              <a href="/pages/about/">About</a>
-            </li>
-            <li class="navItem">
-              <a href="/pages/contact">Contact</a>
-            </li>
-            <li class="navItem">
-              <a href="/pages/blog">Blog</a>
-            </li>
-          </ul>
+
+    <!-- Download Modal -->
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button class="modal-close" id="modalClose">
+          <i data-lucide="x"></i>
+        </button>
+
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
         </div>
-        <div class="buttonsContainer">
-          <div class="downloadButton">
-            <div class="hoverContainer"></div>
-            <img
-              src="/src/assets/images/apple.svg"
-              alt="Apple app store icon"
-            />
-            <div class="seperator"></div>
-            <img
-              src="/src/assets/images/google-play.svg"
-              alt="Google Playstore icon"
-            />
-            <h2 class="downloadText">Download now</h2>
+
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i>
+            <span>iOS</span>
+          </button>
+          <button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i>
+            <span>Android</span>
+          </button>
+        </div>
+
+        <div class="modal-content">
+          <div class="qr-wrapper">
+            <div id="qr-code"></div>
+          </div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+            >
+              <i data-lucide="apple"></i>
+              <span>App Store</span>
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+            >
+              <i data-lucide="play"></i>
+              <span>Play Store</span>
+            </a>
           </div>
         </div>
       </div>
     </div>
 
-    <main>
-      <section class="whitePaper">
-        <p class="sectionHeaders">Our Whitepaper</p>
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-content">
+        <span class="hero-badge">Our Mission</span>
+        <h1>Making Bitcoin Simple for Everyone</h1>
+        <p>
+          We're building the most user-friendly Bitcoin wallet that brings the
+          power of self-custody to everyone, without the complexity.
+        </p>
 
-        <p class="tableOfContentsHeader">Table of contents</p>
-        <ol class="tableOfContentsContainer">
-          <li><a href="#abstract">Abstract</a></li>
-          <li><a href="#problem">Problem</a></li>
-          <li><a href="#solution">Solution</a></li>
-          <li><a href="#use-cases">Use Cases</a></li>
-          <li><a href="#conclusion">Conclusion</a></li>
-        </ol>
-        <h1>
-          BThe simplest self-custodial Bitcoin Lightning wallet—send, spend, and
-          accept BTC.
-        </h1>
-        <div class="contentContainer">
-          <div id="abstract" class="sectionContainer">
-            <h2>Abstract</h2>
-            <p>
-              Blitz Wallet is a self-custodial Bitcoin wallet designed to
-              simplify Bitcoin payments and solve key challenges in the Bitcoin
-              space: Bitcoin is slow for payments, it’s unclear how to use, and
-              it can feel too complex. By focusing on usability and simplicity,
-              Blitz Wallet aims to make self-custodial payments easier. The
-              wallet addresses key barriers such as complex invoices and the
-              dinner paradox. With features like a native contacts system, store
-              to enable use of your Bitcoin, Blitz Wallet creates an intuitive
-              experience for both beginners and experienced users. Our mission
-              is to create the simplest, most user-friendly Bitcoin wallet. We
-              envision a world where everyone has full control over their money
-              and can transact freely and effortlessly with others.
-            </p>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Self-Custodial</span>
           </div>
-          <div id="problem" class="sectionContainer">
-            <h2>1. Problem</h2>
-            <p>
-              A major hurdle that Bitcoin has yet to overcome is usability for
-              day-to-day payments. This issue is evident in what we call the QR
-              code problem. Currently, the most common way to share Bitcoin
-              addresses or Lightning invoices is through QR codes. This is for
-              two major reasons:
-            </p>
-            <ol>
-              <li>
-                Finality of payments – Bitcoin transactions are irreversible, so
-                manually entering an address increases the risk of errors and
-                potential loss of funds
-              </li>
-              <li>
-                Complexity of addresses – Bitcoin addresses and Lightning
-                invoices are long and difficult to read, which can be
-                intimidating for new users.
-              </li>
-            </ol>
-            <p>
-              While QR codes help mitigate these risks, they also create
-              usability friction. Traditional payment networks use simple
-              identifiers like usernames or phone numbers, making payments
-              seamless. Bitcoin, in contrast, often feels like a step backward
-              in user experience. While protocals such as LNURL, Bolt12, and
-              silent payments are improvements, friction still occurs.
-            </p>
-            <p>
-              Another challenge is the complexity of the lightning network: a
-              Layer 2 solutions designed to improve Bitcoin’s payment
-              throughput. The Lightning network introduces technical quirks not
-              seen in traditional payment networks, such as:
-            </p>
-            <ul>
-              <li>
-                Lightning Network channel capacity – Users can only receive
-                payments if their channel has enough inbound liquidity.
-              </li>
-              <li>
-                Invoice limitations – Lightning invoices expire and can only be
-                used once.
-              </li>
-              <li>
-                Node uptime – Lightning nodes must remain online to send and
-                receive payments.
-              </li>
-            </ul>
-            <p>
-              These constraints require users to understand the underlying
-              protocol before they can effectively use Bitcoin, creating a
-              significant barrier to adoption. Given these usability challenges,
-              there is a clear need for a wallet that seamlessly integrates
-              Bitcoin’s scaling technologies into a simple, intuitive
-              experience.
-            </p>
+          <div class="stat">
+            <span class="stat-number">Open Source</span>
+            <span class="stat-label">Fully Transparent</span>
           </div>
-          <div id="solution" class="sectionContainer">
-            <h2>2. Solution</h2>
-            <p>
-              Blitz Wallet simplifies Bitcoin payments by integrating a new
-              Layer 2 protocol called
-              <a
-                href="https://docs.spark.money/spark/spark-tldr"
-                target="_blank"
-                >Spark</a
-              >. Spark is a Bitcoin-native network that enables instant,
-              low-friction, self-custodial transactions— without the usual
-              complexity of Lightning.
-            </p>
+          <div class="stat">
+            <span class="stat-number">Instant</span>
+            <span class="stat-label">Lightning Fast</span>
+          </div>
+        </div>
+      </div>
+    </section>
 
-            <p>
-              Unlike traditional Lightning wallets, Spark doesn’t require users
-              to manage channels or maintain inbound liquidity. That means you
-              can receive payments instantly without being online or having to
-              set up anything in advance. This removes one of the biggest
-              hurdles in using Lightning for everyday payments.
-            </p>
+    <!-- Mission Section -->
+    <section class="mission">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-label">Why We Exist</span>
+          <h2>Our Mission & Vision</h2>
+        </div>
 
+        <div class="mission-grid">
+          <div class="mission-card fade-in">
+            <div class="mission-icon">
+              <i data-lucide="target"></i>
+            </div>
+            <h3>Our Mission</h3>
             <p>
-              Spark also alows Blitz to introduce human-readable addresses, like
-              <code>username@blitzwalletapp.com</code>, making sending Bitcoin
-              feel as familiar as sending an email. These LNURL addresses
-              replace complex invoices and QR codes with simple, reusable
-              identities—making Bitcoin more accessible for everyone.
-            </p>
-            <p>
-              With Spark, Blitz Wallet becomes the easiest way to send, receive,
-              and manage Bitcoin: instant payments, no node setup, no channel
-              balancing, and full self-custody. It's the bridge between the
-              power of Lightning and the simplicity users expect from modern
-              apps.
+              To create the simplest, most user-friendly Bitcoin wallet that
+              empowers everyone to have full control over their money and
+              transact freely.
             </p>
           </div>
-          <div id="use-cases" class="sectionContainer">
-            <h2>3. Use Cases</h2>
+
+          <div class="mission-card fade-in">
+            <div class="mission-icon">
+              <i data-lucide="eye"></i>
+            </div>
+            <h3>Our Vision</h3>
             <p>
-              A perfect example of Blitz Wallet’s power comes from its creator,
-              Blake Kaufman. During a holiday, his mother wanted to send money
-              to him and his brothers for dinner. She logged onto Venmo and sent
-              each of his brothers $20. However, for Blake, she used Blitz
-              Wallet and sent him Bitcoin—without needing an invoice or prior
-              coordination.
-            </p>
-            <p>
-              Despite not being highly technical, she was able to send Bitcoin
-              just as easily as using Venmo. This story highlights the
-              simplicity of Blitz Wallet in onboarding new users and removing
-              friction from Bitcoin transactions.
+              A world where self-custodial Bitcoin payments are as easy as using
+              Venmo or Cash App—no compromises on simplicity or sovereignty.
             </p>
           </div>
-          <div id="conclusion" class="sectionContainer">
-            <h2>4. Conclusion</h2>
+
+          <div class="mission-card fade-in">
+            <div class="mission-icon">
+              <i data-lucide="users"></i>
+            </div>
+            <h3>Who We Serve</h3>
             <p>
-              Blitz Wallet is a game-changer in the Bitcoin ecosystem, bridging
-              the gap between usability and financial sovereignty. Blitz Wallet
-              makes self-custodial Bitcoin payments as seamless as traditional
-              financial apps. Through features like a native contacts system and
-              places to spend your Bitcoin, Blitz Wallet removes complexity and
-              enhances user experience.
+              From Bitcoin beginners to experienced users, we're building for
+              everyone who wants financial freedom without technical complexity.
             </p>
+          </div>
+
+          <div class="mission-card fade-in">
+            <div class="mission-icon">
+              <i data-lucide="rocket"></i>
+            </div>
+            <h3>Our Approach</h3>
             <p>
-              As we continue to innovate, we remain committed to our vision of
-              making Bitcoin simple, accessible, and practical for everyday use.
-              With Blitz Wallet, sending and receiving Bitcoin is finally as
-              easy as using Venmo or Cash App—without compromising on
-              self-custody and financial freedom.
+              Leveraging cutting-edge Bitcoin technology while maintaining
+              radical simplicity in user experience and design.
             </p>
           </div>
         </div>
-      </section>
-    </main>
+      </div>
+    </section>
 
+    <!-- Problem & Solution -->
+    <section class="problem-solution">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-label">The Challenge</span>
+          <h2>The Bitcoin Usability Problem</h2>
+        </div>
+
+        <div class="content-block fade-in">
+          <h3>
+            <i data-lucide="alert-circle"></i>
+            The Problem
+          </h3>
+          <p>
+            Bitcoin faces a major usability challenge for everyday payments. The
+            current system relies heavily on complex QR codes and addresses,
+            creating friction for users. This stems from two key issues:
+          </p>
+          <ol>
+            <li>
+              <strong>Finality of payments</strong> – Bitcoin transactions are
+              irreversible, so errors in entering addresses can lead to
+              permanent loss of funds.
+            </li>
+            <li>
+              <strong>Complexity of addresses</strong> – Bitcoin addresses and
+              Lightning invoices are long, difficult to read, and intimidating
+              for newcomers.
+            </li>
+          </ol>
+          <p>
+            While QR codes help mitigate these risks, they also create usability
+            friction. Traditional payment networks use simple identifiers like
+            usernames or phone numbers, making payments seamless. Bitcoin, in
+            contrast, often feels like a step backward in user experience.
+          </p>
+          <p>The Lightning Network introduces additional technical quirks:</p>
+          <ul>
+            <li>
+              Lightning Network channel capacity – Users can only receive
+              payments if their channel has enough inbound liquidity.
+            </li>
+            <li>
+              Invoice limitations – Lightning invoices expire and can only be
+              used once.
+            </li>
+            <li>
+              Node uptime – Lightning nodes must remain online to send and
+              receive payments.
+            </li>
+          </ul>
+          <p>
+            These constraints require users to understand the underlying
+            protocol before they can effectively use Bitcoin, creating a
+            significant barrier to adoption.
+          </p>
+        </div>
+
+        <div class="content-block fade-in">
+          <h3>
+            <i data-lucide="lightbulb"></i>
+            Our Solution
+          </h3>
+          <p>
+            Blitz Wallet simplifies Bitcoin payments by integrating
+            <a href="https://docs.spark.money/spark/spark-tldr" target="_blank"
+              >Spark</a
+            >, a Bitcoin-native Layer 2 network that enables instant,
+            low-friction, self-custodial transactions without Lightning's
+            complexity.
+          </p>
+          <p>
+            Unlike traditional Lightning wallets, Spark doesn't require users to
+            manage channels or maintain inbound liquidity. That means you can
+            receive payments instantly without being online or having to set up
+            anything in advance. This removes one of the biggest hurdles in
+            using Lightning for everyday payments.
+          </p>
+          <p>
+            Spark also allows Blitz to introduce human-readable addresses like
+            <code>username@domain.com</code>, making sending Bitcoin feel as
+            familiar as sending an email. These LNURL addresses replace complex
+            invoices and QR codes with simple, reusable identities—making
+            Bitcoin more accessible for everyone.
+          </p>
+          <p>
+            With Spark, Blitz Wallet becomes the easiest way to send, receive,
+            and manage Bitcoin: instant payments, no node setup, no channel
+            balancing, and full self-custody. It's the bridge between the power
+            of Lightning and the simplicity users expect from modern apps.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Story Section -->
+    <section class="story">
+      <div class="story-content">
+        <h2>A Real-World Example</h2>
+        <p class="story-quote">
+          "During a holiday, my mother wanted to send money for dinner. She sent
+          my brothers $20 via Venmo. For me, she used Blitz Wallet and sent
+          Bitcoin—without needing an invoice or prior coordination. Despite not
+          being technical, she found it just as easy as Venmo."
+        </p>
+        <p class="story-author">— Blake Kaufman, Creator of Blitz Wallet</p>
+      </div>
+    </section>
+
+    <!-- Values Section -->
+    <section class="values">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-label">Our Values</span>
+          <h2>What We Stand For</h2>
+        </div>
+
+        <div class="values-grid">
+          <div class="value-card fade-in">
+            <div class="value-icon">
+              <i data-lucide="shield"></i>
+            </div>
+            <h3>Self-Custody First</h3>
+            <p>
+              Your Bitcoin, your keys, your control. We never compromise on
+              self-custody.
+            </p>
+          </div>
+
+          <div class="value-card fade-in">
+            <div class="value-icon">
+              <i data-lucide="smile"></i>
+            </div>
+            <h3>Simplicity Wins</h3>
+            <p>
+              Complex technology should feel simple. We obsess over making
+              Bitcoin accessible to everyone.
+            </p>
+          </div>
+
+          <div class="value-card fade-in">
+            <div class="value-icon">
+              <i data-lucide="code"></i>
+            </div>
+            <h3>Open & Transparent</h3>
+            <p>
+              Our code is open source. We believe in transparency, community
+              feedback, and collaborative improvement.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+      <h2>Ready to Experience Bitcoin?</h2>
+      <p>Join thousands using the simplest self-custodial Bitcoin wallet</p>
+      <a href="#" class="btn-primary download-btn">Download Blitz Wallet →</a>
+    </section>
+
+    <!-- Footer -->
     <footer>
-      <div class="top">
-        <div class="text">
-          <h2>Blitz Wallet.</h2>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <h3>Blitz Wallet</h3>
           <p>
             The simplest self-custodial Bitcoin Lightning wallet—send, spend,
             and accept BTC.
           </p>
         </div>
-        <div class="listItems">
-          <div class="list">
-            <h3>Company</h3>
-            <ul>
-              <li><a href="/pages/about/">About</a></li>
-              <li><a href="/pages/contact/">Contact</a></li>
-              <li><a href="/pages/blog/">Blog</a></li>
-            </ul>
-          </div>
-          <div class="list">
-            <h3>Social Media</h3>
-            <ul>
-              <li>
-                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
-              </li>
-              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
-              <li>
-                <a href="https://youtube.com/@BlitzWalletApp">YouTube</a>
-              </li>
-            </ul>
-          </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/#products">Point of Sale</a></li>
+            <li><a href="/#products">Recovery Platform</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="content">
-        <div class="privcyContent">
-          <a href="/pages/privacyPolicy/">Privacy Policy</a>
-          <a href="/pages/terms/">Terms of Usage</a>
-          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
-            >License</a
-          >
-        </div>
-        <p>&copy;2025 Blitz Wallet LLC.</p>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Blitz Wallet LLC. All rights reserved.</p>
       </div>
     </footer>
-    <!-- Google tag (gtag.js) -->
+
+    <!-- Google Analytics -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
@@ -390,7 +463,6 @@
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-WNRJ7Y4RVE");
     </script>
   </body>

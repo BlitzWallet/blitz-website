@@ -1,57 +1,6 @@
-nav .blogNav {
-  width: 95%;
-  max-width: 1300px;
-  display: flex;
-  min-height: 35px;
-  align-items: center;
-  margin: 10px auto 20px;
-  justify-content: center;
-  position: relative;
-}
-.mobileNavDropdown {
-  top: 126px;
-  height: calc(100dvh - 126px);
-}
-
-nav .blogNav .locationTab {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-nav .blogNav .locationTab .imgContainer {
-  width: 35px;
-  height: 35px;
-  background-color: var(--lm-background);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 8px;
-  margin-right: 10px;
-}
-nav .blogNav .locationTab .imgContainer img {
-  width: 20px;
-  height: 20px;
-}
-
-nav .blogNav .postTypeSelector {
-  display: flex;
-  align-items: center;
-}
-nav .blogNav .postTypeSelector a {
-  margin: 0 10px;
-  transition: opacity 0.3s ease-in;
-  opacity: 0.7;
-  cursor: pointer;
-  color: var(--lm-background);
-}
-nav .blogNav .postTypeSelector .activeNav {
-  opacity: 1;
-}
 /* //////////////////////////////// */
 .blogContentContainer {
+  padding-top: 3em;
   /* min-height: calc(100dvh - 60px - 400px); */
 }
 .pageTitle {
@@ -137,7 +86,7 @@ nav .blogNav .postTypeSelector .activeNav {
   padding: 1.5rem;
   margin-bottom: 2rem;
   border-radius: 12px;
-  background: var(--dm-backgroundOffset);
+  background: var(--lm-backgroundOffset);
 }
 
 #previousPosts .post-content:hover {
@@ -171,7 +120,7 @@ nav .blogNav .postTypeSelector .activeNav {
 #previousPosts .post-type {
   font-size: 0.85rem;
   font-weight: 600;
-  color: var(--dm-text);
+  color: var(--lm-text);
   text-transform: uppercase;
 }
 
@@ -192,6 +141,9 @@ nav .blogNav .postTypeSelector .activeNav {
   font-size: 0.85rem;
   color: #777;
 }
+.blogContentContainer footer {
+  padding: 0;
+}
 
 @media screen and (max-width: 1200px) {
   #previousPosts .blogPost {
@@ -207,11 +159,7 @@ nav .blogNav .postTypeSelector .activeNav {
     display: block;
   }
 }
-@media screen and (max-width: 800px) {
-  #previousPosts .blogPost {
-    /* max-width: 100%; */
-  }
-}
+
 @media screen and (max-width: 500px) {
   .pageTitle {
     font-size: 25px;

@@ -12,6 +12,7 @@ export const postList = [
     time: "1763970000000",
     author: "Blitz Team",
     authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageNew: "megaphone.svg",
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
     isVertical: true,
     isFeatured: false, // usualy will be set to false
@@ -230,12 +231,12 @@ export const postList = [
 export const getPostsByCategory = (category) => {
   if (!category || category.toLowerCase() === "all") return postList;
   return postList.filter((post) =>
-    category.toLowerCase().includes(post.type.toLowerCase())
+    category.toLowerCase().includes(post.type.toLowerCase()),
   );
 };
 export const getPostByName = (postTitle) => {
   return postList.filter(
-    (post) => postTitle.toLowerCase() === post.searchName.toLowerCase()
+    (post) => postTitle.toLowerCase() === post.searchName.toLowerCase(),
   );
 };
 

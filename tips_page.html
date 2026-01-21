@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Favicon links -->
+    <!-- Favicon links-->
     <link
       rel="icon"
       type="image/png"
@@ -12,14 +12,6 @@
     />
     <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
     <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="/public/favicon/apple-touch-icon.png"
-    />
-    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
-    <link rel="manifest" href="/public/favicon/site.webmanifest" />
-
     <!-- SEO tags -->
     <!-- Primary Meta Tags -->
     <title>Blitz Wallet – Get Paid Instantly in Bitcoin</title>
@@ -29,7 +21,7 @@
       content="Receive Bitcoin payments directly from anyone using the Lightning Network. Send and accept BTC instantly."
     />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/" />
     <meta
@@ -61,114 +53,53 @@
       content="Receive Bitcoin payments directly from anyone using the Lightning Network. Send and accept BTC instantly."
     />
 
-    <link rel="stylesheet" href="./src/assets/styles/index.css" />
-    <link rel="stylesheet" href="./pages/tips/tips.css" />
-    <link rel="stylesheet" href="./src/assets/styles/navbar_footer.css" />
-    <link rel="stylesheet" href="../src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/pages/tips/tips.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
     <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    <script src="./src/js/navbar.js" defer></script>
-    <script src="./pages/tips/tips.js" defer></script>
-    <!-- <script src="./src/components/downloadModal/index.js" defer></script> -->
-
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/pages/tips/tips.js" defer></script>
     <script src="/src/components/downloadModal/index.js" defer></script>
     <script src="/src/js/font-loader.js" defer></script>
   </head>
-
   <body>
+    <!-- Navigation -->
     <nav>
-      <div class="navContent">
-        <a href="/">
-          <p class="bitzName">Blitz Wallet.</p>
-        </a>
-        <div class="desktopNav">
-          <ul class="navItems">
-            <li class="navItem">
-              <a href="./pages/about/">About</a>
-            </li>
-            <li class="navItem">
-              <a href="./pages/contact">Contact</a>
-            </li>
-            <li class="navItem">
-              <a href="./pages/blog">Blog</a>
-            </li>
-          </ul>
+      <div class="nav-container">
+        <a href="/" class="logo">Blitz Wallet</a>
+        <ul class="nav-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/pages/about">About</a></li>
+          <li><a href="/pages/blog">Blog</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <div class="mobile-menu" id="mobileMenu">
+          <span></span>
+          <span></span>
+          <span></span>
         </div>
-        <div class="mobile mobileNavBTN">
-          <img
-            class="navigationIcon shown"
-            src="../src/assets/images/hamburger.svg"
-            alt="Hamburger icon for mobile navigation"
-          />
-          <img
-            class="navigationIcon hidden"
-            src="../src/assets/images/xIcon.svg"
-            alt="Close icon for mobile navigation"
-          />
-        </div>
-        <p class="downloadModal">Download</p>
       </div>
     </nav>
-    <div class="mobileNavDropdown">
-      <div class="mobileNavInnerContainer">
-        <div class="mobileNavDropdown-Container">
-          <ul class="navItems">
-            <li class="navItem">
-              <a href="/pages/about/">About</a>
-            </li>
-            <li class="navItem">
-              <a href="/pages/contact">Contact</a>
-            </li>
-            <li class="navItem">
-              <a href="/pages/blog">Blog</a>
-            </li>
-          </ul>
-        </div>
-        <div class="buttonsContainer">
-          <div class="downloadButton">
-            <div class="hoverContainer"></div>
-            <img
-              src="/src/assets/images/apple.svg"
-              alt="Apple app store icon"
-            />
-            <div class="seperator"></div>
-            <img
-              src="/src/assets/images/google-play.svg"
-              alt="Google Playstore icon"
-            />
-            <h2 class="downloadText">Download now</h2>
-          </div>
-        </div>
-      </div>
-    </div>
 
+    <!-- Main Content -->
     <main>
-      <div class="modalContainer">
-        <div class="modal">
-          <h2>Download Blitz Wallet</h2>
-          <div class="downloadTypeInModal">
-            <p class="selectorItem IOS active">App Store</p>
-            <p class="selectorItem Android">Play Store</p>
-          </div>
-
-          <div class="qr-container">
-            <div id="qr-code"></div>
-          </div>
-          <p>Scan with your mobile device</p>
-        </div>
-      </div>
-
-      <div class="tipsContainer">
+      <div class="tips-container">
         <!-- Input Screen -->
         <div class="input-screen" id="input-screen">
-          <h1 class="title">Pay</h1>
+          <h1 class="page-title">Send Payment</h1>
 
           <div class="profile-section">
             <div class="avatar-container">
-              <div class="avatar-large avatar" id="avatar">B</div>
-              <span class="username" id="username-display">username</span>
+              <div class="avatar" id="avatar">B</div>
+              <span class="username-display" id="username-display"
+                >username</span
+              >
             </div>
           </div>
 
@@ -181,14 +112,13 @@
                 id="amount-input"
                 placeholder="0"
                 inputmode="decimal"
-                value=""
               />
             </div>
           </div>
 
-          <button class="tip-button" id="tip-button">Pay</button>
+          <button class="tip-button" id="tip-button">Continue</button>
           <button class="currency-button" id="currency-button">
-            Switch currency
+            Switch Currency
           </button>
 
           <div class="currency-dropdown" id="currency-dropdown">
@@ -204,93 +134,129 @@
 
         <!-- Invoice Screen -->
         <div class="invoice-screen" id="invoice-screen">
-          <div class="header">
+          <div class="invoice-header">
             <div class="user-info">
               <div class="avatar" id="invoice-avatar">B</div>
-              <span class="username" id="invoice-username">username</span>
+              <span class="username-display" id="username-display"
+                >username</span
+              >
             </div>
-            <span class="page-title">Tip</span>
-            <div class="amount-badge" id="amount-badge">$0.00</div>
+            <div class="amount-badge" id="amount-badge">5:00</div>
           </div>
 
-          <div class="qr-container">
+          <div id="qr-wrapper" class="qr-wrapper">
             <div id="invoice-qr-code"></div>
-            <p class="qr-hint">Scan with a Bitcoin Lightning wallet.</p>
+            <p class="qr-hint">
+              <i data-lucide="scan"></i>
+              Scan with your Bitcoin wallet
+            </p>
           </div>
-          <p class="reverify-text" id="reverify-text"></p>
 
-          <div class="info-section">
+          <p class="verify-text" id="verify-text">Checking payment status...</p>
+
+          <div class="info-section" id="info-section">
             <div class="info-row">
               <span class="info-label">Amount</span>
-              <span class="info-value" id="display-amount">$0.00</span>
+              <span class="amount-badge info-value" id="display-amount"
+                >$0.00</span
+              >
             </div>
-            <!-- <div class="info-row">
-              <span class="info-label">Estimated time</span>
-              <span class="info-value">Instant</span>
-            </div> -->
           </div>
 
-          <button class="button" id="copy-button">Copy</button>
-          <button class="button secondary" id="cancel-button">Cancel</button>
+          <button class="action-button primary" id="copy-button">
+            Copy Invoice
+          </button>
+          <button class="action-button secondary" id="cancel-button">
+            Cancel
+          </button>
         </div>
       </div>
     </main>
+
+    <!-- Footer -->
     <footer>
-      <div class="top">
-        <div class="text">
-          <h2>Blitz Wallet.</h2>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <h3>Blitz Wallet</h3>
           <p>
             The simplest self-custodial Bitcoin Lightning wallet—send, spend,
             and accept BTC.
           </p>
         </div>
-        <div class="listItems">
-          <div class="list">
-            <h3>Company</h3>
-            <ul>
-              <li><a href="/pages/about/">About</a></li>
-              <li><a href="/pages/contact/">Contact</a></li>
-              <li><a href="/pages/blog/">Blog</a></li>
-            </ul>
-          </div>
-          <div class="list">
-            <h3>Social Media</h3>
-            <ul>
-              <li>
-                <a href="https://github.com/BlitzWallet/BlitzWallet">GitHub</a>
-              </li>
-              <li><a href="https://x.com/blitzwalletapp">Twitter</a></li>
-              <li>
-                <a href="https://youtube.com/@BlitzWalletApp">YouTube</a>
-              </li>
-            </ul>
-          </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about">About</a></li>
+            <li><a href="/pages/contact">Contact</a></li>
+            <li><a href="/pages/blog">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy">Privacy Policy</a></li>
+            <li><a href="/pages/terms">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="content">
-        <div class="privcyContent">
-          <a href="./pages/privacyPolicy/">Privacy Policy</a>
-          <a href="./pages/terms/">Terms of Usage</a>
-          <a target="_blank" href="http://www.apache.org/licenses/LICENSE-2.0"
-            >License</a
-          >
-        </div>
-        <p>&copy;2025 Blitz Wallet LLC.</p>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Blitz Wallet LLC. All rights reserved.</p>
       </div>
     </footer>
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
+    <!-- download modal -->
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button class="modal-close" id="modalClose">
+          <i data-lucide="x"></i>
+        </button>
 
-      gtag("config", "G-WNRJ7Y4RVE");
-    </script>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i>
+            <span>iOS</span>
+          </button>
+          <button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i>
+            <span>Android</span>
+          </button>
+        </div>
+
+        <div class="modal-content">
+          <div class="qr-wrapper">
+            <div id="qr-code"></div>
+          </div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              id="iosLink"
+              target="_blank"
+            >
+              <i data-lucide="apple"></i>
+              <span>App Store</span>
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              id="androidLink"
+              target="_blank"
+            >
+              <i data-lucide="play"></i>
+              <span>Play Store</span>
+            </a>
+          </div>
+        </div>
+      </div>
   </body>
 </html>
