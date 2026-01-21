@@ -218,7 +218,7 @@ export const postList = [
     pageMetaDescription:
       "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
     readingLengthEST: 5, //In minutes
-    time: "1736994574819", // January 8, 2025
+    time: "1736994574819", // January 8, 2026
     author: "Blitz Team",
     authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
