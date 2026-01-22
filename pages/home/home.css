@@ -3,7 +3,7 @@
   min-height: 100dvh;
   display: flex;
   align-items: center;
-  padding: 8rem 2rem 4rem;
+  padding: 8rem 5% 4rem;
   position: relative;
   overflow: hidden;
 }
@@ -160,7 +160,7 @@
 .phone-mockup {
   width: 100%;
   max-width: 350px;
-  margin: 0 auto;
+  margin-left: auto;
   position: relative;
   filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.15));
 }
@@ -173,7 +173,7 @@
 
 /* Products Section */
 .products {
-  padding: 6rem 2rem;
+  padding: 6rem 5%;
   background: white;
 }
 
@@ -322,7 +322,7 @@
 
 /* Features Section */
 .features {
-  padding: 6rem 2rem;
+  padding: 6rem 5%;
   background: var(--lm-background);
 }
 
@@ -405,7 +405,7 @@
 
 /* How It Works */
 .how-it-works {
-  padding: 6rem 2rem;
+  padding: 6rem 5%;
   background: white;
 }
 
@@ -468,7 +468,7 @@
 
 /* CTA Section */
 .cta-section {
-  padding: 6rem 2rem;
+  padding: 6rem 5%;
   background: linear-gradient(
     135deg,
     var(--secondary_color) 0%,
@@ -499,66 +499,6 @@
 .cta-section .btn-primary:hover {
   transform: translateY(-3px);
   box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-}
-
-/* Footer */
-footer {
-  background: var(--lm-backgroundOffset);
-  padding: 4rem 2rem 2rem;
-}
-
-.footer-container {
-  max-width: 1400px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 3rem;
-  margin-bottom: 3rem;
-}
-
-.footer-brand h3 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: var(--primary_color);
-}
-
-.footer-brand p {
-  opacity: 0.8;
-  line-height: 1.7;
-}
-
-.footer-links h4 {
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-}
-
-.footer-links ul {
-  list-style: none;
-}
-
-.footer-links li {
-  margin-bottom: 0.8rem;
-}
-
-.footer-links a {
-  color: var(--lm-text);
-  text-decoration: none;
-  opacity: 0.8;
-  transition: all 0.3s ease;
-}
-
-.footer-links a:hover {
-  color: var(--primary_color);
-  opacity: 1;
-  padding-left: 5px;
-}
-
-.footer-bottom {
-  text-align: center;
-  padding-top: 2rem;
-  border-top: 1px solid #d0d0d0;
-  opacity: 0.7;
 }
 
 @media (max-width: 1300px) {
