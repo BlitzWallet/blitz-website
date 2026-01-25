@@ -19,12 +19,7 @@ function generateHTML(giftId) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- Favicon -->
-    <link
-      rel="icon"
-      type="image/png"
-      href="/public/favicon/favicon-96x96.png"
-      sizes="96x96"
-    />
+    <link rel="icon" type="image/png" href="/public/favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
     <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
     <link rel="apple-touch-icon" href="/public/favicon/favicon.ico" />
@@ -32,12 +27,9 @@ function generateHTML(giftId) {
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
     
     <title>Claim your Gift!</title>
-    <meta
-      name="description"
-      content="You've received a gift! Claim it with Blitz Wallet."
-    />
+    <meta name="description" content="You've received a gift! Claim it with Blitz Wallet." />
 
-    <!-- Open Graph / Facebook -->
+    <!-- Open Graph -->
     <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCardPresent.png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/gift/${giftId}" />
@@ -54,123 +46,186 @@ function generateHTML(giftId) {
     <meta name="robots" content="noindex,nofollow"> 
     <meta name="googlebot" content="noindex,nofollow">
 
-    <script src="/src/js/font-loader.js" defer></script>
-    <link rel="stylesheet" href="../src/assets/styles/index.css" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
 
     <style>
-      .gift-container {
+      :root {
+        --title_font: "Poppins", sans-serif;
+        --description_font: "Poppins", sans-serif;
+        --primary_color: #0375f6;
+        --secondary_color: #21374f;
+        --tertiary_color: #009bf0;
+        --lm-background: #f2f2f2;
+        --lm-backgroundOffset: #e3e3e3;
+        --lm-text: #262626;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--description_font);
+        background: var(--lm-background);
+        color: var(--lm-text);
         min-height: 100vh;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 20px;
+        padding: 1rem;
+      }
+
+      .gift-container {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
       }
 
       .gift-card {
-        background-color: var(--dm-backgroundOffset);
-        border-radius: 12px;
-        padding: 40px;
-        max-width: 500px;
-        width: 100%;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        background: white;
+        border-radius: 24px;
+        padding: 3rem 2.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--lm-backgroundOffset);
         text-align: center;
       }
 
       .gift-icon {
-        font-size: 80px;
-        margin-bottom: 20px;
+        width: 80px;
+        height: 80px;
+        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+      }
+
+      .gift-icon svg {
+        width: 45px;
+        height: 45px;
+        color: white;
       }
 
       .gift-title {
-        font-size: 28px;
-        margin-bottom: 10px;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        color: var(--lm-text);
       }
 
       .gift-amount {
-        font-size: 48px;
+        font-size: 3rem;
         font-weight: 600;
-        color: var(--dm-text);
-        margin: 20px 0;
+        color: var(--primary_color);
+        margin: 1.5rem 0;
       }
 
       .gift-description {
-        font-size: 16px;
-        margin-bottom: 20px;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
         opacity: 0.9;
+        line-height: 1.6;
       }
 
       .info-grid {
-        display: grid;
-        gap: 12px;
-        margin: 30px 0;
-        text-align: left;
+        background: var(--lm-background);
+        border-radius: 12px;
+        padding: 1rem;
+        margin: 2rem 0;
       }
 
       .info-item {
         display: flex;
         justify-content: space-between;
-        padding: 15px;
-        background: var(--dm-background);
-        border-radius: 8px;
+        padding: 1rem 0;
+      }
+
+      .info-item:not(:last-child) {
+        border-bottom: 1px solid #e0e0e0;
       }
 
       .info-label {
-        font-size: 14px;
+        font-size: 0.95rem;
         opacity: 0.7;
       }
 
       .info-value {
-        font-weight: 500;
-        font-size: 14px;
+        font-weight: 600;
+        font-size: 0.95rem;
       }
 
       .claim-button {
-        background-color: var(--dm-text);
-        color: var(--lm-text);
-        padding: 14px 24px;
-        border: 0;
-        border-radius: 8px;
-        font-size: 18px;
-        font-weight: 500;
+        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 12px;
+        font-size: 1.1rem;
+        font-weight: 600;
         cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
+        transition: all 0.3s ease;
         width: 100%;
-        margin-top: 20px;
+        margin-top: 1rem;
+        font-family: var(--description_font);
+        box-shadow: 0 4px 15px rgba(3, 117, 246, 0.3);
       }
 
       .claim-button:hover {
-        background-color: #b8b8b8;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(3, 117, 246, 0.4);
       }
 
       .copy-button {
-        background-color: unset;
-        color: var(--dm-text);
-        padding: 14px 24px;
-        border: 0;
-        border-radius: 8px;
-        font-size: 18px;
-        font-weight: 500;
+        background: transparent;
+        color: var(--primary_color);
+        padding: 1rem 2rem;
+        border: 1px solid var(--lm-backgroundOffset);
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 600;
         cursor: pointer;
-        transition: background-color 0.3s ease-in-out;
+        transition: all 0.3s ease;
         width: 100%;
-        margin-top: 20px;
-        text-decoration: underline;
+        margin-top: 1rem;
+        font-family: var(--description_font);
+      }
+
+      .copy-button:hover {
+        background: var(--lm-background);
+        border-color: var(--primary_color);
       }
 
       .error-message {
-        padding: 20px;
-        border-radius: 8px;
+        padding: 2rem;
+        border-radius: 12px;
+        background: #fef2f2;
+        border: 1px solid #fecaca;
       }
       
+      .error-message h2 {
+        color: #991b1b;
+        margin-bottom: 1rem;
+      }
+
       .error-message p {
-        margin-top: 20px;
+        color: #991b1b;
+        margin-top: 0.5rem;
       }
 
       .loading-spinner {
         display: inline-block;
         width: 50px;
         height: 50px;
-        border: 5px solid rgba(255, 255, 255, 0.3);
+        border: 5px solid var(--lm-backgroundOffset);
         border-radius: 50%;
         border-top-color: var(--primary_color);
         animation: spin 1s ease-in-out infinite;
@@ -184,31 +239,60 @@ function generateHTML(giftId) {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 20px;
+        gap: 1.5rem;
         opacity: 1;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity 0.3s ease;
+        padding: 3rem 0;
       }
 
       .loading-container.fade-out {
         opacity: 0;
       }
 
+      .loading-container p {
+        font-size: 1rem;
+        opacity: 0.8;
+      }
+
       .content-container {
         opacity: 0;
-        transition: opacity 0.3s ease-in-out;
+        transition: opacity 0.3s ease;
       }
 
       .content-container.fade-in {
         opacity: 1;
       }
 
-      @media screen and (max-width: 350px) {
+      .status-badge {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+      }
+
+      .status-badge.success {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .status-badge.error {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      @media screen and (max-width: 500px) {
         .gift-card {
-          padding: 20px;
+          padding: 2rem 1.5rem;
+        }
+
+        .gift-title {
+          font-size: 1.6rem;
         }
 
         .gift-amount {
-          font-size: 35px;
+          font-size: 2.5rem;
         }
       }
     </style>
@@ -230,15 +314,10 @@ function generateHTML(giftId) {
        * @returns {'ios' | 'android' | 'other'}
        */
       function detectOS() {
-          const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-          
-          if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
-              return 'ios';
-          }
-          if (/android/i.test(userAgent)) {
-              return 'android';
-          }
-          return 'other';
+        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return 'ios';
+        if (/android/i.test(userAgent)) return 'android';
+        return 'other';
       }
 
       /**
@@ -246,74 +325,58 @@ function generateHTML(giftId) {
        * before the full gift card UI is rendered.
        */
       function updateLoadingStatus(message) {
-          const loadingContainer = document.querySelector('.loading-container p');
-          if (loadingContainer) {
-              loadingContainer.textContent = message;
-          }
+        const loadingContainer = document.querySelector('.loading-container p');
+        if (loadingContainer) loadingContainer.textContent = message;
       }
 
       /**
        * Core function to attempt deep link launch with store redirect fallback.
        */
-      function attemptDeepLinkWithFallback(onlyPreNaigate = false) {
-          const os = detectOS();
-          const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
-          
-          let storeUrl = '';
-          if (os === 'ios') {
-              storeUrl = IOS_STORE_URL;
-          } else if (os === 'android') {
-              storeUrl = ANDROID_STORE_URL;
-          } else {
-              // For desktop/other, just try the deep link, but no fallback needed.
-              updateLoadingStatus('This link is optimized for mobile devices. Trying to open the app...');
-              window.location.href = deepLink;
-              return;
-          }
-
-          updateLoadingStatus('Attempting to open the Blitz Wallet app...');
-          
-          // 1. Attempt Deep Link Navigation
-          // If successful, the user leaves the page and the timer is naturally stopped.
+      function attemptDeepLinkWithFallback(onlyPreNaigate = false) 
+      function attemptDeepLinkWithFallback(onlyPreNavigate = false) {
+        const os = detectOS();
+        const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
+        
+        let storeUrl = '';
+        if (os === 'ios') {
+          storeUrl = IOS_STORE_URL;
+        } else if (os === 'android') {
+          storeUrl = ANDROID_STORE_URL;
+        } else {
+          updateLoadingStatus('This link is optimized for mobile devices.');
           window.location.href = deepLink;
+          return;
+        }
 
-          if (onlyPreNaigate) return
+        updateLoadingStatus('Opening Blitz Wallet...');
+        window.location.href = deepLink;
 
-          // 2. Set Fallback Timer
-          // If the app is NOT installed, the browser remains on this page, and the timer fires.
-          const fallbackTimer = setTimeout(() => {
-            if (pageHidden) {
-              // App opened → tab got backgrounded → do not redirect
-              return;
-            }
-              
-            updateLoadingStatus(\`App not detected. Redirecting you to the \${os === 'ios' ? 'App Store' : 'Play Store'}...\`);
+        if (onlyPreNavigate) return;
 
-            // Redirect after a moment to read the message
-            setTimeout(() => {
-              if (!pageHidden) window.location.href = storeUrl;
-            }, 1000); 
-
-          }, FALLBACK_TIMEOUT_MS);
+        setTimeout(() => {
+          if (pageHidden) return;
+          updateLoadingStatus(\`App not detected. Redirecting to \${os === 'ios' ? 'App Store' : 'Play Store'}...\`);
           
-          // Return the timer ID in case we need to clear it (e.g., if we confirm app launch quickly, though less reliable).
+            // Redirect after a moment to read the message
+          setTimeout(() => {
+            if (!pageHidden) window.location.href = storeUrl;
+          }, 1000);
+
+        }, FALLBACK_TIMEOUT_MS);
+
+         // Return the timer ID in case we need to clear it (e.g., if we confirm app launch quickly, though less reliable).
           return fallbackTimer;
       }
-      
       async function fetchGiftData() {
         try {
           const response = await fetch('/getBitcoinGiftDetails', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ giftUUID: giftId })
           });
+         
 
-          if (!response.ok) {
-            throw new Error('Failed to fetch gift data');
-          }
-
+          if (!response.ok) throw new Error('Failed to fetch gift data');
           const data = await response.json();
           return { data, error: null };
         } catch (error) {
@@ -322,34 +385,33 @@ function generateHTML(giftId) {
       }
 
       function updateMetaTags(formattedAmount, denomination) {
-        const title = \`Claim your \${formattedAmount ? \`\${formattedAmount}\` : \`\${denomination === 'BTC' ? 'Bitcoin' : 'Dollar'}\`} Gift!\`;
-        
-        // Update title
+        const title = \`Claim your \${formattedAmount || (denomination === 'BTC' ? 'Bitcoin' : 'Dollar')} Gift!\`;
+
+         // Update title
         document.title = title;
-        
-        // Update Open Graph tags
+
+         // Update Open Graph tags
         document.querySelector('meta[property="og:title"]').setAttribute('content', title);
-        
-        // Update Twitter tags
+
+         // Update Twitter tags
         document.querySelector('meta[property="twitter:title"]').setAttribute('content', title);
       }
 
       function renderGiftCard(giftData, loadError) {
         const container = document.getElementById('app');
-        
+
         // Hide loading spinner with fade out
         const loadingContainer = document.querySelector('.loading-container');
-        if (loadingContainer) {
-          loadingContainer.classList.add('fade-out');
-        }
+        
+        if (loadingContainer) loadingContainer.classList.add('fade-out');
 
         setTimeout(() => {
           if (loadError) {
             container.innerHTML = \`
               <div class="content-container fade-in">
-                <div class="error-message gift-card" style="box-shadow: none;">
-                  <h2 class="gift-title">Error Loading the Gift</h2>
-                  <p class="gift-description">\${loadError}</p>
+                <div class="error-message">
+                  <h2>Error Loading Gift</h2>
+                  <p>\${loadError}</p>
                 </div>
               </div>
             \`;
@@ -359,9 +421,9 @@ function generateHTML(giftId) {
           if (!giftData) {
             container.innerHTML = \`
               <div class="content-container fade-in">
-                <div class="error-message gift-card" style="box-shadow: none;">
-                  <h2 class="gift-title">The Gift was Not Found</h2>
-                  <p class="gift-description">This Gift doesn't exist or has been claimed.</p>
+                <div class="error-message">
+                  <h2>Gift Not Found</h2>
+                  <p>This gift doesn't exist or has already been claimed.</p>
                 </div>
               </div>
             \`;
@@ -370,7 +432,7 @@ function generateHTML(giftId) {
 
           const isExpired = Date.now() > giftData.expireTime;
           const isClaimed = giftData.state === 'Claimed';
-          const useSatSymbol = giftData.satDisplay === 'symbol' || !giftData.satDisplay
+          const useSatSymbol = giftData.satDisplay === 'symbol' || !giftData.satDisplay;
           const denomination = giftData.denomination || 'BTC';
           const frontSymbol = denomination === "BTC" ? '₿' : '$';
           const backText = denomination === "BTC" ? ' SAT' : ' USD';
@@ -378,12 +440,15 @@ function generateHTML(giftId) {
           const formattedAmount = (useSatSymbol ? frontSymbol : '') + giftAmount?.toLocaleString() + (useSatSymbol ? '' : backText);
           const giftType = denomination === 'BTC' ? 'Bitcoin' : 'Dollar';
           const expiresDate = new Date(giftData.expireTime).toLocaleDateString();
-          updateMetaTags(formattedAmount, denomination);
           
+          updateMetaTags(formattedAmount, denomination);
 
           container.innerHTML = \`
             <div class="content-container">
-              <h1 class="gift-title">Claim your Gift!</h1>
+              <div class="gift-icon">
+                <i data-lucide="gift"></i>
+              </div>
+              <h1 class="gift-title">You've Received a Gift!</h1>
               <div class="gift-amount">\${formattedAmount}</div>
               \${giftData.description ? \`<p class="gift-description">\${giftData.description}</p>\` : ''}
               
@@ -392,6 +457,10 @@ function generateHTML(giftId) {
                   <span class="info-label">Expires</span>
                   <span class="info-value">\${expiresDate}</span>
                 </div>
+                <div class="info-item">
+                  <span class="info-label">Type</span>
+                  <span class="info-value">\${giftType} Gift</span>
+                </div>
               </div>
 
               \${(!isClaimed && !isExpired) ? \`
@@ -399,17 +468,23 @@ function generateHTML(giftId) {
                   Claim in Blitz Wallet
                 </button>
                 <button class="copy-button" onclick="copyGift()">
-                  Copy Claim Link
+                  Copy Gift Link
                 </button>
               \` : \`
-                <div class="error-message">
-                  <p class="gift-description">\${isClaimed ? \`This \${giftType} Gift has already been claimed.\` : \`This \${giftType} Gift has expired.\`}</p>
-                </div>
+                <span class="status-badge error">
+                  \${isClaimed ? 'Already Claimed' : 'Expired'}
+                </span>
+                <p class="gift-description">
+                  \${isClaimed 
+                    ? \`This \${giftType} gift has already been claimed.\` 
+                    : \`This \${giftType} gift has expired.\`}
+                </p>
               \`}
             </div>
           \`;
 
-          // Trigger fade in
+          lucide.createIcons();
+          
           setTimeout(() => {
             container.querySelector('.content-container').classList.add('fade-in');
           }, 50);
@@ -442,7 +517,7 @@ function generateHTML(giftId) {
         // Then fetch and render the UI after a short delay
         setTimeout(async () => {
           const { data, error } = await fetchGiftData();
-          if (!error && data.data){
+          if (!error && data.data) {
             attemptDeepLinkWithFallback(true);
           }
           const giftData = data?.data;
@@ -463,24 +538,19 @@ function generateHTML(giftId) {
         <div id="app">
           <div class="loading-container">
             <div class="loading-spinner"></div>
-            <p>Loading Gift...</p>
+            <p>Loading your gift...</p>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
-    ></script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-      gtag("config", "G-WNRJ7Y4RVE");
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WNRJ7Y4RVE');
     </script>
   </body>
 </html>`;
