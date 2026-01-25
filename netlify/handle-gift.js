@@ -159,7 +159,7 @@ function generateHTML(giftId) {
       }
 
       .info-value {
-        font-weight: 600;
+        font-weight: 400;
         font-size: 0.95rem;
       }
 
@@ -298,21 +298,13 @@ function generateHTML(giftId) {
     </style>
 
     <script>
-      // --- CONFIGURATION ---
       const IOS_STORE_URL = 'https://apps.apple.com/us/app/blitz-wallet/id6476810582';
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
       let pageHidden = false;
-      
-      // Time (in milliseconds) to wait before executing the fallback redirect.
-      const FALLBACK_TIMEOUT_MS = 1500; 
-
+      const FALLBACK_TIMEOUT_MS = 1500;
       const giftId = '${giftId}';
       const fragment = window.location.hash.substring(1);
 
-      /**
-       * Detects the user's mobile operating system.
-       * @returns {'ios' | 'android' | 'other'}
-       */
       function detectOS() {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return 'ios';
@@ -320,19 +312,11 @@ function generateHTML(giftId) {
         return 'other';
       }
 
-      /**
-       * Updates the content of the loading container to show a status message
-       * before the full gift card UI is rendered.
-       */
       function updateLoadingStatus(message) {
         const loadingContainer = document.querySelector('.loading-container p');
         if (loadingContainer) loadingContainer.textContent = message;
       }
 
-      /**
-       * Core function to attempt deep link launch with store redirect fallback.
-       */
-      function attemptDeepLinkWithFallback(onlyPreNaigate = false) 
       function attemptDeepLinkWithFallback(onlyPreNavigate = false) {
         const os = detectOS();
         const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
@@ -356,17 +340,12 @@ function generateHTML(giftId) {
         setTimeout(() => {
           if (pageHidden) return;
           updateLoadingStatus(\`App not detected. Redirecting to \${os === 'ios' ? 'App Store' : 'Play Store'}...\`);
-          
-            // Redirect after a moment to read the message
           setTimeout(() => {
             if (!pageHidden) window.location.href = storeUrl;
           }, 1000);
-
         }, FALLBACK_TIMEOUT_MS);
-
-         // Return the timer ID in case we need to clear it (e.g., if we confirm app launch quickly, though less reliable).
-          return fallbackTimer;
       }
+
       async function fetchGiftData() {
         try {
           const response = await fetch('/getBitcoinGiftDetails', {
@@ -374,7 +353,6 @@ function generateHTML(giftId) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ giftUUID: giftId })
           });
-         
 
           if (!response.ok) throw new Error('Failed to fetch gift data');
           const data = await response.json();
@@ -386,21 +364,13 @@ function generateHTML(giftId) {
 
       function updateMetaTags(formattedAmount, denomination) {
         const title = \`Claim your \${formattedAmount || (denomination === 'BTC' ? 'Bitcoin' : 'Dollar')} Gift!\`;
-
-         // Update title
         document.title = title;
-
-         // Update Open Graph tags
         document.querySelector('meta[property="og:title"]').setAttribute('content', title);
-
-         // Update Twitter tags
         document.querySelector('meta[property="twitter:title"]').setAttribute('content', title);
       }
 
       function renderGiftCard(giftData, loadError) {
         const container = document.getElementById('app');
-
-        // Hide loading spinner with fade out
         const loadingContainer = document.querySelector('.loading-container');
         
         if (loadingContainer) loadingContainer.classList.add('fade-out');
@@ -488,7 +458,7 @@ function generateHTML(giftId) {
           setTimeout(() => {
             container.querySelector('.content-container').classList.add('fade-in');
           }, 50);
-        }, 300); // Wait for fade out to complete
+        }, 300);
       }
 
       function claimGift() {
@@ -497,8 +467,6 @@ function generateHTML(giftId) {
 
       function copyGift() {
         const giftLink = \`https://blitzwalletapp.com/gift/\${giftId}#\${fragment}\`;
-
-        // Copy the text inside the text field
         navigator.clipboard.writeText(giftLink);
 
         const button = document.querySelector('.copy-button');
@@ -511,10 +479,7 @@ function generateHTML(giftId) {
         }
       }
 
-      // Fetch and render when DOM is ready
       document.addEventListener('DOMContentLoaded', () => {
-
-        // Then fetch and render the UI after a short delay
         setTimeout(async () => {
           const { data, error } = await fetchGiftData();
           if (!error && data.data) {
