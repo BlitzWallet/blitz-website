@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Primary Meta Tags -->
+    <title>Why We Need More Familiarity in Bitcoin’s User Experience</title>
+    <meta
+      name="title"
+      content="Why We Need More Familiarity in Bitcoin’s User Experience."
+    />
+    <meta
+      name="description"
+      content="Bitcoin adoption stalls not because the technology lacks value, but because unfamiliar user experiences amplify perceived risk—making familiarity, not education or ideology, the real driver of mass adoption."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/pages/blog/bridge-update/"
+    />
+    <meta
+      property="og:title"
+      content="Why We Need More Familiarity in Bitcoin’s User Experience."
+    />
+    <meta
+      property="og:description"
+      content="Bitcoin adoption stalls not because the technology lacks value, but because unfamiliar user experiences amplify perceived risk—making familiarity, not education or ideology, the real driver of mass adoption."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta
+      property="twitter:url"
+      content="https://blitzwalletapp.com/pages/blog/bridge-update/"
+    />
+    <meta
+      property="twitter:title"
+      content="Why We Need More Familiarity in Bitcoin’s User Experience."
+    />
+    <meta
+      property="twitter:description"
+      content="Bitcoin adoption stalls not because the technology lacks value, but because unfamiliar user experiences amplify perceived risk—making familiarity, not education or ideology, the real driver of mass adoption."
+    />
+
+    <!-- Favicon -->
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <script src="/src//js/navbar.js" defer></script>
+
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="module" src="/pages/blog/pageSetup.js"></script>
+    <link rel="stylesheet" href="/pages/blog/masterBlogTheme.css" />
+    <link rel="stylesheet" href="/pages/blog/blitz-gifts/style.css" />
+  </head>
+
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo">Blitz Wallet</a>
+        <ul class="nav-links">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/pages/about/" class="active">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <div class="mobile-menu" id="mobileMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+    <section class="blogContentContainer">
+      <div class="postHead">
+        <h1 id="blogTitle">
+          <!-- Pulled in from javascript -->
+        </h1>
+        <p id="blogSubHeader">
+          <!-- Pulled in from javascript -->
+        </p>
+        <div class="postDataContainerOuter">
+          <div class="imageContainer">
+            <img
+              id="authorProfilePicture"
+              src="/favicon.png"
+              alt="Profile image of the author"
+            />
+            <!-- Img src in from javascript -->
+          </div>
+          <div class="dataContainer">
+            <p rel="author" id="authorName">
+              <!-- Pulled in from javascript -->
+            </p>
+            <div class="postDataContainerInner">
+              <p id="postReadTime">
+                <!-- Pulled in from javascript -->
+              </p>
+              <p class="postDataSeperator">|</p>
+              <p id="postDate">
+                <!-- Pulled in from javascript -->
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="postBody">
+        <p>Bitcoin doesn’t struggle to be adopted because it lacks benefits.</p>
+        <p>
+          It struggles because the experience people are used to is different
+          from the experience most Bitcoin products provide.
+        </p>
+        <p>
+          When I think about changing a user experience, I don’t think about
+          adding features. I think about changing how someone feels while moving
+          through a process. And the challenge of change, when it comes to the
+          success of a product, is shaped almost entirely by familiarity.
+        </p>
+
+        <h2>Change fails when familiarity breaks</h2>
+        <p>
+          People don’t resist change because it’s bad. They resist it because
+          the transition feels risky.
+        </p>
+        <p>
+          If someone understands and is okay with their current experience,
+          there’s a simple question they’re asking: why risk this? Why enter a
+          period—possibly long—where things might feel confusing or
+          uncomfortable, even if the end result could be better?
+        </p>
+        <p>In my view, fear of loss almost always dominates potential gain.</p>
+        <p>
+          Consider a coin flip. Heads, you gain one million dollars. Tails,
+          nothing happens. Most people would take that bet—there’s no downside.
+        </p>
+        <p>
+          Now change the rules. Heads, you gain one million. Tails, you lose one
+          million. The upside hasn’t changed, but far fewer people would
+          participate. The moment loss enters the picture, behavior shifts
+          completely.
+        </p>
+        <p>
+          That’s what unfamiliar experiences feel like. With familiar
+          experiences, losses are known and bounded. With unfamiliar ones, they
+          feel open-ended. People imagine worst-case scenarios. The uncertainty
+          in the experience itself becomes the risk.
+        </p>
+        <h2>Familiarity is the hidden adoption lever</h2>
+        <p>
+          Familiarity isn’t comfort. It’s the alignment between experience and
+          expectation.
+        </p>
+        <p>
+          When an experience matches what a user already knows, they can
+          estimate risk, assess benefit, and feel confident in their choices.
+          When it doesn’t, even a well-designed system creates discomfort.
+        </p>
+        <p>
+          From what I’ve seen, Bitcoin products are often consistent within the
+          context of Bitcoin, but unfamiliar to newcomers. Custody, payment
+          flows, error handling, and responsibility behave differently than in
+          traditional finance. That difference makes the experience feel
+          foreign, uncertain, and risky; even when it’s objectively sound.
+        </p>
+        <h2>Education can’t substitute for familiarity</h2>
+        <p>A common belief is that users just need to “learn more.”</p>
+        <p>
+          But people don’t use banks because they understand banking mechanics.
+          They use them because the experience matches the mental models they’ve
+          built over the years.
+        </p>
+        <p>
+          I don’t believe any product wins by demanding understanding upfront.
+          Nobody studies networking protocols before using the internet or
+          hardware architecture before buying a phone. People adopt new tools
+          when the cost of switching—cognitive, emotional, or practical—is low,
+          and the benefit is clear.
+        </p>
+        <h2>Familiarity beats ideology</h2>
+        <p>
+          At some point, I think builders have to ask themselves: who am I
+          actually building for? Is it for me, my friends, or people who already
+          think like I do?
+        </p>
+        <p>
+          If the goal is to onboard the world to Bitcoin, we can’t keep
+          designing only for the people already inside the system.
+        </p>
+        <p>
+          It’s natural to do so. Builders design around their own values and
+          tolerances. But when ideology leaks into UX, mass adoption suffers.
+        </p>
+        <p>
+          People use products for the experience they provide, not for an
+          understanding of why they’re better. When building on Bitcoin, I don’t
+          think our job is to convince users that Bitcoin is the solution. Our
+          job is to create a better, more meaningful experience, one that users
+          can't say no to.
+        </p>
+
+        <h2>Familiarity is the path forward</h2>
+        <p>
+          I don’t think Bitcoin will be adopted because people understand it’s
+          better money.
+        </p>
+        <p>
+          I think it will be adopted when using it feels familiar enough that
+          the risk of change disappears.
+        </p>
+        <p>
+          That doesn’t require everyone to understand Bitcoin. It requires
+          products to align with experiences users already know.
+        </p>
+        <p>
+          Mass adoption comes from matching expectations, not teaching new ones.
+        </p>
+        <p>
+          If we want Bitcoin to scale, we don’t need more explanations. We need
+          experiences that feel familiar from the very first interaction.
+        </p>
+
+        <p>Best,</p>
+        <p>Blitz Team</p>
+      </section>
+    </section>
+
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <h3>Blitz Wallet</h3>
+          <p>
+            The simplest self-custodial Bitcoin Lightning wallet—send, spend,
+            and accept BTC.
+          </p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/#products">Point of Sale</a></li>
+            <li><a href="/#products">Recovery Platform</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Download Modal -->
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button class="modal-close" id="modalClose">
+          <i data-lucide="x"></i>
+        </button>
+
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i>
+            <span>iOS</span>
+          </button>
+          <button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i>
+            <span>Android</span>
+          </button>
+        </div>
+
+        <div class="modal-content">
+          <div class="qr-wrapper">
+            <div id="qr-code"></div>
+          </div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+            >
+              <i data-lucide="apple"></i>
+              <span>App Store</span>
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+            >
+              <i data-lucide="play"></i>
+              <span>Play Store</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

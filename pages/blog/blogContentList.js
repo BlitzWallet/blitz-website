@@ -3,10 +3,26 @@
 export const postList = [
   {
     type: "Release", // Can be "Release", "Learn", or "Podcast"
+    title: "Why We Need More Familiarity in Bitcoin’s User Experience ",
+    description:
+      "Bitcoin adoption stalls not because the technology lacks value, but because unfamiliar user experiences amplify perceived risk—making familiarity, not education or ideology, the real driver of mass adoption.",
+    htmlPageLink: "/pages/blog/bitcoin-familiarity",
+    searchName: "bitcoin-familiarity",
+    readingLengthEST: 2, //In minutes
+    time: "1769443507549",
+    author: "Blitz Team",
+    authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
+    imageNew: "megaphone.svg",
+    imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
+    isVertical: true,
+    isFeatured: false, // usualy will be set to false
+  },
+  {
+    type: "Release", // Can be "Release", "Learn", or "Podcast"
     title: "Blitz Gifts",
     description:
       "Discover how you can create and share Blitz Bitcoin gifts to easily onboard any new Bitcoiner.",
-    htmlPageLink: "./blitz-gifts",
+    htmlPageLink: "/pages/blog/blitz-gifts",
     searchName: "blitz-gifts",
     readingLengthEST: 2, //In minutes
     time: "1763970000000",
@@ -22,7 +38,7 @@ export const postList = [
     title: "Day 4 of 14: Anonymous SMS with Blitz Wallet",
     description:
       "Discover Blitz Wallet’s Anonymous SMS feature powered by sms4sats. Send and receive private texts without using your personal number.",
-    htmlPageLink: "./anonymous-sms-with-blitz",
+    htmlPageLink: "/pages/blog/anonymous-sms-with-blitz",
     searchName: "anonymous-sms-with-blitz",
     readingLengthEST: 2, //In minutes
     time: "1759061600000",
@@ -37,7 +53,7 @@ export const postList = [
     title: "Day 3/14: Privacy On the Go – VPN Access with Bitcoin",
     description:
       "Protect your privacy with Blitz Wallet’s VPN integration via LNVPN. For the first time, you can buy VPN access directly with Bitcoin — pay by the hour or the quarter, no subscriptions, no hassle.",
-    htmlPageLink: "./vpn-access-with-bitcoin",
+    htmlPageLink: "/pages/blog/vpn-access-with-bitcoin",
     searchName: "vpn-access-with-bitcoin",
     readingLengthEST: 2, //In minutes
     time: "1758974845000",
@@ -52,7 +68,7 @@ export const postList = [
     title: "Day 2/14: Send Gift Cards to Contacts",
     description:
       "Send gift cards to friends instantly — no codes, no emails, just wallet-to-phone. A first in Bitcoin wallets with Blitz.",
-    htmlPageLink: "./send-gifts-to-contacts",
+    htmlPageLink: "/pages/blog/send-gifts-to-contacts",
     searchName: "send-gifts-to-contacts",
     readingLengthEST: 2, //In minutes
     time: "1758874845000",
@@ -67,7 +83,7 @@ export const postList = [
     title: "Day 1/14: Gift Cards in Seconds",
     description:
       "Turn your Bitcoin into real-world spending power instantly. With Blitz Wallet’s integration with the Bitcoin Company, you can buy gift cards in seconds—no exchanges, no middlemen, just seamless Bitcoin spending.",
-    htmlPageLink: "./gift-cards-in-seconds",
+    htmlPageLink: "/pages/blog/gift-cards-in-seconds",
     searchName: "gift-cards-in-seconds",
     readingLengthEST: 2, //In minutes
     time: "1758774845000",
@@ -81,7 +97,7 @@ export const postList = [
     type: "Learn", // Can be "Release", "Learn", or "Podcast"
     title: "What is Spark",
     description: "Learn about the technology powering Blitz Wallet!",
-    htmlPageLink: "./what-is-spark",
+    htmlPageLink: "/pages/blog/what-is-spark",
     searchName: "what-is-spark",
     readingLengthEST: 4, //In minutes
     time: "1758574845000",
@@ -96,7 +112,7 @@ export const postList = [
     title: "How to create a Bitcoin Wallet",
     description:
       "Lean how you can start sending and receiving Bitcoin instantly.",
-    htmlPageLink: "./how-to-create-a-bitcoin-wallet",
+    htmlPageLink: "/pages/blog/how-to-create-a-bitcoin-wallet",
     searchName: "how-to-create-a-bitcoin-wallet",
     readingLengthEST: 3, //In minutes
     time: "1745537600000",
@@ -110,7 +126,7 @@ export const postList = [
     type: "Release", // Can be "Release", "Learn", or "Podcast"
     title: "Explore page & Crashlytics",
     description: "Explore Blitz downloads, crash reporting & more!",
-    htmlPageLink: "./explore-blitz",
+    htmlPageLink: "/pages/blog/explore-blitz",
     searchName: "explore-blitz",
     pageMetaDescription:
       "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
@@ -119,7 +135,7 @@ export const postList = [
     author: "Blitz Team",
     authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
-    thumbnailUrl: "./explore-blitz/assets/explore_blitz_stats.webp", //Scoped to blog index.html
+    thumbnailUrl: "/pages/blog/explore-blitz/assets/explore_blitz_stats.webp", //Scoped to blog index.html
     isVertical: true,
     isFeatured: false, // usualy will be set to false
   },
@@ -127,7 +143,7 @@ export const postList = [
     type: "Release", // Can be "Release", "Learn", or "Podcast"
     title: "eCash & Point-of-sale",
     description: "eCash Expansion, POS Tip Optimization & More!",
-    htmlPageLink: "./eCash-pos",
+    htmlPageLink: "/pages/blog/eCash-pos",
     searchName: "eCash-pos",
     pageMetaDescription:
       "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
@@ -136,7 +152,7 @@ export const postList = [
     author: "Blitz Team",
     authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
-    thumbnailUrl: "./eCash-pos/assets/eCashSettings.webp", //Scoped to blog index.html
+    thumbnailUrl: "/pages/blog/eCash-pos/assets/eCashSettings.webp", //Scoped to blog index.html
     isVertical: true,
     isFeatured: false, // usualy will be set to false
   },
@@ -144,7 +160,7 @@ export const postList = [
     type: "Release", // Can be "Release", "Learn", or "Podcast"
     title: "The Power Up",
     description: "Ecash overhall, POS Tip Tracking & More!",
-    htmlPageLink: "./power-up",
+    htmlPageLink: "/pages/blog/power-up",
     searchName: "power-up",
     pageMetaDescription:
       "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
@@ -153,7 +169,7 @@ export const postList = [
     author: "Blitz Team",
     authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
-    thumbnailUrl: "./power-up/assets/posTransactions.webp", //Scoped to blog index.html
+    thumbnailUrl: "/pages/blog/power-up/assets/posTransactions.webp", //Scoped to blog index.html
     isVertical: true,
     isFeatured: false, // usualy will be set to false
   },
@@ -161,7 +177,7 @@ export const postList = [
     type: "Learn", // Can be "Release", "Learn", or "Podcast"
     title: "What Is a Self-Custodial Wallet?",
     description: "Your Guide to Financial Freedom with Blitz Wallet.",
-    htmlPageLink: "./self-custodial-wallet",
+    htmlPageLink: "/pages/blog/self-custodial-wallet",
     searchName: "self-custodial-wallet",
     pageMetaDescription:
       "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
@@ -170,7 +186,7 @@ export const postList = [
     author: "Destiny Smart",
     authorImage: "/public/authorImages/destiny_smart.webp", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/info.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
-    thumbnailUrl: "./self-custodial-wallet/assets/self_custody.png", //Scoped to blog index.html
+    thumbnailUrl: "/pages/blog/self-custodial-wallet/assets/self_custody.png", //Scoped to blog index.html
     isVertical: true,
     isFeatured: false, // usualy will be set to false
     customAuthor: true,
@@ -179,7 +195,7 @@ export const postList = [
     type: "Release", // Can be "Release", "Learn", or "Podcast"
     title: "The Efficiency Update",
     description: "Saying goodbye to long load times.",
-    htmlPageLink: "./efficiency-update",
+    htmlPageLink: "/pages/blog/efficiency-update",
     searchName: "efficiency-update",
     pageMetaDescription:
       "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
@@ -188,7 +204,7 @@ export const postList = [
     author: "Blitz Team",
     authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
-    thumbnailUrl: "./efficiency-update/assets/homepage.png", //Scoped to blog index.html
+    thumbnailUrl: "/pages/blog/efficiency-update/assets/homepage.png", //Scoped to blog index.html
     isVertical: true,
     isFeatured: false, // usualy will be set to false
   },
@@ -196,7 +212,7 @@ export const postList = [
     type: "Release", // Can be "Release", "Learn", or "Podcast"
     title: "The Bridge Update",
     description: "We've rebuilt how you pay your contacts.",
-    htmlPageLink: "./bridge-update",
+    htmlPageLink: "/pages/blog/bridge-update",
     searchName: "bridge-update",
     pageMetaDescription:
       "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
@@ -205,7 +221,7 @@ export const postList = [
     author: "Blitz Team",
     authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
-    thumbnailUrl: "./bridge-update/assets/contactsImages.png", //Scoped to blog index.html
+    thumbnailUrl: "/pages/blog/bridge-update/assets/contactsImages.png", //Scoped to blog index.html
     isVertical: true,
     isFeatured: false, // usualy will be set to false
   },
@@ -213,7 +229,7 @@ export const postList = [
     type: "Release", // Can be "Release", "Learn", or "Podcast"
     title: "Introducing Blitz Wallet",
     description: "A bitcoin wallet making payments simple",
-    htmlPageLink: "./introducing-blitz-wallet",
+    htmlPageLink: "/pages/blog/introducing-blitz-wallet",
     searchName: "introducing-blitz-wallet",
     pageMetaDescription:
       "Blitz Wallet is a fully open-source self-custodial Bitcoin and Lightning wallet that makes payments simple. Download the app, send money to friends, and spend Bitcoin on gift cards, services, and more.",
@@ -222,7 +238,8 @@ export const postList = [
     author: "Blitz Team",
     authorImage: "/favicon.png", //Scoped to blog post page or public depending on image
     imageUrl: "../../src/assets/images/megaphone.svg", //Scoped to blog index.html| Megaphone is for Release, Info is for Learn and Microphone is for podcast
-    thumbnailUrl: "./introducing-blitz-wallet/assets/thumbnailUrlWhite.png", //Scoped to blog index.html
+    thumbnailUrl:
+      "/pages/blog/introducing-blitz-wallet/assets/thumbnailUrlWhite.png", //Scoped to blog index.html
     isFeatured: true, // usualy will be set to false
   },
 ];
