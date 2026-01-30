@@ -110,7 +110,9 @@
     "radar": "53c7bdc3e5ab1482f16bf791c56c34db35f61e3fd53d1deb087b276c7dbbf5b8",
     "Kritik": "6e615b85f413ef90d03e56ff3e4e856b567141618652bd05442cf9ef19db5036",
     "ItsHoward": "5bb04fea536f4f15b250c5485e70efe4f3f77e21e4cdaf6653329d654107f3f1",
-    "za": "dd840e433b978795bb35a408bc61ef7e99688ba0b166f8cb4c7cebcb5318ecb0"
+    "za": "dd840e433b978795bb35a408bc61ef7e99688ba0b166f8cb4c7cebcb5318ecb0",
+    "satoshin": "d6817e7a4fa3f54e11d3e6dbe6bfc9b9d798f85c41485da29703e824ee94e3cc",
+    "novo": "5fb3f973b42ad6ee466c477d7625d1616c2f770610e52439ee7f573dc2d560ad"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -1002,6 +1004,22 @@
       "wss://relay.primal.net"
     ],
     "dd840e433b978795bb35a408bc61ef7e99688ba0b166f8cb4c7cebcb5318ecb0": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "d6817e7a4fa3f54e11d3e6dbe6bfc9b9d798f85c41485da29703e824ee94e3cc": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "5fb3f973b42ad6ee466c477d7625d1616c2f770610e52439ee7f573dc2d560ad": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
