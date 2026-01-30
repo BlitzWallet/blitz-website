@@ -381,6 +381,7 @@ let verifyURL = "";
 
 let verifyInterval = null;
 let verifyTimeout = null;
+let resizeTimeout = null;
 
 // Extract username from URL
 const username = window.location.pathname.split("/").filter(Boolean)[0];
@@ -630,21 +631,33 @@ function showInvoiceScreen(amount) {
   document.getElementById("input-screen").classList.add("hidden");
   document.getElementById("invoice-screen").classList.add("active");
   document.getElementById("display-amount").textContent = formattedAmount[0];
-  const container = document
-    .getElementById("qr-wrapper")
-    .getBoundingClientRect().width;
 
-  // Generate QR code
+  // Generate QR code with dynamic sizing
+  generateQRCode();
+
+  startInvoiceVerification();
+}
+
+function generateQRCode() {
+  const container = document.getElementById("qr-wrapper");
+  const containerWidth = container.getBoundingClientRect().width;
+
+  // Calculate QR size: 85% of container width, but max 250px
+  const qrSize = Math.min(containerWidth * 0.82, 250);
+
+  console.log(qrSize, "qr size", containerWidth);
+
+  // Clear existing QR code
   document.getElementById("invoice-qr-code").innerHTML = "";
+
+  // Generate new QR code
   new QRCode(document.getElementById("invoice-qr-code"), {
     text: currentInvoice,
-    width: container * 0.85,
-    height: container * 0.85,
+    width: qrSize,
+    height: qrSize,
     colorDark: "#000000",
     colorLight: "#ffffff",
   });
-
-  startInvoiceVerification();
 }
 
 function clearRunningItems() {
@@ -775,6 +788,22 @@ document.getElementById("cancel-button").addEventListener("click", () => {
   amountInput.value = "";
   tipButton.classList.remove("active");
   scaleFontSize();
+});
+
+// Window resize handler for QR code
+window.addEventListener("resize", () => {
+  // Debounce the resize event to avoid excessive regeneration
+  if (resizeTimeout) {
+    clearTimeout(resizeTimeout);
+  }
+
+  resizeTimeout = setTimeout(() => {
+    // Only regenerate if invoice screen is active and we have an invoice
+    const invoiceScreen = document.getElementById("invoice-screen");
+    if (invoiceScreen.classList.contains("active") && currentInvoice) {
+      generateQRCode();
+    }
+  }, 250); // Wait 250ms after resize stops before regenerating
 });
 
 // Initialize
