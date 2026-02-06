@@ -1,0 +1,580 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+
+    <!-- Primary Meta Tags -->
+    <title>Brand Resources - Blitz Wallet</title>
+    <meta name="title" content="Brand Resources - Blitz Wallet" />
+    <meta
+      name="description"
+      content="Download Blitz Wallet logos, find brand colors, typography guidelines, and resources for supporting Bitcoin adoption efforts."
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blitzwalletapp.com/pages/brand/" />
+    <meta property="og:title" content="Brand Resources - Blitz Wallet" />
+    <meta
+      property="og:description"
+      content="Download Blitz Wallet logos, find brand colors, typography guidelines, and resources for supporting Bitcoin adoption efforts."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://blitzwalletapp.com/pages/brand/"
+    />
+    <meta property="twitter:title" content="Brand Resources - Blitz Wallet" />
+    <meta
+      property="twitter:description"
+      content="Download Blitz Wallet logos, find brand colors, typography guidelines, and resources for supporting Bitcoin adoption efforts."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <!-- Global / shared styles -->
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+
+    <!-- Component styles -->
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+
+    <!-- Page-specific style -->
+    <link rel="stylesheet" href="/pages/brand/style.css" />
+
+    <!-- Scripts -->
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+
+    <script src="/src/components/downloadModal/index.js" defer></script>
+  </head>
+  <body>
+    <!-- Navigation -->
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo">Blitz Wallet</a>
+        <ul class="nav-links">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <div class="mobile-menu" id="mobileMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Download Modal -->
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button class="modal-close" id="modalClose">
+          <i data-lucide="x"></i>
+        </button>
+
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i>
+            <span>iOS</span>
+          </button>
+          <button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i>
+            <span>Android</span>
+          </button>
+        </div>
+
+        <div class="modal-content">
+          <div class="qr-wrapper">
+            <div id="qr-code"></div>
+          </div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+            >
+              <i data-lucide="apple"></i>
+              <span>App Store</span>
+            </a>
+            <a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+            >
+              <i data-lucide="play"></i>
+              <span>Play Store</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="brand-hero">
+      <div class="brand-hero-content">
+        <span class="hero-badge">Brand Resources</span>
+        <h1>Build with Blitz</h1>
+        <p>
+          Everything you need to represent Blitz Wallet accurately. Download
+          logos, reference our brand colors, and find resources to support
+          Bitcoin adoption.
+        </p>
+      </div>
+    </section>
+
+    <!-- Logo Files Section -->
+    <section class="brand-logos">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-label">Logo Files</span>
+          <h2>Our Logos</h2>
+          <p class="section-description">
+            Use these logos when referencing Blitz Wallet. Always maintain clear
+            space around the logo and never alter its proportions or colors.
+          </p>
+        </div>
+
+        <div class="logo-grid">
+          <!-- Wordmark - Light Background -->
+          <div class="logo-card fade-in">
+            <div class="logo-preview light-bg">
+              <img
+                src="/public/wordmark.png"
+                alt="Blitz Wallet wordmark on light background"
+                class="logo-img"
+              />
+            </div>
+            <div class="logo-card-info">
+              <h3>Wordmark - Light Background</h3>
+              <p>Full wordmark for use on light backgrounds.</p>
+              <a
+                href="/public/wordmark.png"
+                download="blitz-wallet-wordmark.png"
+                class="brand-download-link"
+              >
+                <i data-lucide="download"></i> Download PNG
+              </a>
+            </div>
+          </div>
+
+          <!-- Wordmark - Dark Background -->
+          <div class="logo-card fade-in">
+            <div class="logo-preview dark-bg">
+              <img
+                src="/public/wordmarkWhite.png"
+                alt="Blitz Wallet wordmark on light background"
+                class="logo-img"
+              />
+            </div>
+            <div class="logo-card-info">
+              <h3>Wordmark - Dark Background</h3>
+              <p>White wordmark for use on dark backgrounds.</p>
+              <a
+                href="/public/wordmarkWhite.png"
+                download="blitz-wallet-wordmark.png"
+                class="brand-download-link"
+              >
+                <i data-lucide="download"></i> Download PNG
+              </a>
+            </div>
+          </div>
+
+          <!-- Icon - SVG -->
+          <div class="logo-card fade-in">
+            <div class="logo-preview light-bg">
+              <img
+                src="/public/icon.png"
+                alt="Blitz Wallet icon on light background"
+                class="logo-img logo-img-icon"
+              />
+            </div>
+            <div class="logo-card-info">
+              <h3>Icon - Light Background</h3>
+              <p>Logo for use on light backgrounds.</p>
+              <a
+                href="/public/icon.png"
+                download="blitz-wallet-icon.svg"
+                class="brand-download-link"
+              >
+                <i data-lucide="download"></i> Download SVG
+              </a>
+            </div>
+          </div>
+
+          <!-- Icon - PNG -->
+          <div class="logo-card fade-in">
+            <div class="logo-preview dark-bg">
+              <img
+                src="/public/iconWhite.png"
+                alt="Blitz Wallet icon 96x96"
+                class="logo-img logo-img-icon"
+              />
+            </div>
+            <div class="logo-card-info">
+              <h3>Icon - Dark Background</h3>
+              <p>Logo for use on dark backgrounds.</p>
+              <a
+                href="/public/iconWhite.png"
+                download="blitz-wallet-icon-96x96.png"
+                class="brand-download-link"
+              >
+                <i data-lucide="download"></i> Download PNG
+              </a>
+            </div>
+          </div>
+
+          <!-- App Icon - Full Color -->
+          <div class="logo-card fade-in">
+            <div class="logo-preview light-bg">
+              <img
+                src="/public/BlitzFull.png"
+                alt="Blitz Wallet app icon full color"
+                class="logo-img logo-img-icon"
+              />
+            </div>
+            <div class="logo-card-info">
+              <h3>Blitz Full - Light Background</h3>
+              <p>Full Blitz for use on light backgrounds.</p>
+              <a
+                href="/public/BlitzFull.png"
+                download="blitz-wallet-app-icon-512.png"
+                class="brand-download-link"
+              >
+                <i data-lucide="download"></i> Download PNG
+              </a>
+            </div>
+          </div>
+
+          <!-- Wordmark + Tagline -->
+          <div class="logo-card fade-in">
+            <div class="logo-preview dark-bg">
+              <img
+                src="/public/BlitzFullWhite.png"
+                alt="Blitz Wallet app icon full color"
+                class="logo-img logo-img-icon"
+              />
+            </div>
+            <div class="logo-card-info">
+              <h3>Blitz Full - Dark Background</h3>
+              <p>Full Blitz for use on dark backgrounds.</p>
+              <a
+                href="/public/BlitzFullWhite.png"
+                download="blitz-wallet-app-icon-512.png"
+                class="brand-download-link"
+              >
+                <i data-lucide="download"></i> Download PNG
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand Colors Section -->
+    <section class="brand-colors">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-label">Colors</span>
+          <h2>Brand Colors</h2>
+        </div>
+
+        <div class="colors-grid">
+          <div class="color-card fade-in">
+            <div class="color-swatch" style="background: #0375f6"></div>
+            <div class="color-info">
+              <h3>Blitz Blue</h3>
+              <span class="color-label">Primary</span>
+              <code>#0375F6</code>
+            </div>
+          </div>
+
+          <div class="color-card fade-in">
+            <div class="color-swatch" style="background: #21374f"></div>
+            <div class="color-info">
+              <h3>Deep Navy</h3>
+              <span class="color-label">Secondary</span>
+              <code>#21374F</code>
+            </div>
+          </div>
+
+          <div class="color-card fade-in">
+            <div class="color-swatch" style="background: #009bf0"></div>
+            <div class="color-info">
+              <h3>Bright Cyan</h3>
+              <span class="color-label">Tertiary</span>
+              <code>#009BF0</code>
+            </div>
+          </div>
+
+          <div class="color-card fade-in">
+            <div
+              class="color-swatch"
+              style="
+                background: linear-gradient(135deg, #0375f6 0%, #009bf0 100%);
+              "
+            ></div>
+            <div class="color-info">
+              <h3>Blitz Gradient</h3>
+              <span class="color-label">Accent</span>
+              <code>#0375F6 &rarr; #009BF0</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography Section -->
+    <section class="brand-typography">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-label">Typography</span>
+          <h2>Fonts & Type</h2>
+        </div>
+
+        <div class="type-grid">
+          <div class="type-card fade-in">
+            <div class="type-icon">
+              <i data-lucide="type"></i>
+            </div>
+            <h3>Poppins</h3>
+            <span class="type-usage">Primary Font &mdash; All Uses</span>
+            <p class="type-sample">Aa Bb Cc Dd Ee Ff Gg</p>
+            <p class="type-description">
+              Used across all headings, body copy, and UI elements. Weights
+              used: Regular (400) and Medium (500).
+            </p>
+            <a
+              href="https://fonts.google.com/specimen/Poppins"
+              class="brand-download-link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i data-lucide="external-link"></i> View on Google Fonts
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Additional Resources Section -->
+    <section class="brand-resources">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="section-label">Resources</span>
+          <h2>Additional Resources</h2>
+        </div>
+
+        <div class="resources-grid">
+          <!-- Educational Guide -->
+          <div class="logo-card fade-in">
+            <div class="logo-preview light-bg logo-preview-tall">
+              <img
+                src="/public/educationalGuide.png"
+                alt="Blitz Wallet educational guide"
+                class="logo-img"
+              />
+            </div>
+            <div class="logo-card-info">
+              <h3>Educational Guide</h3>
+              <p>
+                Printable educational guide for community onboarding and
+                workshops.
+              </p>
+              <a
+                href="/public/educationalGuide.pdf"
+                download="blitz-wallet-educational-guide.pdf"
+                class="brand-download-link"
+              >
+                <i data-lucide="download"></i> Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Window Sticker - Light -->
+          <div class="logo-card fade-in">
+            <div class="logo-preview dark-bg">
+              <img
+                src="/public/windowStickerLight.png"
+                alt="Blitz Wallet window sticker light"
+                class="logo-img"
+              />
+            </div>
+            <div class="logo-card-info">
+              <h3>Window Sticker - Light</h3>
+              <p>Light window sticker for merchant storefronts.</p>
+              <a
+                href="/public/windowStickerLight.pdf"
+                download="blitz-wallet-window-sticker-light.pdf"
+                class="brand-download-link"
+              >
+                <i data-lucide="download"></i> Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Window Sticker - Dark -->
+          <div class="logo-card fade-in">
+            <div class="logo-preview light-bg">
+              <img
+                src="/public/windowStickerDark.png"
+                alt="Blitz Wallet window sticker dark"
+                class="logo-img"
+              />
+            </div>
+            <div class="logo-card-info">
+              <h3>Window Sticker - Dark</h3>
+              <p>Dark window sticker for merchant storefronts.</p>
+              <a
+                href="/public/windowStickerDark.pdf"
+                download="blitz-wallet-window-sticker-dark.pdf"
+                class="brand-download-link"
+              >
+                <i data-lucide="download"></i> Download PDF
+              </a>
+            </div>
+          </div>
+
+          <!-- Counter Top Display -->
+          <div class="logo-card fade-in">
+            <div class="logo-preview light-bg">
+              <img
+                src="/public/couterTop.png"
+                alt="Blitz Wallet counter top display"
+                class="logo-img"
+              />
+            </div>
+            <div class="logo-card-info">
+              <h3>Counter Top Display</h3>
+              <p>Counter top display for point-of-sale locations.</p>
+              <a
+                href="/public/couterTop.pdf"
+                download="blitz-wallet-counter-top-display.pdf"
+                class="brand-download-link"
+              >
+                <i data-lucide="download"></i> Download PDF
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support CTA Section -->
+    <section class="brand-cta">
+      <div class="brand-cta-content">
+        <h2>Need Something Else?</h2>
+        <p>
+          If you need a specific asset, have questions about brand usage, or
+          want to collaborate, get in touch.
+        </p>
+        <div class="brand-cta-links">
+          <a href="/pages/contact/" class="btn-primary">
+            <i data-lucide="mail"></i> Contact Us
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <h3>Blitz Wallet</h3>
+          <p>
+            The simplest self-custodial Bitcoin Lightning wallet—send, spend,
+            and accept BTC.
+          </p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/#products">Point of Sale</a></li>
+            <li><a href="/#products">Recovery Platform</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/brand/">Brand</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <!-- Google Analytics -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

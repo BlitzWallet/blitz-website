@@ -1,0 +1,505 @@
+/* ================================================
+   BRAND RESOURCES PAGE STYLES
+   ================================================ */
+
+/* Hero Section */
+.brand-hero {
+  padding: 10rem 2rem 6rem;
+  text-align: center;
+  background: linear-gradient(180deg, white 0%, var(--lm-background) 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-hero::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, var(--primary_color) 0%, transparent 70%);
+  opacity: 0.05;
+}
+
+.brand-hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero-badge {
+  display: inline-block;
+  background: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--primary_color);
+  color: var(--primary_color);
+  box-shadow: 0 2px 10px rgba(3, 117, 246, 0.1);
+}
+
+.brand-hero h1 {
+  font-size: 3.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+}
+
+.brand-hero p {
+  font-size: 1.3rem;
+  line-height: 1.8;
+  opacity: 0.9;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+/* Shared Section Styles */
+.section-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-label {
+  display: inline-block;
+  background: var(--lm-backgroundOffset);
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  color: var(--primary_color);
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.section-description {
+  max-width: 600px;
+  margin: 0 auto;
+  opacity: 0.8;
+  line-height: 1.7;
+}
+
+/* Shared Download Link */
+.brand-download-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--primary_color);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.brand-download-link svg {
+  width: 16px;
+  height: 16px;
+}
+
+.brand-download-link:hover {
+  gap: 0.7rem;
+}
+
+/* ---- Logo Files Section ---- */
+.brand-logos {
+  padding: 6rem 2rem;
+  background: white;
+}
+
+.logo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.logo-card {
+  background: var(--lm-background);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-card:hover {
+  border-color: var(--primary_color);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(3, 117, 246, 0.15);
+}
+
+.logo-preview {
+  min-height: 160px;
+  max-height: 60dvh;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-preview.light-bg {
+  background: #ffffff;
+}
+
+.logo-preview.dark-bg {
+  background: var(--secondary_color);
+}
+
+.logo-preview-tall {
+  height: 300px;
+}
+
+.logo-img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+}
+
+.logo-img-icon {
+  max-width: 60%;
+  max-height: 60%;
+}
+
+.logo-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0.4;
+}
+
+.logo-placeholder svg {
+  width: 40px;
+  height: 40px;
+}
+
+.dark-bg .logo-placeholder {
+  color: white;
+}
+
+.logo-placeholder span {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.logo-card-info {
+  padding: 1.5rem;
+}
+
+.logo-card-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.logo-card-info p {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+}
+
+/* ---- Brand Colors Section ---- */
+.brand-colors {
+  padding: 6rem 2rem;
+  background: var(--lm-background);
+}
+
+.colors-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.color-card {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.color-card:hover {
+  border-color: var(--primary_color);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(3, 117, 246, 0.15);
+}
+
+.color-swatch {
+  height: 120px;
+  width: 100%;
+}
+
+.color-info {
+  padding: 1.5rem;
+}
+
+.color-info h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.color-label {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--primary_color);
+  margin-bottom: 0.5rem;
+}
+
+.color-info code {
+  display: block;
+  background: var(--lm-background);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
+
+/* ---- Typography Section ---- */
+.brand-typography {
+  padding: 6rem 2rem;
+  background: white;
+}
+
+.type-grid {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.type-card {
+  background: var(--lm-background);
+  padding: 2.5rem;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.type-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(
+    135deg,
+    var(--primary_color),
+    var(--tertiary_color)
+  );
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+}
+
+.type-icon svg {
+  width: 30px;
+  height: 30px;
+  color: white;
+}
+
+.type-card h3 {
+  font-size: 2rem;
+  margin-bottom: 0.3rem;
+}
+
+.type-usage {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--primary_color);
+  margin-bottom: 1rem;
+}
+
+.type-sample {
+  font-size: 1.8rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.type-description {
+  line-height: 1.7;
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ---- Additional Resources Section ---- */
+.brand-resources {
+  padding: 6rem 2rem;
+  background: var(--lm-background);
+}
+
+.resources-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+/* ---- Support CTA Section ---- */
+.brand-cta {
+  padding: 6rem 2rem;
+  background: linear-gradient(
+    135deg,
+    var(--secondary_color) 0%,
+    var(--primary_color) 100%
+  );
+  color: white;
+  text-align: center;
+}
+
+.brand-cta-content {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.brand-cta h2 {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.brand-cta p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+  color: white;
+}
+
+.brand-cta-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  background: white;
+  color: var(--primary_color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.btn-primary svg {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-secondary {
+  padding: 1rem 2.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  background: transparent;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+  transform: translateY(-3px);
+}
+
+.btn-secondary svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---- Responsive: 1024px ---- */
+@media (max-width: 1024px) {
+  .logo-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .colors-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .resources-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ---- Responsive: 768px ---- */
+@media (max-width: 768px) {
+  .brand-hero {
+    padding: 8rem 1.5rem 4rem;
+  }
+
+  .brand-hero h1 {
+    font-size: 2.5rem;
+  }
+
+  .brand-hero p {
+    font-size: 1.1rem;
+  }
+
+  .section-header h2 {
+    font-size: 2rem;
+  }
+
+  .logo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .colors-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-cta h2 {
+    font-size: 2rem;
+  }
+
+  .brand-cta-links {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ---- Scroll Animations ---- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
