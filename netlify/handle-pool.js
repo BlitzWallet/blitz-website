@@ -81,15 +81,17 @@ function generateHTML(poolId) {
         color: var(--lm-text);
         min-height: 100vh;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         padding: 1rem;
+        padding-top: 70px;
       }
 
       .pool-container {
         width: 100%;
         max-width: 500px;
-        margin: 0 auto;
+        margin: 50px auto;
       }
 
       .pool-card {
@@ -235,7 +237,7 @@ function generateHTML(poolId) {
         padding: 0.5rem 1rem;
         border-radius: 50px;
         font-size: 0.9rem;
-        font-weight: 600;
+        font-weight: 500;
         margin-bottom: 1rem;
       }
 
@@ -257,7 +259,7 @@ function generateHTML(poolId) {
 
       .contributors-title {
         font-size: 0.9rem;
-        font-weight: 600;
+        font-weight: 500;
         color: #888;
         text-transform: uppercase;
         letter-spacing: 0.5px;
@@ -291,7 +293,7 @@ function generateHTML(poolId) {
         justify-content: center;
         color: white;
         font-size: 0.8rem;
-        font-weight: 600;
+        font-weight: 500;
       }
 
       .contributor-name {
@@ -301,7 +303,7 @@ function generateHTML(poolId) {
 
       .contributor-amount {
         font-size: 0.95rem;
-        font-weight: 600;
+        font-weight: 500;
         color: var(--primary_color);
       }
 
@@ -313,7 +315,7 @@ function generateHTML(poolId) {
         border: none;
         border-radius: 12px;
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: 500;
         cursor: pointer;
         transition: all 0.3s ease;
         width: 100%;
@@ -341,7 +343,7 @@ function generateHTML(poolId) {
         border: 1px solid var(--lm-backgroundOffset);
         border-radius: 12px;
         font-size: 1rem;
-        font-weight: 600;
+        font-weight: 500;
         cursor: pointer;
         transition: all 0.3s ease;
         width: 100%;
@@ -496,7 +498,7 @@ function generateHTML(poolId) {
 
       .invoice-amount-display {
         font-size: 1.5rem;
-        font-weight: 600;
+        font-weight: 500;
         color: var(--primary_color);
         margin: 0.5rem 0;
       }
@@ -533,7 +535,7 @@ function generateHTML(poolId) {
         border: none;
         color: var(--primary_color);
         font-size: 0.9rem;
-        font-weight: 600;
+        font-weight: 500;
         cursor: pointer;
         padding: 0.5rem 1rem;
         font-family: var(--description_font);
@@ -615,6 +617,231 @@ function generateHTML(poolId) {
         color: #92400e;
       }
 
+      /* Navbar */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: var(--lm-background);
+        border-bottom: 1px solid var(--lm-backgroundOffset);
+        display: flex;
+        justify-content: center;
+        padding: 0 1rem;
+      }
+
+      .nav-inner {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 0;
+      }
+
+      nav a {
+      display:flex;
+      }
+      nav img {
+        height: 45px;
+      }
+
+      .nav-download-btn {
+        background: linear-gradient(135deg, var(--primary_color) 0%, var(--tertiary_color) 100%);
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 50px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(3, 117, 246, 0.3);
+      }
+
+      .nav-download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(3, 117, 246, 0.4);
+      }
+
+      /* Download Modal */
+      .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        pointer-events: none;
+        z-index: 9998;
+      }
+
+      .modal-backdrop.active {
+        opacity: 1;
+        pointer-events: all;
+      }
+
+      .modal-container {
+        position: fixed;
+        bottom: -200%;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        transition: bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .modal-container.active {
+        bottom: 0;
+      }
+
+      .download-modal {
+        background: white;
+        border-radius: 30px 30px 0 0;
+        padding: 2.5rem 2rem 2rem;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: var(--lm-backgroundOffset);
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .modal-close:hover {
+        background: var(--lm-text);
+      }
+
+      .modal-close svg {
+        width: 20px;
+        height: 20px;
+        color: var(--lm-text);
+      }
+
+      .modal-close:hover svg {
+        color: white;
+      }
+
+      .modal-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .modal-header h2 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+        color: var(--lm-text);
+      }
+
+      .modal-header p {
+        color: var(--lm-text);
+        opacity: 0.7;
+      }
+
+      .modal-tabs {
+        display: flex;
+        background: var(--lm-backgroundOffset);
+        border-radius: 50px;
+        padding: 0.3rem;
+        margin-bottom: 2rem;
+        gap: 0.3rem;
+      }
+
+      .modal-tab {
+        flex: 1;
+        padding: 0.7rem 1.5rem;
+        border: none;
+        background: transparent;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 0.95rem;
+        color: var(--lm-text);
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .modal-tab svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .modal-tab.active {
+        background: white;
+        color: var(--primary_color);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .modal-content {
+        text-align: center;
+      }
+
+      .qr-wrapper {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 20px;
+        display: inline-block;
+        border: 2px solid var(--lm-backgroundOffset);
+        margin-bottom: 1.5rem;
+      }
+
+      #qr-code {
+        display: block;
+      }
+
+      .modal-instructions {
+        font-size: 0.95rem;
+        color: var(--lm-text);
+        opacity: 0.8;
+        margin-bottom: 1.5rem;
+      }
+
+      .store-badges {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .store-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.8rem 1.5rem;
+        background: var(--lm-text);
+        color: white;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .store-badge svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .store-badge:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
       @media screen and (max-width: 500px) {
         .pool-card {
           padding: 2rem 1.5rem;
@@ -631,6 +858,14 @@ function generateHTML(poolId) {
         .amount-option {
           padding: 0.75rem;
           font-size: 1rem;
+        }
+
+        .download-modal {
+          padding: 2.5rem 1.5rem 2rem;
+        }
+
+        .modal-header h2 {
+          font-size: 1.5rem;
         }
       }
     </style>
@@ -726,7 +961,7 @@ function generateHTML(poolId) {
       }
 
       function formatSats(sats) {
-        return sats.toLocaleString();
+        return sats?.toLocaleString()||0;
       }
 
       function getProgressPercent(current, goal) {
@@ -823,7 +1058,7 @@ function generateHTML(poolId) {
                           <div class="contributor-avatar">\${getInitial(c.name)}</div>
                           <span class="contributor-name">\${escapeHtml(c.name)}</span>
                         </div>
-                        <span class="contributor-amount">\${formatSats(c.amount)} sats</span>
+                        <span class="contributor-amount">\${formatSats(c.amount)} SAT</span>
                       </div>
                     \`).join('')}
                   </div>
@@ -833,16 +1068,6 @@ function generateHTML(poolId) {
                   <button class="btn-primary" onclick="showStep('amount')">
                     Contribute
                   </button>
-                \` : ''}
-                \${!isClosed ? \`
-                <button class="btn-secondary" onclick="attemptDeepLinkWithFallback()">
-                  Open in Blitz Wallet
-                </button>
-                \` : ''}
-                \${!isClosed ? \`
-                <button class="btn-secondary" onclick="copyPoolLink()" id="copyLinkBtn">
-                  Copy Pool Link
-                </button>
                 \` : ''}
               </div>
 
@@ -898,7 +1123,7 @@ function generateHTML(poolId) {
                 <button class="btn-back" onclick="cancelPayment()">
                   <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
                 </button>
-                <h2 style="font-size:1.4rem;font-weight:600;margin-bottom:0.5rem;">Scan to Pay</h2>
+                <h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.5rem;">Scan to Pay</h2>
                 <div class="invoice-amount-display" id="paymentAmountDisplay"></div>
 
                 <div class="qr-code-container" id="qrCodeContainer"></div>
@@ -924,9 +1149,6 @@ function generateHTML(poolId) {
                 <p class="success-subtitle">Your contribution has been recorded.</p>
                 <button class="btn-primary" onclick="returnToPool()">
                   Back to Pool
-                </button>
-                <button class="btn-secondary" onclick="attemptDeepLinkWithFallback()">
-                  Open in Blitz Wallet
                 </button>
               </div>
             </div>
@@ -1016,7 +1238,7 @@ function generateHTML(poolId) {
         showStep('payment');
         lucide.createIcons();
 
-        document.getElementById('paymentAmountDisplay').textContent = formatSats(selectedAmountSats) + ' sats';
+        document.getElementById('paymentAmountDisplay').textContent = formatSats(selectedAmountSats) + ' SAT';
 
         // Render QR code
         const qrContainer = document.getElementById('qrCodeContainer');
@@ -1129,7 +1351,7 @@ function generateHTML(poolId) {
         origShowStep(stepName);
         if (stepName === 'name') {
           const amountEl = document.querySelector('#step-name strong');
-          if (amountEl) amountEl.textContent = formatSats(selectedAmountSats) + ' sats';
+          if (amountEl) amountEl.textContent = formatSats(selectedAmountSats) + ' SAT';
         }
       };
 
@@ -1159,11 +1381,8 @@ function generateHTML(poolId) {
                 <div class="content-container fade-in">
                   <div class="error-message">
                     <h2>Pool Not Found</h2>
-                    <p>\${error || 'This pool does not exist or has been removed.'}</p>
+                    <p>\${'This pool does not exist.'}</p>
                   </div>
-                  <button class="btn-secondary" onclick="attemptDeepLinkWithFallback()" style="margin-top:1rem;">
-                    Open Blitz Wallet
-                  </button>
                 </div>
               \`;
             }, 300);
@@ -1178,9 +1397,58 @@ function generateHTML(poolId) {
     </script>
   </head>
   <body>
+    <nav>
+      <div class="nav-inner">
+        <a href="/">
+          <img src="/public/favicon/favicon.svg" alt="Blitz Wallet" />
+        </a>
+        <a href="#" class="nav-download-btn download-btn">Download</a>
+      </div>
+    </nav>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button class="modal-close" id="modalClose">
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i>
+            <span>iOS</span>
+          </button>
+          <button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i>
+            <span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper">
+            <div id="qr-code"></div>
+          </div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a href="https://apps.apple.com/us/app/blitz-wallet/id6476810582" class="store-badge" target="_blank">
+              <i data-lucide="apple"></i>
+              <span>App Store</span>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.blitzwallet" class="store-badge" target="_blank">
+              <i data-lucide="play"></i>
+              <span>Play Store</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <div class="pool-container">
       <div class="pool-card">
-        <div id="app">
+        <div id="app"> 
+     
           <div class="loading-container">
             <div class="loading-spinner"></div>
             <p>Loading pool...</p>
@@ -1188,6 +1456,85 @@ function generateHTML(poolId) {
         </div>
       </div>
     </div>
+
+    <!-- Download Modal JS -->
+    <script>
+      (function() {
+        const modalContainer = document.getElementById('modalContainer');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const modalClose = document.getElementById('modalClose');
+        const modalTabs = document.querySelectorAll('.modal-tab');
+        let qrcode = null;
+
+        function initQRCode(url) {
+          const qrElement = document.getElementById('qr-code');
+          qrElement.innerHTML = '';
+          qrcode = new QRCode(qrElement, {
+            text: url,
+            width: 200,
+            height: 200,
+            colorDark: '#000000',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H,
+          });
+        }
+
+        function showModal() {
+          modalContainer.classList.add('active');
+          modalBackdrop.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          if (!qrcode) initQRCode(IOS_STORE_URL);
+        }
+
+        function hideModal() {
+          modalContainer.classList.remove('active');
+          modalBackdrop.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+
+        function isMobileDevice() {
+          return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        function isAndroidDevice() {
+          return /Android/i.test(navigator.userAgent);
+        }
+
+        function isIOSDevice() {
+          return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
+        modalTabs.forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            modalTabs.forEach(function(t) { t.classList.remove('active'); });
+            tab.classList.add('active');
+            var platform = tab.dataset.platform;
+            var url = platform === 'ios' ? IOS_STORE_URL : ANDROID_STORE_URL;
+            initQRCode(url);
+          });
+        });
+
+        modalClose.addEventListener('click', hideModal);
+        modalBackdrop.addEventListener('click', hideModal);
+
+        document.querySelectorAll('.download-btn').forEach(function(btn) {
+          btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            if (isMobileDevice()) {
+              if (isAndroidDevice()) {
+                window.location.href = ANDROID_STORE_URL;
+              } else if (isIOSDevice()) {
+                window.location.href = IOS_STORE_URL;
+              }
+            } else {
+              showModal();
+            }
+          });
+        });
+
+        lucide.createIcons();
+      })();
+    </script>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"></script>
