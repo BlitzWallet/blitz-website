@@ -1009,8 +1009,6 @@ function generateHTML(poolId) {
           return;
         }
 
-        console.log(data)
-
         currentInvoice = data.invoice.encodedInvoice;
         currentInvoiceId = data.id;
 
@@ -1046,7 +1044,6 @@ function generateHTML(poolId) {
         isPolling = true;
         try {
           const result = await checkPayment(currentInvoiceId);
-          console.log(result)
           if (result.paid) {
             stopPaymentPolling();
             showStep('success');
