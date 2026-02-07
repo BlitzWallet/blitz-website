@@ -134,12 +134,43 @@
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
 
-# Gifts redirct
+# Gifts redirect
 
 [[redirects]]
   from = "/getBitcoinGiftDetails"
   to = "https://getbitcoingiftdetails-6krimtymjq-uc.a.run.app"
    status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
+# Pools page
+[[redirects]]
+  from = "/pools/:poolId"
+  to = "/.netlify/functions/handle-pool"
+  status = 200
+
+# Pool API proxies (to Google Cloud Functions)
+[[redirects]]
+  from = "/getPoolData"
+  to = "https://getpooldata-6krimtymjq-uc.a.run.app"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/createPoolInvoice"
+  to = "https://createpoolinvoice-6krimtymjq-uc.a.run.app"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/checkPoolPayment"
+  to = "https://checkpoolpayment-6krimtymjq-uc.a.run.app"
+  status = 200
   force = true
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
