@@ -134,12 +134,43 @@
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
 
-# Gifts redirct
+# Gifts redirect
 
 [[redirects]]
   from = "/getBitcoinGiftDetails"
   to = "https://getbitcoingiftdetails-6krimtymjq-uc.a.run.app"
    status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
+# Pools page
+[[redirects]]
+  from = "/pools/:poolId"
+  to = "/.netlify/functions/handle-pool"
+  status = 200
+
+# Pool API proxies (to Google Cloud Functions)
+[[redirects]]
+  from = "/getPoolData"
+  to = "http://127.0.0.1:5001/blitz-wallet-82b39/us-central1/getPoolData"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/createPoolInvoice"
+  to = "http://127.0.0.1:5001/blitz-wallet-82b39/us-central1/createPoolInvoice"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/checkPoolPayment"
+  to = "http://127.0.0.1:5001/blitz-wallet-82b39/us-central1/checkPoolPayment"
+  status = 200
   force = true
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
