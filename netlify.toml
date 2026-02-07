@@ -153,7 +153,7 @@
 # Pool API proxies (to Google Cloud Functions)
 [[redirects]]
   from = "/getPoolData"
-  to = "http://127.0.0.1:5001/blitz-wallet-82b39/us-central1/getPoolData"
+  to = "https://getpooldata-6krimtymjq-uc.a.run.app"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -161,7 +161,7 @@
 
 [[redirects]]
   from = "/createPoolInvoice"
-  to = "http://127.0.0.1:5001/blitz-wallet-82b39/us-central1/createPoolInvoice"
+  to = "https://createpoolinvoice-6krimtymjq-uc.a.run.app"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -169,7 +169,7 @@
 
 [[redirects]]
   from = "/checkPoolPayment"
-  to = "http://127.0.0.1:5001/blitz-wallet-82b39/us-central1/checkPoolPayment"
+  to = "https://checkpoolpayment-6krimtymjq-uc.a.run.app"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
