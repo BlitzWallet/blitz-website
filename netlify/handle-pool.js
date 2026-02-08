@@ -201,14 +201,14 @@ function generateHTML(poolId) {
       }
 
       .progress-amount {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         font-weight: 500;
         line-height:34px;
         color: var(--lm-text);
       }
 
       .progress-goal {
-        font-size: 0.85rem;
+        font-size: 0.8rem;
         color: #888;
         margin-top: 2px;
       }
