@@ -91,7 +91,7 @@ function generateHTML(poolId) {
       .pool-container {
         width: 100%;
         max-width: 500px;
-        margin: 50px auto;
+        margin: 25px auto;
       }
 
       .pool-card {
@@ -146,23 +146,6 @@ function generateHTML(poolId) {
         opacity: 1;
       }
 
-      /* Pool Icon */
-      .pool-icon {
-        width: 80px;
-        height: 80px;
-        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 1.5rem;
-      }
-
-      .pool-icon svg {
-        width: 40px;
-        height: 40px;
-        color: white;
-      }
 
       /* Progress Ring */
       .progress-ring-container {
@@ -181,13 +164,13 @@ function generateHTML(poolId) {
       .progress-ring-bg {
         fill: none;
         stroke: var(--lm-backgroundOffset);
-        stroke-width: 3;
+        stroke-width: 4;
       }
 
       .progress-ring-fill {
         fill: none;
         stroke: url(#progressGradient);
-        stroke-width: 3;
+        stroke-width: 4;
         stroke-linecap: round;
         transition: stroke-dashoffset 1s ease;
       }
@@ -636,14 +619,14 @@ function generateHTML(poolId) {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.8rem 0;
+        padding: 1rem 0;
       }
 
       nav a {
       display:flex;
       }
       nav img {
-        height: 45px;
+        height: 40px;
       }
 
       .nav-download-btn {
@@ -1016,10 +999,6 @@ function generateHTML(poolId) {
             <div class="content-container">
               <!-- STEP: Pool Info -->
               <div id="step-info" class="step active">
-                <div class="pool-icon">
-                  <i data-lucide="users"></i>
-                </div>
-
                 <h1 class="pool-title">\${escapeHtml(pool.poolTitle)}</h1>
                 <p class="pool-meta">
                   By \${escapeHtml(pool.creatorName)}
