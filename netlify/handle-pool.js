@@ -600,6 +600,37 @@ function generateHTML(poolId) {
         color: #92400e;
       }
 
+      /* Denomination Toggle Button */
+      .denomination-toggle-btn {
+        background: transparent;
+        border: 2px solid var(--lm-backgroundOffset);
+        color: var(--primary_color);
+        padding: 0.6rem 1rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: 1rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-family: var(--description_font);
+      }
+
+      .denomination-toggle-btn:hover {
+        background: var(--lm-background);
+        border-color: var(--primary_color);
+      }
+
+      .denomination-toggle-btn svg {
+        transition: transform 0.3s ease;
+      }
+
+      .denomination-toggle-btn:hover svg {
+        transform: rotate(180deg);
+      }
+
       /* Navbar */
       nav {
         position: fixed;
@@ -866,6 +897,13 @@ function generateHTML(poolId) {
       let isPolling = false;
       let invoiceError = '';
 
+      // Denomination state
+      let btcPrice = null;
+      let poolCurrency = 'USD';
+      let displayDenomination = 'USD';
+      const PRESET_AMOUNTS_SATS = [1000, 5000, 10000, 25000, 50000];
+      const PRESET_AMOUNTS_FIAT = [1, 5, 10, 25, 50];
+
       function detectOS() {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return 'ios';
@@ -907,6 +945,15 @@ function generateHTML(poolId) {
           if (!response.ok) throw new Error('Failed to fetch pool data');
           const {data,status} = await response.json();
           if (status !== 'SUCCESS')throw new Error('Failed to feth pool data')
+
+          console.log(data)
+          // Extract btcPrice and poolDenomination
+          if (data && data.btcPrice && data.btcPrice > 0) {
+            btcPrice = data.btcPrice;
+            poolCurrency = data.poolDenomination || 'USD';
+            displayDenomination = poolCurrency;
+          }
+
           return { data, error: null };
         } catch (error) {
           return { data: null, error: error.message };
@@ -945,6 +992,54 @@ function generateHTML(poolId) {
 
       function formatSats(sats) {
         return sats?.toLocaleString()||0;
+      }
+
+      // Conversion functions
+      function satsToFiat(sats) {
+        if (typeof sats !== 'number' || !btcPrice || btcPrice <= 0) return null;
+        return sats * (btcPrice / 100000000);
+      }
+
+      function fiatToSats(fiatAmount) {
+        if (typeof fiatAmount !== 'number' || !btcPrice || btcPrice <= 0) return null;
+        return Math.round(100000000 / btcPrice * fiatAmount);
+      }
+
+      function formatAmount(sats, denomination) {
+        if (denomination === 'SAT') {
+          return formatSats(sats) + ' SAT';
+        }
+
+        const fiatAmount = satsToFiat(sats);
+        if (fiatAmount === null) {
+          return formatSats(sats) + ' SAT'; // Fallback
+        }
+
+        try {
+          const formatted = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: denomination,
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          }).format(fiatAmount);
+          return formatted;
+        } catch (e) {
+          // Invalid currency code, fallback to SAT
+          return formatSats(sats) + ' SAT';
+        }
+      }
+
+      function toggleDenomination() {
+        // Switch between poolCurrency and SAT
+        displayDenomination = (displayDenomination === 'SAT') ? poolCurrency : 'SAT';
+
+        // Clear selection state
+        selectedAmountSats = 0;
+
+        // Refresh the display
+        if (poolData) {
+          renderPoolInfo(poolData, poolData.contributions || []);
+        }
       }
 
       function getProgressPercent(current, goal) {
@@ -1008,6 +1103,13 @@ function generateHTML(poolId) {
 
                 \${isClosed ? '<span class="status-badge closed">Closed' + (closedDate ? ' ' + closedDate : '') + '</span>' : ''}
 
+                \${btcPrice && btcPrice > 0 ? \`
+                  <button class="denomination-toggle-btn" onclick="toggleDenomination()" id="denomToggleBtn">
+                    <i data-lucide="refresh-cw" style="width:14px;height:14px;"></i>
+                    Switch to \${displayDenomination === 'SAT' ? poolCurrency : 'BTC'}
+                  </button>
+                \` : ''}
+
                 <div class="progress-ring-container">
                   <svg class="progress-ring-svg" viewBox="0 0 170 170">
                     <defs>
@@ -1023,8 +1125,8 @@ function generateHTML(poolId) {
                       data-target-offset="\${dashOffset}" />
                   </svg>
                   <div class="progress-ring-text">
-                    <div class="progress-amount">\${formatSats(pool.currentAmount)} SAT</div>
-                    <div class="progress-goal">of \${formatSats(pool.goalAmount)} SAT goal</div>
+                    <div class="progress-amount">\${formatAmount(pool.currentAmount, displayDenomination)}</div>
+                    <div class="progress-goal">of \${formatAmount(pool.goalAmount, displayDenomination)} goal</div>
                   </div>
                 </div>
 
@@ -1037,7 +1139,7 @@ function generateHTML(poolId) {
                           <div class="contributor-avatar">\${getInitial(c.name)}</div>
                           <span class="contributor-name">\${escapeHtml(c.name)}</span>
                         </div>
-                        <span class="contributor-amount">\${formatSats(c.amount)} SAT</span>
+                        <span class="contributor-amount">\${formatAmount(c.amount, displayDenomination)}</span>
                       </div>
                     \`).join('')}
                   </div>
@@ -1056,20 +1158,32 @@ function generateHTML(poolId) {
                   <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
                 </button>
                 <h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.5rem;">Choose an amount</h2>
-                <p style="font-size:0.9rem;color:#888;margin-bottom:1rem;">Select a preset or enter a custom amount in sats.</p>
+                <p style="font-size:0.9rem;color:#888;margin-bottom:1rem;">Select a preset or enter a custom amount\${displayDenomination === 'SAT' ? ' in sats' : ''}.</p>
 
                 <div class="amount-grid">
-                  <button class="amount-option" onclick="selectPreset(1000, this)">1,000</button>
-                  <button class="amount-option" onclick="selectPreset(5000, this)">5,000</button>
-                  <button class="amount-option" onclick="selectPreset(10000, this)">10,000</button>
-                  <button class="amount-option" onclick="selectPreset(25000, this)">25,000</button>
-                  <button class="amount-option" onclick="selectPreset(50000, this)">50,000</button>
+                  \${displayDenomination === 'SAT'
+                    ? PRESET_AMOUNTS_SATS.map(sats => \`<button class="amount-option" onclick="selectPreset(\${sats}, this)" data-sats="\${sats}">\${sats.toLocaleString()}</button>\`).join('')
+                    : PRESET_AMOUNTS_FIAT.map(fiat => {
+                        const sats = fiatToSats(fiat);
+                        try {
+                          const formatted = new Intl.NumberFormat('en-US', {
+                            style: 'currency',
+                            currency: displayDenomination,
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0
+                          }).format(fiat);
+                          return \`<button class="amount-option" onclick="selectPreset(\${sats}, this)" data-sats="\${sats}">\${formatted}</button>\`;
+                        } catch (e) {
+                          return \`<button class="amount-option" onclick="selectPreset(\${sats}, this)" data-sats="\${sats}">\${fiat} \${displayDenomination}</button>\`;
+                        }
+                      }).join('')
+                  }
                   <button class="amount-option custom-btn" onclick="toggleCustomAmount()">...</button>
                 </div>
 
                 <div class="custom-amount-wrapper" id="customAmountWrapper">
                   <input type="number" class="custom-amount-input" id="customAmountInput"
-                    placeholder="Enter sats" min="1" oninput="onCustomAmountInput(this.value)">
+                    placeholder="\${displayDenomination === 'SAT' ? 'Enter sats' : 'Enter ' + displayDenomination + ' amount'}" min="1" oninput="onCustomAmountInput(this.value)">
                 </div>
 
                 <button class="btn-primary" id="continueToNameBtn" disabled onclick="showStep('name')">
@@ -1152,7 +1266,9 @@ function generateHTML(poolId) {
       }
 
       function selectPreset(sats, el) {
-        selectedAmountSats = sats;
+        // Extract sats from data attribute (in case button was re-rendered)
+        const satAmount = parseInt(el.getAttribute('data-sats')) || sats;
+        selectedAmountSats = satAmount;
         document.querySelectorAll('.amount-option').forEach(b => b.classList.remove('selected'));
         el.classList.add('selected');
 
@@ -1179,8 +1295,23 @@ function generateHTML(poolId) {
       }
 
       function onCustomAmountInput(value) {
-        const sats = parseInt(value, 10);
-        if (sats > 0) {
+        let sats;
+
+        if (displayDenomination === 'SAT') {
+          // Parse directly as sats
+          sats = parseInt(value, 10);
+        } else {
+          // Convert fiat to sats
+          const fiatAmount = parseFloat(value);
+          if (!fiatAmount || fiatAmount <= 0) {
+            selectedAmountSats = 0;
+            document.getElementById('continueToNameBtn').disabled = true;
+            return;
+          }
+          sats = fiatToSats(fiatAmount);
+        }
+
+        if (sats && sats > 0) {
           selectedAmountSats = sats;
           document.getElementById('continueToNameBtn').disabled = false;
         } else {
@@ -1211,19 +1342,20 @@ function generateHTML(poolId) {
         }
 
         currentInvoice = data.invoice.encodedInvoice;
+        const displayInvoice = "lightning:" + currentInvoice
         currentInvoiceId = data.id;
 
         // Update name step amount display
         showStep('payment');
         lucide.createIcons();
 
-        document.getElementById('paymentAmountDisplay').textContent = formatSats(selectedAmountSats) + ' SAT';
+        document.getElementById('paymentAmountDisplay').textContent = formatAmount(selectedAmountSats, displayDenomination);
 
         // Render QR code
         const qrContainer = document.getElementById('qrCodeContainer');
         qrContainer.innerHTML = '';
         new QRCode(qrContainer, {
-          text: currentInvoice,
+          text: displayInvoice,
           width: 220,
           height: 220,
           colorDark: '#000000',
