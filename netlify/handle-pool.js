@@ -26,21 +26,21 @@ function generateHTML(poolId) {
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
 
-    <title>Contribute to Pool</title>
+    <title>Share your pool. Anyone on or off Blitz Wallet can contribute</title>
     <meta name="description" content="Contribute to this pool on Blitz Wallet." />
 
     <!-- Open Graph -->
     <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCard.png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/pools/${poolId}" />
-    <meta property="og:title" content="Contribute to Pool" />
+    <meta property="og:title" content="Share your pool. Anyone on or off Blitz Wallet can contribute" />
     <meta property="og:description" content="Contribute to this pool on Blitz Wallet." />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCard.png">
     <meta property="twitter:url" content="https://blitzwalletapp.com/pools/${poolId}" />
-    <meta property="twitter:title" content="Contribute to Pool" />
+    <meta property="twitter:title" content="Share your pool. Anyone on or off Blitz Wallet can contribute" />
     <meta property="twitter:description" content="Contribute to this pool on Blitz Wallet." />
 
     <meta name="robots" content="noindex,nofollow">
