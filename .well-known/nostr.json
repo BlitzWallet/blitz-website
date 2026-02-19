@@ -124,7 +124,9 @@
     "MRBitcoin": "792b0842883a5b3e8a936e4b0eb52575200ce4bb3d0a951ef7e596d62eda7ce1",
     "Bauer": "80c362d7c048f68f4e0991227e0c28f740c48fb95b5d8aac7233343671cef439",
     "NullVox": "a4e6f35b6e717d5cdc7a70ee8f2a372078f14c0d54c928a297a0b880f3fd4178",
-    "Calvin": "2dd9250b28f62c7c49415745423d01ffff74084de3ed7e51379853be6e928072"
+    "Calvin": "2dd9250b28f62c7c49415745423d01ffff74084de3ed7e51379853be6e928072",
+    "oskarjpe": "e57744d6f5a6583fe89a4431721e56d721db93ce3f0cc2f4567926eea88591b8",
+    "oluengo": "6712a46a0fde2438d7f7b214c62e5536a8e514d351e629b8a9be01809075160a"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -1128,6 +1130,22 @@
       "wss://relay.primal.net"
     ],
     "2dd9250b28f62c7c49415745423d01ffff74084de3ed7e51379853be6e928072": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "e57744d6f5a6583fe89a4431721e56d721db93ce3f0cc2f4567926eea88591b8": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "6712a46a0fde2438d7f7b214c62e5536a8e514d351e629b8a9be01809075160a": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
