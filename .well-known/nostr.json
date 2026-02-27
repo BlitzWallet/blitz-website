@@ -128,7 +128,8 @@
     "oluengo": "6712a46a0fde2438d7f7b214c62e5536a8e514d351e629b8a9be01809075160a",
     "nameless": "1fd64f2465012eeaabf505d05c1d8058adde1d99d4c5825e3d50dd2022cadc33",
     "Jimfromjax": "3af187bfe00920d87068a6bcdffc48f4b241d1d82594cd395119a30891041654",
-    "x": "d6817e7a4fa3f54e11d3e6dbe6bfc9b9d798f85c41485da29703e824ee94e3cc"
+    "x": "d6817e7a4fa3f54e11d3e6dbe6bfc9b9d798f85c41485da29703e824ee94e3cc",
+    "kruusextension": "cd4602ab0909789a858093d1220312331006a2bcb73312cfe50c098a35a11b46"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -1164,6 +1165,14 @@
       "wss://relay.primal.net"
     ],
     "3af187bfe00920d87068a6bcdffc48f4b241d1d82594cd395119a30891041654": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "cd4602ab0909789a858093d1220312331006a2bcb73312cfe50c098a35a11b46": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
