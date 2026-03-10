@@ -387,7 +387,8 @@ function generateHTML(giftId) {
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
       const giftId = '${giftId}';
       const currentUrl = new URL(window.location.href);
-      let activeLinker = null;
+      let pageHidden = false;
+      let claimAttemptTimer = null;
 
       function detectOS() {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -402,104 +403,6 @@ function generateHTML(giftId) {
         if (loadingContainer) loadingContainer.textContent = message;
       }
 
-      class DeepLinker {
-        constructor(options = {}) {
-          this.options = options;
-
-          this.hasFocus = true;
-          this.didHide = false;
-          this.didNavigate = false;
-
-          this.onBlur = this.onBlur.bind(this);
-          this.onFocus = this.onFocus.bind(this);
-          this.onVisibility = this.onVisibility.bind(this);
-          this.onPageHide = this.onPageHide.bind(this);
-
-          this.bind(true);
-        }
-
-        bind(add) {
-          const m = add ? 'addEventListener' : 'removeEventListener';
-
-          window[m]('blur', this.onBlur);
-          window[m]('focus', this.onFocus);
-
-          document[m]('visibilitychange', this.onVisibility);
-
-          // newer browsers fire this when leaving to app
-          window[m]('pagehide', this.onPageHide);
-        }
-
-        destroy() {
-          this.bind(false);
-        }
-
-        onBlur() {
-          this.hasFocus = false;
-        }
-
-        onVisibility() {
-          if (document.visibilityState === 'hidden') {
-            this.didHide = true;
-          }
-        }
-
-        onPageHide() {
-          this.didNavigate = true;
-        }
-
-        onFocus() {
-
-          // Returned from native app
-          if (this.didHide) {
-            this.options.onReturn?.();
-
-            this.didHide = false;
-            this.hasFocus = true;
-            return;
-          }
-
-          // Focus regained but never hidden -> dialog closed / cancelled
-          if (!this.hasFocus) {
-            setTimeout(() => {
-              if (!this.didHide) {
-                this.options.onFallback?.();
-              }
-            }, 800);
-          }
-
-          this.hasFocus = true;
-        }
-
-        openURL(url) {
-
-          const start = Date.now();
-
-          // If browser never reacted to deep link
-          const ignoredTimer = setTimeout(() => {
-
-            if (!this.didHide && this.hasFocus) {
-              this.options.onIgnored?.();
-            }
-
-          }, 700);
-
-          // attempt navigation
-          window.location.href = url;
-
-          // detect navigation success heuristically
-          setTimeout(() => {
-
-            const elapsed = Date.now() - start;
-
-            if (this.didHide || this.didNavigate) {
-              this.options.onAppOpened?.(elapsed);
-            }
-
-          }, 1200);
-        }
-      }
-
       function getClaimButton() {
         return document.querySelector('.claim-button');
       }
@@ -508,7 +411,7 @@ function generateHTML(giftId) {
         const btn = getClaimButton();
         if (!btn) return;
         btn.textContent = 'Claim in Blitz Wallet';
-        btn.onclick = openLink;
+        btn.onclick = claimGift;
       }
 
       function showDownloadModal(os) {
@@ -527,7 +430,7 @@ function generateHTML(giftId) {
         };
 
         confirmBtn.onclick = () => {
-          // setButtonToClaim();
+          setButtonToClaim();
           close();
           window.location.href = storeUrl;
         };
@@ -538,13 +441,6 @@ function generateHTML(giftId) {
         backdrop.classList.add('active');
       }
 
-      function hideDownloadModal() {
-        const modal = document.getElementById('downloadModal');
-        const backdrop = document.getElementById('downloadBackdrop');
-        if (modal) modal.classList.remove('active');
-        if (backdrop) backdrop.classList.remove('active');
-      }
-
       function buildLinks() {
         const safeGiftId = encodeURIComponent(giftId || '');
         const httpsLink = currentUrl.origin + currentUrl.pathname + currentUrl.search + currentUrl.hash;
@@ -552,30 +448,32 @@ function generateHTML(giftId) {
         return { httpsLink: httpsLink, deepLink: deepLink };
       }
 
-      function openLink() {
-        const os = detectOS()
-        const urlParams = new URLSearchParams(currentUrl.search);
-        const links = buildLinks()
-        const httpsLink =links.httpsLink
-        const androidDeepLink =links.deepLink
+      function attemptDeepLinkWithFallback(event) {
+        if (event && event.isTrusted !== true) return;
+        const os = detectOS();
+        const links = buildLinks();
 
-        if (os === 'ios') {
-          const a = document.createElement('a');
-          a.href = httpsLink;
-          a.style.display = 'none';
-          document.body.appendChild(a);
-          a.click();
-          document.body.removeChild(a);
-          setTimeout(() => { showDownloadModal('ios'); }, 1200);
-
-        } else if (os === 'android') {
-          const start = Date.now();
-          window.location.href = androidDeepLink;
-          setTimeout(() => { if (Date.now() - start < 1500) showDownloadModal('android'); }, 1200);
-
-        } else {
-          window.location.href = httpsLink;
+        if (os === 'other') {
+          updateLoadingStatus('This link is optimized for mobile devices.');
+          window.location.href = links.httpsLink;
+          return;
         }
+
+        updateLoadingStatus('Opening Blitz Wallet...');
+        if (os === 'android') {
+          window.location.href = links.deepLink;
+          if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
+          claimAttemptTimer = setTimeout(() => {
+            if (!pageHidden) showDownloadModal('android');
+          }, 1500);
+          return;
+        }
+
+        window.location.href = links.httpsLink;
+        if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
+        claimAttemptTimer = setTimeout(() => {
+          if (!pageHidden) showDownloadModal('ios');
+        }, 1500);
       }
 
       async function fetchGiftData() {
@@ -666,7 +564,9 @@ function generateHTML(giftId) {
               </div>
 
               \${(!isClaimed && !isExpired) ? \`
-                <button class="claim-button" onclick="openLink()">Claim in Blitz Wallet</button>
+                <button class="claim-button" onclick="claimGift(event)">
+                  Claim in Blitz Wallet
+                </button>
                 <button class="copy-button" onclick="copyGift()">
                   Copy Gift Link
                 </button>
@@ -691,6 +591,9 @@ function generateHTML(giftId) {
         }, 300);
       }
 
+      function claimGift(event) {
+        attemptDeepLinkWithFallback(event);
+      }
 
       function copyGift() {
         const giftLink = currentUrl.origin + currentUrl.pathname + currentUrl.search + currentUrl.hash;
