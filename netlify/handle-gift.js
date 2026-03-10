@@ -448,32 +448,88 @@ function generateHTML(giftId) {
         return { httpsLink: httpsLink, deepLink: deepLink };
       }
 
-      function attemptDeepLinkWithFallback(event) {
+      function attemptAutoDeepLink() {
+        const os = detectOS();
+        if (os === 'other') return; // Desktop — do nothing, show normal page
+
+        const links = buildLinks();
+
+        if (os === 'ios') {
+          // iOS: inject hidden iframe with custom scheme for auto-redirect
+          // If app is installed, it opens immediately. If not, nothing happens.
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.style.width = '0';
+          iframe.style.height = '0';
+          iframe.src = links.deepLink; // blitz-wallet://gift/<id>
+          document.body.appendChild(iframe);
+
+          // After a short delay, if page is still visible, app isn't installed
+          claimAttemptTimer = setTimeout(() => {
+            if (!pageHidden) {
+              // App not installed — update button to show download modal
+              setButtonToDownload('ios');
+            }
+          }, 1500);
+
+        } else if (os === 'android') {
+          // Android: intent URL or direct deep link
+          window.location.href = links.deepLink;
+
+          claimAttemptTimer = setTimeout(() => {
+            if (!pageHidden) {
+              setButtonToDownload('android');
+            }
+          }, 1500);
+        }
+      }
+
+      function setButtonToDownload(os) {
+        const btn = getClaimButton();
+        if (!btn) return;
+        btn.textContent = 'Download Blitz Wallet';
+        btn.onclick = (event) => {
+          if (event && event.isTrusted !== true) return;
+          showDownloadModal(os);
+        };
+      }
+
+      function setButtonToClaim() {
+        const btn = getClaimButton();
+        if (!btn) return;
+        btn.textContent = 'Claim in Blitz Wallet';
+        btn.onclick = claimGift;
+      }
+
+      function claimGift(event) {
         if (event && event.isTrusted !== true) return;
         const os = detectOS();
         const links = buildLinks();
 
-        if (os === 'other') {
-          updateLoadingStatus('This link is optimized for mobile devices.');
-          window.location.href = links.httpsLink;
-          return;
-        }
+        if (os === 'ios') {
+          // On manual tap, use iframe trick again
+          const iframe = document.createElement('iframe');
+          iframe.style.display = 'none';
+          iframe.src = links.deepLink;
+          document.body.appendChild(iframe);
 
-        updateLoadingStatus('Opening Blitz Wallet...');
-        if (os === 'android') {
+          if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
+          claimAttemptTimer = setTimeout(() => {
+            if (!pageHidden) showDownloadModal('ios');
+          }, 1500);
+
+        } else if (os === 'android') {
           window.location.href = links.deepLink;
+
           if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
           claimAttemptTimer = setTimeout(() => {
             if (!pageHidden) showDownloadModal('android');
           }, 1500);
-          return;
-        }
 
-        window.location.href = links.httpsLink;
-        if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
-        claimAttemptTimer = setTimeout(() => {
-          if (!pageHidden) showDownloadModal('ios');
-        }, 1500);
+        } else {
+          // Desktop fallback
+          window.location.href = links.httpsLink;
+        }
       }
 
       async function fetchGiftData() {
@@ -614,7 +670,15 @@ function generateHTML(giftId) {
           const { data, error } = await fetchGiftData();
           const giftData = data?.data;
           renderGiftCard(giftData, error);
-          setButtonToClaim();
+
+          // Only auto-deep-link if gift is claimable
+          const isClaimed = giftData?.state === 'Claimed';
+          const isExpired = giftData ? Date.now() > giftData.expireTime : false;
+          if (!error && giftData && !isClaimed && !isExpired) {
+            attemptAutoDeepLink();
+          } else {
+            setButtonToClaim(); // fallback — button will just show modal
+          }
         }, 500);
       });
 
