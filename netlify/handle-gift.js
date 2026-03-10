@@ -407,12 +407,6 @@ function generateHTML(giftId) {
         return document.querySelector('.claim-button');
       }
 
-      function setButtonToClaim() {
-        const btn = getClaimButton();
-        if (!btn) return;
-        btn.textContent = 'Claim in Blitz Wallet';
-        btn.onclick = claimGift;
-      }
 
       function showDownloadModal(os) {
         if (os !== 'ios' && os !== 'android') return;
@@ -430,7 +424,6 @@ function generateHTML(giftId) {
         };
 
         confirmBtn.onclick = () => {
-          setButtonToClaim();
           close();
           window.location.href = storeUrl;
         };
@@ -441,96 +434,15 @@ function generateHTML(giftId) {
         backdrop.classList.add('active');
       }
 
-      function buildLinks() {
-        const safeGiftId = encodeURIComponent(giftId || '');
-        const httpsLink = currentUrl.origin + currentUrl.pathname + currentUrl.search + currentUrl.hash;
-        const deepLink = 'blitz-wallet://gift/' + safeGiftId + currentUrl.search + currentUrl.hash;
-        return { httpsLink: httpsLink, deepLink: deepLink };
-      }
+    
 
-      function attemptAutoDeepLink() {
-        const os = detectOS();
-        if (os === 'other') return; // Desktop — do nothing, show normal page
-
-        const links = buildLinks();
-
-        if (os === 'ios') {
-          // iOS: inject hidden iframe with custom scheme for auto-redirect
-          // If app is installed, it opens immediately. If not, nothing happens.
-          const iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          iframe.style.width = '0';
-          iframe.style.height = '0';
-          iframe.src = links.deepLink; // blitz-wallet://gift/<id>
-          const target = document.body || document.documentElement;
-          target.appendChild(iframe);
-
-          // After a short delay, if page is still visible, app isn't installed
-          claimAttemptTimer = setTimeout(() => {
-            if (!pageHidden) {
-              // App not installed — update button to show download modal
-              setButtonToDownload('ios');
-            }
-          }, 1500);
-
-        } else if (os === 'android') {
-          // Android: intent URL or direct deep link
-          window.location.href = links.deepLink;
-
-          claimAttemptTimer = setTimeout(() => {
-            if (!pageHidden) {
-              setButtonToDownload('android');
-            }
-          }, 1500);
-        }
-      }
-
-      function setButtonToDownload(os) {
-        const btn = getClaimButton();
-        if (!btn) return;
-        btn.textContent = 'Download Blitz Wallet';
-        btn.onclick = (event) => {
-          if (event && event.isTrusted !== true) return;
-          showDownloadModal(os);
-        };
-      }
-
-      function setButtonToClaim() {
-        const btn = getClaimButton();
-        if (!btn) return;
-        btn.textContent = 'Claim in Blitz Wallet';
-        btn.onclick = claimGift;
-      }
 
       function claimGift(event) {
         if (event && event.isTrusted !== true) return;
         const os = detectOS();
-        const links = buildLinks();
-
-        if (os === 'ios') {
-          // On manual tap, use iframe trick again
-          const iframe = document.createElement('iframe');
-          iframe.style.display = 'none';
-          iframe.src = links.deepLink;
-          document.body.appendChild(iframe);
-
-          if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
-          claimAttemptTimer = setTimeout(() => {
-            if (!pageHidden) showDownloadModal('ios');
-          }, 1500);
-
-        } else if (os === 'android') {
-          window.location.href = links.deepLink;
-
-          if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
-          claimAttemptTimer = setTimeout(() => {
-            if (!pageHidden) showDownloadModal('android');
-          }, 1500);
-
-        } else {
-          // Desktop fallback
-          window.location.href = links.httpsLink;
-        }
+         showDownloadModal(os);
+         return
+        
       }
 
       async function fetchGiftData() {
@@ -622,7 +534,7 @@ function generateHTML(giftId) {
 
               \${(!isClaimed && !isExpired) ? \`
                 <button class="claim-button" onclick="claimGift(event)">
-                  Claim in Blitz Wallet
+                 Download Blitz Wallet
                 </button>
                 <button class="copy-button" onclick="copyGift()">
                   Copy Gift Link
@@ -648,9 +560,6 @@ function generateHTML(giftId) {
         }, 300);
       }
 
-      function claimGift(event) {
-        attemptDeepLinkWithFallback(event);
-      }
 
       function copyGift() {
         const giftLink = currentUrl.origin + currentUrl.pathname + currentUrl.search + currentUrl.hash;
@@ -669,16 +578,12 @@ function generateHTML(giftId) {
       document.addEventListener('DOMContentLoaded', () => {
         // Fire deep link attempt ASAP, don't wait for gift data
         const os = detectOS();
-        if (os !== 'other') {
-          attemptAutoDeepLink(); // try immediately
-        }
 
         // Then fetch gift data in parallel
         setTimeout(async () => {
           const { data, error } = await fetchGiftData();
           const giftData = data?.data;
           renderGiftCard(giftData, error);
-          // Don't call attemptAutoDeepLink again here
         }, 100);
       });
 
@@ -691,7 +596,6 @@ function generateHTML(giftId) {
           }
         } else {
           pageHidden = false;
-          setButtonToClaim();
         }
       });
 
@@ -705,8 +609,8 @@ function generateHTML(giftId) {
     <div class="modal-container" id="downloadModal">
       <div class="modal-title">Download Blitz Wallet</div>
       <div class="modal-text">
-        We noticed you do not have Blitz Wallet installed yet.<br /><br />
-        After downloading, come back to this page to claim the gift.
+        Already have Blitz? <strong>Re-scan or re-open this link</strong> and it will open automatically — or copy the gift link and paste it into the <strong>Claim a Gift</strong> screen, found in the Gifts page.<br /><br />
+        Don't have Blitz yet? Download it now, then Re-scan or re-click this link.
       </div>
       <div class="modal-actions">
         <button class="modal-btn" id="downloadCancel">Not now</button>
