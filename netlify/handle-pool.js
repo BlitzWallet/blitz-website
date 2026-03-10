@@ -1,6 +1,11 @@
 export async function handler(event, context) {
-  const path = event.path;
-  const poolId = path.split("/").pop();
+  const path = (event.path || "").replace(/\/+$/, "");
+  let poolId = path.split("/").pop() || "";
+  try {
+    poolId = decodeURIComponent(poolId);
+  } catch (e) {
+    // Keep raw poolId if decode fails.
+  }
 
   return {
     statusCode: 200,
@@ -24,6 +29,10 @@ function generateHTML(poolId) {
     <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
     <link rel="apple-touch-icon" href="/public/favicon/favicon.ico" />
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <meta
+      name="apple-itunes-app"
+      content="app-id=6476810582, app-argument=https://blitzwalletapp.com/pools/${poolId}"
+    />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
 
     <title>Share your pool. Anyone on or off Blitz Wallet can contribute</title>
@@ -887,7 +896,6 @@ function generateHTML(poolId) {
     <script>
       const IOS_STORE_URL = 'https://apps.apple.com/us/app/blitz-wallet/id6476810582';
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
-      const FALLBACK_TIMEOUT_MS = 1500;
       const poolId = '${poolId}';
       let pageHidden = false;
       let poolData = null;
@@ -907,32 +915,9 @@ function generateHTML(poolId) {
       function detectOS() {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return 'ios';
+        if (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) return 'ios';
         if (/android/i.test(userAgent)) return 'android';
         return 'other';
-      }
-
-      function attemptDeepLinkWithFallback() {
-        const os = detectOS();
-        const deepLink = \`blitz-wallet://pools/\${poolId}\`;
-
-        let storeUrl = '';
-        if (os === 'ios') {
-          storeUrl = IOS_STORE_URL;
-        } else if (os === 'android') {
-          storeUrl = ANDROID_STORE_URL;
-        } else {
-          window.location.href = deepLink;
-          return;
-        }
-
-        window.location.href = deepLink;
-
-        setTimeout(() => {
-          if (pageHidden) return;
-          setTimeout(() => {
-            if (!pageHidden) window.location.href = storeUrl;
-          }, 1000);
-        }, FALLBACK_TIMEOUT_MS);
       }
 
       async function fetchPoolData() {
@@ -1477,6 +1462,10 @@ function generateHTML(poolId) {
             pollPayment();
           }
         }
+      });
+
+      window.addEventListener('pagehide', () => {
+        pageHidden = true;
       });
 
       document.addEventListener('DOMContentLoaded', () => {

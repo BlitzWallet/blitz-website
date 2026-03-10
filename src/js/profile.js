@@ -1,4 +1,12 @@
-const username = window.location.pathname.split("/").pop();
+const currentUrl = new URL(window.location.href);
+const rawUsername =
+  currentUrl.pathname.replace(/\/+$/, "").split("/").pop() || "";
+let username = rawUsername;
+try {
+  username = decodeURIComponent(rawUsername);
+} catch (e) {
+  // Keep raw username if decode fails.
+}
 
 const IOS_STORE_URL = "https://apps.apple.com/us/app/blitz-wallet/id6476810582";
 
@@ -15,10 +23,43 @@ function detectOS() {
   if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
     return "ios";
   }
+  if (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1) {
+    return "ios";
+  }
   if (/android/i.test(userAgent)) {
     return "android";
   }
   return "other";
+}
+
+function buildLinks() {
+  const safeUsername = encodeURIComponent(username || "");
+  const httpsLink =
+    currentUrl.origin +
+    currentUrl.pathname +
+    currentUrl.search +
+    currentUrl.hash;
+  const deepLink =
+    "blitz-wallet://u/" + safeUsername + currentUrl.search + currentUrl.hash;
+  return { httpsLink, deepLink };
+}
+
+function openInApp(event) {
+  if (event && event.isTrusted !== true) return;
+  const os = detectOS();
+  const links = buildLinks();
+
+  if (os === "other") {
+    window.location.href = links.httpsLink;
+    return;
+  }
+
+  if (os === "android") {
+    window.location.href = links.deepLink;
+    return;
+  }
+
+  window.location.href = links.httpsLink;
 }
 
 /**
@@ -51,7 +92,7 @@ document.body.innerHTML = `<section class="container">
         <p class="subHeader">or create a Blitz Wallet account</p>
 
         <div class="buttonContainer">
-          <a id="blitzLink" href="blitz-wallet://u/${username}" class="button">
+          <a id="blitzLink" href="https://blitzwalletapp.com/u/${username}" class="button">
             <p>Go to app</p>
           </a>
           <a id="downloadBtn" class="button">
@@ -64,4 +105,11 @@ document.body.innerHTML = `<section class="container">
 document.getElementById("downloadBtn").addEventListener("click", (e) => {
   e.preventDefault();
   goToDownload();
+});
+
+document.getElementById("blitzLink").addEventListener("click", (e) => {
+  const os = detectOS();
+  if (os === "ios" || os === "other") return;
+  e.preventDefault();
+  openInApp(e);
 });

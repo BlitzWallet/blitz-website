@@ -50,8 +50,18 @@
 
 # Main redirection for user profiles
 [[redirects]]
+  from = "/u/:username/"
+  to = "/.netlify/functions/dynamic-profile"
+  status = 200
+
+[[redirects]]
   from = "/u/:username"
   to = "/.netlify/functions/dynamic-profile"
+  status = 200
+
+[[redirects]]
+  from = "/gift/:giftInfo/"
+  to = "/.netlify/functions/handle-gift"
   status = 200
 
 [[redirects]]
@@ -145,6 +155,11 @@
   signed = "API_SIGNATURE_TOKEN"
 
 # Pools page
+[[redirects]]
+  from = "/pools/:poolId/"
+  to = "/.netlify/functions/handle-pool"
+  status = 200
+
 [[redirects]]
   from = "/pools/:poolId"
   to = "/.netlify/functions/handle-pool"

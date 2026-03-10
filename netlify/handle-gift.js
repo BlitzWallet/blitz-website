@@ -1,6 +1,11 @@
 export async function handler(event, context) {
-  const path = event.path;
-  const giftId = path.split("/").pop();
+  const path = (event.path || "").replace(/\/+$/, "");
+  let giftId = path.split("/").pop() || "";
+  try {
+    giftId = decodeURIComponent(giftId);
+  } catch (e) {
+    // Keep raw giftId if decode fails.
+  }
 
   return {
     statusCode: 200,
@@ -24,6 +29,10 @@ function generateHTML(giftId) {
     <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
     <link rel="apple-touch-icon" href="/public/favicon/favicon.ico" />
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <meta
+      name="apple-itunes-app"
+      content="app-id=6476810582, app-argument=https://blitzwalletapp.com/gift/${giftId}"
+    />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
     
     <title>Claim your Gift!</title>
@@ -204,6 +213,82 @@ function generateHTML(giftId) {
         border-color: var(--primary_color);
       }
 
+      .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.45);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+        z-index: 20;
+      }
+
+      .modal-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.98);
+        width: calc(100% - 2rem);
+        max-width: 420px;
+        background: white;
+        border-radius: 20px;
+        padding: 1.5rem;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        z-index: 21;
+      }
+
+      .modal-container.active,
+      .modal-backdrop.active {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .modal-container.active {
+        transform: translate(-50%, -50%) scale(1);
+      }
+
+      .modal-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--secondary_color);
+      }
+
+      .modal-text {
+        font-size: 0.95rem;
+        color: var(--lm-text);
+        opacity: 0.9;
+        line-height: 1.4;
+      }
+
+      .modal-actions {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 1.25rem;
+      }
+
+      .modal-btn {
+        flex: 1;
+        padding: 0.85rem 1rem;
+        border-radius: 12px;
+        font-weight: 600;
+        border: 1px solid var(--lm-backgroundOffset);
+        background: white;
+        cursor: pointer;
+      }
+
+      .modal-btn.confirm {
+        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+        color: white;
+        border: none;
+      }
+
       .error-message {
         padding: 2rem;
         border-radius: 12px;
@@ -300,14 +385,15 @@ function generateHTML(giftId) {
     <script>
       const IOS_STORE_URL = 'https://apps.apple.com/us/app/blitz-wallet/id6476810582';
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
-      let pageHidden = false;
-      const FALLBACK_TIMEOUT_MS = 1500;
       const giftId = '${giftId}';
-      const fragment = window.location.hash.substring(1);
+      const currentUrl = new URL(window.location.href);
+      let pageHidden = false;
+      let claimAttemptTimer = null;
 
       function detectOS() {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
         if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return 'ios';
+        if (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) return 'ios';
         if (/android/i.test(userAgent)) return 'android';
         return 'other';
       }
@@ -317,33 +403,77 @@ function generateHTML(giftId) {
         if (loadingContainer) loadingContainer.textContent = message;
       }
 
-      function attemptDeepLinkWithFallback(onlyPreNavigate = false) {
+      function getClaimButton() {
+        return document.querySelector('.claim-button');
+      }
+
+      function setButtonToClaim() {
+        const btn = getClaimButton();
+        if (!btn) return;
+        btn.textContent = 'Claim in Blitz Wallet';
+        btn.onclick = claimGift;
+      }
+
+      function showDownloadModal(os) {
+        if (os !== 'ios' && os !== 'android') return;
+        const storeUrl = os === 'android' ? ANDROID_STORE_URL : IOS_STORE_URL;
+        const modal = document.getElementById('downloadModal');
+        const backdrop = document.getElementById('downloadBackdrop');
+        const confirmBtn = document.getElementById('downloadConfirm');
+        const cancelBtn = document.getElementById('downloadCancel');
+        if (!modal || !backdrop || !confirmBtn || !cancelBtn) return;
+        if (modal.classList.contains('active')) return;
+
+        const close = () => {
+          modal.classList.remove('active');
+          backdrop.classList.remove('active');
+        };
+
+        confirmBtn.onclick = () => {
+          setButtonToClaim();
+          close();
+          window.location.href = storeUrl;
+        };
+        cancelBtn.onclick = close;
+        backdrop.onclick = close;
+
+        modal.classList.add('active');
+        backdrop.classList.add('active');
+      }
+
+      function buildLinks() {
+        const safeGiftId = encodeURIComponent(giftId || '');
+        const httpsLink = currentUrl.origin + currentUrl.pathname + currentUrl.search + currentUrl.hash;
+        const deepLink = 'blitz-wallet://gift/' + safeGiftId + currentUrl.search + currentUrl.hash;
+        return { httpsLink: httpsLink, deepLink: deepLink };
+      }
+
+      function attemptDeepLinkWithFallback(event) {
+        if (event && event.isTrusted !== true) return;
         const os = detectOS();
-        const deepLink = \`blitz-wallet://gift/\${giftId}#\${fragment}\`;
-        
-        let storeUrl = '';
-        if (os === 'ios') {
-          storeUrl = IOS_STORE_URL;
-        } else if (os === 'android') {
-          storeUrl = ANDROID_STORE_URL;
-        } else {
+        const links = buildLinks();
+
+        if (os === 'other') {
           updateLoadingStatus('This link is optimized for mobile devices.');
-          window.location.href = deepLink;
+          window.location.href = links.httpsLink;
           return;
         }
 
         updateLoadingStatus('Opening Blitz Wallet...');
-        window.location.href = deepLink;
+        if (os === 'android') {
+          window.location.href = links.deepLink;
+          if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
+          claimAttemptTimer = setTimeout(() => {
+            if (!pageHidden) showDownloadModal('android');
+          }, 1500);
+          return;
+        }
 
-        if (onlyPreNavigate) return;
-
-        setTimeout(() => {
-          if (pageHidden) return;
-          updateLoadingStatus(\`App not detected. Redirecting to \${os === 'ios' ? 'App Store' : 'Play Store'}...\`);
-          setTimeout(() => {
-            if (!pageHidden) window.location.href = storeUrl;
-          }, 1000);
-        }, FALLBACK_TIMEOUT_MS);
+        window.location.href = links.httpsLink;
+        if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
+        claimAttemptTimer = setTimeout(() => {
+          if (!pageHidden) showDownloadModal('ios');
+        }, 1500);
       }
 
       async function fetchGiftData() {
@@ -434,7 +564,7 @@ function generateHTML(giftId) {
               </div>
 
               \${(!isClaimed && !isExpired) ? \`
-                <button class="claim-button" onclick="claimGift()">
+                <button class="claim-button" onclick="claimGift(event)">
                   Claim in Blitz Wallet
                 </button>
                 <button class="copy-button" onclick="copyGift()">
@@ -461,12 +591,12 @@ function generateHTML(giftId) {
         }, 300);
       }
 
-      function claimGift() {
-        attemptDeepLinkWithFallback();
+      function claimGift(event) {
+        attemptDeepLinkWithFallback(event);
       }
 
       function copyGift() {
-        const giftLink = \`https://blitzwalletapp.com/gift/\${giftId}#\${fragment}\`;
+        const giftLink = currentUrl.origin + currentUrl.pathname + currentUrl.search + currentUrl.hash;
         navigator.clipboard.writeText(giftLink);
 
         const button = document.querySelector('.copy-button');
@@ -482,22 +612,43 @@ function generateHTML(giftId) {
       document.addEventListener('DOMContentLoaded', () => {
         setTimeout(async () => {
           const { data, error } = await fetchGiftData();
-          if (!error && data.data) {
-            attemptDeepLinkWithFallback(true);
-          }
           const giftData = data?.data;
           renderGiftCard(giftData, error);
+          setButtonToClaim();
         }, 500);
       });
 
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
           pageHidden = true;
+          if (claimAttemptTimer) {
+            clearTimeout(claimAttemptTimer);
+            claimAttemptTimer = null;
+          }
+        } else {
+          pageHidden = false;
+          setButtonToClaim();
         }
+      });
+
+      window.addEventListener('pagehide', () => {
+        pageHidden = true;
       });
     </script>
   </head>
   <body>
+    <div class="modal-backdrop" id="downloadBackdrop"></div>
+    <div class="modal-container" id="downloadModal">
+      <div class="modal-title">Download Blitz Wallet</div>
+      <div class="modal-text">
+        We noticed you do not have Blitz Wallet installed yet.<br /><br />
+        After downloading, come back to this page to claim the gift.
+      </div>
+      <div class="modal-actions">
+        <button class="modal-btn" id="downloadCancel">Not now</button>
+        <button class="modal-btn confirm" id="downloadConfirm">Download</button>
+      </div>
+    </div>
     <div class="gift-container">
       <div class="gift-card">
         <div id="app">

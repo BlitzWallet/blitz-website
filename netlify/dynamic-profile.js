@@ -1,6 +1,11 @@
 export async function handler(event, context) {
-  const path = event.path;
-  const username = path.split("/").pop(); // Get username from URL
+  const path = (event.path || "").replace(/\/+$/, "");
+  let username = path.split("/").pop() || "";
+  try {
+    username = decodeURIComponent(username);
+  } catch (e) {
+    // Keep raw username if decode fails.
+  }
 
   return {
     statusCode: 200,
@@ -24,6 +29,10 @@ export async function handler(event, context) {
     <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
     <link rel="apple-touch-icon" href="/public/favicon/favicon.ico" />
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <meta
+      name="apple-itunes-app"
+      content="app-id=6476810582, app-argument=https://blitzwalletapp.com/u/${username}"
+    />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
     
    
@@ -66,31 +75,6 @@ export async function handler(event, context) {
         const script = document.createElement('script');
         script.src = "/src/js/profile.js";
         document.body.appendChild(script);
-        
-        let didClick = false;
-        let runCount = 0;
-        
-        const tryClickButton = async () => {
-          do {
-            console.log('running', didClick, runCount);
-            const blitzLinkButton = document.querySelector("#blitzLink");
-            try {
-              if (blitzLinkButton) {
-                blitzLinkButton.click();
-                didClick = true;
-              }
-            } catch (err) {
-              console.log(err);
-            } finally {
-              runCount += 1;
-              await new Promise(resolve => setTimeout(resolve, 250));
-            }
-          } while (!didClick && runCount < 20);
-        };
-        
-        // Try initial click
-        await tryClickButton();
-        
       });
     </script>
   </head>
