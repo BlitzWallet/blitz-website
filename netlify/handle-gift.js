@@ -28,11 +28,6 @@ function generateHTML(giftId) {
     <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
     <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
     <link rel="apple-touch-icon" href="/public/favicon/favicon.ico" />
-    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
-    <meta
-      name="apple-itunes-app"
-      content="app-id=6476810582, app-argument=https://blitzwalletapp.com/gift/${giftId}"
-    />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
     
     <title>Claim your Gift!</title>
