@@ -47,6 +47,12 @@ X-Content-Type-Options = "nosniff"
     Content-Security-Policy = "frame-ancestors 'none';"
     X-Frame-Options = "DENY"
 
+[[headers]]
+  for = "/gift/*"
+  [headers.values]
+    Content-Security-Policy = "frame-ancestors 'none'; frame-src blitz-wallet:;"
+    X-Frame-Options = "DENY"
+
 # Main redirection for user profiles
 [[redirects]]
   from = "/u/:username/"

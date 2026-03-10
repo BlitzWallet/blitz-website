@@ -462,7 +462,8 @@ function generateHTML(giftId) {
           iframe.style.width = '0';
           iframe.style.height = '0';
           iframe.src = links.deepLink; // blitz-wallet://gift/<id>
-          document.body.appendChild(iframe);
+          const target = document.body || document.documentElement;
+          target.appendChild(iframe);
 
           // After a short delay, if page is still visible, app isn't installed
           claimAttemptTimer = setTimeout(() => {
@@ -666,20 +667,19 @@ function generateHTML(giftId) {
       }
 
       document.addEventListener('DOMContentLoaded', () => {
+        // Fire deep link attempt ASAP, don't wait for gift data
+        const os = detectOS();
+        if (os !== 'other') {
+          attemptAutoDeepLink(); // try immediately
+        }
+
+        // Then fetch gift data in parallel
         setTimeout(async () => {
           const { data, error } = await fetchGiftData();
           const giftData = data?.data;
           renderGiftCard(giftData, error);
-
-          // Only auto-deep-link if gift is claimable
-          const isClaimed = giftData?.state === 'Claimed';
-          const isExpired = giftData ? Date.now() > giftData.expireTime : false;
-          if (!error && giftData && !isClaimed && !isExpired) {
-            attemptAutoDeepLink();
-          } else {
-            setButtonToClaim(); // fallback — button will just show modal
-          }
-        }, 500);
+          // Don't call attemptAutoDeepLink again here
+        }, 100);
       });
 
       document.addEventListener('visibilitychange', () => {
