@@ -469,7 +469,7 @@ function generateHTML(giftId) {
           return;
         }
 
-        window.location.href = links.httpsLink;
+        window.location.href = links.deepLink;
         if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
         claimAttemptTimer = setTimeout(() => {
           if (!pageHidden) showDownloadModal('ios');
