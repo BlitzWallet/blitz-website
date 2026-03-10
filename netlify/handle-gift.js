@@ -589,7 +589,7 @@ function generateHTML(giftId) {
 
       });
 
-      linker.openURL(os === 'android'?links.deepLink:links.deepLink);
+      linker.openURL(os === 'android'?links.deepLink:links.httpsLink);
       
       }
 
