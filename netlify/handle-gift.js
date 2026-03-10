@@ -387,8 +387,7 @@ function generateHTML(giftId) {
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
       const giftId = '${giftId}';
       const currentUrl = new URL(window.location.href);
-      let pageHidden = false;
-      let claimAttemptTimer = null;
+      let activeLinker = null;
 
       function detectOS() {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -401,6 +400,104 @@ function generateHTML(giftId) {
       function updateLoadingStatus(message) {
         const loadingContainer = document.querySelector('.loading-container p');
         if (loadingContainer) loadingContainer.textContent = message;
+      }
+
+      class DeepLinker {
+        constructor(options = {}) {
+          this.options = options;
+
+          this.hasFocus = true;
+          this.didHide = false;
+          this.didNavigate = false;
+
+          this.onBlur = this.onBlur.bind(this);
+          this.onFocus = this.onFocus.bind(this);
+          this.onVisibility = this.onVisibility.bind(this);
+          this.onPageHide = this.onPageHide.bind(this);
+
+          this.bind(true);
+        }
+
+        bind(add) {
+          const m = add ? 'addEventListener' : 'removeEventListener';
+
+          window[m]('blur', this.onBlur);
+          window[m]('focus', this.onFocus);
+
+          document[m]('visibilitychange', this.onVisibility);
+
+          // newer browsers fire this when leaving to app
+          window[m]('pagehide', this.onPageHide);
+        }
+
+        destroy() {
+          this.bind(false);
+        }
+
+        onBlur() {
+          this.hasFocus = false;
+        }
+
+        onVisibility() {
+          if (document.visibilityState === 'hidden') {
+            this.didHide = true;
+          }
+        }
+
+        onPageHide() {
+          this.didNavigate = true;
+        }
+
+        onFocus() {
+
+          // Returned from native app
+          if (this.didHide) {
+            this.options.onReturn?.();
+
+            this.didHide = false;
+            this.hasFocus = true;
+            return;
+          }
+
+          // Focus regained but never hidden -> dialog closed / cancelled
+          if (!this.hasFocus) {
+            setTimeout(() => {
+              if (!this.didHide) {
+                this.options.onFallback?.();
+              }
+            }, 800);
+          }
+
+          this.hasFocus = true;
+        }
+
+        openURL(url) {
+
+          const start = Date.now();
+
+          // If browser never reacted to deep link
+          const ignoredTimer = setTimeout(() => {
+
+            if (!this.didHide && this.hasFocus) {
+              this.options.onIgnored?.();
+            }
+
+          }, 700);
+
+          // attempt navigation
+          window.location.href = url;
+
+          // detect navigation success heuristically
+          setTimeout(() => {
+
+            const elapsed = Date.now() - start;
+
+            if (this.didHide || this.didNavigate) {
+              this.options.onAppOpened?.(elapsed);
+            }
+
+          }, 1200);
+        }
       }
 
       function getClaimButton() {
@@ -441,6 +538,13 @@ function generateHTML(giftId) {
         backdrop.classList.add('active');
       }
 
+      function hideDownloadModal() {
+        const modal = document.getElementById('downloadModal');
+        const backdrop = document.getElementById('downloadBackdrop');
+        if (modal) modal.classList.remove('active');
+        if (backdrop) backdrop.classList.remove('active');
+      }
+
       function buildLinks() {
         const safeGiftId = encodeURIComponent(giftId || '');
         const httpsLink = currentUrl.origin + currentUrl.pathname + currentUrl.search + currentUrl.hash;
@@ -460,20 +564,33 @@ function generateHTML(giftId) {
         }
 
         updateLoadingStatus('Opening Blitz Wallet...');
-        if (os === 'android') {
-          window.location.href = links.deepLink;
-          if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
-          claimAttemptTimer = setTimeout(() => {
-            if (!pageHidden) showDownloadModal('android');
-          }, 1500);
-          return;
+        if (activeLinker) {
+          activeLinker.destroy();
+          activeLinker = null;
         }
 
-        window.location.href = links.deepLink;
-        if (claimAttemptTimer) clearTimeout(claimAttemptTimer);
-        claimAttemptTimer = setTimeout(() => {
-          if (!pageHidden) showDownloadModal('ios');
-        }, 1500);
+      const linker = new DeepLinker({
+        onIgnored() {
+          console.log("Deep link ignored (no dialog)");
+          showDownloadModal(os);
+        },
+
+        onFallback() {
+          console.log("User closed dialog / stayed in browser");
+        },
+
+        onReturn() {
+          console.log("User returned from native app");
+        },
+
+        onAppOpened(time) {
+          console.log("App likely opened in", time, "ms");
+        }
+
+      });
+
+      linker.openURL(os === 'android'?links.deepLink:links.deepLink);
+      
       }
 
       async function fetchGiftData() {
