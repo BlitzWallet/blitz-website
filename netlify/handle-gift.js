@@ -508,7 +508,7 @@ function generateHTML(giftId) {
         const btn = getClaimButton();
         if (!btn) return;
         btn.textContent = 'Claim in Blitz Wallet';
-        btn.onclick = claimGift;
+        btn.onclick = openLink;
       }
 
       function showDownloadModal(os) {
@@ -527,7 +527,7 @@ function generateHTML(giftId) {
         };
 
         confirmBtn.onclick = () => {
-          setButtonToClaim();
+          // setButtonToClaim();
           close();
           window.location.href = storeUrl;
         };
@@ -552,45 +552,30 @@ function generateHTML(giftId) {
         return { httpsLink: httpsLink, deepLink: deepLink };
       }
 
-      function attemptDeepLinkWithFallback(event) {
-        if (event && event.isTrusted !== true) return;
-        const os = detectOS();
-        const links = buildLinks();
+      function openLink() {
+        const os = detectOS()
+        const urlParams = new URLSearchParams(currentUrl.search);
+        const links = buildLinks()
+        const httpsLink =links.httpsLink
+        const androidDeepLink =links.deepLink
 
-        if (os === 'other') {
-          updateLoadingStatus('This link is optimized for mobile devices.');
-          window.location.href = links.httpsLink;
-          return;
+        if (os === 'ios') {
+          const a = document.createElement('a');
+          a.href = httpsLink;
+          a.style.display = 'none';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          setTimeout(() => { showDownloadModal('ios'); }, 1200);
+
+        } else if (os === 'android') {
+          const start = Date.now();
+          window.location.href = androidDeepLink;
+          setTimeout(() => { if (Date.now() - start < 1500) showDownloadModal('android'); }, 1200);
+
+        } else {
+          window.location.href = httpsLink;
         }
-
-        updateLoadingStatus('Opening Blitz Wallet...');
-        if (activeLinker) {
-          activeLinker.destroy();
-          activeLinker = null;
-        }
-
-      const linker = new DeepLinker({
-        onIgnored() {
-          console.log("Deep link ignored (no dialog)");
-          showDownloadModal(os);
-        },
-
-        onFallback() {
-          console.log("User closed dialog / stayed in browser");
-        },
-
-        onReturn() {
-          console.log("User returned from native app");
-        },
-
-        onAppOpened(time) {
-          console.log("App likely opened in", time, "ms");
-        }
-
-      });
-
-      linker.openURL(os === 'android'?links.deepLink:links.httpsLink);
-      
       }
 
       async function fetchGiftData() {
@@ -681,9 +666,7 @@ function generateHTML(giftId) {
               </div>
 
               \${(!isClaimed && !isExpired) ? \`
-                <button class="claim-button" onclick="claimGift(event)">
-                  Claim in Blitz Wallet
-                </button>
+                <button class="claim-button" onclick="openLink()">Claim in Blitz Wallet</button>
                 <button class="copy-button" onclick="copyGift()">
                   Copy Gift Link
                 </button>
@@ -708,9 +691,6 @@ function generateHTML(giftId) {
         }, 300);
       }
 
-      function claimGift(event) {
-        attemptDeepLinkWithFallback(event);
-      }
 
       function copyGift() {
         const giftLink = currentUrl.origin + currentUrl.pathname + currentUrl.search + currentUrl.hash;

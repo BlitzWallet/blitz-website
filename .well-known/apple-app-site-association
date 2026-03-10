@@ -4,7 +4,11 @@
     "details": [
       {
         "appID": "38WX44YTA6.org.reactjs.native.example.BlitzWallet",
-        "paths": ["/u/*", "/gift/*", "/pools/*"]
+        "paths": [
+          "/u/*",
+          "/gift/*",
+          "/pools/*"
+        ]
       }
     ]
   }
