@@ -19,9 +19,9 @@ export const postList = [
   },
   {
     type: "Release", // Can be "Release", "Learn", or "Podcast"
-    title: "Blitz Gifts",
+    title: "How to Gift Bitcoin to Anyone, Even If They Don't Have a Wallet.",
     description:
-      "Discover how you can create and share Blitz Bitcoin gifts to easily onboard any new Bitcoiner.",
+      "Send Bitcoin as a gift in seconds with Blitz Gifts. Share a link, they tap to claim.",
     htmlPageLink: "/pages/blog/blitz-gifts",
     searchName: "blitz-gifts",
     readingLengthEST: 2, //In minutes
