@@ -22,6 +22,7 @@ function generateHTML(giftId) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://blitzwalletapp.com/gift/${giftId}" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/public/favicon/favicon-96x96.png" sizes="96x96" />
@@ -47,7 +48,7 @@ function generateHTML(giftId) {
     <meta property="twitter:title" content="Claim your Gift!" />
     <meta property="twitter:description" content="You've received a gift! Claim it with Blitz Wallet." />
 
-    <meta name="robots" content="noindex,nofollow"> 
+    <meta name="robots" content="noindex, follow">
     <meta name="googlebot" content="noindex,nofollow">
 
     <!-- Fonts -->

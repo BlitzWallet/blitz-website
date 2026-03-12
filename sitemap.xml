@@ -5,8 +5,6 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" >
 
-
-
 <url>
   <loc>https://blitzwalletapp.com/</loc>
   <lastmod>2026-01-20T02:01:55+00:00</lastmod>
@@ -28,7 +26,7 @@
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://blitzwalletapp.com/pages/privacypolicy/</loc>
+  <loc>https://blitzwalletapp.com/pages/privacyPolicy/</loc>
   <lastmod>2026-01-20T02:01:55+00:00</lastmod>
   <priority>0.80</priority>
 </url>
@@ -38,19 +36,79 @@
   <priority>0.80</priority>
 </url>
 <url>
-  <loc>https://blitzwalletapp.com/pages/blog/?category=Releases</loc>
+  <loc>https://blitzwalletapp.com/pages/blog/introducing-blitz-wallet/</loc>
   <lastmod>2026-01-20T02:01:55+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://blitzwalletapp.com/pages/blog/?category=Learn</loc>
-  <lastmod>2025-09-28T02:01:55+00:00</lastmod>
-  <priority>0.64</priority>
+  <loc>https://blitzwalletapp.com/pages/blog/self-custodial-wallet/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
 </url>
 <url>
-  <loc>https://blitzwalletapp.com/pages/blog/?category=Podcasts</loc>
+  <loc>https://blitzwalletapp.com/pages/blog/how-to-create-a-bitcoin-wallet/</loc>
   <lastmod>2026-01-20T02:01:55+00:00</lastmod>
-  <priority>0.64</priority>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/what-is-spark/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/bitcoin-familiarity/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/bridge-update/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/blitz-gifts/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/send-gifts-to-contacts/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/gift-cards-in-seconds/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/anonymous-sms-with-blitz/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/vpn-access-with-bitcoin/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/explore-blitz/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/eCash-pos/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/power-up/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
+</url>
+<url>
+  <loc>https://blitzwalletapp.com/pages/blog/efficiency-update/</loc>
+  <lastmod>2026-01-20T02:01:55+00:00</lastmod>
+  <priority>0.70</priority>
 </url>
 
 

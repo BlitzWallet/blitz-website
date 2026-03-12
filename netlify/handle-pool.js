@@ -22,6 +22,7 @@ function generateHTML(poolId) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://blitzwalletapp.com/pools/${poolId}" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/public/favicon/favicon-96x96.png" sizes="96x96" />
@@ -52,7 +53,7 @@ function generateHTML(poolId) {
     <meta property="twitter:title" content="Share your pool. Anyone on or off Blitz Wallet can contribute" />
     <meta property="twitter:description" content="Contribute to this pool on Blitz Wallet." />
 
-    <meta name="robots" content="noindex,nofollow">
+   <meta name="robots" content="noindex, follow">
     <meta name="googlebot" content="noindex,nofollow">
 
     <!-- Fonts -->

@@ -17,6 +17,7 @@ export async function handler(event, context) {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://blitzwalletapp.com/u/${username}" />
 
     <!-- Favicon -->
     <link
@@ -63,7 +64,7 @@ export async function handler(event, context) {
     <meta property="og:description" content="Check out ${username} on Blitz Wallet." />
     <meta property="og:url" content="https://blitzwalletapp.com/u/${username}" />
 
-    <meta name="robots" content="index,nofollow"> 
+    <meta name="robots" content="noindex, follow">
     <meta name="googlebot" content="noindex,nofollow">
     <script src="/src/js/font-loader.js" defer></script>
 
