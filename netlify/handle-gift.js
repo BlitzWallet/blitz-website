@@ -147,7 +147,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
     <meta property="twitter:title" content="${ogTitle}" />
     <meta property="twitter:description" content="${ogDescription}" />
 
-    <meta name="robots" content="noindex, follow">
+    <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow">
 
     <!-- Fonts -->

@@ -64,7 +64,7 @@ export async function handler(event, context) {
     <meta property="og:description" content="Check out ${username} on Blitz Wallet." />
     <meta property="og:url" content="https://blitzwalletapp.com/u/${username}" />
 
-    <meta name="robots" content="noindex, follow">
+    <meta name="robots" content="noindex,nofollow">
     <meta name="googlebot" content="noindex,nofollow">
     <script src="/src/js/font-loader.js" defer></script>
 
