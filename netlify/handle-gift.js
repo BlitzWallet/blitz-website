@@ -1,16 +1,10 @@
-import blitzAuthHeaders from "./lib/blitz-api-auth";
-
-async function fetchGiftData(giftId) {
+async function fetchGiftData(giftId, baseUrl) {
   try {
-    const res = await fetch(
-      "https://getbitcoingiftdetails-6krimtymjq-uc.a.run.app",
-      {
-        method: "POST",
-        headers: blitzAuthHeaders(),
-        body: JSON.stringify({ giftUUID: giftId }),
-        signal: AbortSignal.timeout(6000),
-      },
-    );
+    const res = await fetch(baseUrl + "/getBitcoinGiftDetails", {
+      method: "POST",
+      body: JSON.stringify({ giftUUID: giftId }),
+      signal: AbortSignal.timeout(6000),
+    });
 
     if (!res.ok) {
       console.error("[OG gift] Cloud Function returned", res.status);
@@ -82,9 +76,8 @@ export async function handler(event, context) {
   } catch (e) {
     // Keep raw giftId if decode fails.
   }
-
-  const giftData = await fetchGiftData(giftId);
   const baseUrl = process.env.URL || "https://blitzwalletapp.com";
+  const giftData = await fetchGiftData(giftId, baseUrl);
 
   let ogTitle, ogDescription, ogImage;
 

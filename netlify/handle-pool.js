@@ -1,10 +1,7 @@
-import blitzAuthHeaders from "./lib/blitz-api-auth";
-
-async function fetchPoolData(poolId) {
+async function fetchPoolData(poolId, baseUrl) {
   try {
-    const res = await fetch("https://getpooldata-6krimtymjq-uc.a.run.app", {
+    const res = await fetch(baseUrl + "/getPoolData", {
       method: "POST",
-      headers: blitzAuthHeaders(),
       body: JSON.stringify({ poolId }),
       signal: AbortSignal.timeout(6000),
     });
@@ -95,8 +92,9 @@ export async function handler(event, context) {
   } catch (e) {
     // Keep raw poolId if decode fails.
   }
-  const poolData = await fetchPoolData(poolId);
   const baseUrl = process.env.URL || "https://blitzwalletapp.com";
+  const poolData = await fetchPoolData(poolId, baseUrl);
+
   console.log(poolData);
 
   let ogTitle, ogDescription, ogImage;
