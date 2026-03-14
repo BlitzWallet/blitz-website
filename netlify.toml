@@ -194,3 +194,13 @@ X-Content-Type-Options = "nosniff"
   from = "/:username"
   to = "/tips_page.html"
   status = 200
+
+[[redirects]]
+  from = "/fonts/*"
+  to = "/public/fonts/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/public/*"
+  to = "/public/:splat"
+  status = 200

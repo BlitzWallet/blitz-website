@@ -1,3 +1,73 @@
+async function fetchGiftData(giftId, baseUrl) {
+  try {
+    const res = await fetch(baseUrl + "/getBitcoinGiftDetails", {
+      method: "POST",
+      body: JSON.stringify({ giftUUID: giftId }),
+      signal: AbortSignal.timeout(6000),
+    });
+
+    if (!res.ok) {
+      console.error("[OG gift] Cloud Function returned", res.status);
+      return null;
+    }
+
+    const json = await res.json();
+    if (json?.status !== "SUCCESS") {
+      console.error("[OG gift] Unexpected status:", json?.status);
+      return null;
+    }
+
+    return json?.data ?? null;
+  } catch (err) {
+    console.error("[OG gift] fetch error:", err.message);
+    return null;
+  }
+}
+
+// ── 2. Build the og:image URL from the gift data object ───────────────────────
+
+function buildGiftOgImageUrl(baseUrl, giftId, data) {
+  // data fields (adjust these keys to match what your Cloud Function actually returns)
+  const amount = data?.amount ?? "";
+  const denom = data?.denomination ?? "BTC"; // "BTC" | "USD"
+  const satDisplay = data?.satDisplay ?? "SAT"; // "SAT" | "BTC"
+  const message = encodeURIComponent(data?.giftMessage ?? "");
+  const sender = encodeURIComponent(data?.senderName ?? "");
+
+  return (
+    `${baseUrl}/og-gift` +
+    `?amount=${amount}` +
+    `&denom=${encodeURIComponent(denom)}` +
+    `&satDisplay=${encodeURIComponent(satDisplay)}` +
+    `&message=${message}` +
+    `&sender=${sender}` +
+    `&id=${encodeURIComponent(giftId)}` +
+    `&v=1`
+  );
+}
+
+// ── 3. Format amount for og:title / og:description ────────────────────────────
+
+function formatGiftAmountLabel(data) {
+  if (!data) return null;
+
+  const denomination = data.denomination ?? "BTC";
+  const useSatSymbol = data.satDisplay === "symbol" || !data.satDisplay;
+
+  if (denomination === "USD") {
+    const amount = Number(data.dollarAmount ?? 0);
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(amount);
+  }
+
+  const amount = Number(data.amount ?? 0);
+  return useSatSymbol
+    ? `₿${amount.toLocaleString("en-US")}`
+    : `${amount.toLocaleString("en-US")} SAT`;
+}
+
 export async function handler(event, context) {
   const path = (event.path || "").replace(/\/+$/, "");
   let giftId = path.split("/").pop() || "";
@@ -6,17 +76,44 @@ export async function handler(event, context) {
   } catch (e) {
     // Keep raw giftId if decode fails.
   }
+  const baseUrl = process.env.URL || "https://blitzwalletapp.com";
+  const giftData = await fetchGiftData(giftId, baseUrl);
+
+  let ogTitle, ogDescription, ogImage;
+
+  if (giftData) {
+    const denomination = giftData.denomination ?? "BTC";
+    const amountLabel = formatGiftAmountLabel(giftData);
+    ogTitle = `Claim your ${amountLabel} ${denomination === "BTC" ? "Bitcoin" : "Dollar"} Gift!`;
+    ogDescription = `You've received a ${amountLabel} Bitcoin gift. Claim it instantly on Blitz Wallet.`;
+    ogImage = buildGiftOgImageUrl(baseUrl, giftId, giftData);
+    console.log(ogImage);
+  } else {
+    // fallback — same values your current code already uses
+    ogTitle = "You've received a Bitcoin Gift!";
+    ogDescription = "Claim your Bitcoin gift on Blitz Wallet.";
+    ogImage = `https://blitzwalletapp.com/public/twitterCardPresent.png`;
+  }
+
+  const html = generateHTML({
+    ogTitle,
+    ogDescription,
+    ogImage,
+    giftId,
+    giftData,
+  });
 
   return {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
     },
-    body: generateHTML(giftId),
+    body: html,
   };
 }
 
-function generateHTML(giftId) {
+function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
+  const inlinedData = JSON.stringify(giftData ?? null);
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -31,22 +128,24 @@ function generateHTML(giftId) {
     <link rel="apple-touch-icon" href="/public/favicon/favicon.ico" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
     
-    <title>Claim your Gift!</title>
-    <meta name="description" content="You've received a gift! Claim it with Blitz Wallet." />
+    <title>${ogTitle}</title>
+    <meta name="description" content="${ogDescription}" />
 
     <!-- Open Graph -->
-    <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCardPresent.png" />
+    <meta property="og:image"       content="${ogImage}" />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="628" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/gift/${giftId}" />
-    <meta property="og:title" content="Claim your Gift!" />
-    <meta property="og:description" content="You've received a gift! Claim it with Blitz Wallet." />
+    <meta property="og:title"       content="${ogTitle}" />
+    <meta property="og:description" content="${ogDescription}" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCardPresent.png">
+    <meta name="twitter:image"       content="${ogImage}" />
     <meta property="twitter:url" content="https://blitzwalletapp.com/gift/${giftId}" />
-    <meta property="twitter:title" content="Claim your Gift!" />
-    <meta property="twitter:description" content="You've received a gift! Claim it with Blitz Wallet." />
+    <meta property="twitter:title" content="${ogTitle}" />
+    <meta property="twitter:description" content="${ogDescription}" />
 
     <meta name="robots" content="noindex, follow">
     <meta name="googlebot" content="noindex,nofollow">
@@ -385,6 +484,7 @@ function generateHTML(giftId) {
       const currentUrl = new URL(window.location.href);
       let pageHidden = false;
       let claimAttemptTimer = null;
+      const GIFT_DATA = ${inlinedData};
 
       function detectOS() {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -441,29 +541,6 @@ function generateHTML(giftId) {
         
       }
 
-      async function fetchGiftData() {
-        try {
-          const response = await fetch('/getBitcoinGiftDetails', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ giftUUID: giftId })
-          });
-
-          if (!response.ok) throw new Error('Failed to fetch gift data');
-          const data = await response.json();
-          return { data, error: null };
-        } catch (error) {
-          return { data: null, error: error.message };
-        }
-      }
-
-      function updateMetaTags(formattedAmount, denomination) {
-        const title = \`Claim your \${formattedAmount || (denomination === 'BTC' ? 'Bitcoin' : 'Dollar')} Gift!\`;
-        document.title = title;
-        document.querySelector('meta[property="og:title"]').setAttribute('content', title);
-        document.querySelector('meta[property="twitter:title"]').setAttribute('content', title);
-      }
-
       function renderGiftCard(giftData, loadError) {
         const container = document.getElementById('app');
         const loadingContainer = document.querySelector('.loading-container');
@@ -506,7 +583,6 @@ function generateHTML(giftId) {
           const giftType = denomination === 'BTC' ? 'Bitcoin' : 'Dollar';
           const expiresDate = new Date(giftData.expireTime).toLocaleDateString();
           
-          updateMetaTags(formattedAmount, denomination);
 
           container.innerHTML = \`
             <div class="content-container">
@@ -572,15 +648,7 @@ function generateHTML(giftId) {
       }
 
       document.addEventListener('DOMContentLoaded', () => {
-        // Fire deep link attempt ASAP, don't wait for gift data
-        const os = detectOS();
-
-        // Then fetch gift data in parallel
-        setTimeout(async () => {
-          const { data, error } = await fetchGiftData();
-          const giftData = data?.data;
-          renderGiftCard(giftData, error);
-        }, 100);
+        renderGiftCard(GIFT_DATA, GIFT_DATA ? null : 'Gift not found');
       });
 
       document.addEventListener('visibilitychange', () => {
