@@ -1,3 +1,92 @@
+import blitzAuthHeaders from "./lib/blitz-api-auth";
+
+async function fetchPoolData(poolId) {
+  try {
+    const res = await fetch("https://getpooldata-6krimtymjq-uc.a.run.app", {
+      method: "POST",
+      headers: blitzAuthHeaders(),
+      body: JSON.stringify({ poolId }),
+      signal: AbortSignal.timeout(6000),
+    });
+
+    if (!res.ok) {
+      console.error("[OG pool] Cloud Function returned", res.status);
+      return null;
+    }
+
+    const json = await res.json();
+    if (json?.status !== "SUCCESS") {
+      console.error("[OG pool] Unexpected status:", json?.status);
+      return null;
+    }
+
+    return json?.data ?? null;
+  } catch (err) {
+    console.error("[OG pool] fetch error:", err.message);
+    return null;
+  }
+}
+
+// ── 2. Format goal amount for display ─────────────────────────────────────────
+//
+// Mirrors the btcPrice conversion logic already in handle-pool.js.
+// Pass in the same btcPrice you already compute in handler().
+
+function formatPoolGoal(data, btcPrice) {
+  if (!data) return null;
+  const goalAmount = Number(data.goalAmount ?? 0);
+  return `${goalAmount.toLocaleString("en-US")} SAT`;
+
+  const denomination = data.denomination ?? "SAT"; // "SAT" | "BTC" | "USD" | other fiat
+
+  if (
+    denomination === "USD" ||
+    (denomination !== "SAT" && denomination !== "BTC")
+  ) {
+    // Fiat goal stored in cents → divide by 100 for display
+    const fiatGoal = goalAmount / 100;
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency:
+        denomination === "SAT" || denomination === "BTC" ? "USD" : denomination,
+    }).format(fiatGoal);
+  }
+
+  // SAT / BTC goal
+  if (denomination === "BTC" || goalAmount >= 100_000) {
+    const btc = goalAmount / 1e8;
+    return `${btc.toLocaleString("en-US", { maximumFractionDigits: 8 })} BTC`;
+  }
+}
+
+// ── 3. Compute progress percentage ───────────────────────────────────────────
+
+function computeProgressPct(data) {
+  const raised = Number(data?.currentAmount ?? 0);
+  const goal = Number(data?.goalAmount ?? 0);
+  if (!goal) return 0;
+  return Math.round((raised / goal) * 100);
+}
+
+// ── 4. Build og:image URL ─────────────────────────────────────────────────────
+
+function buildPoolOgImageUrl(baseUrl, poolId, data, goalLabel) {
+  const title = encodeURIComponent(data?.poolTitle ?? "Pool");
+  const creator = encodeURIComponent(data?.creatorName ?? "");
+  const goal = encodeURIComponent(goalLabel ?? "");
+  const pct = computeProgressPct(data);
+
+  return (
+    `${baseUrl}/og-pool` +
+    `?title=${title}` +
+    `&creator=${creator}` +
+    `&goal=${goal}` +
+    `&pct=${pct}` +
+    `&id=${encodeURIComponent(poolId)}` +
+    `&v=1`
+  );
+}
+
 export async function handler(event, context) {
   const path = (event.path || "").replace(/\/+$/, "");
   let poolId = path.split("/").pop() || "";
@@ -6,17 +95,59 @@ export async function handler(event, context) {
   } catch (e) {
     // Keep raw poolId if decode fails.
   }
+  const poolData = await fetchPoolData(poolId);
+  const baseUrl = process.env.URL || "https://blitzwalletapp.com";
+  console.log(poolData);
+
+  let ogTitle, ogDescription, ogImage;
+
+  if (poolData) {
+    const goalLabel = formatPoolGoal(poolData, poolData.btcPrice);
+    const poolTitle = poolData.poolTitle ?? "Pool";
+    const creatorName = poolData.creatorName ?? "";
+    const pct = Math.max(
+      Math.round(poolData.currentAmount / poolData.goalAmount),
+      100,
+    );
+
+    ogTitle =
+      `${creatorName} shared a pool for ${poolTitle}, Open the link to contribute.`
+        .trim()
+        .replace(/ — Pool by $/, "");
+    ogDescription = `Help raise ${goalLabel} for "${poolTitle}" on Blitz Wallet.`;
+    ogImage = buildPoolOgImageUrl(
+      baseUrl,
+      poolId,
+      poolData,
+      Number(poolData.goalAmount ?? 0),
+    );
+    console.log(ogImage);
+  } else {
+    ogTitle = "Join this Bitcoin Pool on Blitz Wallet";
+    ogDescription =
+      "Contribute to a community Bitcoin pool via Lightning — no app required.";
+    ogImage = `https://blitzwalletapp.com/public/twitterCard.png`;
+  }
+
+  const html = generateHTML({
+    poolId,
+    ogTitle,
+    ogDescription,
+    ogImage,
+    poolData,
+  });
 
   return {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
     },
-    body: generateHTML(poolId),
+    body: html,
   };
 }
 
-function generateHTML(poolId) {
+function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
+  const inlinedData = JSON.stringify(poolData ?? null);
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,22 +167,24 @@ function generateHTML(poolId) {
     />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
 
-    <title>Share your pool. Anyone on or off Blitz Wallet can contribute</title>
-    <meta name="description" content="Contribute to this pool on Blitz Wallet." />
+    <title>${ogTitle}</title>
+    <meta name="description" content="${ogDescription}" />
 
     <!-- Open Graph -->
-    <meta property="og:image" content="https://blitzwalletapp.com/public/twitterCard.png" />
+    <meta property="og:image"        content="${ogImage}" />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="628" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/pools/${poolId}" />
-    <meta property="og:title" content="Share your pool. Anyone on or off Blitz Wallet can contribute" />
-    <meta property="og:description" content="Contribute to this pool on Blitz Wallet." />
+   <meta property="og:title"        content="${ogTitle}" />
+    <meta property="og:description"  content="${ogDescription}" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content="https://blitzwalletapp.com/public/twitterCard.png">
+    <meta name="twitter:image"       content="${ogImage}" />
     <meta property="twitter:url" content="https://blitzwalletapp.com/pools/${poolId}" />
-    <meta property="twitter:title" content="Share your pool. Anyone on or off Blitz Wallet can contribute" />
-    <meta property="twitter:description" content="Contribute to this pool on Blitz Wallet." />
+    <meta property="twitter:title" content="${ogTitle}" />
+    <meta property="twitter:description" content="${ogDescription}" />
 
    <meta name="robots" content="noindex, follow">
     <meta name="googlebot" content="noindex,nofollow">
@@ -897,6 +1030,7 @@ function generateHTML(poolId) {
     <script>
       const IOS_STORE_URL = 'https://apps.apple.com/us/app/blitz-wallet/id6476810582';
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
+      const POOL_DATA = ${inlinedData};
       const poolId = '${poolId}';
       let pageHidden = false;
       let poolData = null;
@@ -1037,22 +1171,6 @@ function generateHTML(poolId) {
         return (name || '?')[0].toUpperCase();
       }
 
-      function updateMetaTags(title, creatorName) {
-        const ogTitle = \`\${title} - Pool by \${creatorName}\`;
-        document.title = ogTitle;
-        const ogTitleMeta = document.querySelector('meta[property="og:title"]');
-        const twTitleMeta = document.querySelector('meta[property="twitter:title"]');
-        if (ogTitleMeta) ogTitleMeta.setAttribute('content', ogTitle);
-        if (twTitleMeta) twTitleMeta.setAttribute('content', ogTitle);
-
-        const desc = \`Contribute to "\${title}" on Blitz Wallet.\`;
-        const ogDescMeta = document.querySelector('meta[property="og:description"]');
-        const twDescMeta = document.querySelector('meta[property="twitter:description"]');
-        const descMeta = document.querySelector('meta[name="description"]');
-        if (ogDescMeta) ogDescMeta.setAttribute('content', desc);
-        if (twDescMeta) twDescMeta.setAttribute('content', desc);
-        if (descMeta) descMeta.setAttribute('content', desc);
-      }
 
       function showStep(stepName) {
         currentStep = stepName;
@@ -1470,30 +1588,9 @@ function generateHTML(poolId) {
       });
 
       document.addEventListener('DOMContentLoaded', () => {
-        setTimeout(async () => {
-          const { data, error } = await fetchPoolData();
-
-          if (error || !data) {
-            const container = document.getElementById('app');
-            const loadingContainer = document.querySelector('.loading-container');
-            if (loadingContainer) loadingContainer.classList.add('fade-out');
-            setTimeout(() => {
-              container.innerHTML = \`
-                <div class="content-container fade-in">
-                  <div class="error-message">
-                    <h2>Pool Not Found</h2>
-                    <p>\${'This pool does not exist.'}</p>
-                  </div>
-                </div>
-              \`;
-            }, 300);
-            return;
-          }
-
-          poolData = data;
-          updateMetaTags(data.poolTitle, data.creatorName);
-          renderPoolInfo(data, data.contributions || []);
-        }, 500);
+         btcPrice = POOL_DATA.btcPrice;
+         poolData = POOL_DATA;
+        renderPoolInfo(POOL_DATA, POOL_DATA.contributions || []);
       });
     </script>
   </head>
