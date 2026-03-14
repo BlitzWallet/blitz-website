@@ -112,7 +112,7 @@ export async function handler(event, context) {
       `${creatorName} shared a pool for ${poolTitle}, Open the link to contribute.`
         .trim()
         .replace(/ — Pool by $/, "");
-    ogDescription = `Help raise ${goalLabel} for "${poolTitle}" on Blitz Wallet.`;
+    ogDescription = `Help raise ${goalLabel} for ${poolTitle} on Blitz Wallet.`;
     ogImage = buildPoolOgImageUrl(
       baseUrl,
       poolId,
