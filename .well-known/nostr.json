@@ -132,8 +132,10 @@
     "FloweyTheFlower": "ed5cfd82e57e0d79fa7888264432d1d7b6dddde361616a2bd32ad8532f526915",
     "1Myy4QCu9zWESRHrVZBusN6g9bS5G7L5UK": "d6817e7a4fa3f54e11d3e6dbe6bfc9b9d798f85c41485da29703e824ee94e3cc",
     "cypherpunk": "fc06fcbe2251e5f11f92f9ba54e0db3b04e9478fd440f6124a23235bad491ea9",
-    "renatoenfisema": "e87c295ede33c2274e419dd63e9c117804c0dacaabcc8ed59c646cf058da788a",
-    "wikitoshi": "4f5abd09eb4365ce2ceb2a45d08e1e6520f7eeaee24652ad809013b34c007653"
+    "wikitoshi": "4f5abd09eb4365ce2ceb2a45d08e1e6520f7eeaee24652ad809013b34c007653",
+    "renato": "e87c295ede33c2274e419dd63e9c117804c0dacaabcc8ed59c646cf058da788a",
+    "bradford": "e9d58d53b009ac6d3524c17f899149073f4e7db9ddf1aee70f207dcb685df0ff",
+    "lateef": "d2e3cbf76e9a636aef280e3006b42dc13aaaae609b67d01a3208feaa8c9a110d"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -1209,6 +1211,22 @@
       "wss://relay.primal.net"
     ],
     "4f5abd09eb4365ce2ceb2a45d08e1e6520f7eeaee24652ad809013b34c007653": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "e9d58d53b009ac6d3524c17f899149073f4e7db9ddf1aee70f207dcb685df0ff": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "d2e3cbf76e9a636aef280e3006b42dc13aaaae609b67d01a3208feaa8c9a110d": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
