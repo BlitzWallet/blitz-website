@@ -2,6 +2,7 @@
 
 async function fetchPaylinkData(paylinkId, baseUrl) {
   try {
+    console.log(baseUrl + "/getPaylinkData");
     const res = await fetch(baseUrl + "/getPaylinkData", {
       method: "POST",
       body: JSON.stringify({ paylinkId, checkInvoice: true }),
@@ -64,8 +65,7 @@ export async function handler(event, context) {
     // Keep raw paylinkId if decode fails.
   }
 
-  const baseUrl = process.env.URL || "https://blitzwalletapp.com";
-  const paylinkData = await fetchPaylinkData(paylinkId, baseUrl);
+  const paylinkData = await fetchPaylinkData(paylinkId, domain);
 
   console.log(paylinkData);
 
@@ -76,7 +76,7 @@ export async function handler(event, context) {
     const username = paylinkData.name ?? "Someone";
     ogTitle = `${username} is requesting ${amountLabel}`;
     ogDescription = `Pay ${username} on Blitz Wallet`;
-    ogImage = buildOgImageUrl(baseUrl, paylinkId, paylinkData);
+    ogImage = buildOgImageUrl(domain, paylinkId, paylinkData);
     console.log(ogImage);
   } else {
     ogTitle = "Payment Request — Blitz Wallet";
