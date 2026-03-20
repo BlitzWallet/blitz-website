@@ -119,7 +119,6 @@ export async function handler(event, context) {
       poolData,
       Number(poolData.goalAmount ?? 0),
     );
-    console.log(ogImage);
   } else {
     ogTitle = "Join this Bitcoin Pool on Blitz Wallet";
     ogDescription =
@@ -146,6 +145,7 @@ export async function handler(event, context) {
 
 function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
   const inlinedData = JSON.stringify(poolData ?? null);
+  console.log(inlinedData);
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -1183,8 +1183,23 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
         if (loadingContainer) loadingContainer.classList.add('fade-out');
 
+        if (!pool){
+          container.innerHTML = \`
+            <div class="content-container">
+              <span style="margin-bottom:0px" class="status-badge closed">This pool does not exist</span>
+            </div>
+          \`
+
+          setTimeout(() => {
+              const cc = container.querySelector('.content-container');
+              if (cc) cc.classList.add('fade-in');
+            }, 50);
+
+          return
+        }
+
         setTimeout(() => {
-          const percent = getProgressPercent(pool.currentAmount, pool.goalAmount);
+          const percent = getProgressPercent(pool?.currentAmount, pool?.goalAmount);
           const circumference = 2 * Math.PI * 75;
           const dashOffset = circumference - (percent / 100) * circumference;
           const isClosed = pool.status === 'closed';
@@ -1586,9 +1601,9 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       });
 
       document.addEventListener('DOMContentLoaded', () => {
-         btcPrice = POOL_DATA.btcPrice;
+         btcPrice = POOL_DATA?.btcPrice;
          poolData = POOL_DATA;
-        renderPoolInfo(POOL_DATA, POOL_DATA.contributions || []);
+        renderPoolInfo(POOL_DATA, POOL_DATA?.contributions || []);
       });
     </script>
   </head>
