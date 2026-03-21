@@ -1238,7 +1238,7 @@ function generateHTML({
             walletAddress: currentDepositAddress,
             chainId: currentChainId,
           });
-          
+          console.log("EVM swap balance",balance)
           if (expectedAmountRaw !== null && balance >= expectedAmountRaw) {
             attemptRelay();
           } else if (currentSwap) {
@@ -1250,7 +1250,6 @@ function generateHTML({
             if (isLoadingState) {
               setProcessingStatus(friendlyStatus(status));
               showScreen('screen-processing');
-              stopBalancePolling()
             }
           }
         } catch (err) {
@@ -1671,6 +1670,7 @@ function generateHTML({
           const swap = await PaylinkSwap.getSwap(currentSwapId);
           currentSwap = swap;
           const status = getSwapStatus(swap);
+          console.log("Current swap poll", swap)
 
           if (isTerminalSuccess(status)) {
             clearSwapContext(); stopSwapPolling(); stopBalancePolling();
@@ -1964,14 +1964,8 @@ function generateHTML({
       document.addEventListener('visibilitychange', () => {
         if (document.visibilityState === 'hidden') {
           if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
-          if (swapPollTimer) { clearTimeout(swapPollTimer); swapPollTimer = null; }
-          if (balancePollTimer) { clearTimeout(balancePollTimer); balancePollTimer = null; }
         } else if (shouldPoll && !pollTimer) {
           _schedulePoll();
-        } else if (swapPolling && !swapPollTimer) {
-          scheduleSwapPoll();
-        } else if (balancePolling && !balancePollTimer) {
-          scheduleBalancePoll();
         }
       });
 
