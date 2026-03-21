@@ -383,7 +383,6 @@ function generateHTML({
         border-radius: 20px;
         display: inline-block;
         border: 2px solid var(--lm-backgroundOffset);
-        margin-bottom: 1.5rem;
       }
 
       #qr-code {
@@ -474,7 +473,7 @@ function generateHTML({
         font-weight: 700;
         color: var(--primary_color);
         line-height: 1.1;
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
       }
 
       .pay-description {
@@ -1015,7 +1014,7 @@ function generateHTML({
             <div id="qr-btc-invoice"></div>
           </div>
           <p class="amount">${amountLabel}</p>
-          <button class="btn-primary" id="btn-open-wallet" onclick="openBitcoinWallet()">Open Wallet</button>
+          <button class="btn-primary" onclick="openBitcoinWallet()">Open Wallet</button>
           <p id="btc-status" class="status-text">Waiting for payment…</p>
           <div class="spinner"></div>
         </div>
