@@ -1011,10 +1011,11 @@ function generateHTML({
         <div id="screen-btc" class="screen">
           <button class="btn-back" onclick="goBack()">← Back</button>
           <p class="requester">Pay ${username} via Lightning</p>
-          <div class="qr-wrapper">
+          <div style="cursor:pointer;" onclick="copyBitcoinAddress()" class="qr-wrapper">
             <div id="qr-btc-invoice"></div>
           </div>
           <p class="amount">${amountLabel}</p>
+          <button class="btn-primary" id="btn-open-wallet" onclick="openBitcoinWallet()">Open Wallet</button>
           <p id="btc-status" class="status-text">Waiting for payment…</p>
           <div class="spinner"></div>
         </div>
@@ -1167,6 +1168,7 @@ function generateHTML({
       let balancePollTimer = null;    let balancePolling = false;
       let expectedAmountRaw = null;   let currentTokenAddress = null;
       let currentChainId = null;      let currentDepositAddress = null;
+      let bitcoinInvoice = null;
 
       // ── screen navigation ─────────────────────────────────────────────
       function showScreen(id) {
@@ -1450,11 +1452,24 @@ function generateHTML({
             colorLight: '#ffffff',
             correctLevel: QRCode.CorrectLevel.M,
           });
+          bitcoinInvoice = json.invoice;
           startPolling();
         } catch (err) {
           showAlert('Network error. Please try again.');
           document.getElementById('btn-btc').disabled = false;
         }
+      }
+
+      function copyBitcoinAddress() {
+        if (!bitcoinInvoice) return;
+        event.preventDefault();
+        navigator.clipboard.writeText(bitcoinInvoice);
+        showAlert('Copied!');
+      }
+
+      function openBitcoinWallet() {
+        if (!bitcoinInvoice) return;
+        window.location.href = \`lightning:\${bitcoinInvoice}\`;
       }
 
       // ── Stablecoin flow ───────────────────────────────────────────────
