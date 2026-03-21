@@ -2,7 +2,6 @@
 
 async function fetchPaylinkData(paylinkId, baseUrl) {
   try {
-    console.log(baseUrl + "/getPaylinkData");
     const res = await fetch(baseUrl + "/getPaylinkData", {
       method: "POST",
       body: JSON.stringify({ paylinkId, checkInvoice: true }),
@@ -67,8 +66,6 @@ export async function handler(event, context) {
 
   const paylinkData = await fetchPaylinkData(paylinkId, domain);
 
-  console.log(paylinkData);
-
   let ogTitle, ogDescription, ogImage;
 
   if (paylinkData) {
@@ -77,7 +74,6 @@ export async function handler(event, context) {
     ogTitle = `${username} is requesting ${amountLabel}`;
     ogDescription = `Pay ${username} on Blitz Wallet`;
     ogImage = buildOgImageUrl(domain, paylinkId, paylinkData);
-    console.log(ogImage);
   } else {
     ogTitle = "Payment Request — Blitz Wallet";
     ogDescription =
@@ -1242,10 +1238,20 @@ function generateHTML({
             walletAddress: currentDepositAddress,
             chainId: currentChainId,
           });
-          console.log(balance)
+          
           if (expectedAmountRaw !== null && balance >= expectedAmountRaw) {
-       
             attemptRelay();
+          } else if (currentSwap) {
+            // On refresh, balance may be 0 because relay already swept tokens.
+            // Check swap status and show processing screen if swap is in a loading state.
+            const status = getSwapStatus(currentSwap);
+            const s = String(status).toLowerCase();
+            const isLoadingState = s === 'clientfunded' || s === 'serverfunded';
+            if (isLoadingState) {
+              setProcessingStatus(friendlyStatus(status));
+              showScreen('screen-processing');
+              stopBalancePolling()
+            }
           }
         } catch (err) {
           // silent — non-fatal
@@ -1454,7 +1460,7 @@ function generateHTML({
 
       // ── Stablecoin flow ───────────────────────────────────────────────
       function showNetworkSelect() {
-        if (${amount} <= 500){
+        if (${amount} < 500){
          showAlert('Minimum USDC/USDT amount is ${formatAmountLabel({ amount: 500 })}');
          return
         }
@@ -1543,7 +1549,7 @@ function generateHTML({
           ? formatTokenAmount(amountRaw, tokenInfo.decimals)
           : amountRaw;
 
-        console.log(address, amountRaw, tokenInfo,amountFormatted ,context)
+        
         if (context === 'stable') {
           stableAddress = address;
           document.getElementById('stable-network-label').textContent =
@@ -1553,7 +1559,7 @@ function generateHTML({
           document.getElementById('stable-address-text').textContent = address || '';
 
           const qrEl = document.getElementById('qr-stable-address');
-          console.log(qrEl, address,context)
+          
           if (qrEl && address) {
             qrEl.innerHTML = '';
             new QRCode(qrEl, {
@@ -1619,7 +1625,7 @@ function generateHTML({
             sourceAsset: tokenInfo,
             targetAddress: invoice,
           });
-          console.log(swap)
+          
 
           const swapId = swap?.response?.id || swap?.id;
           if (!swapId) {
@@ -1716,7 +1722,7 @@ function generateHTML({
         const context = loadSwapContext();
         if (!context || !context.swapId) return;
         currentSwapId = context.swapId;
-        console.log(context)
+        
         selectedNetwork = context.network;
         selectedCurrency = context.currency || 'USDC';
 
@@ -1735,9 +1741,9 @@ function generateHTML({
 
         try {
           const swap = await PaylinkSwap.getSwap(currentSwapId);
-          console.log(swap)
+          
           currentSwap = swap;
-          console.log(selectedNetwork,selectedCurrency)
+          
           const tokenInfo = getTokenInfo(swap.chain, selectedCurrency);
           currentTokenAddress = tokenInfo.token_id;
           currentChainId = Number(tokenInfo.chain);
@@ -1745,10 +1751,38 @@ function generateHTML({
           expectedAmountRaw = swap?.source_amount
             ? BigInt(Math.round(Number(swap.source_amount))) : null;
           updateSwapDetails(swap, 'stable');
-          showWalletButtons();
-          startSwapPolling();
-          startBalancePolling();
-          showScreen('screen-stable-pay');
+         
+          const status = getSwapStatus(swap);
+
+          if (isTerminalSuccess(status)) {
+            clearSwapContext();
+            showScreen('screen-success');
+          } else if (needsCollabRefund(status)) {
+            stopSwapPolling(); stopBalancePolling();
+            setRecoveryStatus(\`Swap issue (\${status}) — your tokens can be refunded.\`);
+            updateSwapDetails(swap, 'recovery');
+            const collabBtn = document.getElementById('btn-collab-refund');
+            if (collabBtn) collabBtn.style.setProperty('display', 'block');
+            showScreen('screen-recovery');
+          } else if (isTerminalFailure(status)) {
+            stopSwapPolling(); stopBalancePolling();
+            setRecoveryStatus(friendlyStatus(status));
+            updateSwapDetails(swap, 'recovery');
+            showScreen('screen-recovery');
+          } else {
+            const s = String(status).toLowerCase();
+            const isProcessing = s === 'clientfunded' || s === 'serverfunded';
+            updateSwapDetails(swap, 'stable');
+            showWalletButtons();
+            startSwapPolling();
+            startBalancePolling();
+            if (isProcessing) {
+              setProcessingStatus(friendlyStatus(status));
+              showScreen('screen-processing');
+            } else {
+              showScreen('screen-stable-pay');
+            }
+          }
         } catch (err) {
          console.log(err)
           setCreatingStatus('Unable to load swap. Please try again.', true);
