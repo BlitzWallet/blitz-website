@@ -1,4 +1,5 @@
 [build]
+  command = "npm run build"
   functions = "netlify"
   
 [functions]
@@ -189,6 +190,35 @@ X-Content-Type-Options = "nosniff"
   force = true
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
+
+# Paylinks page
+[[redirects]]
+  from = "/paylink/:paylinkId/"
+  to = "/.netlify/functions/handle-paylink"
+  status = 200
+
+[[redirects]]
+  from = "/paylink/:paylinkId"
+  to = "/.netlify/functions/handle-paylink"
+  status = 200
+
+# Paylinks API proxies
+[[redirects]]
+  from = "/getPaylinkData"
+  to = "https://getpaylinkdata-6krimtymjq-uc.a.run.app"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
+[[redirects]]
+  from = "/createPayLinkInvoice"
+  to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
 
 [[redirects]]
   from = "/:username"
