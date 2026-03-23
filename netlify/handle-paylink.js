@@ -1726,6 +1726,7 @@ function generateHTML({
         } catch (err) {
           // non-fatal
           startBalancePolling()
+          relayAttempted = false
         } finally {
           relayInFlight = false;
         }

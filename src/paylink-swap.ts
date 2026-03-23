@@ -89,7 +89,7 @@ async function withRetry<T>(
   options?: { retries?: number; baseDelayMs?: number; maxDelayMs?: number },
 ): Promise<T> {
   const retries = options?.retries ?? 3;
-  const baseDelayMs = options?.baseDelayMs ?? 1000;
+  const baseDelayMs = options?.baseDelayMs ?? 2000;
   const maxDelayMs = options?.maxDelayMs ?? 15000;
 
   let attempt = 0;
