@@ -6,7 +6,6 @@ import React from "https://esm.sh/react@18.2.0";
 // ─── brand ───────────────────────────────────────────────────────────────────
 
 const WHITE = "#ffffff";
-const WHITE_DIM = "rgba(255,255,255,0.75)";
 
 const FONTS = [
   {
@@ -41,10 +40,14 @@ async function loadFonts(origin: string) {
   );
 }
 
+async function loadIcon(origin: string): Promise<string> {
+  const res = await fetch(`${origin}/public/iconWhite.png`);
+  const buf = await res.arrayBuffer();
+  const b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
+  return `data:image/png;base64,${b64}`;
+}
+
 // ─── Bitcoin SVG icon ─────────────────────────────────────────────────────────
-// Rendered inline — Satori supports SVG elements directly in JSX.
-// Size is controlled by `width`/`height` on the <svg> element itself.
-// `display: "flex"` on the wrapper is required by Satori's Yoga layout engine.
 
 function BitcoinIcon({ size = 120 }: { size?: number }) {
   return (
@@ -53,7 +56,7 @@ function BitcoinIcon({ size = 120 }: { size?: number }) {
         display: "flex",
         alignItems: "center",
         paddingBottom: Math.round(size * 0.2),
-        marginRight: Math.round(size * -0.15),
+        marginRight: Math.round(size * -0.2),
       }}
     >
       <svg
@@ -79,15 +82,16 @@ function PaylinkCard({
   username,
   amountLabel,
   description,
+  iconSrc,
 }: {
   username: string;
   amountLabel: string;
   description: string;
+  iconSrc: string;
 }) {
   const amountFontSize =
-    amountLabel.length > 18 ? 62 : amountLabel.length > 7 ? 100 : 127;
+    amountLabel.length > 12 ? 90 : amountLabel.length > 7 ? 130 : 150;
 
-  // Icon scales proportionally with the amount font size so they stay optically balanced
   const iconSize = Math.round(amountFontSize * 1.3);
 
   return (
@@ -98,10 +102,8 @@ function PaylinkCard({
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
-        background:
-          "linear-gradient(160deg,#0b1a2b 0%,#102a43 40%,#0e4f8a 100%)",
+        background: "linear-gradient(135deg, #0476F6 0%, #009BF0 100%)",
         fontFamily: "'Poppins', sans-serif",
-        padding: "48px 60px",
         boxSizing: "border-box",
         alignItems: "center",
         position: "relative",
@@ -136,46 +138,27 @@ function PaylinkCard({
             "radial-gradient(circle, rgba(3,117,246,0.45) 0%, rgba(3,117,246,0) 70%)",
         }}
       />
-
-      {/* ── header: Blitz Wallet wordmark ── */}
       <div
         style={{
           display: "flex",
           alignItems: "center",
           width: "100%",
+          marginTop: "48px",
+          marginLeft: "96px",
         }}
       >
-        <div
-          style={{
-            color: WHITE,
-            fontSize: 60,
-            fontWeight: 700,
-            letterSpacing: "-0.03em",
-            display: "flex",
-            alignItems: "center",
-            lineHeight: 1,
-            padding: 0,
-            margin: 0,
-          }}
-        >
-          Blitz Wallet
-        </div>
+        <img src={iconSrc} width={65} height={65} />
       </div>
 
-      {/* ── amount row: icon + balance + SAT label ── */}
-      {/*
-        Key alignment rules for Satori / Yoga:
-        - The outer div MUST have display:"flex" — Satori ignores block layout.
-        - alignItems:"center" vertically centres children on the cross axis.
-        - gap handles the space between icon and text without extra margins.
-        - Both children are inline-flex themselves so their own content centres correctly.
-      */}
+      {/* ── amount row: bitcoin icon + balance ── */}
       <div
         style={{
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
           width: "100%",
+          marginTop: "auto",
+          padding: "0px 60px 0px",
         }}
       >
         <BitcoinIcon size={iconSize} />
@@ -207,13 +190,18 @@ export default async (request: Request, _context: Context) => {
   const amount = Number(p.get("amount") ?? 0);
   const description = decodeURIComponent(p.get("description") ?? "");
   const amountLabel = amount ? `${amount.toLocaleString("en-US")}` : "—";
-  const fonts = await loadFonts(origin);
+
+  const [fonts, iconSrc] = await Promise.all([
+    loadFonts(origin),
+    loadIcon(origin),
+  ]);
 
   const image = new ImageResponse(
     <PaylinkCard
       username={username}
       amountLabel={amountLabel}
       description={description}
+      iconSrc={iconSrc}
     />,
     {
       width: 1200,
