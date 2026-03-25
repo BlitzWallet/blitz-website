@@ -112,7 +112,9 @@ function generateHTML({
   const inlinedData = JSON.stringify(paylinkData ?? null);
   const username = paylinkData?.name ?? "";
   const amount = Number(paylinkData?.amount ?? 0);
-  const amountLabel = amount ? `₿${amount.toLocaleString("en-US")}` : "";
+  const amountLabel = amount
+    ? `<p class="amount"><span style="font-weight:400;">₿</span>${amount.toLocaleString("en-US")}</p>`
+    : "";
   const description = paylinkData?.description ?? "";
   const isPaid = paylinkData?.isPaid ?? false;
   const paylinkUrl = `https://blitzwalletapp.com/paylink/${paylinkId}`;
@@ -163,6 +165,7 @@ function generateHTML({
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
      <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -172,8 +175,8 @@ function generateHTML({
 
     <style>
       :root {
-        --title_font: "Poppins", sans-serif;
-        --description_font: "Poppins", sans-serif;
+        --title_font: "Poppins", "Noto Sans", sans-serif;
+        --description_font: "Poppins", "Noto Sans", sans-serif;
         --primary_color: #0375f6;
         --secondary_color: #21374f;
         --tertiary_color: #009bf0;
@@ -192,12 +195,11 @@ function generateHTML({
         font-family: var(--description_font);
         background: var(--lm-background);
         color: var(--lm-text);
-        min-height: calc(100dvh - 90px);
+        min-height: 100dvh;
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 1rem;
-        padding-top:90px;
+        padding: 90px 1rem;
         flex-direction:column;
       }
 
@@ -379,7 +381,7 @@ function generateHTML({
 
       .qr-wrapper {
         background: white;
-        padding: 1.5rem;
+        padding: 1rem;
         border-radius: 20px;
         display: inline-block;
         border: 2px solid var(--lm-backgroundOffset);
@@ -451,26 +453,29 @@ function generateHTML({
       /* ── request layout (initial screen) ──────────────────────────── */
       .request-layout {
         display: flex;
-        gap: 2rem;
         align-items: center;
         justify-content: center;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
       }
 
       .request-text {
         text-align: center;
         flex: 1;
+        gap: 1rem;
+      }
+
+      .request-text .requester {
+       margin-bottom: 1rem;
       }
 
       .requester {
         font-size: 1.1rem;
         opacity: 0.7;
-        margin-bottom: 0.5rem;
       }
 
       .amount {
         font-size: 3rem;
-        font-weight: 700;
+        font-weight: 500;
         color: var(--primary_color);
         line-height: 1.1;
         margin-bottom: 1rem;
@@ -981,7 +986,7 @@ function generateHTML({
           <div class="request-layout">
             <div class="request-text">
               <p class="requester">${username} requested you</p>
-              <p class="amount">${amountLabel}</p>
+              ${amountLabel}
               ${description ? `<p class="pay-description">for "${description}"</p>` : ""}
             </div>
           </div>
@@ -1008,12 +1013,12 @@ function generateHTML({
 
         <!-- Screen 2a: Bitcoin QR -->
         <div id="screen-btc" class="screen">
-          <button class="btn-back" onclick="goBack()">← Back</button>
+         <button class="btn-back" onclick="goBack()"><i data-lucide="arrow-left"></i> Back</button>
           <p class="requester">Pay ${username} via Lightning</p>
-          <div style="cursor:pointer;" onclick="copyBitcoinAddress()" class="qr-wrapper">
+          <div style="margin: 1rem 0px" style="cursor:pointer;" onclick="copyBitcoinAddress()" class="qr-wrapper">
             <div id="qr-btc-invoice"></div>
           </div>
-          <p class="amount">${amountLabel}</p>
+          ${amountLabel}
           <button class="btn-primary" onclick="openBitcoinWallet()">Open Wallet</button>
           <p id="btc-status" class="status-text">Waiting for payment…</p>
           <div class="spinner"></div>
@@ -1021,7 +1026,7 @@ function generateHTML({
 
         <!-- Screen 2b: Network selection -->
         <div id="screen-network" class="screen">
-          <button class="btn-back" onclick="goBack()">← Back</button>
+         <button class="btn-back" onclick="goBack()"><i data-lucide="arrow-left"></i> Back</button>
           <h2 class="screen-title">Select Network</h2>
           <div class="network-cards">
             <div class="network-card" id="card-polygon"  onclick="selectNetwork('polygon')">Polygon</div>
@@ -1037,7 +1042,7 @@ function generateHTML({
 
         <!-- Screen 3: Stablecoin deposit -->
         <div id="screen-stable-pay" class="screen">
-          <button class="btn-back" onclick="goBack('network')">← Back</button>
+          <button class="btn-back" onclick="goBack('network')"><i data-lucide="arrow-left"></i> Back</button>
           <p class="requester" id="stable-network-label"></p>
           <p class="amount" id="stable-amount-label"></p>
           <div class="qr-wrapper">
@@ -1054,7 +1059,7 @@ function generateHTML({
 
         <!-- Screen 3b: Swap recovery -->
         <div id="screen-recovery" class="screen">
-          <button class="btn-back" onclick="goBack()">← Back</button>
+          <button class="btn-back" onclick="goBack()"><i data-lucide="arrow-left"></i> Back</button>
           <h2 class="screen-title">Swap recovery</h2>
           <p id="recovery-status" class="status-text">Loading swap…</p>
           <div class="qr-wrapper">
@@ -1827,6 +1832,13 @@ function generateHTML({
             showScreen('screen-success');
             return;
           }
+            console.log(needsCollabRefund(status),'testing',status)
+          if (needsCollabRefund(status)||true) {
+            setRecoveryStatus(\`Swap issue (\${status}) — your tokens can be refunded.\`);
+            const collabBtn = document.getElementById('btn-collab-refund');
+            if (collabBtn) collabBtn.style.setProperty('display', 'block');
+            return;
+          }
           if (isTerminalFailure(status)) {
             setRecoveryStatus(\`Swap status: \${status || 'failed'}\`);
             return;
@@ -1949,7 +1961,7 @@ function generateHTML({
       }
 
       function _schedulePoll() {
-        pollTimer = setTimeout(_doPoll, 8000);
+        pollTimer = setTimeout(_doPoll, 5000);
       }
 
       async function _doPoll() {
