@@ -1024,7 +1024,6 @@ function generateHTML({
           <button class="btn-back" onclick="goBack()">← Back</button>
           <h2 class="screen-title">Select Network</h2>
           <div class="network-cards">
-            <div class="network-card" id="card-ethereum" onclick="selectNetwork('ethereum')">Ethereum</div>
             <div class="network-card" id="card-polygon"  onclick="selectNetwork('polygon')">Polygon</div>
             <div class="network-card" id="card-arbitrum" onclick="selectNetwork('arbitrum')">Arbitrum</div>
           </div>
@@ -1168,6 +1167,7 @@ function generateHTML({
       let expectedAmountRaw = null;   let currentTokenAddress = null;
       let currentChainId = null;      let currentDepositAddress = null;
       let bitcoinInvoice = null;
+      PaylinkSwap.getStablecoinMinLimits()
 
       // ── screen navigation ─────────────────────────────────────────────
       function showScreen(id) {
@@ -1473,8 +1473,8 @@ function generateHTML({
 
       // ── Stablecoin flow ───────────────────────────────────────────────
       function showNetworkSelect() {
-        if (${amount} < 500){
-         showAlert('Minimum USDC/USDT amount is ${formatAmountLabel({ amount: 500 })}');
+        if (${amount} < 1000){
+         showAlert('Minimum USDC/USDT amount is ${formatAmountLabel({ amount: 1000 })}');
          return
         }
         showScreen('screen-network');
