@@ -1167,7 +1167,6 @@ function generateHTML({
       let expectedAmountRaw = null;   let currentTokenAddress = null;
       let currentChainId = null;      let currentDepositAddress = null;
       let bitcoinInvoice = null;
-      PaylinkSwap.getStablecoinMinLimits()
 
       // ── screen navigation ─────────────────────────────────────────────
       function showScreen(id) {
