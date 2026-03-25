@@ -192,7 +192,7 @@ function generateHTML({
         font-family: var(--description_font);
         background: var(--lm-background);
         color: var(--lm-text);
-        min-height: 100vh;
+        min-height: calc(100dvh - 90px);
         display: flex;
         align-items: center;
         justify-content: center;
