@@ -154,14 +154,18 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
     <style>
       :root {
-        --title_font: "Poppins", sans-serif;
-        --description_font: "Poppins", sans-serif;
+        --title_font: "Poppins", "Noto Sans", sans-serif;
+        --description_font: "Poppins", "Noto Sans", sans-serif;
         --primary_color: #0375f6;
         --secondary_color: #21374f;
         --tertiary_color: #009bf0;
@@ -180,16 +184,64 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         font-family: var(--description_font);
         background: var(--lm-background);
         color: var(--lm-text);
-        min-height: 100vh;
+        min-height: 100dvh;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 1rem;
+        padding: calc(70px + 1rem) 1rem 1rem;
+      }
+
+      /* Navbar */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: var(--lm-background);
+        border-bottom: 1px solid var(--lm-backgroundOffset);
+        display: flex;
+        justify-content: center;
+        padding: 0 1rem;
+      }
+
+      .nav-inner {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+      }
+
+      nav a {
+        display: flex;
+      }
+
+      nav img {
+        height: 40px;
+      }
+
+      .nav-download-btn {
+        background: linear-gradient(135deg, var(--primary_color) 0%, var(--tertiary_color) 100%);
+        color: white;
+        padding: 0.6rem 1.2rem;
+        border-radius: 50px;
+        font-weight: 500;
+        font-size: 0.9rem;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(3, 117, 246, 0.3);
+      }
+
+      .nav-download-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(3, 117, 246, 0.4);
       }
 
       .gift-container {
         width: 100%;
-        max-width: 500px;
+        max-width: 600px;
         margin: 0 auto;
       }
 
@@ -299,7 +351,6 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         cursor: pointer;
         transition: all 0.3s ease;
         width: 100%;
-        margin-top: 1rem;
         font-family: var(--description_font);
       }
 
@@ -308,80 +359,182 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         border-color: var(--primary_color);
       }
 
+      /* Download Modal */
       .modal-backdrop {
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.45);
+        background: rgba(0, 0, 0, 0.5);
         opacity: 0;
+        transition: opacity 0.4s ease;
         pointer-events: none;
-        transition: opacity 0.2s ease;
-        z-index: 20;
+        z-index: 9998;
+      }
+
+      .modal-backdrop.active {
+        opacity: 1;
+        pointer-events: all;
       }
 
       .modal-container {
         position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0.98);
-        width: calc(100% - 2rem);
-        max-width: 420px;
-        background: white;
-        border-radius: 20px;
-        padding: 1.5rem;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.2s ease, transform 0.2s ease;
-        z-index: 21;
-      }
-
-      .modal-container.active,
-      .modal-backdrop.active {
-        opacity: 1;
-        pointer-events: auto;
+        bottom: -200%;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        transition: bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
       }
 
       .modal-container.active {
-        transform: translate(-50%, -50%) scale(1);
+        bottom: 0;
       }
 
-      .modal-title {
-        font-size: 1.25rem;
-        font-weight: 600;
+      .download-modal {
+        background: white;
+        border-radius: 30px 30px 0 0;
+        padding: 2.5rem 2rem 2rem;
+        max-width: 600px;
+        margin: 0 auto;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.2);
+        position: relative;
+      }
+
+      .modal-close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: var(--lm-backgroundOffset);
+        border: none;
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+      }
+
+      .modal-close:hover {
+        background: var(--lm-text);
+      }
+
+      .modal-close svg {
+        width: 20px;
+        height: 20px;
+        color: var(--lm-text);
+      }
+
+      .modal-close:hover svg {
+        color: white;
+      }
+
+      .modal-header {
+        text-align: center;
+        margin-bottom: 2rem;
+      }
+
+      .modal-header h2 {
+        font-size: 1.8rem;
         margin-bottom: 0.5rem;
-        color: var(--secondary_color);
+        color: var(--lm-text);
       }
 
-      .modal-text {
+      .modal-header p {
+        color: var(--lm-text);
+        opacity: 0.7;
+      }
+
+      .modal-tabs {
+        display: flex;
+        background: var(--lm-backgroundOffset);
+        border-radius: 50px;
+        padding: 0.3rem;
+        margin-bottom: 2rem;
+        gap: 0.3rem;
+      }
+
+      .modal-tab {
+        flex: 1;
+        padding: 0.7rem 1.5rem;
+        border: none;
+        background: transparent;
+        border-radius: 50px;
+        cursor: pointer;
+        font-weight: 500;
         font-size: 0.95rem;
         color: var(--lm-text);
-        opacity: 0.9;
-        line-height: 1.4;
-      }
-
-      .modal-actions {
+        transition: all 0.3s ease;
         display: flex;
-        gap: 0.75rem;
-        margin-top: 1.25rem;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
       }
 
-      .modal-btn {
-        flex: 1;
-        padding: 0.85rem 1rem;
-        border-radius: 12px;
-        font-weight: 600;
-        border: 1px solid var(--lm-backgroundOffset);
+      .modal-tab svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .modal-tab.active {
         background: white;
-        cursor: pointer;
+        color: var(--primary_color);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
 
-      .modal-btn.confirm {
-        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+      .modal-content {
+        text-align: center;
+      }
+
+      .qr-wrapper {
+        background: white;
+        padding: 1rem;
+        border-radius: 20px;
+        display: inline-block;
+        border: 2px solid var(--lm-backgroundOffset);
+      }
+
+      #qr-code {
+        display: block;
+      }
+
+      .modal-instructions {
+        font-size: 0.95rem;
+        color: var(--lm-text);
+        opacity: 0.8;
+        margin-bottom: 1.5rem;
+      }
+
+      .store-badges {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      .store-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.7rem;
+        padding: 0.8rem 1.5rem;
+        background: var(--lm-text);
         color: white;
-        border: none;
+        text-decoration: none;
+        border-radius: 12px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .store-badge svg {
+        width: 24px;
+        height: 24px;
+      }
+
+      .store-badge:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
       }
 
       .error-message {
@@ -474,6 +627,108 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         .gift-amount {
           font-size: 2.5rem;
         }
+
+        .download-modal {
+          padding: 2.5rem 1.5rem 2rem;
+        }
+
+        .modal-header h2 {
+          font-size: 1.5rem;
+        }
+      }
+
+      .steps-divider {
+        border: none;
+        border-top: 1px solid var(--lm-backgroundOffset);
+        margin: 1.5rem 0;
+      }
+
+      .steps-section {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: left;
+      }
+
+      .step {
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+      }
+
+      .step-number {
+        flex-shrink: 0;
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+
+      .step-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+        flex: 1;
+      }
+
+      .step-title {
+        font-weight: 600;
+        font-size: 1rem;
+        color: var(--lm-text);
+      }
+
+      .step-description {
+        font-size: 0.9rem;
+        opacity: 0.7;
+        line-height: 1.4;
+      }
+
+      .step-actions {
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
+      }
+
+      .step-btn {
+        flex: 1;
+        white-space: nowrap;
+        padding: 0.75rem 1.25rem;
+        border-radius: 12px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: var(--description_font);
+        border: none;
+        transition: all 0.3s ease;
+      }
+
+      .step-btn.primary {
+        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+        color: white;
+        box-shadow: 0 4px 15px rgba(3, 117, 246, 0.3);
+      }
+
+      .step-btn.primary:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 20px rgba(3, 117, 246, 0.4);
+      }
+
+      .step-btn.secondary {
+        background: transparent;
+        color: var(--primary_color);
+        border: 1px solid var(--lm-backgroundOffset);
+      }
+
+      .step-btn.secondary:hover {
+        background: var(--lm-background);
+        border-color: var(--primary_color);
       }
     </style>
 
@@ -486,59 +741,9 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
       let claimAttemptTimer = null;
       const GIFT_DATA = ${inlinedData};
 
-      function detectOS() {
-        const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-        if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) return 'ios';
-        if (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) return 'ios';
-        if (/android/i.test(userAgent)) return 'android';
-        return 'other';
-      }
-
       function updateLoadingStatus(message) {
         const loadingContainer = document.querySelector('.loading-container p');
         if (loadingContainer) loadingContainer.textContent = message;
-      }
-
-      function getClaimButton() {
-        return document.querySelector('.claim-button');
-      }
-
-
-      function showDownloadModal(os) {
-        if (os !== 'ios' && os !== 'android') return;
-        const storeUrl = os === 'android' ? ANDROID_STORE_URL : IOS_STORE_URL;
-        const modal = document.getElementById('downloadModal');
-        const backdrop = document.getElementById('downloadBackdrop');
-        const confirmBtn = document.getElementById('downloadConfirm');
-        const cancelBtn = document.getElementById('downloadCancel');
-        if (!modal || !backdrop || !confirmBtn || !cancelBtn) return;
-        if (modal.classList.contains('active')) return;
-
-        const close = () => {
-          modal.classList.remove('active');
-          backdrop.classList.remove('active');
-        };
-
-        confirmBtn.onclick = () => {
-          close();
-          window.location.href = storeUrl;
-        };
-        cancelBtn.onclick = close;
-        backdrop.onclick = close;
-
-        modal.classList.add('active');
-        backdrop.classList.add('active');
-      }
-
-    
-
-
-      function claimGift(event) {
-        if (event && event.isTrusted !== true) return;
-        const os = detectOS();
-         showDownloadModal(os);
-         return
-        
       }
 
       function renderGiftCard(giftData, loadError) {
@@ -592,25 +797,32 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
               <h1 class="gift-title">You've Received a Gift!</h1>
               <div class="gift-amount">\${formattedAmount}</div>
               \${giftData.description ? \`<p class="gift-description">\${giftData.description}</p>\` : ''}
-              
-              <div class="info-grid">
-                <div class="info-item">
-                  <span class="info-label">Expires</span>
-                  <span class="info-value">\${expiresDate}</span>
-                </div>
-                <div class="info-item">
-                  <span class="info-label">Type</span>
-                  <span class="info-value">\${giftType} Gift</span>
-                </div>
-              </div>
 
               \${(!isClaimed && !isExpired) ? \`
-                <button class="claim-button" onclick="claimGift(event)">
-                 Download Blitz Wallet
-                </button>
-                <button class="copy-button" onclick="copyGift()">
-                  Copy Gift Link
-                </button>
+                <hr class="steps-divider" />
+                <div class="steps-section">
+                  <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                      <div class="step-title">Download Blitz Wallet</div>
+                      <div class="step-description">Get the free app from the App Store or Google Play.</div>
+                      <div class="step-actions">
+                        <button class="step-btn primary download-btn">Download Blitz Wallet</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                      <div class="step-title">Claim Your Gift</div>
+                      <div class="step-description">Already installed? Tap below to open your gift in Blitz.</div>
+                      <div class="step-actions">
+                        <button class="step-btn primary" onclick="openInApp()">Open in Blitz Wallet</button>
+                        <button class="step-btn secondary copy-button" onclick="copyGift()">Copy Gift Link</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               \` : \`
                 <span class="status-badge error">
                   \${isClaimed ? 'Already Claimed' : 'Expired'}
@@ -632,6 +844,10 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         }, 300);
       }
 
+
+      function openInApp() {
+        window.location.href = \`blitz-wallet://gift/\${giftId}\`;
+      }
 
       function copyGift() {
         const giftLink = currentUrl.origin + currentUrl.pathname + currentUrl.search + currentUrl.hash;
@@ -669,18 +885,54 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
     </script>
   </head>
   <body>
-    <div class="modal-backdrop" id="downloadBackdrop"></div>
-    <div class="modal-container" id="downloadModal">
-      <div class="modal-title">Download Blitz Wallet</div>
-      <div class="modal-text">
-        Already have Blitz? <strong>Re-scan or re-open this link</strong> and it will open automatically — or copy the gift link and paste it into the <strong>Claim a Gift</strong> screen, found in the Gifts page.<br /><br />
-        Don't have Blitz yet? Download it now, then Re-scan or re-click this link.
+    <nav>
+      <div class="nav-inner">
+        <a href="/">
+          <img src="/public/favicon/favicon.svg" alt="Blitz Wallet" />
+        </a>
+        <a href="#" class="nav-download-btn download-btn">Download</a>
       </div>
-      <div class="modal-actions">
-        <button class="modal-btn" id="downloadCancel">Not now</button>
-        <button class="modal-btn confirm" id="downloadConfirm">Download</button>
+    </nav>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button class="modal-close" id="modalClose">
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i>
+            <span>iOS</span>
+          </button>
+          <button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i>
+            <span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper">
+            <div id="qr-code"></div>
+          </div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a href="https://apps.apple.com/us/app/blitz-wallet/id6476810582" class="store-badge" target="_blank">
+              <i data-lucide="apple"></i>
+              <span>App Store</span>
+            </a>
+            <a href="https://play.google.com/store/apps/details?id=com.blitzwallet" class="store-badge" target="_blank">
+              <i data-lucide="play"></i>
+              <span>Play Store</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
+
     <div class="gift-container">
       <div class="gift-card">
         <div id="app">
@@ -691,6 +943,84 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         </div>
       </div>
     </div>
+
+    <script>
+      (function() {
+        const modalContainer = document.getElementById('modalContainer');
+        const modalBackdrop = document.getElementById('modalBackdrop');
+        const modalClose = document.getElementById('modalClose');
+        const modalTabs = document.querySelectorAll('.modal-tab');
+        let qrcode = null;
+
+        function initQRCode(url) {
+          const qrElement = document.getElementById('qr-code');
+          qrElement.innerHTML = '';
+          qrcode = new QRCode(qrElement, {
+            text: url,
+            width: 200,
+            height: 200,
+            colorDark: '#000000',
+            colorLight: '#ffffff',
+            correctLevel: QRCode.CorrectLevel.H,
+          });
+        }
+
+        function showModal() {
+          modalContainer.classList.add('active');
+          modalBackdrop.classList.add('active');
+          document.body.style.overflow = 'hidden';
+          if (!qrcode) initQRCode(IOS_STORE_URL);
+        }
+
+        function hideModal() {
+          modalContainer.classList.remove('active');
+          modalBackdrop.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+
+        function isMobileDevice() {
+          return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        }
+
+        function isAndroidDevice() {
+          return /Android/i.test(navigator.userAgent);
+        }
+
+        function isIOSDevice() {
+          return /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
+        modalTabs.forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            modalTabs.forEach(function(t) { t.classList.remove('active'); });
+            tab.classList.add('active');
+            var platform = tab.dataset.platform;
+            var url = platform === 'ios' ? IOS_STORE_URL : ANDROID_STORE_URL;
+            initQRCode(url);
+          });
+        });
+
+        modalClose.addEventListener('click', hideModal);
+        modalBackdrop.addEventListener('click', hideModal);
+
+        document.addEventListener('click', function(e) {
+          if (e.target.closest('.download-btn')) {
+            e.preventDefault();
+            if (isMobileDevice()) {
+              if (isAndroidDevice()) {
+                window.location.href = ANDROID_STORE_URL;
+              } else if (isIOSDevice()) {
+                window.location.href = IOS_STORE_URL;
+              }
+            } else {
+              showModal();
+            }
+          }
+        });
+
+        lucide.createIcons();
+      })();
+    </script>
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"></script>

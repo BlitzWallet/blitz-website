@@ -219,6 +219,14 @@ X-Content-Type-Options = "nosniff"
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
 
+[[redirects]]
+  from = "/submitPaylinkSwap"
+  to = "https://submitPaylinkSwap-6krimtymjq-uc.a.run.app"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
 
 [[redirects]]
   from = "/:username"
