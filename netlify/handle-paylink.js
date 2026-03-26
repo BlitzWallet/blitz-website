@@ -951,7 +951,7 @@ function generateHTML({
         <div id="screen-processing" class="screen">
           <div class="loading-screen">
             <div class="spinner"></div>
-            <p class="loading-status" id="processing-status">Deposit Received…</p>
+            <p class="loading-status" id="processing-status">Deposit received…</p>
           </div>
         </div>
 
@@ -1098,11 +1098,32 @@ function generateHTML({
       let pollCount = 0;
       const MAX_POLLS = 50;
       let bitcoinInvoice = null;
+      let processingStatusTimer = null;
+      let processingStatusIndex = 0;
+      const processingStatusMessages = [
+        'Deposit received…',
+        'Securing funds…',
+        'Preparing relay…',
+        'Routing through Flashnet…',
+        'Building transaction…',
+        'Waiting for finality…',
+        'Updating balances…',
+        'Finalizing transfer…',
+        'Updating balances…',
+        'Almost done…',
+        'Updating balances…',
+        'Routing through Flashnet…',
+      ];
 
       // ── screen navigation ─────────────────────────────────────────────
       function showScreen(id) {
         document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
         document.getElementById(id).classList.add('active');
+        if (id === 'screen-processing') {
+          startProcessingStatusLoop();
+        } else {
+          stopProcessingStatusLoop();
+        }
       }
 
       function goBack() {
@@ -1323,6 +1344,23 @@ function generateHTML({
   function setProcessingStatus(msg) {
     const el = document.getElementById('processing-status');
     if (el) el.textContent = msg;
+  }
+
+  function startProcessingStatusLoop() {
+    stopProcessingStatusLoop();
+    processingStatusIndex = 0;
+    setProcessingStatus(processingStatusMessages[processingStatusIndex]);
+    processingStatusTimer = setInterval(() => {
+      processingStatusIndex = (processingStatusIndex + 1) % processingStatusMessages.length;
+      setProcessingStatus(processingStatusMessages[processingStatusIndex]);
+    }, 5000);
+  }
+
+  function stopProcessingStatusLoop() {
+    if (processingStatusTimer) {
+      clearInterval(processingStatusTimer);
+      processingStatusTimer = null;
+    }
   }
 
 
