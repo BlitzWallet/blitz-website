@@ -165,7 +165,7 @@ function generateHTML({
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
      <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -199,7 +199,7 @@ function generateHTML({
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 90px 1rem;
+        padding: 70px 1rem 1rem;
         flex-direction:column;
       }
 
@@ -242,7 +242,6 @@ function generateHTML({
         text-decoration: none;
         transition: all 0.3s ease;
         box-shadow: 0 4px 15px rgba(3, 117, 246, 0.3);
-        margin-left: auto;
       }
 
       .nav-download-btn:hover {
@@ -580,33 +579,33 @@ function generateHTML({
       }
 
       .network-cards {
-        display: flex;
-        gap: 0.75rem;
-        justify-content: center;
-        margin-bottom: 1.5rem;
-        flex-wrap: wrap;
-      }
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
 
-      .network-card {
-        border: 2px solid var(--lm-backgroundOffset);
-        border-radius: 12px;
-        padding: 1rem 1.5rem;
-        cursor: pointer;
-        font-weight: 500;
-        font-size: 0.95rem;
-        transition: all 0.2s ease;
-        min-width: 120px;
-      }
+.network-card {
+  border: 2px solid var(--lm-backgroundOffset);
+  border-radius: 12px;
+  padding: 1rem 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  text-align: center;
+  width: 100%;
+}
 
-      .network-card:hover {
-        border-color: var(--primary_color);
-      }
+.network-card:hover {
+  border-color: var(--primary_color);
+}
 
-      .network-card.selected {
-        border-color: var(--primary_color);
-        background: rgba(3, 117, 246, 0.06);
-        color: var(--primary_color);
-      }
+.network-card.selected {
+  border-color: var(--primary_color);
+  background: rgba(3, 117, 246, 0.06);
+  color: var(--primary_color);
+}
 
       .currency-toggle {
         display: flex;
@@ -883,9 +882,6 @@ function generateHTML({
           <img src="/public/favicon/favicon.svg" alt="Blitz Wallet" />
         </a>
         <a href="#" class="nav-download-btn download-btn">Download</a>
-         <button id="gear-btn" onclick="openGearOverlay()" aria-label="Recovery options">
-          <i color="#0375f6" data-lucide="settings"></i>
-        </button>
       </div>
     </nav>
     
@@ -925,25 +921,6 @@ function generateHTML({
               <span>Play Store</span>
             </a>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Gear overlay: recovery seed -->
-    <div id="gear-overlay" class="overlay-backdrop">
-      <div class="overlay-card">
-        <button class="overlay-close" onclick="closeGearOverlay()"><i data-lucide="x"></i></button>
-        <p class="overlay-title">Recovery</p>
-        <div class="warning-callout">
-          ⚠️ This seed recovers your USDT/USDC → Lightning swaps. Do not share it publicly.
-        </div>
-        <p class="overlay-body">
-          If a stablecoin-to-Lightning swap fails or gets stuck, this seed lets you recover your funds using an external wallet.
-        </p>
-        <button class="btn-secondary" onclick="revealGearSeed()">Reveal recovery seed</button>
-        <div id="seed-gear" style="display:none; margin-top:1rem;">
-          <div class="seed-box" id="seed-gear-text"></div>
-          <button class="btn-secondary" onclick="copyGearSeed()">Copy seed</button>
         </div>
       </div>
     </div>
@@ -998,7 +975,6 @@ function generateHTML({
               : `
           <button class="btn-primary" id="btn-btc" onclick="startBtcFlow()">Pay with Bitcoin</button>
           <button class="btn-secondary" id="btn-stable" onclick="showNetworkSelect()">Pay with USDC or USDT</button>
-          <button class="btn-secondary" id="btn-resume-swap" style="display:none;" onclick="resumeSwapFromStorage()">Resume swap</button>
           `
           }
           `
@@ -1027,61 +1003,43 @@ function generateHTML({
         <!-- Screen 2b: Network selection -->
         <div id="screen-network" class="screen">
          <button class="btn-back" onclick="goBack()"><i data-lucide="arrow-left"></i> Back</button>
-          <h2 class="screen-title">Select Network</h2>
-          <div class="network-cards">
-            <div class="network-card" id="card-polygon"  onclick="selectNetwork('polygon')">Polygon</div>
-            <div class="network-card" id="card-arbitrum" onclick="selectNetwork('arbitrum')">Arbitrum</div>
-          </div>
-          <div class="currency-toggle">
+          <p class="screen-title" style="margin-bottom:4px;">Pay with stablecoin</p>
+          <p style="font-size:0.9rem;opacity:0.65;margin-bottom:1.5rem;">Choose a token and the chain you'll send from.</p>
+           <p class="section-label" style="margin-bottom:0.5rem;">Token</p>
+            <div class="currency-toggle">
             <button id="btn-usdc" class="active" onclick="selectCurrency('USDC')">USDC</button>
             <button id="btn-usdt" onclick="selectCurrency('USDT')">USDT</button>
           </div>
+          <p class="section-label" style="margin-bottom:0.5rem;">Network</p>
+          <div class="network-cards" id="network-grid">
+            <!-- populated dynamically by showNetworkSelect() -->
+          </div>
+         
           <button class="btn-primary" id="btn-continue-stable" onclick="confirmStablecoin()">Continue</button>
         </div>
 
-
         <!-- Screen 3: Stablecoin deposit -->
         <div id="screen-stable-pay" class="screen">
-          <button class="btn-back" onclick="goBack('network')"><i data-lucide="arrow-left"></i> Back</button>
           <p class="requester" id="stable-network-label"></p>
-          <p class="amount" id="stable-amount-label"></p>
+          <p class="status-text amount" id="stable-amount-label" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;"></p>
           <div class="qr-wrapper">
             <div id="qr-stable-address"></div>
           </div>
           <div onclick="copyAddress()" class="address-box" id="stable-address-text"></div>
           <button class="btn-primary" id="btn-open-wallet" onclick="openWallet()" style="display:none;">Open Wallet</button>
           <button class="btn-primary" id="btn-connect-pay" onclick="connectAndPay()" style="display:none;">Connect &amp; Pay</button>
-          <div class="warning-callout">
-            After sending USDC/USDT, return to this page so we can complete your payment.
-          </div>
         </div>
 
-
-        <!-- Screen 3b: Swap recovery -->
-        <div id="screen-recovery" class="screen">
-          <button class="btn-back" onclick="goBack()"><i data-lucide="arrow-left"></i> Back</button>
-          <h2 class="screen-title">Swap recovery</h2>
-          <p id="recovery-status" class="status-text">Loading swap…</p>
-          <div class="qr-wrapper">
-            <div id="qr-recovery-address"></div>
+          <!-- Screen: error / timeout -->
+          <div id="screen-error" class="screen">
+            <div class="error-box">
+              <h2>Taking longer than expected</h2>
+              <p>Your payment is still processing. Your tx hash has been submitted successfully.</p>
+              <p class="status-text" id="error-txhash-display" style="word-break:break-all;margin:0.75rem 0;"></p>
+              <p>Please <a href="https://blitzwalletapp.com" target="_blank">contact support</a> with the tx hash above if this persists.</p>
+              <button class="btn-secondary" onclick="retryIsPaidPolling()">Check again</button>
+            </div>
           </div>
-          <div onclick="copyAddress()" class="address-box" id="recovery-address-text"></div>
-          <p id="recovery-amount" class="status-text"></p>
-          <div class="recovery-actions">
-            <button class="btn-primary" onclick="retryRelay()">Retry relay</button>
-            <button class="btn-secondary" onclick="refreshSwapStatus()">Refresh status</button>
-          </div>
-          <button class="btn-primary" id="btn-collab-refund" onclick="requestCollabRefund()" style="display:none;">
-            Refund Tokens
-          </button>
-          <p id="refund-countdown" class="status-text"></p>
-          <button class="btn-secondary" id="btn-timeout-refund" onclick="requestTimeoutRefund()" style="display:none;">
-            Check Unilateral Refund
-          </button>
-          <button class="btn-primary" id="btn-submit-refund" onclick="submitRefundTx()" style="display:none;">
-            Submit Refund via Wallet
-          </button>
-        </div>
 
         <!-- Screen 4: Success -->
         <div id="screen-success" class="screen">
@@ -1106,71 +1064,39 @@ function generateHTML({
       const PAYLINK_DATA = ${inlinedData};
       const SWAP_STORAGE_KEY = \`paylink_swap_\${PAYLINK_ID}\`;
 
-      const TOKEN_MAP = {
-        ethereum: {
-          USDC: {
-            token_id: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
-            symbol: 'USDC',
-            name: 'USD Coin',
-            decimals: 6,
-            chain: '1',
-          },
-          USDT: {
-            token_id: '0xdac17f958d2ee523a2206206994597c13d831ec7',
-            symbol: 'USDT',
-            name: 'Tether USD',
-            decimals: 6,
-            chain: '1',
-          },
-        },
-        polygon: {
-          USDC: {
-            token_id: '0x3c499c542cef5e3811e1192ce70d8cc03d5c3359',
-            symbol: 'USDC',
-            name: 'USD Coin',
-            decimals: 6,
-            chain: '137',
-          },
-          USDT: {
-            token_id: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
-            symbol: 'USDT',
-            name: 'Tether USD',
-            decimals: 6,
-            chain: '137',
-          },
-        },
-        arbitrum: {
-          USDC: {
-            token_id: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
-            symbol: 'USDC',
-            name: 'USD Coin',
-            decimals: 6,
-            chain: '42161',
-          },
-          USDT: {
-            token_id: '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9',
-            symbol: 'USDT',
-            name: 'Tether USD',
-            decimals: 6,
-            chain: '42161',
-          },
-        },
+     const NETWORK_MAP = {
+        ethereum: { chainId: 1,     usdc: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', usdt: '0xdac17f958d2ee523a2206206994597c13d831ec7' },
+        polygon:  { chainId: 137,   usdc: '0x3c499c542cef5e3811e1192ce70d8cc03d5c3359', usdt: null },
+        arbitrum: { chainId: 42161, usdc: '0xaf88d065e77c8cc2239327c5edb3a432268e5831', usdt: '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9' },
+        optimism: { chainId: 10,    usdc: '0x0b2c639c533813f4aa9d7837caf62653d097ff85', usdt: '0x94b008aa00579c1307b0ef2c499ad98a8ce58e58' },
+        base:     { chainId: 8453,  usdc: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913', usdt: null },
+        solana:   { chainId: null,  usdc: null, usdt: null },
+        tron:     { chainId: null,  usdc: null, usdt: null },
+      };
+
+      const NETWORK_LABELS = {
+        ethereum: 'Ethereum', polygon: 'Polygon', arbitrum: 'Arbitrum',
+        optimism: 'Optimism', base: 'Base', solana: 'Solana', tron: 'Tron',
+      };
+
+      const CURRENCY_NETWORKS = {
+        USDC: ['ethereum', 'arbitrum', 'optimism', 'polygon', 'base', 'solana'],
+        USDT: ['ethereum', 'arbitrum', 'optimism', 'tron'],
       };
 
       let selectedNetwork = null;
       let selectedCurrency = 'USDC';
+      let depositAddress = null;
+      let amountInRaw = null;
+      let estimatedOut = null;
+      let currentChainId = null;
+      let currentTokenAddress = null;
+      let txHashSubmitted = false;
+      let swapWatcher = null;
       let pollTimer = null;
       let shouldPoll = false;
-      let stableAddress = null;
-      let currentSwapId = null;
-      let currentSwap = null;
-      let swapPollTimer = null;
-      let swapPolling = false;
-      let relayInFlight = false;
-      let relayAttempted = false;
-      let balancePollTimer = null;    let balancePolling = false;
-      let expectedAmountRaw = null;   let currentTokenAddress = null;
-      let currentChainId = null;      let currentDepositAddress = null;
+      let pollCount = 0;
+      const MAX_POLLS = 50;
       let bitcoinInvoice = null;
 
       // ── screen navigation ─────────────────────────────────────────────
@@ -1179,95 +1105,27 @@ function generateHTML({
         document.getElementById(id).classList.add('active');
       }
 
-      function goBack(target) {
-        stopBalancePolling();
-        // Reset refund/wallet button visibility
-        ['btn-collab-refund', 'btn-timeout-refund', 'btn-submit-refund', 'btn-open-wallet', 'btn-connect-pay'].forEach(id => {
-          const el = document.getElementById(id);
-          if (el) { el.style.display = 'none'; el.disabled = false; }
-        });
-        const countdown = document.getElementById('refund-countdown');
-        if (countdown) countdown.textContent = '';
-        pendingRefundTx = null;
-        if (target === 'network') {
-          stopPolling();
-          stopSwapPolling();
-          document.getElementById('qr-stable-address').innerHTML = '';
-          stableAddress = null;
-          showScreen('screen-network');
-        } else {
-          stopPolling();
-          stopSwapPolling();
-          document.getElementById('btn-btc').disabled = false;
-          document.getElementById('qr-btc-invoice').innerHTML = '';
-          document.getElementById('qr-stable-address').innerHTML = '';
-          stableAddress = null;
-          selectedNetwork = null;
-          document.querySelectorAll('.network-card').forEach(c => c.classList.remove('selected'));
-          showScreen('screen-initial');
-        }
+      function goBack() {
+        stopPolling();
+        document.getElementById('btn-btc').disabled = false;
+        document.getElementById('qr-btc-invoice').innerHTML = '';
+        document.getElementById('qr-stable-address').innerHTML = '';
+        depositAddress = null;
+        selectedNetwork = null;
+        document.querySelectorAll('.network-card').forEach(c => c.classList.remove('selected'));
+        showScreen('screen-initial');
       }
 
       function stopPolling() {
         shouldPoll = false;
         if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
-      }
-
-      function stopSwapPolling() {
-        swapPolling = false;
-        if (swapPollTimer) { clearTimeout(swapPollTimer); swapPollTimer = null; }
-      }
-
-      // ── EVM balance polling ───────────────────────────────────────────
-      function startBalancePolling() {
-        stopBalancePolling();
-        balancePolling = true;
-        if (document.visibilityState !== 'hidden') scheduleBalancePoll();
-      }
-
-      function stopBalancePolling() {
-        balancePolling = false;
-        if (balancePollTimer) { clearTimeout(balancePollTimer); balancePollTimer = null; }
-      }
-
-      function scheduleBalancePoll() {
-        balancePollTimer = setTimeout(doBalancePoll, 10000);
-      }
-
-      async function doBalancePoll() {
-        balancePollTimer = null;
-        if (!balancePolling || !currentTokenAddress || !currentDepositAddress || !currentChainId) return;
-        try {
-          const balance = await PaylinkSwap.getTokenBalance({
-            tokenAddress: currentTokenAddress,
-            walletAddress: currentDepositAddress,
-            chainId: currentChainId,
-          });
-          console.log("EVM swap balance",balance)
-          if (expectedAmountRaw !== null && balance >= expectedAmountRaw) {
-            attemptRelay();
-          } else if (currentSwap) {
-            // On refresh, balance may be 0 because relay already swept tokens.
-            // Check swap status and show processing screen if swap is in a loading state.
-            const status = getSwapStatus(currentSwap);
-            const s = String(status).toLowerCase();
-            const isLoadingState = s === 'clientfunded' || s === 'serverfunded';
-            if (isLoadingState) {
-              setProcessingStatus(friendlyStatus(status));
-              showScreen('screen-processing');
-            }
-          }
-        } catch (err) {
-          // silent — non-fatal
-        }
-        if (balancePolling) scheduleBalancePoll();
-      }
+      }   
 
       // ── Wallet deep link / MetaMask integration ───────────────────────
       function buildEip681Uri() {
-        if (!currentTokenAddress || !currentDepositAddress || !currentChainId || !expectedAmountRaw) return null;
-        // ERC-20 transfer: ethereum:<token>@<chainId>/transfer?address=<to>&uint256=<amount>
-        return \`ethereum:\${currentTokenAddress}@\${currentChainId}/transfer?address=\${currentDepositAddress}&uint256=\${expectedAmountRaw.toString()}\`;
+        if (!currentTokenAddress || !depositAddress || !currentChainId || !amountInRaw) return null;
+        // ERC-20 transfer per EIP-681; uint256 value is decimal (not hex)
+        return \`ethereum:\${currentTokenAddress}@\${currentChainId}/transfer?address=\${depositAddress}&uint256=\${amountInRaw.toString()}\`;
       }
 
       function openWallet() {
@@ -1277,26 +1135,26 @@ function generateHTML({
       }
 
       async function connectAndPay() {
-        if (!window.ethereum || !currentTokenAddress || !currentDepositAddress || !currentChainId || !expectedAmountRaw) return;
+        if (!window.ethereum || !currentTokenAddress || !depositAddress || !currentChainId || !amountInRaw) return;
         try {
           const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          const chainHex = '0x' + currentChainId.toString(16);
-          try {
-            await window.ethereum.request({
-              method: 'wallet_switchEthereumChain', params: [{ chainId: chainHex }],
-            });
-          } catch (switchErr) { if (switchErr.code === 4902) throw switchErr; }
-          // ABI-encode ERC-20 transfer(address,uint256)
-          // selector: 0xa9059cbb
-          const addrPadded = currentDepositAddress.replace('0x', '').toLowerCase().padStart(64, '0');
-          const amtPadded = expectedAmountRaw.toString(16).padStart(64, '0');
-          const data = '0xa9059cbb' + addrPadded + amtPadded;
           await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x' + currentChainId.toString(16) }],
+          });
+          const addrPadded = depositAddress.replace('0x', '').toLowerCase().padStart(64, '0');
+          const amtPadded  = amountInRaw.toString(16).padStart(64, '0');
+          const data = '0xa9059cbb' + addrPadded + amtPadded;
+          const txHash = await window.ethereum.request({
             method: 'eth_sendTransaction',
             params: [{ from: accounts[0], to: currentTokenAddress, data }],
           });
+          handleTxHash(txHash, accounts[0]);
         } catch (err) {
-         if (err.code !== 4001) showAlert('Wallet error: ' + (err.message || err));
+          // All wallet errors treated identically (rejection, chain switch failure, etc.)
+          // wallet_addEthereumChain fallback is out of scope for v1.
+          // txHashSubmitted not set (handleTxHash not called), so no reset needed.
+          showTxHashError('Wallet error: ' + (err.message || 'Request rejected.'));
         }
       }
 
@@ -1308,8 +1166,8 @@ function generateHTML({
         const uri = buildEip681Uri();
         const openBtn = document.getElementById('btn-open-wallet');
         const connectBtn = document.getElementById('btn-connect-pay');
-        if (openBtn && isMobileDevice()) openBtn.style.display = uri ? 'block' : 'none';
-        if (connectBtn && !isMobileDevice()) connectBtn.style.display = window.ethereum ? 'block' : 'none';
+        if (openBtn) openBtn.style.display = (isMobileDevice() && uri) ? 'block' : 'none';
+        if (connectBtn) connectBtn.style.display = (!isMobileDevice() && !!window.ethereum) ? 'block' : 'none';
       }
 
       // ── initial QR (desktop) ──────────────────────────────────────────
@@ -1325,18 +1183,10 @@ function generateHTML({
 
       function saveSwapContext(context) {
         localStorage.setItem(SWAP_STORAGE_KEY, JSON.stringify(context));
-        updateResumeButton();
       }
 
       function clearSwapContext() {
         localStorage.removeItem(SWAP_STORAGE_KEY);
-        updateResumeButton();
-      }
-
-      function updateResumeButton() {
-        const btn = document.getElementById('btn-resume-swap');
-        if (!btn) return;
-        btn.style.display = loadSwapContext() ? 'block' : 'none';
       }
 
       function formatNetworkLabel(network) {
@@ -1344,22 +1194,112 @@ function generateHTML({
         return network.charAt(0).toUpperCase() + network.slice(1);
       }
 
-      function getTokenInfo(network, currency) {
-        const entry = TOKEN_MAP[network?.toLowerCase()] || {};
-        return entry[currency] || null;
-      }
-
       function formatTokenAmount(raw, decimals) {
         if (!raw) return '';
-        const rawStr = raw.toString();
-        if (!decimals) return rawStr;
-        const amount = raw / Math.pow(10,decimals)
-        return amount.toFixed(2)
+        if (!decimals) return raw.toString();
+        return (Number(raw) / Math.pow(10, decimals)).toFixed(2);
       }
 
-      function setRecoveryStatus(message) {
-        const el = document.getElementById('recovery-status');
-        if (el) el.textContent = message;
+      function formatNetworkLabel(network) {
+        return NETWORK_LABELS[network] || (network ? network.charAt(0).toUpperCase() + network.slice(1) : '');
+      }
+
+      function showTxHashError(msg) {
+        const el = document.getElementById('txhash-error');
+        if (!el) return;
+        el.textContent = msg;
+        el.style.display = msg ? 'block' : 'none';
+      }
+
+      async function handleTxHash(txHash, sourceAddress) {
+        if (txHashSubmitted) return;
+        txHashSubmitted = true;
+        if (swapWatcher) { swapWatcher.stop(); swapWatcher = null; }
+
+        // Validate format
+        const isEVM    = /^0x[0-9a-fA-F]{64}$/.test(txHash);
+        const isNonEVM = !currentChainId && txHash.trim().length > 10;
+        if (!isEVM && !isNonEVM) {
+          txHashSubmitted = false;
+          showTxHashError('Invalid transaction hash format.');
+          return;
+        }
+
+       showScreen('screen-processing');
+       startIsPaidPolling();
+        try {
+          const res = await fetch('/submitPaylinkSwap', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              paylinkId: PAYLINK_ID,
+              txHash,
+              sourceAddress: sourceAddress || null,
+            }),
+          });
+          const json = await res.json();
+          if (!json || json.status !== 'SUCCESS') throw new Error('submit-failed');
+          saveSwapContext({ txHash, sourceAddress: sourceAddress || null });
+        } catch (err) {
+          txHashSubmitted = false;
+          showScreen('screen-stable-pay');
+          showTxHashError('Submission failed. Please try again.');
+        }
+      }
+
+      function submitManualTxHash() {
+        const val = document.getElementById('txhash-input');
+        if (val) handleTxHash(val.value.trim(), null);
+      }
+
+      function startIsPaidPolling() {
+        pollCount = 0;
+        shouldPoll = true;
+        _schedulePaylinkPoll();
+      }
+
+      function _schedulePaylinkPoll() {
+        pollTimer = setTimeout(_doPaylinkPoll, 5000);
+      }
+
+      async function _doPaylinkPoll() {
+        pollTimer = null;
+        if (!shouldPoll) return;
+        pollCount++;
+        try {
+          const res = await fetch('/getPaylinkData', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ paylinkId: PAYLINK_ID, checkInvoice: true }),
+          });
+          const json = await res.json();
+          if (json?.data?.isPaid) {
+            shouldPoll = false;
+            clearSwapContext();
+            showScreen('screen-success');
+            return;
+          }
+        } catch (e) { /* network error — continue polling */ }
+        if (pollCount >= MAX_POLLS) {
+          shouldPoll = false;
+          showErrorScreen();
+          return;
+        }
+        _schedulePaylinkPoll();
+      }
+
+      function retryIsPaidPolling() {
+        if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
+        pollCount = 0;
+        shouldPoll = true;
+        _schedulePaylinkPoll();
+      }
+
+      function showErrorScreen() {
+        const stored = loadSwapContext();
+        const el = document.getElementById('error-txhash-display');
+        if (el) el.textContent = stored?.txHash || '(unknown)';
+        showScreen('screen-error');
       }
 
 
@@ -1385,38 +1325,6 @@ function generateHTML({
     if (el) el.textContent = msg;
   }
 
-  // ── gear overlay ───────────────────────────────────────────────────
-  function openGearOverlay() {
-    document.getElementById('gear-overlay').classList.add('active');
-  }
-
-  function closeGearOverlay() {
-    document.getElementById('gear-overlay').classList.remove('active');
-  }
-
-  async function revealGearSeed() {
-    const wrapper = document.getElementById('seed-gear');
-    const textEl = document.getElementById('seed-gear-text');
-    if (!wrapper || !textEl) return;
-    wrapper.style.display = 'block';
-    textEl.textContent = 'Loading recovery seed…';
-    try {
-      const mnemonic = await PaylinkSwap.getMnemonic();
-      textEl.textContent = mnemonic || 'Recovery seed unavailable.';
-    } catch (err) {
-      textEl.textContent = 'Unable to load recovery seed.';
-    }
-  }
-
-    function copyGearSeed() {
-      const textEl = document.getElementById('seed-gear-text');
-      if (!textEl) return;
-      navigator.clipboard.writeText(textEl.textContent || '');
-      const btn = event.target; 
-      const orig = btn.textContent;
-      btn.textContent = 'Copied!';
-      setTimeout(() => { btn.textContent = orig; }, 2000);
-    }
 
         // ── alert overlay ──────────────────────────────────────────────────
       function showAlert(message) {
@@ -1475,477 +1383,137 @@ function generateHTML({
         window.location.href = \`lightning:\${bitcoinInvoice}\`;
       }
 
+      function updateCurrencyGrid(){
+        const grid = document.getElementById('network-grid');
+        if (grid) {
+          const networks = CURRENCY_NETWORKS[selectedCurrency] || [];
+          console.log(CURRENCY_NETWORKS,selectedCurrency,networks  )
+          grid.innerHTML = networks.map(n =>
+            \`<div class="network-card" id="card-\${n}" onclick="selectNetwork('\${n}')">\${NETWORK_LABELS[n]}</div>\`
+          ).join('');
+        }
+      }
+
       // ── Stablecoin flow ───────────────────────────────────────────────
       function showNetworkSelect() {
-        if (${amount} < 1000){
-         showAlert('Minimum USDC/USDT amount is ${formatAmountLabel({ amount: 1000 })}');
+        if (${amount} < 1300){
+         showAlert('Minimum USDC/USDT amount is ${formatAmountLabel({ amount: 1300 })}');
          return
         }
+       updateCurrencyGrid()
+        
         showScreen('screen-network');
       }
 
-      function selectNetwork(network) {
+       function selectNetwork(network) {
         selectedNetwork = network;
         document.querySelectorAll('.network-card').forEach(c => c.classList.remove('selected'));
-        document.getElementById('card-' + network).classList.add('selected');
+        const card = document.getElementById('card-' + network);
+        if (card) card.classList.add('selected');
       }
 
       function selectCurrency(currency) {
         selectedCurrency = currency;
-        document.getElementById('btn-usdc').classList.toggle('active', currency === 'USDC');
-        document.getElementById('btn-usdt').classList.toggle('active', currency === 'USDT');
+        const usdcBtn = document.getElementById('btn-usdc');
+        const usdtBtn = document.getElementById('btn-usdt');
+        if (usdcBtn) usdcBtn.classList.toggle('active', currency === 'USDC');
+        if (usdtBtn) usdtBtn.classList.toggle('active', currency === 'USDT');
+        updateCurrencyGrid()
       }
 
-      async function createLightningInvoice() {
-        const res = await fetch('/createPayLinkInvoice', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ paylinkId: PAYLINK_ID }),
-        });
-        const json = await res.json();
-        if (!json || json.status !== 'SUCCESS' || !json.invoice) {
-          throw new Error('invoice');
-        }
-        return json.invoice;
-      }
-
-      function getSwapStatus(swap) {
-        return swap?.response?.status || swap?.status || '';
-      }
-
-      function getSwapAddress(swap) {
-        return (
-          swap?.response?.client_evm_address || swap?.client_evm_address
-        );
-      }
-
-      function getSwapSourceAmount(swap) {
-        return swap?.source_amount || swap?.response?.source_amount || '';
-      }
-
-      const TERMINAL_STATES = new Set([
-        'serverredeemed', 'clientredeemed', 'clientredeeming',
-        'clientrefunded', 'expired',
-        'clientrefundedserverfunded', 'clientrefundedserverrefunded',
-        'clientredeemedandclientrefunded',
-      ]);
-      const COLLAB_REFUND_STATUSES = new Set([
-        'clientfundedserverrefunded', 'clientinvalidfunded',
-        'clientfundedtoolate', 'serverpaymenterror',
-      ]);
-
-      function isTerminalSuccess(status) {
-        const s = String(status).toLowerCase();
-        return s === 'serverredeemed' || s === 'clientredeemed' || s === 'clientredeeming';
-      }
-      function isTerminalFailure(status) {
-        const s = String(status).toLowerCase();
-        return TERMINAL_STATES.has(s) && !isTerminalSuccess(s);
-      }
-      function needsCollabRefund(status) {
-        return COLLAB_REFUND_STATUSES.has(String(status).toLowerCase());
-      }
-
-      const STATUS_LABELS = {
-        clientfunded: 'Starting swap\u2026',
-        serverfunded: 'Payment sent!',
-        serverredeemed: 'Payment confirmed!',
-        clientredeemed: 'Payment confirmed!',
-        clientredeeming: 'Completing payment\u2026',
-        expired: 'Swap expired.',
-      };
-      function friendlyStatus(s) {
-        return STATUS_LABELS[String(s).toLowerCase()] || 'Processing Payment\u2026';
-      }
-
-      function updateSwapDetails(swap, context) {
-        const address = getSwapAddress(swap);
-        const amountRaw = getSwapSourceAmount(swap);
-        const tokenInfo = getTokenInfo(selectedNetwork, selectedCurrency);
-        const amountFormatted = tokenInfo
-          ? formatTokenAmount(amountRaw, tokenInfo.decimals)
-          : amountRaw;
-
-        
-        if (context === 'stable') {
-          stableAddress = address;
-          document.getElementById('stable-network-label').textContent =
-            'Send ' + selectedCurrency + ' on ' + formatNetworkLabel(selectedNetwork);
-          document.getElementById('stable-amount-label').textContent =
-            amountFormatted ? \`\${amountFormatted} \${selectedCurrency}\` : '';
-          document.getElementById('stable-address-text').textContent = address || '';
-
-          const qrEl = document.getElementById('qr-stable-address');
-          
-          if (qrEl && address) {
-            qrEl.innerHTML = '';
-            new QRCode(qrEl, {
-              text: address,
-              width: 220,
-              height: 220,
-              colorDark: '#000000',
-              colorLight: '#ffffff',
-              correctLevel: QRCode.CorrectLevel.H,
-            });
-          }
-        }
-
-        if (context === 'recovery') {
-          document.getElementById('recovery-address-text').textContent = address || '';
-          document.getElementById('recovery-amount').textContent =
-            amountFormatted ? \`Required: \${amountFormatted} \${selectedCurrency}\` : '';
-          const qrEl = document.getElementById('qr-recovery-address');
-          if (qrEl && address) {
-            qrEl.innerHTML = '';
-            new QRCode(qrEl, {
-              text: address,
-              width: 220,
-              height: 220,
-              colorDark: '#000000',
-              colorLight: '#ffffff',
-              correctLevel: QRCode.CorrectLevel.H,
-            });
-          }
-        }
-      }
 
       async function confirmStablecoin() {
         if (!selectedNetwork) {
           showAlert('Please select a network first.');
           return;
         }
-
-        const tokenInfo = getTokenInfo(selectedNetwork, selectedCurrency);
-        if (!tokenInfo) {
-          showAlert('Selected token is not supported.');
-          return;
-        }
-
         const continueBtn = document.getElementById('btn-continue-stable');
         if (continueBtn) continueBtn.disabled = true;
 
         // Reset creating screen state
-        const backBtn = document.getElementById('creating-back-btn');
-        if (backBtn) { backBtn.style.display = 'none'; backBtn.setAttribute('onclick', "showScreen('screen-network')"); }
         const spinnerEl = document.getElementById('creating-spinner');
+        const statusEl  = document.getElementById('creating-status');
+        const errorEl   = document.getElementById('creating-error');
+        const backBtn   = document.getElementById('creating-back-btn');
         if (spinnerEl) spinnerEl.style.display = 'inline-block';
-        const statusEl = document.getElementById('creating-status');
-        if (statusEl) statusEl.style.display = 'block';
-
+        if (statusEl)  { statusEl.textContent = 'Creating swap\u2026'; statusEl.style.display = 'block'; }
+        if (errorEl)   errorEl.style.display = 'none';
+        if (backBtn)   backBtn.style.display = 'none';
         showScreen('screen-creating-swap');
-        setCreatingStatus('Creating swap…');
 
         try {
-          relayAttempted = false;
-          const invoice = await createLightningInvoice();
-          const swap = await PaylinkSwap.createSwap({
-            sourceAsset: tokenInfo,
-            targetAddress: invoice,
+          const res = await fetch('/createPayLinkInvoice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ paylinkId: PAYLINK_ID, network: selectedNetwork, currency: selectedCurrency }),
           });
-          
+          const json = await res.json();
+          if (!json || json.status !== 'SUCCESS' || !json.depositAddress) throw new Error('create-failed');
 
-          const swapId = swap?.response?.id || swap?.id;
-          if (!swapId) {
-            throw new Error('swap-id');
+          depositAddress = json.depositAddress;
+          amountInRaw    = BigInt(String(json.amountIn));
+          estimatedOut   = json.estimatedOut;
+
+          const networkEntry = NETWORK_MAP[selectedNetwork] || {};
+          currentChainId      = networkEntry.chainId || null;
+          currentTokenAddress = currentChainId ? (networkEntry[selectedCurrency.toLowerCase()] || null) : null;
+
+          // Render QR
+          const qrEl = document.getElementById('qr-stable-address');
+          if (qrEl) {
+            qrEl.innerHTML = '';
+            new QRCode(qrEl, {
+              text: depositAddress,
+              width: 220, height: 220,
+              colorDark: '#000000', colorLight: '#ffffff',
+              correctLevel: QRCode.CorrectLevel.H,
+            });
           }
 
-          currentSwapId = swapId;
-          currentSwap = swap;
-          currentTokenAddress = tokenInfo.token_id;
-          currentChainId = Number(tokenInfo.chain);
-          currentDepositAddress = getSwapAddress(swap);
-          expectedAmountRaw = swap?.response?.source_amount
-            ? BigInt(Math.round(Number(swap.response.source_amount))) : null;
-          saveSwapContext({ swapId, network: selectedNetwork, currency: selectedCurrency });
-          updateSwapDetails(swap, 'stable');
-          showWalletButtons();
-          startSwapPolling();
-          startBalancePolling();
+          // Set labels
+          const networkLabelEl = document.getElementById('stable-network-label');
+          if (networkLabelEl) networkLabelEl.textContent = 'Send ' + selectedCurrency + ' on ' + (NETWORK_LABELS[selectedNetwork] || selectedNetwork);
+          const amountLabelEl = document.getElementById('stable-amount-label');
+          if (amountLabelEl) amountLabelEl.textContent = formatTokenAmount(amountInRaw, 6) + ' ' + selectedCurrency;
+          const addrEl = document.getElementById('stable-address-text');
+          if (addrEl) addrEl.textContent = depositAddress;
+
+          // Clear previous error
+          showTxHashError('');
+
+          const detectEl = document.getElementById('txhash-detect-status');
+          if (currentChainId) {
+            // EVM: start watcher + show wallet buttons
+            swapWatcher = PaylinkSwap.watchForTransfer({
+              depositAddress,
+              tokenAddress: currentTokenAddress,
+              chainId: currentChainId,
+              onFound: (txHash, from) => handleTxHash(txHash, from),
+            });
+            showWalletButtons();
+            if (detectEl) detectEl.textContent = 'Monitoring for transaction\u2026';
+          } else {
+            // Non-EVM: hide wallet buttons
+            const openBtn    = document.getElementById('btn-open-wallet');
+            const connectBtn = document.getElementById('btn-connect-pay');
+            if (openBtn)    openBtn.style.display = 'none';
+            if (connectBtn) connectBtn.style.display = 'none';
+            if (detectEl) detectEl.textContent = 'Auto-detection unavailable for this network. Paste your tx hash after sending.';
+          }
+
           showScreen('screen-stable-pay');
         } catch (err) {
-         console.log(err)
-         setCreatingStatus('Failed to create swap. Please try again.', true)
-        } finally {
           if (continueBtn) continueBtn.disabled = false;
+          showScreen('screen-network');
+          showAlert('Failed to create swap. Please try again.');
         }
       }
 
-      function startSwapPolling() {
-        stopSwapPolling();
-        swapPolling = true;
-        if (document.visibilityState !== 'hidden') scheduleSwapPoll();
-      }
-
-      function scheduleSwapPoll() {
-        swapPollTimer = setTimeout(doSwapPoll, 7000);
-      }
-
-      async function doSwapPoll() {
-        swapPollTimer = null;
-        if (!swapPolling || !currentSwapId) return;
-
-        try {
-          const swap = await PaylinkSwap.getSwap(currentSwapId);
-          currentSwap = swap;
-          const status = getSwapStatus(swap);
-          console.log("Current swap poll", swap)
-
-          if (isTerminalSuccess(status)) {
-            clearSwapContext(); stopSwapPolling(); stopBalancePolling();
-            showScreen('screen-success'); return;
-          }
-          if (isTerminalFailure(status)) {
-            stopSwapPolling(); stopBalancePolling();
-            setRecoveryStatus(friendlyStatus(status));
-            updateSwapDetails(swap, 'recovery');
-            showScreen('screen-recovery'); return;
-          }
-          if (needsCollabRefund(status)) {
-            stopSwapPolling(); stopBalancePolling();
-            setRecoveryStatus(\`Swap issue (\${status}) \u2014 your tokens can be refunded.\`);
-            updateSwapDetails(swap, 'recovery');
-            const collabBtn = document.getElementById('btn-collab-refund');
-            if (collabBtn) collabBtn.style.setProperty('display', 'block');
-            showScreen('screen-recovery'); return;
-          }
-
-          updateSwapDetails(swap, 'stable');
-          setProcessingStatus(friendlyStatus(status))
-        } catch (err) {
-        //  silent error, will repoll next time
-        }
-
-        if (swapPolling) scheduleSwapPoll();
-      }
-
-      async function attemptRelay() {
-        if (relayInFlight || relayAttempted || !currentSwapId) return;
-        relayInFlight = true;
-        relayAttempted = true;    // never reset automatically after being set
-        try {
-          setProcessingStatus('Payment Received\u2026')
-          showScreen('screen-processing');
-          stopBalancePolling();
-          await PaylinkSwap.fundSwapGasless(currentSwapId);
-        } catch (err) {
-          // non-fatal
-          startBalancePolling()
-          relayAttempted = false
-        } finally {
-          relayInFlight = false;
-        }
-      }
-
-      async function resumeSwapFromStorage() {
-        relayAttempted = false;
-        const context = loadSwapContext();
-        if (!context || !context.swapId) return;
-        currentSwapId = context.swapId;
-        
-        selectedNetwork = context.network;
-        selectedCurrency = context.currency || 'USDC';
-
-        // Reset creating screen and configure back button for resume path
-        const backBtn = document.getElementById('creating-back-btn');
-        if (backBtn) { backBtn.style.display = 'none'; backBtn.setAttribute('onclick', "showScreen('screen-initial')"); }
-        const spinnerEl = document.getElementById('creating-spinner');
-        if (spinnerEl) spinnerEl.style.display = 'inline-block';
-        const statusEl = document.getElementById('creating-status');
-        if (statusEl) statusEl.style.display = 'block';
-
-
-        showScreen('screen-creating-swap');
-        setCreatingStatus('Resuming swap…');
-       
-
-        try {
-          const swap = await PaylinkSwap.getSwap(currentSwapId);
-          
-          currentSwap = swap;
-          
-          const tokenInfo = getTokenInfo(swap.chain, selectedCurrency);
-          currentTokenAddress = tokenInfo.token_id;
-          currentChainId = Number(tokenInfo.chain);
-          currentDepositAddress = getSwapAddress(swap);
-          expectedAmountRaw = swap?.source_amount
-            ? BigInt(Math.round(Number(swap.source_amount))) : null;
-          updateSwapDetails(swap, 'stable');
-         
-          const status = getSwapStatus(swap);
-
-          if (isTerminalSuccess(status)) {
-            clearSwapContext();
-            showScreen('screen-success');
-          } else if (needsCollabRefund(status)) {
-            stopSwapPolling(); stopBalancePolling();
-            setRecoveryStatus(\`Swap issue (\${status}) — your tokens can be refunded.\`);
-            updateSwapDetails(swap, 'recovery');
-            const collabBtn = document.getElementById('btn-collab-refund');
-            if (collabBtn) collabBtn.style.setProperty('display', 'block');
-            showScreen('screen-recovery');
-          } else if (isTerminalFailure(status)) {
-            stopSwapPolling(); stopBalancePolling();
-            setRecoveryStatus(friendlyStatus(status));
-            updateSwapDetails(swap, 'recovery');
-            showScreen('screen-recovery');
-          } else {
-            const s = String(status).toLowerCase();
-            const isProcessing = s === 'clientfunded' || s === 'serverfunded';
-            updateSwapDetails(swap, 'stable');
-            showWalletButtons();
-            startSwapPolling();
-            startBalancePolling();
-            if (isProcessing) {
-              setProcessingStatus(friendlyStatus(status));
-              showScreen('screen-processing');
-            } else {
-              showScreen('screen-stable-pay');
-            }
-          }
-        } catch (err) {
-         console.log(err)
-          setCreatingStatus('Unable to load swap. Please try again.', true);
-        }
-      }
-
-      async function retryRelay() {
-        if (!currentSwapId) return;
-        setRecoveryStatus('Retrying relay…');
-        try {
-          await PaylinkSwap.fundSwapGasless(currentSwapId);
-          setRecoveryStatus('Relay requested. Checking status…');
-          refreshSwapStatus();
-        } catch (err) {
-          setRecoveryStatus('Relay retry failed. Please try again.');
-        }
-      }
-
-      async function refreshSwapStatus() {
-        if (!currentSwapId) return;
-        try {
-          const swap = await PaylinkSwap.getSwap(currentSwapId);
-          currentSwap = swap;
-          updateSwapDetails(swap, 'recovery');
-          const status = getSwapStatus(swap);
-          if (isTerminalSuccess(status)) {
-            clearSwapContext();
-            showScreen('screen-success');
-            return;
-          }
-            console.log(needsCollabRefund(status),'testing',status)
-          if (needsCollabRefund(status)||true) {
-            setRecoveryStatus(\`Swap issue (\${status}) — your tokens can be refunded.\`);
-            const collabBtn = document.getElementById('btn-collab-refund');
-            if (collabBtn) collabBtn.style.setProperty('display', 'block');
-            return;
-          }
-          if (isTerminalFailure(status)) {
-            setRecoveryStatus(\`Swap status: \${status || 'failed'}\`);
-            return;
-          }
-          setRecoveryStatus(\`Swap status: \${status || 'pending'}\`);
-        } catch (err) {
-          setRecoveryStatus('Unable to refresh status.');
-        }
-      }
-
-      // ── Collaborative refund (gasless, instant) ───────────────────────────
-      let pendingRefundTx = null;
-
-      async function requestCollabRefund() {
-        if (!currentSwapId) return;
-        const btn = document.getElementById('btn-collab-refund');
-        if (btn) btn.disabled = true;
-        setRecoveryStatus('Requesting refund\u2026');
-        try {
-          await PaylinkSwap.collabRefundEvmSwap(currentSwapId);
-          setRecoveryStatus('Refund submitted \u2014 funds will return to your wallet shortly.');
-          clearSwapContext();
-        } catch (err) {
-          // Collab failed — fall back to timeout path
-          setRecoveryStatus('Collaborative refund unavailable. Checking unilateral path\u2026');
-          await requestTimeoutRefund();
-        } finally {
-          if (btn) btn.disabled = false;
-        }
-      }
-
-      // ── Unilateral / timeout refund ───────────────────────────────────────
-      async function requestTimeoutRefund() {
-        if (!currentSwapId) return;
-        setRecoveryStatus('Checking refund availability\u2026');
-        try {
-          const result = await PaylinkSwap.refundSwapTimeout(currentSwapId);
-          const evm = result?.evmRefundData;
-          if (!evm) {
-            setRecoveryStatus('Could not retrieve refund data. Please contact support.');
-            return;
-          }
-          if (!evm.timelockExpired) {
-            const availableAt = new Date(evm.timelockExpiry * 1000).toLocaleString();
-            setRecoveryStatus(\`Refund available at: \${availableAt}. Please return then.\`);
-            startRefundCountdown(evm.timelockExpiry);
-            return;
-          }
-          // Timelock expired — user must submit tx
-          pendingRefundTx = { to: evm.to, data: evm.data };
-          setRecoveryStatus('Refund ready. Submit the transaction with your EVM wallet.');
-          const submitBtn = document.getElementById('btn-submit-refund');
-          if (submitBtn) submitBtn.style.setProperty('display', 'block');
-        } catch (err) {
-          setRecoveryStatus('Refund check failed. Please try again.');
-        }
-      }
-
-      async function submitRefundTx() {
-        if (!pendingRefundTx || !window.ethereum) {
-          setRecoveryStatus('Please submit manually: use the calldata above with your EVM wallet.');
-          return;
-        }
-        try {
-          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-          const chainHex = '0x' + currentChainId.toString(16);
-          try {
-            await window.ethereum.request({
-              method: 'wallet_switchEthereumChain', params: [{ chainId: chainHex }],
-            });
-          } catch (switchErr) { if (switchErr.code === 4902) throw switchErr; }
-          const txHash = await window.ethereum.request({
-            method: 'eth_sendTransaction',
-            params: [{ from: accounts[0], to: pendingRefundTx.to, data: pendingRefundTx.data }],
-          });
-          setRecoveryStatus(\`Refund submitted: \${txHash.slice(0, 10)}\u2026\`);
-          clearSwapContext();
-        } catch (err) {
-          if (err.code === 4001) setRecoveryStatus('Transaction cancelled.');
-          else setRecoveryStatus('Failed to submit. Please use your wallet manually with the calldata shown.');
-        }
-      }
-
-      function startRefundCountdown(timelockExpiry) {
-        const el = document.getElementById('refund-countdown');
-        if (!el) return;
-        function tick() {
-          const remaining = timelockExpiry * 1000 - Date.now();
-          if (remaining <= 0) {
-            el.textContent = 'Refund is now available.';
-            const timeoutBtn = document.getElementById('btn-timeout-refund');
-            if (timeoutBtn) timeoutBtn.style.setProperty('display', 'block');
-            return;
-          }
-          const h = Math.floor(remaining / 3600000);
-          const m = Math.floor((remaining % 3600000) / 60000);
-          const s = Math.floor((remaining % 60000) / 1000);
-          el.textContent = \`Available in \${h}h \${m}m \${s}s\`;
-          setTimeout(tick, 1000);
-        }
-        tick();
-      }
-
+     
       // ── copy address ──────────────────────────────────────────────────
       function copyAddress() {
-        if (!stableAddress) return;
-        navigator.clipboard.writeText(stableAddress);
+        if (!depositAddress) return;
+        navigator.clipboard.writeText(depositAddress);
         const btn = event.target;
         const orig = btn.textContent;
         btn.textContent = 'Copied!';
@@ -1997,12 +1565,16 @@ function generateHTML({
 
       // ── init ──────────────────────────────────────────────────────────
       document.addEventListener('DOMContentLoaded', () => {
-        updateResumeButton();
-        const existingSwap = loadSwapContext();
-        if (existingSwap && existingSwap.swapId) {
-          resumeSwapFromStorage();
+        const stored = loadSwapContext();
+        // Resume if we have a txHash from a previous submission.
+        // Discard stale Lendaswap entries (those have a swapId key).
+        if (stored && stored.txHash && !stored.swapId) {
+          txHashSubmitted = true;
+          showScreen('screen-processing');
+          startIsPaidPolling();
         }
       });
+
       (function() {
         const modalContainer = document.getElementById('modalContainer');
         const modalBackdrop = document.getElementById('modalBackdrop');

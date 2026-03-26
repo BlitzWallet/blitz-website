@@ -191,6 +191,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -200,8 +201,8 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
     <style>
       :root {
-        --title_font: "Poppins", sans-serif;
-        --description_font: "Poppins", sans-serif;
+        --title_font: "Poppins", "Noto Sans", sans-serif;
+        --description_font: "Poppins", "Noto Sans", sans-serif;
         --primary_color: #0375f6;
         --secondary_color: #21374f;
         --tertiary_color: #009bf0;
