@@ -205,7 +205,7 @@ X-Content-Type-Options = "nosniff"
 # Paylinks API proxies
 [[redirects]]
   from = "/getPaylinkData"
-  to = "http://127.0.0.1:5001/blitz-wallet-82b39/us-central1/getPaylinkData"
+  to = "https://getpaylinkdata-6krimtymjq-uc.a.run.app"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -213,7 +213,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/createPayLinkInvoice"
-  to = "http://127.0.0.1:5001/blitz-wallet-82b39/asia-southeast1/createLNURLInvoice"
+  to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -221,7 +221,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/submitPaylinkSwap"
-  to = "http://127.0.0.1:5001/blitz-wallet-82b39/us-central1/submitPaylinkSwap"
+  to = "https://submitPaylinkSwap-6krimtymjq-uc.a.run.app"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
