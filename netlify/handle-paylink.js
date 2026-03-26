@@ -199,7 +199,7 @@ function generateHTML({
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 70px 1rem 1rem;
+         padding: calc(70px + 1rem) 1rem 1rem;
         flex-direction:column;
       }
 

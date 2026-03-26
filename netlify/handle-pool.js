@@ -226,8 +226,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 1rem;
-        padding-top: 70px;
+        padding: calc(70px + 1rem) 1rem 1rem;
       }
 
       .pool-container {
