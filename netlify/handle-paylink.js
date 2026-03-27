@@ -386,6 +386,11 @@ function generateHTML({
         border: 2px solid var(--lm-backgroundOffset);
       }
 
+      .qr-wrapper:not(:first-child) {
+        cursor: pointer;
+      }
+
+
       #qr-code {
         display: block;
       }
@@ -634,15 +639,50 @@ function generateHTML({
 
       /* ── address display ───────────────────────────────────────────── */
       .address-box {
+        width: 100%;
         background: var(--lm-background);
         border-radius: 10px;
         padding: 0.75rem 1rem;
         font-family: monospace;
         font-size: 0.85rem;
         word-break: break-all;
-        margin: 1rem 0;
-        text-align: left;
+        margin: 1rem auto 0;
         cursor: pointer;
+        white-space: nowrap;       /* Prevent wrapping */
+        overflow: hidden;          /* Hide overflow */
+        text-overflow: ellipsis;   /* Show ... */
+        display: block;            /* Or inline-block */
+      }
+
+
+      #screen-refund-address .screen-desc { 
+        max-width: 400px;
+        font-size: 0.9rem;
+        opacity: 0.65;
+        margin: 0 auto 1.5rem;
+      }
+
+      .refund-input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.75rem 1rem;
+        border: 2px solid var(--lm-backgroundOffset);
+        border-radius: 10px;
+        font-size: 0.95rem;
+        background: var(--lm-background);
+        color: var(--lm-text);
+        margin: 1rem 0 0.5rem;
+        outline: none;
+        transition: border-color 0.2s ease;
+      }
+      .refund-input:focus {
+        border-color: var(--primary_color);
+      }
+      .hint {
+        font-size: 0.8rem;
+        color: var(--lm-textSecondary, #888);
+        margin-bottom: 1.25rem;
+        text-align: left;
       }
 
       /* ── status text ───────────────────────────────────────────────── */
@@ -873,6 +913,33 @@ function generateHTML({
         color: #991b1b;
         margin-top: 0.5rem;
       }
+
+      .waiting-text {
+        font-size: 0.95rem;
+        color: #888;
+        margin: 1rem 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .waiting-dot {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--primary_color);
+        animation: pulse-dot 1.4s infinite ease-in-out both;
+      }
+
+      .waiting-dot:nth-child(1) { animation-delay: -0.32s; }
+      .waiting-dot:nth-child(2) { animation-delay: -0.16s; }
+
+      @keyframes pulse-dot {
+        0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
+        40% { transform: scale(1); opacity: 1; }
+      }
     </style>
   </head>
   <body>
@@ -989,15 +1056,19 @@ function generateHTML({
 
         <!-- Screen 2a: Bitcoin QR -->
         <div id="screen-btc" class="screen">
-         <button class="btn-back" onclick="goBack()"><i data-lucide="arrow-left"></i> Back</button>
           <p class="requester">Pay ${username} via Lightning</p>
-          <div style="margin: 1rem 0px" style="cursor:pointer;" onclick="copyBitcoinAddress()" class="qr-wrapper">
+          <p class="status-text amount" id="stable-amount-label" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;"><span style="font-weight:400;">₿</span>${amount.toLocaleString("en-US")}</p>
+          <div onclick="copyAddress()" class="qr-wrapper">
             <div id="qr-btc-invoice"></div>
           </div>
-          ${amountLabel}
-          <button class="btn-primary" onclick="openBitcoinWallet()">Open Wallet</button>
-          <p id="btc-status" class="status-text">Waiting for payment…</p>
-          <div class="spinner"></div>
+          <div class="waiting-text">
+            <span class="waiting-dot"></span>
+            <span class="waiting-dot"></span>
+            <span class="waiting-dot"></span>
+            <span style="margin-left:0.25rem;">Waiting for payment</span>
+          </div>
+          <div onclick="copyAddress()" class="address-box" id="bitcoin-address-text"></div>
+          <button class="btn-primary" onclick="openBitcoinWallet()" id="bitcoin-open-buttn" style="display:none;">Open Wallet</button>
         </div>
 
         <!-- Screen 2b: Network selection -->
@@ -1015,14 +1086,30 @@ function generateHTML({
             <!-- populated dynamically by showNetworkSelect() -->
           </div>
          
-          <button class="btn-primary" id="btn-continue-stable" onclick="confirmStablecoin()">Continue</button>
+          <button class="btn-primary" id="btn-continue-stable" onclick="proceedToRefundAddress()">Continue</button>
+        </div>
+
+
+        <!-- Screen 2c: Refund address -->
+        <div id="screen-refund-address" class="screen">
+          <button class="btn-back" onclick="showScreen('screen-network')"><i data-lucide="arrow-left"></i> Back</button>
+          <h2 class="screen-title" style="margin-bottom: 4px;">Refund address</h2>
+          <p class="screen-desc">Adding a refund address means if the swap fails you will get your money back.</p>
+          <input
+            type="text"
+            id="refund-address-input"
+            class="refund-input"
+            placeholder="Enter refund address"
+          />
+          <p class="hint">Refund addresses are optional.</p>
+          <button class="btn btn-primary" onclick="proceedFromRefundAddress()">Continue</button>
         </div>
 
         <!-- Screen 3: Stablecoin deposit -->
         <div id="screen-stable-pay" class="screen">
           <p class="requester" id="stable-network-label"></p>
           <p class="status-text amount" id="stable-amount-label" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;"></p>
-          <div class="qr-wrapper">
+          <div onclick="copyAddress()" class="qr-wrapper">
             <div id="qr-stable-address"></div>
           </div>
           <div onclick="copyAddress()" class="address-box" id="stable-address-text"></div>
@@ -1047,7 +1134,6 @@ function generateHTML({
               <i data-lucide="check"></i>
             </div>
           <h2 class="success-title">Payment received!</h2>
-          <p class="success-text">Thank you for paying ${username}.</p>
         </div>
 
       </div>
@@ -1100,6 +1186,7 @@ function generateHTML({
       let bitcoinInvoice = null;
       let processingStatusTimer = null;
       let processingStatusIndex = 0;
+      let refundAddress = null;
       const processingStatusMessages = [
         'Deposit received…',
         'Securing funds…',
@@ -1392,6 +1479,12 @@ function generateHTML({
           }
           showScreen('screen-btc');
           const qrEl = document.getElementById('qr-btc-invoice');
+          const address = document.getElementById('bitcoin-address-text');
+          const openWalletButton = document.getElementById('bitcoin-open-buttn');
+          depositAddress = json.invoice;
+          if (address) address.innerHTML = json.invoice
+          if (openWalletButton && isMobileDevice()) openWalletButton.style.display = 'block'
+
           qrEl.innerHTML = '';
           new QRCode(qrEl, {
             text: json.invoice.toUpperCase(),
@@ -1404,6 +1497,7 @@ function generateHTML({
           bitcoinInvoice = json.invoice;
           startPolling();
         } catch (err) {
+         console.log(err)
           showAlert('Network error. Please try again.');
           document.getElementById('btn-btc').disabled = false;
         }
@@ -1460,6 +1554,30 @@ function generateHTML({
       }
 
 
+      function proceedToRefundAddress() {
+        if (!selectedNetwork) {
+          showAlert('Please select a network.');
+          return;
+        }
+        // Clear previous refund address input and update placeholder to reflect selected chain
+        const input = document.getElementById('refund-address-input');
+        if (input) {
+          input.value = '';
+          const label = NETWORK_LABELS[selectedNetwork] || selectedNetwork;
+          input.placeholder = \`Your \${label} address\`;
+        }
+        refundAddress = null;
+        showScreen('screen-refund-address');
+      }
+
+    function proceedFromRefundAddress() {
+      const input = document.getElementById('refund-address-input');
+      refundAddress = input ? input.value.trim() : null;
+      if (!refundAddress) refundAddress = null; // normalize empty string to null
+      confirmStablecoin();
+    }
+
+
       async function confirmStablecoin() {
         if (!selectedNetwork) {
           showAlert('Please select a network first.');
@@ -1483,7 +1601,12 @@ function generateHTML({
           const res = await fetch('/createPayLinkInvoice', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ paylinkId: PAYLINK_ID, network: selectedNetwork, currency: selectedCurrency }),
+            body: JSON.stringify({
+              paylinkId: PAYLINK_ID,
+              network: selectedNetwork,
+              currency: selectedCurrency,
+              ...(refundAddress ? { refundAddress } : {}),
+            })
           });
           const json = await res.json();
           if (!json || json.status !== 'SUCCESS' || !json.depositAddress) throw new Error('create-failed');
@@ -1552,10 +1675,7 @@ function generateHTML({
       function copyAddress() {
         if (!depositAddress) return;
         navigator.clipboard.writeText(depositAddress);
-        const btn = event.target;
-        const orig = btn.textContent;
-        btn.textContent = 'Copied!';
-        setTimeout(() => { btn.textContent = orig; }, 2000);
+        showAlert('Text copied successfully!')
       }
 
 
