@@ -1057,7 +1057,7 @@ function generateHTML({
         <!-- Screen 2a: Bitcoin QR -->
         <div id="screen-btc" class="screen">
           <p class="requester">Pay ${username} via Lightning</p>
-          <p class="status-text amount" id="stable-amount-label" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;"><span style="font-weight:400;">₿</span>${amount.toLocaleString("en-US")}</p>
+          <p class="status-text amount" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;"><span style="font-weight:400;">₿</span>${amount.toLocaleString("en-US")}</p>
           <div onclick="copyAddress()" class="qr-wrapper">
             <div id="qr-btc-invoice"></div>
           </div>
