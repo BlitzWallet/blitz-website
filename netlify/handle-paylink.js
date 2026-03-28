@@ -1179,6 +1179,7 @@ function generateHTML({
       let currentTokenAddress = null;
       let txHashSubmitted = false;
       let swapWatcher = null;
+      let balanceWatcher = null;
       let pollTimer = null;
       let shouldPoll = false;
       let pollCount = 0;
@@ -1323,6 +1324,7 @@ function generateHTML({
         if (txHashSubmitted) return;
         txHashSubmitted = true;
         if (swapWatcher) { swapWatcher.stop(); swapWatcher = null; }
+        if (balanceWatcher) { balanceWatcher.stop(); balanceWatcher = null; }
 
         // Validate format
         const isEVM    = /^0x[0-9a-fA-F]{64}$/.test(txHash);
@@ -1353,11 +1355,6 @@ function generateHTML({
           showScreen('screen-stable-pay');
           showTxHashError('Submission failed. Please try again.');
         }
-      }
-
-      function submitManualTxHash() {
-        const val = document.getElementById('txhash-input');
-        if (val) handleTxHash(val.value.trim(), null);
       }
 
       function startIsPaidPolling() {
@@ -1649,6 +1646,13 @@ function generateHTML({
               depositAddress,
               tokenAddress: currentTokenAddress,
               chainId: currentChainId,
+              onFound: (txHash, from) => handleTxHash(txHash, from),
+            });
+            balanceWatcher = PaylinkSwap.pollForBalance({
+              tokenAddress: currentTokenAddress,
+              depositAddress,
+              chainId: currentChainId,
+              expectedAmount: amountInRaw,
               onFound: (txHash, from) => handleTxHash(txHash, from),
             });
             showWalletButtons();

@@ -93,3 +93,78 @@ export async function getTokenBalance(params: {
     args: [walletAddress],
   }) as Promise<bigint>;
 }
+
+export function pollForBalance(params: {
+  tokenAddress: `0x${string}`;
+  depositAddress: `0x${string}`;
+  chainId: number;
+  expectedAmount: bigint;
+  onFound: (txHash: string, from: string) => void;
+  intervalMs?: number;
+}): { stop: () => void } {
+  const {
+    tokenAddress,
+    depositAddress,
+    chainId,
+    expectedAmount,
+    onFound,
+    intervalMs = 15_000,
+  } = params;
+  const chain = CHAIN_MAP[chainId as keyof typeof CHAIN_MAP];
+  if (!chain) throw new Error(`Unsupported chainId: ${chainId}`);
+
+  const client = createPublicClient({ chain, transport: http() });
+  let stopped = false;
+  let intervalId: ReturnType<typeof setInterval>;
+
+  intervalId = setInterval(async () => {
+    if (stopped) return;
+    try {
+      const balance = (await client.readContract({
+        address: tokenAddress,
+        abi: [
+          parseAbiItem("function balanceOf(address) view returns (uint256)"),
+        ],
+        functionName: "balanceOf",
+        args: [depositAddress],
+      })) as bigint;
+
+      console.log(balance, "balance in address");
+
+      if (balance) {
+        stopped = true;
+        clearInterval(intervalId);
+
+        // Scan recent logs to recover the tx hash
+        try {
+          const currentBlock = await client.getBlockNumber();
+          const fromBlock = currentBlock > 200n ? currentBlock - 200n : 0n;
+          const logs = await client.getLogs({
+            address: tokenAddress,
+            event: TRANSFER_EVENT,
+            args: { to: depositAddress },
+            fromBlock,
+            toBlock: "latest",
+          });
+          if (logs.length > 0) {
+            const first = logs[0];
+            if (first.transactionHash && first.args.from) {
+              onFound(first.transactionHash, first.args.from as string);
+            }
+          }
+        } catch {
+          // Log scan failed — swapWatcher will handle it
+        }
+      }
+    } catch {
+      // transient RPC error — continue polling next tick
+    }
+  }, intervalMs);
+
+  return {
+    stop() {
+      stopped = true;
+      clearInterval(intervalId);
+    },
+  };
+}

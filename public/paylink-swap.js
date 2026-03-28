@@ -9576,6 +9576,7 @@ ${prettyStateOverride(stateOverride)}`;
   var paylink_flashnet_exports = {};
   __export(paylink_flashnet_exports, {
     getTokenBalance: () => getTokenBalance,
+    pollForBalance: () => pollForBalance,
     watchForTransfer: () => watchForTransfer
   });
 
@@ -19097,6 +19098,54 @@ ${prettyStateOverride(stateOverride)}`;
       functionName: "balanceOf",
       args: [walletAddress]
     });
+  }
+  function pollForBalance(params) {
+    const { tokenAddress, depositAddress, chainId, expectedAmount, onFound, intervalMs = 15e3 } = params;
+    const chain = CHAIN_MAP[chainId];
+    if (!chain) throw new Error(`Unsupported chainId: ${chainId}`);
+    const client = createPublicClient({ chain, transport: http() });
+    let stopped = false;
+    let intervalId;
+    intervalId = setInterval(async () => {
+      if (stopped) return;
+      try {
+        const balance = await client.readContract({
+          address: tokenAddress,
+          abi: [parseAbiItem("function balanceOf(address) view returns (uint256)")],
+          functionName: "balanceOf",
+          args: [depositAddress]
+        });
+        if (balance >= expectedAmount) {
+          stopped = true;
+          clearInterval(intervalId);
+          try {
+            const currentBlock = await client.getBlockNumber();
+            const fromBlock = currentBlock > 200n ? currentBlock - 200n : 0n;
+            const logs = await client.getLogs({
+              address: tokenAddress,
+              event: TRANSFER_EVENT,
+              args: { to: depositAddress },
+              fromBlock,
+              toBlock: "latest"
+            });
+            if (logs.length > 0) {
+              const first = logs[0];
+              if (first.transactionHash && first.args.from) {
+                onFound(first.transactionHash, first.args.from);
+              }
+            }
+          } catch {
+          }
+        }
+      } catch {
+      }
+    }, intervalMs);
+    return {
+      stop() {
+        stopped = true;
+        clearInterval(intervalId);
+      }
+    };
   }
   return __toCommonJS(paylink_flashnet_exports);
 })();
