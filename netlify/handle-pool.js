@@ -199,6 +199,9 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
     <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+    <!-- Currency formatting -->
+    <script src="/src/js/format-currency.js"></script>
+
     <style>
       :root {
         --title_font: "Poppins", "Noto Sans", sans-serif;
@@ -497,7 +500,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       /* Amount Grid */
       .amount-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
         gap: 0.75rem;
         margin: 1.5rem 0;
       }
@@ -1133,18 +1136,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           return formatSats(sats) + ' SAT'; // Fallback
         }
 
-        try {
-          const formatted = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: denomination,
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-          }).format(fiatAmount);
-          return formatted;
-        } catch (e) {
-          // Invalid currency code, fallback to SAT
-          return formatSats(sats) + ' SAT';
-        }
+        return formatCurrency({ amount: fiatAmount.toFixed(2), code: denomination })[0];
       }
 
       function toggleDenomination() {
@@ -1279,20 +1271,12 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
                 <div class="amount-grid">
                   \${displayDenomination === 'SAT'
-                    ? PRESET_AMOUNTS_SATS.map(sats => \`<button class="amount-option" onclick="selectPreset(\${sats}, this)" data-sats="\${sats}">\${sats.toLocaleString()}</button>\`).join('')
+                    ? PRESET_AMOUNTS_SATS.map(sats => \`<button class="amount-option" onclick="selectPreset(\${sats}, this)" data-sats="\${sats}">\${sats.toLocaleString() + " SAT"}</button>\`).join('')
                     : PRESET_AMOUNTS_FIAT.map(fiat => {
                         const sats = fiatToSats(fiat);
-                        try {
-                          const formatted = new Intl.NumberFormat('en-US', {
-                            style: 'currency',
-                            currency: displayDenomination,
-                            minimumFractionDigits: 0,
-                            maximumFractionDigits: 0
-                          }).format(fiat);
-                          return \`<button class="amount-option" onclick="selectPreset(\${sats}, this)" data-sats="\${sats}">\${formatted}</button>\`;
-                        } catch (e) {
-                          return \`<button class="amount-option" onclick="selectPreset(\${sats}, this)" data-sats="\${sats}">\${fiat} \${displayDenomination}</button>\`;
-                        }
+                        const formatted = formatCurrency({ amount: fiat, code: displayDenomination })[0];
+                        console.log({fiat, sats, formatted,displayDenomination})
+                        return \`<button class="amount-option" onclick="selectPreset(\${sats}, this)" data-sats="\${sats}">\${formatted}</button>\`;
                       }).join('')
                   }
                   <button class="amount-option custom-btn" onclick="toggleCustomAmount()">...</button>
@@ -1603,6 +1587,8 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       document.addEventListener('DOMContentLoaded', () => {
          btcPrice = POOL_DATA?.btcPrice;
          poolData = POOL_DATA;
+         poolCurrency = POOL_DATA.poolDenomination || 'USD';
+         displayDenomination = poolCurrency;
         renderPoolInfo(POOL_DATA, POOL_DATA?.contributions || []);
       });
     </script>
