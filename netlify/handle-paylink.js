@@ -1543,6 +1543,7 @@ function generateHTML({
 
       function selectCurrency(currency) {
         selectedCurrency = currency;
+        selectedNetwork = null; // reset network selection when currency changes
         const usdcBtn = document.getElementById('btn-usdc');
         const usdtBtn = document.getElementById('btn-usdt');
         if (usdcBtn) usdcBtn.classList.toggle('active', currency === 'USDC');
