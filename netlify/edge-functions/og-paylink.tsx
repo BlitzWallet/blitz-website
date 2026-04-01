@@ -79,14 +79,16 @@ function BitcoinIcon({ size = 120 }: { size?: number }) {
 // ─── main card ───────────────────────────────────────────────────────────────
 
 function PaylinkCard({
-  username,
   amountLabel,
-  description,
+  currencyType,
+  showUSD,
+  rawAmount,
   iconSrc,
 }: {
-  username: string;
   amountLabel: string;
-  description: string;
+  currencyType: string;
+  showUSD: boolean;
+  rawAmount: number;
   iconSrc: string;
 }) {
   const amountFontSize =
@@ -158,10 +160,10 @@ function PaylinkCard({
           alignItems: "center",
           width: "100%",
           marginTop: "auto",
-          padding: "0px 60px 0px",
+          padding: `0px 60px ${showUSD ? 20 : 0}px ${showUSD ? 100 : 0}px`,
         }}
       >
-        <BitcoinIcon size={iconSize} />
+        {!showUSD ? <BitcoinIcon size={iconSize} /> : null}
         <div
           style={{
             display: "flex",
@@ -173,7 +175,7 @@ function PaylinkCard({
             color: WHITE,
           }}
         >
-          {amountLabel}
+          {!showUSD ? amountLabel : `$${rawAmount.toLocaleString("en-US")}`}
         </div>
       </div>
     </div>
@@ -186,10 +188,12 @@ export default async (request: Request, _context: Context) => {
   const p = new URL(request.url).searchParams;
   const { origin } = new URL(request.url);
 
-  const username = decodeURIComponent(p.get("username") ?? "");
   const amount = Number(p.get("amount") ?? 0);
-  const description = decodeURIComponent(p.get("description") ?? "");
+  const rawAmount = Number(p.get("rawAmount") ?? 0);
+  const currencyType = decodeURIComponent(p.get("currencyType") ?? "BTC");
   const amountLabel = amount ? `${amount.toLocaleString("en-US")}` : "—";
+
+  const showUSD = currencyType === "USD" && rawAmount > 0;
 
   const [fonts, iconSrc] = await Promise.all([
     loadFonts(origin),
@@ -198,9 +202,10 @@ export default async (request: Request, _context: Context) => {
 
   const image = new ImageResponse(
     <PaylinkCard
-      username={username}
       amountLabel={amountLabel}
-      description={description}
+      currencyType={currencyType}
+      rawAmount={rawAmount}
+      showUSD={showUSD}
       iconSrc={iconSrc}
     />,
     {

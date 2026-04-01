@@ -4,7 +4,11 @@ async function fetchPaylinkData(paylinkId, baseUrl) {
   try {
     const res = await fetch(baseUrl + "/getPaylinkData", {
       method: "POST",
-      body: JSON.stringify({ paylinkId, checkInvoice: true }),
+      body: JSON.stringify({
+        paylinkId,
+        checkInvoice: true,
+        shouldLoadBitcoinPrice: true,
+      }),
       signal: AbortSignal.timeout(6000),
     });
 
@@ -30,6 +34,10 @@ async function fetchPaylinkData(paylinkId, baseUrl) {
 
 function formatAmountLabel(data) {
   if (!data) return null;
+  if (data.currencyType !== "BTC" && Number(data.rawAmount ?? 0) > 0) {
+    const rawAmount = Number(data.rawAmount);
+    return `$${rawAmount.toLocaleString("en-US")}`;
+  }
   const amount = Number(data.amount ?? 0);
   return `\u20BF${amount.toLocaleString("en-US")}`;
 }
@@ -40,15 +48,13 @@ function buildOgImageUrl(baseUrl, paylinkId, data) {
   return (
     baseUrl +
     "/og-paylink" +
-    "?username=" +
-    encodeURIComponent(data.username ?? "") +
-    "&amount=" +
+    "?amount=" +
     (data.amount ?? 0) +
-    "&description=" +
-    encodeURIComponent(data.description ?? "") +
-    "&id=" +
-    encodeURIComponent(paylinkId) +
-    "&v=1"
+    "&rawAmount=" +
+    (data.rawAmount ?? 0) +
+    "&currencyType=" +
+    (data.currencyType ?? "BTC") +
+    "&v=2"
   );
 }
 
@@ -112,8 +118,11 @@ function generateHTML({
   const inlinedData = JSON.stringify(paylinkData ?? null);
   const username = paylinkData?.name ?? "";
   const amount = Number(paylinkData?.amount ?? 0);
+  const rawAmount = Number(paylinkData?.rawAmount ?? 0);
   const amountLabel = amount
-    ? `<p class="amount"><span style="font-weight:400;">₿</span>${amount.toLocaleString("en-US")}</p>`
+    ? paylinkData.currencyType === "BTC" || !rawAmount
+      ? `<p class="amount"><span style="font-weight:400;">₿</span>${amount.toLocaleString("en-US")}</p>`
+      : `<p class="amount">$${rawAmount.toLocaleString("en-US")}</p>`
     : "";
   const description = paylinkData?.description ?? "";
   const isPaid = paylinkData?.isPaid ?? false;
@@ -1057,7 +1066,13 @@ function generateHTML({
         <!-- Screen 2a: Bitcoin QR -->
         <div id="screen-btc" class="screen">
           <p class="requester">Pay ${username} via Lightning</p>
-          <p class="status-text amount" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;"><span style="font-weight:400;">₿</span>${amount.toLocaleString("en-US")}</p>
+          ${
+            amount
+              ? paylinkData.currencyType === "BTC" || !rawAmount
+                ? `<p class="status-text amount" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;"><span style="font-weight:400;">₿</span>${amount.toLocaleString("en-US")}</p>`
+                : `<p class="status-text amount" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;">$${rawAmount.toLocaleString("en-US")}</p>`
+              : ""
+          }
           <div onclick="copyAddress()" class="qr-wrapper">
             <div id="qr-btc-invoice"></div>
           </div>
@@ -1525,12 +1540,22 @@ function generateHTML({
 
       // ── Stablecoin flow ───────────────────────────────────────────────
       function showNetworkSelect() {
-        if (${amount} < 1300){
-         showAlert('Minimum USDC/USDT amount is ${formatAmountLabel({ amount: 1300 })}');
-         return
+        let satAmount;
+        const rawAmt   = Number(PAYLINK_DATA?.rawAmount   ?? 0);
+        const btcPrice = Number(PAYLINK_DATA?.bitcoinPrice ?? 0);
+        if (PAYLINK_DATA?.currencyType !== 'BTC' && rawAmt > 0 && btcPrice > 0) {
+          // Dollar-type paylink with rawAmount present: convert to sats for min check
+          satAmount = Math.round((rawAmt / btcPrice) * 100_000_000);
+        } else {
+          // BTC type, or older dollar paylink without rawAmount/bitcoinPrice — use sats directly
+          satAmount = ${amount};
         }
-       updateCurrencyGrid()
-        
+        if (satAmount < 1300) {
+          showAlert('Minimum USDC/USDT amount is ${formatAmountLabel({ amount: 1300 })}');
+         return;
+        }
+       updateCurrencyGrid();
+
         showScreen('screen-network');
       }
 
