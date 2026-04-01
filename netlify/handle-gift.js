@@ -136,6 +136,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
     <meta property="og:image:width"  content="1200" />
     <meta property="og:image:height" content="628" />
     <meta property="og:type" content="website" />
+    <meta property="og:image:type"   content="image/png" />
     <meta property="og:url" content="https://blitzwalletapp.com/gift/${giftId}" />
     <meta property="og:title"       content="${ogTitle}" />
     <meta property="og:description" content="${ogDescription}" />

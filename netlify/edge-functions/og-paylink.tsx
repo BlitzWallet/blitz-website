@@ -220,6 +220,8 @@ export default async (request: Request, _context: Context) => {
     "Cache-Control",
     "public, max-age=86400, stale-while-revalidate=604800",
   );
+  response.headers.set("Content-Type", "image/png");
+  response.headers.set("Access-Control-Allow-Origin", "*");
   return response;
 };
 

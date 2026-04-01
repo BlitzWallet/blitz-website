@@ -172,6 +172,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
     <meta property="og:image"        content="${ogImage}" />
     <meta property="og:image:width"  content="1200" />
     <meta property="og:image:height" content="628" />
+    <meta property="og:image:type"   content="image/png" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/pools/${poolId}" />
    <meta property="og:title"        content="${ogTitle}" />
