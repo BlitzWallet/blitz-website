@@ -1178,7 +1178,7 @@ function generateHTML({
               ? `
           <div class="request-layout">
             <div class="request-text">
-              <p class="requester">${username} requested you</p>
+              <p class="requester">${username} requested</p>
               ${amountLabel}
               ${description ? `<p class="pay-description">for "${description}"</p>` : ""}
             </div>
