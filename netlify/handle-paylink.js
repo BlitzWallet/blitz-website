@@ -251,6 +251,7 @@ function generateHTML({
         text-decoration: none;
         transition: all 0.3s ease;
         box-shadow: 0 4px 15px rgba(3, 117, 246, 0.3);
+        margin-left: auto;
       }
 
       .nav-download-btn:hover {
@@ -949,6 +950,130 @@ function generateHTML({
         0%, 80%, 100% { transform: scale(0); opacity: 0.5; }
         40% { transform: scale(1); opacity: 1; }
       }
+
+    .quote-id-text {
+      font-size: 0.7rem;
+      opacity: 0.45;
+      word-break: break-all;
+      margin: 0.4rem 0 0;
+      text-align: center;
+    }
+
+   /* ──swap history overlay ─────────────── */
+    #swap-history-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    #swap-history-modal {
+      background: var(--lm-background);
+      border-radius: 1rem;
+      width: 90%;
+      max-width: 480px;
+      max-height: 70vh;
+      overflow-y: auto;
+      padding:0 1.25rem 1.25rem;
+    }
+
+    .swap-history-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      position: sticky;
+      top: 0;
+      z-index: 99;
+      background: var(--lm-background);
+      padding: 1.25rem 0 0.75rem;
+    }
+    .swap-history-header button {
+    background: transparent;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    }
+    .swap-history-item {
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 0.75rem 0;
+    }
+    .swap-history-item .swap-meta {
+    font-size: 0.75rem;
+    opacity: 0.5;
+    margin-bottom: 0.25rem;
+    }
+    .swap-history-item .swap-quote {
+    font-size: 0.8rem;
+    word-break: break-all;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    }
+    .swap-history-item .copy-btn {
+    font-size: 0.7rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+    }
+    .swap-quote {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+        .chain-icon-wrapper {
+          position: relative;
+          width: 36px;
+          height: 36px;
+        }
+
+        .chain-icon {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+
+        .token-overlay {
+          position: absolute;
+          bottom: -2px;
+          right: -2px;
+          width: 16px;
+          height: 16px;
+          border-radius: 50%;
+          background: #000; /* helps contrast */
+        }
+
+        .quote-middle {
+          display: flex;
+          flex-direction: column;
+          line-height: 1.2;
+        }
+
+        .quote-id {
+          font-size: 0.9rem;
+          font-weight: 500;
+        }
+
+        .quote-time {
+          font-size: 0.75rem;
+          opacity: 0.6;
+          margin-top: 5px;
+        }
+
+        .quote-right {
+          margin-left: auto;
+        }
     </style>
   </head>
   <body>
@@ -958,6 +1083,9 @@ function generateHTML({
           <img src="/public/favicon/favicon.svg" alt="Blitz Wallet" />
         </a>
         <a href="#" class="nav-download-btn download-btn">Download</a>
+        <div onclick="showSwapHistory()" id="gear-btn">
+          <i class="historyIcon" data-lucide="history"></i>  
+        </div>
       </div>
     </nav>
     
@@ -998,6 +1126,18 @@ function generateHTML({
             </a>
           </div>
         </div>
+      </div>
+    </div>
+
+
+    <!-- Swap history overlay -->
+    <div onclick="hideSwapHistory(event)" id="swap-history-overlay" style="display:none;">
+      <div id="swap-history-modal" onclick="event.stopPropagation()">
+        <div class="swap-history-header">
+          <span>Swap History</span>
+          <button onclick="hideSwapHistory(event)"><i data-lucide="x"></i></button>
+        </div>
+        <div id="swap-history-list"></div>
       </div>
     </div>
 
@@ -1128,6 +1268,7 @@ function generateHTML({
             <div id="qr-stable-address"></div>
           </div>
           <div onclick="copyAddress()" class="address-box" id="stable-address-text"></div>
+          <div onclick="copyQuoteId()" class="address-box quote-id-text" id="stable-quote-id"></div>
           <button class="btn-primary" id="btn-open-wallet" onclick="openWallet()" style="display:none;">Open Wallet</button>
           <button class="btn-primary" id="btn-connect-pay" onclick="connectAndPay()" style="display:none;">Connect &amp; Pay</button>
         </div>
@@ -1136,9 +1277,10 @@ function generateHTML({
           <div id="screen-error" class="screen">
             <div class="error-box">
               <h2>Taking longer than expected</h2>
-              <p>Your payment is still processing. Your tx hash has been submitted successfully.</p>
+              <p>Your payment is still processing. Your transaction has been submitted successfully.</p>
               <p class="status-text" id="error-txhash-display" style="word-break:break-all;margin:0.75rem 0;"></p>
-              <p>Please <a href="https://blitzwalletapp.com" target="_blank">contact support</a> with the tx hash above if this persists.</p>
+              <p id="error-quote-id" class="quote-id-text"></p>
+              <p>Please <a href="https://blitzwalletapp.com" target="_blank">contact support</a> with the quote ID above if this persists.</p>
               <button class="btn-secondary" onclick="retryIsPaidPolling()">Check again</button>
             </div>
           </div>
@@ -1164,6 +1306,7 @@ function generateHTML({
       const PAYLINK_ID = ${JSON.stringify(paylinkId)};
       const PAYLINK_DATA = ${inlinedData};
       const SWAP_STORAGE_KEY = \`paylink_swap_\${PAYLINK_ID}\`;
+      const SWAP_HISTORY_KEY = 'blitz_swap_history'
 
      const NETWORK_MAP = {
         ethereum: { chainId: 1,     usdc: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', usdt: '0xdac17f958d2ee523a2206206994597c13d831ec7' },
@@ -1198,6 +1341,8 @@ function generateHTML({
       let pollTimer = null;
       let shouldPoll = false;
       let pollCount = 0;
+      let isStablecoinPolling = false;
+      let currentQuoteId = null;
       const MAX_POLLS = 50;
       let bitcoinInvoice = null;
       let processingStatusTimer = null;
@@ -1242,6 +1387,7 @@ function generateHTML({
 
       function stopPolling() {
         shouldPoll = false;
+        isStablecoinPolling = false
         if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
       }   
 
@@ -1313,9 +1459,20 @@ function generateHTML({
         localStorage.removeItem(SWAP_STORAGE_KEY);
       }
 
-      function formatNetworkLabel(network) {
-        if (!network) return '';
-        return network.charAt(0).toUpperCase() + network.slice(1);
+      function getSwapHistory() {
+        const raw = localStorage.getItem(SWAP_HISTORY_KEY);
+        if (!raw) return [];
+        try {
+          return JSON.parse(raw);
+        } catch (e) {
+          return [];
+        }
+      }
+
+      function saveToSwapHistory(entry) {
+        const history = getSwapHistory();
+        history.unshift(entry);
+        localStorage.setItem(SWAP_HISTORY_KEY, JSON.stringify(history.slice(0, 50)));
       }
 
       function formatTokenAmount(raw, decimals) {
@@ -1351,6 +1508,7 @@ function generateHTML({
         }
 
        showScreen('screen-processing');
+       setQuoteIdDisplays(currentQuoteId);
        startIsPaidPolling();
         try {
           const res = await fetch('/submitPaylinkSwap', {
@@ -1361,10 +1519,11 @@ function generateHTML({
               txHash,
               sourceAddress: sourceAddress || null,
             }),
+            signal: AbortSignal.timeout(8000)
           });
           const json = await res.json();
           if (!json || json.status !== 'SUCCESS') throw new Error('submit-failed');
-          saveSwapContext({ txHash, sourceAddress: sourceAddress || null });
+          saveSwapContext({ txHash, sourceAddress: sourceAddress || null, currentQuoteId });
         } catch (err) {
           txHashSubmitted = false;
           showScreen('screen-stable-pay');
@@ -1375,6 +1534,7 @@ function generateHTML({
       function startIsPaidPolling() {
         pollCount = 0;
         shouldPoll = true;
+        isStablecoinPolling = true;
         _schedulePaylinkPoll();
       }
 
@@ -1391,10 +1551,12 @@ function generateHTML({
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ paylinkId: PAYLINK_ID, checkInvoice: true }),
+            signal: AbortSignal.timeout(8000),
           });
           const json = await res.json();
           if (json?.data?.isPaid) {
             shouldPoll = false;
+            isStablecoinPolling = false;
             clearSwapContext();
             showScreen('screen-success');
             return;
@@ -1402,6 +1564,7 @@ function generateHTML({
         } catch (e) { /* network error — continue polling */ }
         if (pollCount >= MAX_POLLS) {
           shouldPoll = false;
+          isStablecoinPolling = false;
           showErrorScreen();
           return;
         }
@@ -1411,6 +1574,7 @@ function generateHTML({
       function retryIsPaidPolling() {
         if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
         pollCount = 0;
+        isStablecoinPolling = true;
         shouldPoll = true;
         _schedulePaylinkPoll();
       }
@@ -1418,8 +1582,17 @@ function generateHTML({
       function showErrorScreen() {
         const stored = loadSwapContext();
         const el = document.getElementById('error-txhash-display');
-        if (el) el.textContent = stored?.txHash || '(unknown)';
+        if (el) el.textContent = stored?.txHash || "(unknown)";
+        setQuoteIdDisplays(currentQuoteId || stored?.currentQuoteId || null);
         showScreen('screen-error');
+      }
+
+      function setQuoteIdDisplays(quoteId) {
+        const text = quoteId ? 'Quote ID: ' + quoteId : '';
+        ['stable-quote-id', 'processing-quote-id', 'error-quote-id'].forEach(function(id) {
+          const el = document.getElementById(id);
+          if (el) el.textContent = text;
+        });
       }
 
 
@@ -1576,6 +1749,88 @@ function generateHTML({
         updateCurrencyGrid()
       }
 
+      function showSwapHistory() {
+        renderSwapHistory();
+        document.getElementById('swap-history-overlay').style.display = 'flex';
+      }
+
+      function hideSwapHistory(e) {
+        e.preventDefault();
+        document.getElementById('swap-history-overlay').style.display = 'none';
+      }
+
+      function renderSwapHistory() {
+        const listEl = document.getElementById('swap-history-list');
+        if (!listEl) return;
+
+        const history = getSwapHistory();
+        if (!history.length) {
+          listEl.innerHTML = '<p style="opacity:0.5;font-size:0.85rem;">No swaps yet.</p>';
+          return;
+        }
+
+        listEl.innerHTML = history.map(function(entry) {
+          const dateObj = new Date(entry.time || entry.timestamp);
+          const time = dateObj.toLocaleString();
+
+          const chain = (entry.selectedNetwork || entry.network || '').toLowerCase();
+          const currency = (entry.selectedCurrency || entry.currency || '').toLowerCase();
+
+          // Handle polygon PNG vs others SVG
+          const chainImage = chain === 'polygon'
+            ? \`src/assets/images/chain-\${chain}.png\`
+            : \`src/assets/images/chain-\${chain}.svg\`;
+
+          const tokenImage = currency === 'usdc'
+            ? \`src/assets/images/usdc.svg\`
+            : \`src/assets/images/usdt.svg\`;
+
+          const quoteRow = entry.currentQuoteId
+            ? \`
+            <div class="swap-quote">
+              <div class="quote-left">
+                <div class="chain-icon-wrapper">
+                  <img src="https://blitzwalletapp.com/\${chainImage}" class="chain-icon" />
+                  <img src="https://blitzwalletapp.com/\${tokenImage}" class="token-overlay" />
+                </div>
+              </div>
+
+              <div class="quote-middle">
+                <div class="quote-id">\${entry.currentQuoteId}</div>
+                <div class="quote-time">\${time}</div>
+              </div>
+
+              <div class="quote-right">
+                <button class="copy-btn">Copy</button>
+              </div>
+            </div>
+            \`
+            : '';
+
+          return \`
+            <div class="swap-history-item">
+              \${quoteRow}
+            </div>
+          \`;
+        }).join('');
+
+        // Copy logic (unchanged but safer)
+        const items = listEl.querySelectorAll('.swap-history-item');
+        history.forEach(function(entry, i) {
+          const qid = entry.currentQuoteId;
+          if (!qid) return;
+
+          const btn = items[i] && items[i].querySelector('.copy-btn');
+          if (btn) {
+            btn.dataset.qid = qid;
+            btn.addEventListener('click', function() {
+              navigator.clipboard.writeText(btn.dataset.qid);
+              showAlert('Copied!');
+            });
+          }
+        });
+      } 
+
 
       function proceedToRefundAddress() {
         if (!selectedNetwork) {
@@ -1637,11 +1892,14 @@ function generateHTML({
           depositAddress = json.depositAddress;
           amountInRaw    = BigInt(String(json.amountIn));
           estimatedOut   = json.estimatedOut;
+          currentQuoteId = json.quoteId;
 
           const networkEntry = NETWORK_MAP[selectedNetwork] || {};
           currentChainId      = networkEntry.chainId || null;
           currentTokenAddress = currentChainId ? (networkEntry[selectedCurrency.toLowerCase()] || null) : null;
-
+          const swapContext = { selectedNetwork, selectedCurrency, depositAddress, amountInRaw: amountInRaw.toString(), currentChainId, currentTokenAddress, currentQuoteId, time: Date.now() };
+          saveToSwapHistory(swapContext);
+          
           // Render QR
           const qrEl = document.getElementById('qr-stable-address');
           if (qrEl) {
@@ -1661,6 +1919,8 @@ function generateHTML({
           if (amountLabelEl) amountLabelEl.textContent = formatTokenAmount(amountInRaw, 6) + ' ' + selectedCurrency;
           const addrEl = document.getElementById('stable-address-text');
           if (addrEl) addrEl.textContent = depositAddress;
+          const quoteEl = document.getElementById('stable-quote-id');
+          if (quoteEl) quoteEl.textContent = 'Quote ID: ' + currentQuoteId;
 
           // Clear previous error
           showTxHashError('');
@@ -1708,6 +1968,12 @@ function generateHTML({
         showAlert('Text copied successfully!')
       }
 
+      function copyQuoteId() {
+        if (!currentQuoteId) return;
+        navigator.clipboard.writeText(currentQuoteId);
+        showAlert('Text copied successfully!')
+      }
+
 
       // ── payment polling ───────────────────────────────────────────────
       function startPolling() {
@@ -1747,7 +2013,7 @@ function generateHTML({
         if (document.visibilityState === 'hidden') {
           if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
         } else if (shouldPoll && !pollTimer) {
-          _schedulePoll();
+         isStablecoinPolling ? _schedulePaylinkPoll() : _schedulePoll();
         }
       });
 
