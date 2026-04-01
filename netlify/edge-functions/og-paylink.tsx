@@ -160,7 +160,7 @@ function PaylinkCard({
           alignItems: "center",
           width: "100%",
           marginTop: "auto",
-          padding: `0px 60px ${showUSD ? 20 : 0}px ${showUSD ? 100 : 0}px`,
+          padding: `0px 60px ${showUSD ? 20 : 0}px ${showUSD ? 50 : 0}px`,
         }}
       >
         {!showUSD ? <BitcoinIcon size={iconSize} /> : null}
