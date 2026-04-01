@@ -1280,7 +1280,7 @@ function generateHTML({
               <p>Your payment is still processing. Your transaction has been submitted successfully.</p>
               <p class="status-text" id="error-txhash-display" style="word-break:break-all;margin:0.75rem 0;"></p>
               <p id="error-quote-id" class="quote-id-text"></p>
-              <p>Please <a href="https://blitzwalletapp.com" target="_blank">contact support</a> with the quote ID above if this persists.</p>
+              <p>Please <a href="https://blitzwalletapp.com/pages/contact/" target="_blank">contact support</a> with the quote ID above if this persists.</p>
               <button class="btn-secondary" onclick="retryIsPaidPolling()">Check again</button>
             </div>
           </div>
