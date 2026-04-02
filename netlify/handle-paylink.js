@@ -6,7 +6,6 @@ async function fetchPaylinkData(paylinkId, baseUrl) {
       method: "POST",
       body: JSON.stringify({
         paylinkId,
-        checkInvoice: true,
         shouldLoadBitcoinPrice: true,
       }),
       signal: AbortSignal.timeout(6000),
@@ -125,7 +124,6 @@ function generateHTML({
       : `<p class="amount">$${rawAmount.toLocaleString("en-US")}</p>`
     : "";
   const description = paylinkData?.description ?? "";
-  const isPaid = paylinkData?.isPaid ?? false;
   const paylinkUrl = `https://blitzwalletapp.com/paylink/${paylinkId}`;
 
   return `<!DOCTYPE html>
@@ -801,6 +799,7 @@ function generateHTML({
         border-radius: 8px;
         padding: 0.6rem 1rem;
         margin-top: 1rem;
+        display: none;
       }
 
       /* ── error state ───────────────────────────────────────────────── */
@@ -1172,8 +1171,15 @@ function generateHTML({
           </div>
         </div>
 
+        <!-- Screen 0: Loading -->
+        <div id="screen-loading" class="screen active">
+          <div class="loading-screen">
+            <div class="spinner"></div>
+          </div>
+        </div>
+
         <!-- Screen 1: initial -->
-        <div id="screen-initial" class="screen active">
+        <div id="screen-initial" class="screen">
           ${
             paylinkData
               ? `
@@ -1184,16 +1190,9 @@ function generateHTML({
               ${description ? `<p class="pay-description">for "${description}"</p>` : ""}
             </div>
           </div>
-          ${
-            isPaid
-              ? `
-          <div class="paid-notice">This payment has already been completed.</div>
-          `
-              : `
+          <div id="paid-notice" class="paid-notice">This payment has already been completed.</div>
           <button class="btn-primary" id="btn-btc" onclick="startBtcFlow()">Pay with Bitcoin</button>
           <button class="btn-secondary" id="btn-stable" onclick="showNetworkSelect()">Pay with USDC or USDT</button>
-          `
-          }
           `
               : `
           <div class="error-box">
@@ -2019,15 +2018,45 @@ function generateHTML({
       });
 
       // ── init ──────────────────────────────────────────────────────────
-      document.addEventListener('DOMContentLoaded', () => {
-        const stored = loadSwapContext();
-        // Resume if we have a txHash from a previous submission.
+      document.addEventListener('DOMContentLoaded', async () => {
+        // Check isPaid client-side so the serverless function can skip checkInvoice
+        // and return faster, improving first paint.
+
+        const paidNotice = document.getElementById('paid-notice');
+        const btcButton = document.getElementById('btn-btc');
+        const stableButton = document.getElementById('btn-stable');
+        if (PAYLINK_DATA) {
+          try {
+            const res = await fetch('/getPaylinkData', {
+              method: 'POST',
+              body: JSON.stringify({ paylinkId: PAYLINK_ID, checkInvoice: true }),
+              signal: AbortSignal.timeout(6000),
+            });
+            if (res.ok) {
+              const json = await res.json();
+              if (json?.data?.isPaid) {
+              paidNotice.style.display = 'block';
+              btcButton.style.display = 'none';
+              stableButton.style.display = 'none';
+               
+              }
+            }
+          } catch (err) {
+            // transient error — show screen-initial optimistically
+          }
+        }
+
+        // Resume if we have a txHash from a previous stablecoin submission.
         // Discard stale Lendaswap entries (those have a swapId key).
+        const stored = loadSwapContext();
         if (stored && stored.txHash && !stored.swapId) {
           txHashSubmitted = true;
           showScreen('screen-processing');
           startIsPaidPolling();
+          return;
         }
+
+        showScreen('screen-initial');
       });
 
       (function() {

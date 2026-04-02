@@ -2,6 +2,7 @@
 import type { Config, Context } from "@netlify/edge-functions";
 import { ImageResponse } from "https://deno.land/x/og_edge/mod.ts";
 import React from "https://esm.sh/react@18.2.0";
+import { Logo } from "./assets/Logo.tsx";
 
 // ─── brand ───────────────────────────────────────────────────────────────────
 
@@ -20,12 +21,6 @@ const FONTS = [
     style: "normal" as const,
     filePath: "Poppins-Bold.ttf",
   },
-  {
-    name: "Poppins",
-    weight: 800,
-    style: "normal" as const,
-    filePath: "Poppins-ExtraBold.ttf",
-  },
 ];
 
 async function loadFonts(origin: string) {
@@ -38,13 +33,6 @@ async function loadFonts(origin: string) {
       return { name, weight, style, data };
     }),
   );
-}
-
-async function loadIcon(origin: string): Promise<string> {
-  const res = await fetch(`${origin}/public/iconWhite.png`);
-  const buf = await res.arrayBuffer();
-  const b64 = btoa(String.fromCharCode(...new Uint8Array(buf)));
-  return `data:image/png;base64,${b64}`;
 }
 
 // ─── Bitcoin SVG icon ─────────────────────────────────────────────────────────
@@ -83,13 +71,11 @@ function PaylinkCard({
   currencyType,
   showUSD,
   rawAmount,
-  iconSrc,
 }: {
   amountLabel: string;
   currencyType: string;
   showUSD: boolean;
   rawAmount: number;
-  iconSrc: string;
 }) {
   const amountFontSize =
     amountLabel.length > 12 ? 90 : amountLabel.length > 7 ? 130 : 150;
@@ -140,6 +126,7 @@ function PaylinkCard({
             "radial-gradient(circle, rgba(3,117,246,0.45) 0%, rgba(3,117,246,0) 70%)",
         }}
       />
+
       <div
         style={{
           display: "flex",
@@ -149,7 +136,7 @@ function PaylinkCard({
           marginLeft: "96px",
         }}
       >
-        <img src={iconSrc} width={65} height={65} />
+        <Logo />
       </div>
 
       {/* ── amount row: bitcoin icon + balance ── */}
@@ -195,10 +182,7 @@ export default async (request: Request, _context: Context) => {
 
   const showUSD = currencyType === "USD" && rawAmount > 0;
 
-  const [fonts, iconSrc] = await Promise.all([
-    loadFonts(origin),
-    loadIcon(origin),
-  ]);
+  const [fonts] = await Promise.all([loadFonts(origin)]);
 
   const image = new ImageResponse(
     <PaylinkCard
@@ -206,7 +190,6 @@ export default async (request: Request, _context: Context) => {
       currencyType={currencyType}
       rawAmount={rawAmount}
       showUSD={showUSD}
-      iconSrc={iconSrc}
     />,
     {
       width: 1200,
