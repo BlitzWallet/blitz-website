@@ -84,7 +84,7 @@ function BitcoinIcon({
         display: "flex",
         marginRight: -25,
         marginLeft: -25,
-        marginBottom: 15,
+        marginBottom: 25,
       }}
     >
       <path
@@ -141,7 +141,7 @@ function GiftCard({
   isBtc: boolean;
 }) {
   const amountFontSize =
-    primary.length > 10 ? 80 : primary.length > 7 ? 100 : 120;
+    primary.length > 12 ? 90 : primary.length > 7 ? 130 : 150;
   const iconSize = Math.round(amountFontSize * 1.1);
 
   return (
@@ -239,15 +239,16 @@ function GiftCard({
               background: BLUE_FAINT,
               border: `1px solid ${BLUE_BORDER}`,
               borderRadius: 100,
-              padding: "6px 18px",
+              padding: "15px 23px",
+              marginBottom: 50,
             }}
           >
-            <GiftIcon color={BLUE} size={16} />
+            <GiftIcon color={BLUE} size={40} />
             <span
               style={{
-                fontSize: 14,
+                fontSize: 35,
                 fontWeight: 700,
-                marginBottom: -5,
+                marginBottom: -10,
                 color: BLUE,
                 letterSpacing: "0.05em",
                 textTransform: "uppercase",
