@@ -159,45 +159,6 @@ function GiftCard({
         position: "relative",
       }}
     >
-      {/* dot grid */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 0,
-          backgroundImage:
-            "radial-gradient(circle, rgba(3,117,246,0.07) 1.5px, transparent 1.5px)",
-          backgroundSize: "32px 32px",
-        }}
-      />
-
-      {/* top-right glow */}
-      <div
-        style={{
-          position: "absolute",
-          top: -120,
-          right: -120,
-          width: 480,
-          height: 480,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(3,117,246,0.18) 0%, transparent 70%)",
-        }}
-      />
-
-      {/* bottom-left glow */}
-      <div
-        style={{
-          position: "absolute",
-          bottom: -80,
-          left: 60,
-          width: 320,
-          height: 320,
-          borderRadius: "50%",
-          background:
-            "radial-gradient(circle, rgba(56,189,248,0.14) 0%, transparent 70%)",
-        }}
-      />
-
       {/* content */}
       <div
         style={{
@@ -275,7 +236,7 @@ function GiftCard({
                 color: NAVY,
                 letterSpacing: "-0.04em",
                 lineHeight: 1,
-                marginBottom: -20,
+                marginBottom: -25,
               }}
             >
               {primary}
@@ -288,7 +249,7 @@ function GiftCard({
                   color: BLUE_MID,
                   alignSelf: "flex-end",
                   paddingBottom: 6,
-                  marginLeft: 10,
+                  marginLeft: 15,
                 }}
               >
                 {unit}
