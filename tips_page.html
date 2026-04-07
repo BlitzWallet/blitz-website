@@ -65,6 +65,7 @@
     <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="/public/paylink-swap.js"></script>
 
     <script src="/src/js/navbar.js" defer></script>
     <script src="/pages/tips/tips.js" defer></script>
@@ -125,6 +126,13 @@
           <button class="currency-button" id="currency-button">
             Switch Currency
           </button>
+          <button
+            style="margin-top: 0.8rem"
+            class="currency-button"
+            onclick="showSwapHistory()"
+          >
+            View past swaps
+          </button>
 
           <div class="currency-dropdown" id="currency-dropdown">
             <input
@@ -134,6 +142,241 @@
               placeholder="Search currency..."
             />
             <div class="currency-list" id="currency-list"></div>
+          </div>
+        </div>
+
+        <!-- Payment Type Screen -->
+        <div class="tips-screen" id="payment-type-screen">
+          <h2 class="screen-title">How would you like to pay?</h2>
+          <div class="payment-options">
+            <button
+              class="payment-option-btn"
+              id="pay-lightning"
+              onclick="selectPaymentMethod('lightning')"
+            >
+              <div
+                class="payment-option-icon-wrap payment-option-icon-wrap--bitcoin"
+              >
+                <i
+                  data-lucide="bitcoin"
+                  class="payment-option-lucide payment-option-lucide--bitcoin"
+                ></i>
+              </div>
+              <div class="payment-option-text">
+                <span class="payment-option-label">Bitcoin</span>
+                <span class="payment-option-sub">Via Lightning</span>
+              </div>
+            </button>
+
+            <button
+              class="payment-option-btn"
+              id="pay-usdc"
+              onclick="selectPaymentMethod('usdc')"
+            >
+              <div
+                class="payment-option-icon-wrap payment-option-icon-wrap--stable"
+              >
+                <i
+                  data-lucide="dollar-sign"
+                  class="payment-option-lucide payment-option-lucide--stable"
+                ></i>
+              </div>
+              <div class="payment-option-text">
+                <span class="payment-option-label">Stablecoins</span>
+                <span class="payment-option-sub">USDC or USDT</span>
+              </div>
+            </button>
+          </div>
+
+          <button
+            class="action-button secondary"
+            onclick="resetToInputScreen()"
+          >
+            Back
+          </button>
+        </div>
+
+        <!-- Network Select Screen -->
+        <div class="tips-screen" id="network-screen">
+          <h2 class="screen-title">Select Network</h2>
+          <div class="currency-toggle">
+            <button
+              class="currency-toggle-btn active"
+              id="toggle-usdc"
+              onclick="selectCryptoToken('USDC')"
+            >
+              USDC
+            </button>
+            <button
+              class="currency-toggle-btn"
+              id="toggle-usdt"
+              onclick="selectCryptoToken('USDT')"
+            >
+              USDT
+            </button>
+          </div>
+          <div class="network-grid" id="network-grid"></div>
+          <button
+            style="margin-bottom: 0"
+            class="action-button primary"
+            onclick="showRefundAddressScreen()"
+          >
+            Continue
+          </button>
+          <button
+            style="margin-bottom: 0"
+            class="action-button secondary"
+            onclick="showScreen('payment-type-screen')"
+          >
+            Back
+          </button>
+        </div>
+
+        <!-- Refund Address Screen -->
+        <div class="tips-screen" id="refund-address-screen">
+          <h2 class="screen-title">Refund Address</h2>
+          <p class="screen-subtitle">
+            If the swap fails, funds will be returned to this address.
+          </p>
+          <input
+            type="text"
+            class="refund-input"
+            id="refund-address-input"
+            placeholder="Your address (optional)"
+          />
+          <button
+            style="margin-bottom: 0"
+            class="action-button primary"
+            onclick="confirmStablecoin()"
+          >
+            Continue
+          </button>
+          <button
+            style="margin-bottom: 0"
+            class="action-button secondary"
+            onclick="showScreen('network-screen')"
+          >
+            Back
+          </button>
+        </div>
+
+        <!-- Creating Swap Screen -->
+        <div class="tips-screen" id="creating-swap-screen">
+          <div class="creating-content">
+            <div class="creating-spinner" id="creating-spinner"></div>
+            <p class="creating-status" id="creating-status">Creating swap…</p>
+            <p
+              class="creating-error"
+              id="creating-error"
+              style="display: none"
+            ></p>
+            <button
+              class="action-button secondary"
+              id="creating-back-btn"
+              style="display: none; margin-bottom: 0"
+              onclick="showScreen('network-screen')"
+            >
+              Go back
+            </button>
+          </div>
+        </div>
+
+        <!-- Stable Pay Screen -->
+        <div class="tips-screen" id="stable-pay-screen">
+          <p class="stable-network-label" id="stable-network-label">
+            Send USDC on Ethereum
+          </p>
+          <p class="stable-amount-label" id="stable-amount-label">0.00 USDC</p>
+          <div class="qr-wrapper" id="stable-qr-wrapper">
+            <div id="qr-stable-address"></div>
+          </div>
+          <div class="address-copy-row">
+            <span class="stable-address-text" id="stable-address-text"></span>
+            <button class="copy-addr-btn" id="copy-addr-btn">Copy</button>
+          </div>
+          <div class="address-copy-row">
+            <p class="stable-quote-id" id="stable-quote-id"></p>
+          </div>
+          <button
+            class="action-button primary"
+            id="open-wallet-btn"
+            style="display: none; margin-bottom: 0; margin-top: 1rem"
+            onclick="openStableWallet()"
+          >
+            Open Wallet
+          </button>
+          <button
+            class="action-button primary"
+            id="open-wallet-btn-connect"
+            style="display: none; margin-bottom: 0; margin-top: 1rem"
+            onclick="connectAndPay()"
+          >
+            Connect &amp; Pay
+          </button>
+          <button
+            class="action-button secondary"
+            style="margin-bottom: 0"
+            onclick="resetToInputScreen()"
+          >
+            Cancel
+          </button>
+        </div>
+
+        <!-- Processing Screen -->
+        <div class="tips-screen" id="stable-processing-screen">
+          <div class="creating-content">
+            <div class="creating-spinner"></div>
+            <p class="creating-status">Processing swap…</p>
+          </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div class="tips-screen" id="stable-success-screen">
+          <div class="success-content">
+            <div class="success-icon">✓</div>
+            <h2 class="success-title">Payment Received!</h2>
+            <p class="success-sub">The swap was completed successfully.</p>
+            <button
+              class="action-button primary"
+              onclick="resetToInputScreen()"
+            >
+              Pay Again
+            </button>
+          </div>
+        </div>
+
+        <!-- Creating invoice Screen -->
+        <div class="tips-screen" id="creating-invoice-screen">
+          <div class="creating-content">
+            <div class="creating-spinner" id="creating-spinner"></div>
+            <p class="creating-status" id="creating-status">
+              Creating invioce…
+            </p>
+
+            <button
+              class="action-button secondary"
+              id="creating-back-btn"
+              style="display: none"
+              onclick="resetToInputScreen()"
+            >
+              Go back
+            </button>
+          </div>
+        </div>
+
+        <!-- historical swaps -->
+        <div
+          id="tip-swap-history-overlay"
+          style="display: none"
+          class="swap-history-overlay"
+          onclick="hideSwapHistory()"
+        >
+          <div class="swap-history-modal" onclick="event.stopPropagation()">
+            <div class="swap-history-header">
+              <h3>Past Swaps</h3>
+              <button onclick="hideSwapHistory()">✕</button>
+            </div>
+            <div id="tip-swap-history-list"></div>
           </div>
         </div>
 
@@ -174,6 +417,21 @@
           <button class="action-button secondary" id="cancel-button">
             Cancel
           </button>
+        </div>
+
+        <!-- Success Screen -->
+        <div class="tips-screen" id="bitcoin-success-screen">
+          <div class="success-content">
+            <div class="success-icon">✓</div>
+            <h2 class="success-title">Payment Received!</h2>
+            <p class="success-sub">The payment was completed successfully.</p>
+            <button
+              class="action-button primary"
+              onclick="resetToInputScreen()"
+            >
+              Pay Again
+            </button>
+          </div>
         </div>
       </div>
     </main>

@@ -1,3 +1,49 @@
+// Stablecoin network constants
+const NETWORK_LABELS = {
+  ethereum: "Ethereum",
+  polygon: "Polygon",
+  arbitrum: "Arbitrum",
+  optimism: "Optimism",
+  base: "Base",
+  solana: "Solana",
+  tron: "Tron",
+};
+
+const CURRENCY_NETWORKS = {
+  USDC: ["ethereum", "arbitrum", "optimism", "polygon", "base", "solana"],
+  USDT: ["ethereum", "arbitrum", "optimism", "tron"],
+};
+
+const NETWORK_MAP = {
+  ethereum: {
+    chainId: 1,
+    usdc: "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    usdt: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+  },
+  polygon: {
+    chainId: 137,
+    usdc: "0x3c499c542cef5e3811e1192ce70d8cc03d5c3359",
+    usdt: null,
+  },
+  arbitrum: {
+    chainId: 42161,
+    usdc: "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+    usdt: "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+  },
+  optimism: {
+    chainId: 10,
+    usdc: "0x0b2c639c533813f4aa9d7837caf62653d097ff85",
+    usdt: "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+  },
+  base: {
+    chainId: 8453,
+    usdc: "0x833589fcd6edb6e08f4c7c32d4f71b54bda02913",
+    usdt: null,
+  },
+  solana: { chainId: null, usdc: null, usdt: null },
+  tron: { chainId: null, usdc: null, usdt: null },
+};
+
 // Currency data
 const fiatCurrencies = [
   { info: { spacing: null, name: "Australian Dollar" }, id: "AUD" },
@@ -374,6 +420,14 @@ const formatCurrency = ({ amount, code }) => {
   return switchOptions[upperCode] || switchOptions.DEFAULT;
 };
 
+const CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
+const SWAP_HISTORY_KEY = "blitz_tip_swap_history";
+const generatePayLinkId = () =>
+  Array.from(
+    { length: 9 },
+    () => CHARS[Math.floor(Math.random() * CHARS.length)],
+  ).join("");
+
 // State
 let selectedCurrency = "USD";
 let currentInvoice = "";
@@ -382,6 +436,24 @@ let verifyURL = "";
 let verifyInterval = null;
 let verifyTimeout = null;
 let resizeTimeout = null;
+
+// Stablecoin state
+let selectedCryptoToken = "USDC";
+let selectedStableNetwork = null;
+let depositAddress = "";
+let amountInRaw = 0n;
+let currentQuoteId = null;
+let currentChainId = null;
+let currentTokenAddress = null;
+let swapWatcher = null;
+let balanceWatcher = null;
+let stableRefundAddress = null;
+let txHashSubmitted = false;
+let pollTimer = null;
+let pollCount = 0;
+let shouldPoll = false;
+let currentPaylinkId = null;
+const MAX_POLLS = 60;
 
 // Extract username from URL
 const username = window.location.pathname.split("/").filter(Boolean)[0];
@@ -406,7 +478,7 @@ const currencySymbol = document.querySelector(".dollar-sign");
 function createCurrencySelector() {
   // Populate currency list
   const currencyList = document.getElementById("currency-list");
-  console.log(currencyList);
+
   fiatCurrencies.forEach((currency) => {
     const item = document.createElement("div");
     item.className = "currency-item";
@@ -577,24 +649,24 @@ amountInput.addEventListener("blur", (e) => {
   }
 });
 
-// Handle tip button click
-tipButton.addEventListener("click", async () => {
+// Handle tip button click — show payment type selection
+tipButton.addEventListener("click", () => {
+  const amount = parseFloat(amountInput.value);
+  if (amount <= 0 || !amount) return;
+  showPaymentTypeScreen();
+});
+
+async function fetchLightningInvoice() {
   const amount = parseFloat(amountInput.value);
   currentInvoice = "";
 
-  console.log(amount);
-  if (amount <= 0 || !amount || tipButton.textContent === "Error - Try Again")
-    return;
-
   tipButton.textContent = "Generating invoice";
   tipButton.disabled = true;
-
+  showScreen("creating-invoice-screen");
   try {
     const response = await fetch("/getInvoice", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json", // Set the content type to JSON
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         requestUsername: username,
         fiatAmount: amount,
@@ -619,8 +691,566 @@ tipButton.addEventListener("click", async () => {
     setTimeout(() => {
       tipButton.textContent = "Pay";
     }, 4000);
+    showScreen("input-screen");
   }
-});
+}
+
+// ── Screen management ────────────────────────────────────────────────────────
+
+function showScreen(id) {
+  // Hide existing named screens
+  document.getElementById("input-screen").classList.add("hidden");
+  document.getElementById("invoice-screen").classList.remove("active");
+
+  // Hide all tips-screen divs
+  document.querySelectorAll(".tips-screen").forEach((el) => {
+    el.classList.remove("active");
+  });
+
+  if (id === "input-screen") {
+    document.getElementById("input-screen").classList.remove("hidden");
+  } else if (id === "invoice-screen") {
+    document.getElementById("invoice-screen").classList.add("active");
+  } else {
+    const el = document.getElementById(id);
+    if (el) el.classList.add("active");
+  }
+}
+
+// ── Payment type selection ───────────────────────────────────────────────────
+
+function showPaymentTypeScreen() {
+  showScreen("payment-type-screen");
+}
+
+function selectPaymentMethod(method) {
+  if (method === "lightning") {
+    fetchLightningInvoice();
+  } else {
+    selectedCryptoToken = method.toUpperCase();
+    showNetworkScreen();
+  }
+}
+
+// ── Network / currency selection ─────────────────────────────────────────────
+
+function showNetworkScreen() {
+  selectedStableNetwork = null;
+  const toggleUsdc = document.getElementById("toggle-usdc");
+  const toggleUsdt = document.getElementById("toggle-usdt");
+  if (toggleUsdc)
+    toggleUsdc.classList.toggle("active", selectedCryptoToken === "USDC");
+  if (toggleUsdt)
+    toggleUsdt.classList.toggle("active", selectedCryptoToken === "USDT");
+  updateCurrencyGrid();
+  showScreen("network-screen");
+}
+
+function updateCurrencyGrid() {
+  const grid = document.getElementById("network-grid");
+  if (!grid) return;
+  const networks = CURRENCY_NETWORKS[selectedCryptoToken] || [];
+  grid.innerHTML = networks
+    .map(
+      (n) =>
+        `<div class="network-card" id="card-${n}" onclick="selectStableNetwork('${n}')">${NETWORK_LABELS[n]}</div>`,
+    )
+    .join("");
+}
+
+function selectCryptoToken(token) {
+  selectedCryptoToken = token;
+  selectedStableNetwork = null;
+  const toggleUsdc = document.getElementById("toggle-usdc");
+  const toggleUsdt = document.getElementById("toggle-usdt");
+  if (toggleUsdc) toggleUsdc.classList.toggle("active", token === "USDC");
+  if (toggleUsdt) toggleUsdt.classList.toggle("active", token === "USDT");
+  updateCurrencyGrid();
+}
+
+function selectStableNetwork(network) {
+  selectedStableNetwork = network;
+  document
+    .querySelectorAll(".network-card")
+    .forEach((c) => c.classList.remove("selected"));
+  const card = document.getElementById("card-" + network);
+  if (card) card.classList.add("selected");
+}
+
+// ── Refund address ───────────────────────────────────────────────────────────
+
+function showRefundAddressScreen() {
+  if (!selectedStableNetwork) {
+    alert("Please select a network first.");
+    return;
+  }
+  const input = document.getElementById("refund-address-input");
+  if (input) {
+    input.value = "";
+    input.placeholder = `Your ${NETWORK_LABELS[selectedStableNetwork] || selectedStableNetwork} address (optional)`;
+  }
+  stableRefundAddress = null;
+  showScreen("refund-address-screen");
+}
+
+// ── Create swap ───────────────────────────────────────────────────────────────
+
+function isMobileDevice() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent,
+  );
+}
+
+async function confirmStablecoin() {
+  const input = document.getElementById("refund-address-input");
+  stableRefundAddress = input?.value.trim() || null;
+
+  const spinnerEl = document.getElementById("creating-spinner");
+  const statusEl = document.getElementById("creating-status");
+  const errorEl = document.getElementById("creating-error");
+  const backBtn = document.getElementById("creating-back-btn");
+  if (spinnerEl) spinnerEl.style.display = "inline-block";
+  if (statusEl) {
+    statusEl.textContent = "Creating swap…";
+    statusEl.style.display = "block";
+  }
+  if (errorEl) errorEl.style.display = "none";
+  if (backBtn) backBtn.style.display = "none";
+  showScreen("creating-swap-screen");
+
+  const amount = parseFloat(amountInput.value);
+
+  try {
+    currentPaylinkId = generatePayLinkId();
+    const res = await fetch("/createPayLinkInvoice", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        paylinkId: currentPaylinkId,
+        tipUsername: username,
+        network: selectedStableNetwork,
+        currency: selectedCryptoToken,
+        fiatAmount: amount,
+        fiatCode: selectedCurrency,
+        ...(stableRefundAddress ? { refundAddress: stableRefundAddress } : {}),
+      }),
+    });
+    const json = await res.json();
+
+    if (!json || json.status !== "SUCCESS" || !json.depositAddress) {
+      throw new Error(json.reason);
+    }
+
+    depositAddress = json.depositAddress;
+    amountInRaw = BigInt(String(json.amountIn));
+    currentQuoteId = json.quoteId;
+
+    saveToSwapHistory({
+      paylinkId: currentPaylinkId,
+      quoteId: currentQuoteId,
+      network: selectedStableNetwork,
+      currency: selectedCryptoToken,
+      username,
+      timestamp: Date.now(),
+    });
+
+    const networkEntry = NETWORK_MAP[selectedStableNetwork] || {};
+
+    currentChainId = networkEntry.chainId || null;
+    currentTokenAddress = currentChainId
+      ? networkEntry[selectedCryptoToken.toLowerCase()] || null
+      : null;
+
+    const openWalletBtn = document.getElementById("open-wallet-btn");
+    const openWalletBtnConnect = document.getElementById(
+      "open-wallet-btn-connect",
+    );
+
+    const isMobile = isMobileDevice();
+
+    if (isMobile) {
+      openWalletBtn.style.display =
+        currentTokenAddress && currentChainId ? "block" : "none";
+    } else {
+      openWalletBtnConnect.style.display =
+        currentTokenAddress && currentChainId ? "block" : "none";
+    }
+
+    // Render QR
+    const qrEl = document.getElementById("qr-stable-address");
+    if (qrEl) {
+      qrEl.innerHTML = "";
+      new QRCode(qrEl, {
+        text: depositAddress,
+        width: 220,
+        height: 220,
+        colorDark: "#000000",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H,
+      });
+    }
+
+    // Set labels
+    const networkLabelEl = document.getElementById("stable-network-label");
+    if (networkLabelEl) {
+      networkLabelEl.textContent =
+        "Send " +
+        selectedCryptoToken +
+        " on " +
+        (NETWORK_LABELS[selectedStableNetwork] || selectedStableNetwork);
+    }
+    const amountLabelEl = document.getElementById("stable-amount-label");
+    if (amountLabelEl) {
+      amountLabelEl.textContent =
+        formatTokenAmount(amountInRaw, 6) + " " + selectedCryptoToken;
+    }
+    const addrEl = document.getElementById("stable-address-text");
+    if (addrEl) addrEl.textContent = depositAddress;
+    const quoteEl = document.getElementById("stable-quote-id");
+    if (quoteEl)
+      quoteEl.textContent = currentQuoteId ? "Quote ID: " + currentQuoteId : "";
+
+    // Reset tx hash state
+    txHashSubmitted = false;
+    const txErrEl = document.getElementById("txhash-error");
+    if (txErrEl) txErrEl.style.display = "none";
+
+    // Start blockchain watcher for EVM chains
+    const detectEl = document.getElementById("txhash-detect-status");
+    if (currentChainId && typeof PaylinkSwap !== "undefined") {
+      swapWatcher = PaylinkSwap.watchForTransfer({
+        depositAddress,
+        tokenAddress: currentTokenAddress,
+        chainId: currentChainId,
+        onFound: (txHash, from) => handleTxHash(txHash, from),
+      });
+      balanceWatcher = PaylinkSwap.pollForBalance({
+        tokenAddress: currentTokenAddress,
+        depositAddress,
+        chainId: currentChainId,
+        expectedAmount: amountInRaw,
+        onFound: (txHash, from) => handleTxHash(txHash, from),
+      });
+      if (detectEl) detectEl.textContent = "Monitoring for transaction…";
+    } else {
+      if (detectEl)
+        detectEl.textContent = "Send the exact amount to the address above.";
+    }
+
+    showScreen("stable-pay-screen");
+  } catch (err) {
+    console.error("Swap creation failed:", err);
+    if (errorEl) {
+      errorEl.textContent = err.message;
+      errorEl.style.display = "block";
+    }
+    if (statusEl) statusEl.style.display = "none";
+    if (spinnerEl) spinnerEl.style.display = "none";
+    if (backBtn) backBtn.style.display = "block";
+  }
+}
+
+// ── Handle detected transaction ───────────────────────────────────────────────
+
+async function handleTxHash(txHash, sourceAddress) {
+  if (txHashSubmitted) return;
+  txHashSubmitted = true;
+  stopAllStableWatchers();
+
+  const isEVM = /^0x[0-9a-fA-F]{64}$/.test(txHash);
+  if (!isEVM) {
+    txHashSubmitted = false;
+    const txErrEl = document.getElementById("txhash-error");
+    if (txErrEl) {
+      txErrEl.textContent = "Invalid transaction hash format.";
+      txErrEl.style.display = "block";
+    }
+    return;
+  }
+
+  const procQEl = document.getElementById("processing-quote-id");
+  if (procQEl)
+    procQEl.textContent = currentQuoteId ? "Quote ID: " + currentQuoteId : "";
+  showScreen("stable-processing-screen");
+
+  try {
+    const res = await fetch("/submitPaylinkSwap", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        paylinkId: currentPaylinkId,
+        txHash,
+        sourceAddress: sourceAddress || null,
+      }),
+      signal: AbortSignal.timeout(8000),
+    });
+    const json = await res.json();
+    if (!json || json.status !== "SUCCESS") throw new Error("submit-failed");
+    startIsPaidPolling();
+  } catch (err) {
+    console.error("Swap submission failed:", err);
+    txHashSubmitted = false;
+    showScreen("stable-pay-screen");
+    const txErrEl = document.getElementById("txhash-error");
+    if (txErrEl) {
+      txErrEl.textContent = "Submission failed. Please try again.";
+      txErrEl.style.display = "block";
+    }
+  }
+}
+
+// ── Open Wallet (EIP-681) ─────────────────────────────────────────────────────
+
+function buildEip681Uri() {
+  if (
+    !currentTokenAddress ||
+    !depositAddress ||
+    !currentChainId ||
+    !amountInRaw
+  )
+    return null;
+
+  return `ethereum:${currentTokenAddress}@${currentChainId}/transfer?address=${depositAddress}&uint256=${amountInRaw.toString()}`;
+}
+
+function openStableWallet() {
+  const uri = buildEip681Uri();
+  if (!uri) return;
+  window.location.href = uri;
+}
+
+async function connectAndPay() {
+  if (
+    !window.ethereum ||
+    !currentTokenAddress ||
+    !depositAddress ||
+    !currentChainId ||
+    !amountInRaw
+  )
+    return;
+  try {
+    const accounts = await window.ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    await window.ethereum.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: "0x" + currentChainId.toString(16) }],
+    });
+    const addrPadded = depositAddress
+      .replace("0x", "")
+      .toLowerCase()
+      .padStart(64, "0");
+    const amtPadded = amountInRaw.toString(16).padStart(64, "0");
+    const data = "0xa9059cbb" + addrPadded + amtPadded;
+    const txHash = await window.ethereum.request({
+      method: "eth_sendTransaction",
+      params: [{ from: accounts[0], to: currentTokenAddress, data }],
+    });
+    handleTxHash(txHash, accounts[0]);
+  } catch (err) {
+    // All wallet errors treated identically (rejection, chain switch failure, etc.)
+    // wallet_addEthereumChain fallback is out of scope for v1.
+    // txHashSubmitted not set (handleTxHash not called), so no reset needed.
+    showTxHashError("Wallet error: " + (err.message || "Request rejected."));
+  }
+}
+
+// ── isPaid polling ────────────────────────────────────────────────────────────
+
+function startIsPaidPolling() {
+  pollCount = 0;
+  shouldPoll = true;
+  schedulePoll();
+}
+
+function schedulePoll() {
+  pollTimer = setTimeout(doPoll, 5000);
+}
+
+async function doPoll() {
+  pollTimer = null;
+  if (!shouldPoll) return;
+  pollCount++;
+  try {
+    const res = await fetch("/getPaylinkData", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ paylinkId: currentPaylinkId, checkInvoice: true }),
+      signal: AbortSignal.timeout(8000),
+    });
+    const json = await res.json();
+    if (json?.data?.isPaid) {
+      shouldPoll = false;
+      showScreen("stable-success-screen");
+      return;
+    }
+  } catch (e) {
+    /* network error — continue */
+  }
+  if (pollCount >= MAX_POLLS) {
+    shouldPoll = false;
+    showScreen("stable-pay-screen");
+    const txErrEl = document.getElementById("txhash-error");
+    if (txErrEl) {
+      txErrEl.textContent =
+        "Payment verification timed out. Contact support with your Quote ID.";
+      txErrEl.style.display = "block";
+    }
+    return;
+  }
+  schedulePoll();
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+function stopAllStableWatchers() {
+  if (swapWatcher) {
+    swapWatcher.stop();
+    swapWatcher = null;
+  }
+  if (balanceWatcher) {
+    balanceWatcher.stop();
+    balanceWatcher = null;
+  }
+}
+
+function resetToInputScreen() {
+  stopAllStableWatchers();
+  shouldPoll = false;
+  if (pollTimer) {
+    clearTimeout(pollTimer);
+    pollTimer = null;
+  }
+  txHashSubmitted = false;
+  selectedStableNetwork = null;
+  depositAddress = "";
+  currentQuoteId = null;
+  currentChainId = null;
+  currentTokenAddress = null;
+  stableRefundAddress = null;
+  currentPaylinkId = null;
+
+  // Reset Lightning invoice state too
+  clearRunningItems();
+  tipButton.textContent = "Continue";
+  tipButton.disabled = false;
+  amountInput.value = "";
+  tipButton.classList.remove("active");
+
+  // Reset invoice screen paid state
+  const infoSection = document.querySelector(".info-section");
+  if (infoSection) infoSection.style.display = "";
+  const copyBtn = document.getElementById("copy-button");
+  if (copyBtn) copyBtn.style.display = "";
+  const cancelBtn = document.getElementById("cancel-button");
+  if (cancelBtn) {
+    cancelBtn.textContent = "Cancel";
+    cancelBtn.classList.add("secondary");
+  }
+  const verifyTxt = document.getElementById("verify-text");
+  if (verifyTxt) verifyTxt.classList.remove("invoice-paid");
+  const qrWrap = document.getElementById("qr-wrapper");
+  if (qrWrap) qrWrap.style.display = "";
+
+  setTimeout(scaleFontSize, 10);
+  showScreen("input-screen");
+}
+
+function formatTokenAmount(raw, decimals) {
+  if (!raw) return "";
+  if (!decimals) return raw.toString();
+  return (Number(raw) / Math.pow(10, decimals)).toFixed(2);
+}
+
+// - historical swaps
+function getSwapHistory() {
+  const raw = localStorage.getItem(SWAP_HISTORY_KEY);
+  if (!raw) return [];
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    return [];
+  }
+}
+
+function saveToSwapHistory(entry) {
+  const history = getSwapHistory();
+  history.unshift(entry);
+  localStorage.setItem(SWAP_HISTORY_KEY, JSON.stringify(history.slice(0, 50)));
+}
+
+function showSwapHistory() {
+  renderSwapHistory();
+  document.getElementById("tip-swap-history-overlay").style.display = "flex";
+}
+
+function hideSwapHistory() {
+  document.getElementById("tip-swap-history-overlay").style.display = "none";
+}
+
+function renderSwapHistory() {
+  const listEl = document.getElementById("tip-swap-history-list");
+  if (!listEl) return;
+  const history = getSwapHistory();
+  if (!history.length) {
+    listEl.innerHTML =
+      '<p style="opacity:0.5;font-size:0.85rem;">No swaps yet.</p>';
+    return;
+  }
+  listEl.innerHTML = history
+    .map((entry) => {
+      const time = new Date(entry.timestamp).toLocaleString();
+      const chain = (entry.network || "").toLowerCase();
+      const currency = (entry.currency || "").toLowerCase();
+      const chainImage =
+        chain === "polygon"
+          ? `/src/assets/images/chain-${chain}.png`
+          : `/src/assets/images/chain-${chain}.svg`;
+      const tokenImage =
+        currency === "usdc"
+          ? `/src/assets/images/usdc.svg`
+          : `/src/assets/images/usdt.svg`;
+      return `
+      <div class="swap-history-item">
+        <div class="swap-quote">
+          <div class="chain-icon-wrapper">
+            <img src="${chainImage}" class="chain-icon" />
+            <img src="${tokenImage}" class="token-overlay" />
+          </div>
+          <div class="quote-middle">
+            <div class="quote-id">${entry.quoteId || ""}</div>
+            <div class="quote-time">${time}</div>
+          </div>
+          <button class="copy-btn" data-qid="${entry.quoteId}">Copy</button>
+        </div>
+      </div>
+    `;
+    })
+    .join("");
+
+  listEl.querySelectorAll(".copy-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      navigator.clipboard.writeText(btn.dataset.qid);
+    });
+  });
+}
+
+// ── Copy address button ───────────────────────────────────────────────────────
+
+document
+  .getElementById("copy-addr-btn")
+  ?.addEventListener("click", async () => {
+    try {
+      await navigator.clipboard.writeText(depositAddress);
+      const btn = document.getElementById("copy-addr-btn");
+      btn.textContent = "Copied!";
+      setTimeout(() => {
+        btn.textContent = "Copy";
+      }, 2000);
+    } catch (err) {
+      console.error("Failed to copy address:", err);
+    }
+  });
 
 function showInvoiceScreen(amount) {
   const formattedAmount = formatCurrency({
@@ -628,8 +1258,7 @@ function showInvoiceScreen(amount) {
     code: selectedCurrency,
   });
 
-  document.getElementById("input-screen").classList.add("hidden");
-  document.getElementById("invoice-screen").classList.add("active");
+  showScreen("invoice-screen");
   document.getElementById("display-amount").textContent = formattedAmount[0];
 
   // Generate QR code with dynamic sizing
@@ -644,8 +1273,6 @@ function generateQRCode() {
 
   // Calculate QR size: 85% of container width, but max 250px
   const qrSize = Math.min(containerWidth * 0.82, 250);
-
-  console.log(qrSize, "qr size", containerWidth);
 
   // Clear existing QR code
   document.getElementById("invoice-qr-code").innerHTML = "";
@@ -686,7 +1313,6 @@ function startInvoiceVerification() {
     try {
       const response = await fetch(verifyURL);
       const data = await response.json();
-      console.log(data);
 
       if (data?.preimage && data.settled) {
         stopVerification("Invoice Paid");
@@ -747,17 +1373,19 @@ function startInvoiceVerification() {
 }
 
 function showPaidScreen(message) {
-  const qrContainer = document.getElementById("qr-wrapper");
-  const verifyText = document.getElementById("verify-text");
-  const cancelBTN = document.getElementById("cancel-button");
+  showScreen("bitcoin-success-screen");
+  // const qrContainer = document.getElementById("qr-wrapper");
+  // const verifyText = document.getElementById("verify-text");
+  // const cancelBTN = document.getElementById("cancel-button");
 
-  document.querySelector(".info-section").style.display = "none";
-  document.getElementById("copy-button").style.display = "none";
-  document.getElementById("cancel-button").textContent = "Pay again";
-  verifyText.textContent = message;
-  verifyText.classList.add("invoice-paid");
-  cancelBTN.classList.remove("secondary");
-  qrContainer.style.display = "none";
+  // document.querySelector(".info-section").style.display = "none";
+  // document.getElementById("copy-button").style.display = "none";
+  // document.getElementById("cancel-button").textContent = "Pay again";
+  // verifyText.textContent = message;
+  // verifyText.classList.add("invoice-paid");
+  // cancelBTN.classList.remove("secondary");
+  // qrContainer.style.display = "none";
+  // cancel-button click will call resetToInputScreen via existing listener
 }
 
 function formatTime(seconds) {
@@ -780,14 +1408,7 @@ document.getElementById("copy-button").addEventListener("click", async () => {
 });
 
 document.getElementById("cancel-button").addEventListener("click", () => {
-  clearRunningItems();
-  document.getElementById("input-screen").classList.remove("hidden");
-  document.getElementById("invoice-screen").classList.remove("active");
-  tipButton.textContent = "Pay";
-  tipButton.disabled = false;
-  amountInput.value = "";
-  tipButton.classList.remove("active");
-  scaleFontSize();
+  resetToInputScreen();
 });
 
 // Window resize handler for QR code
