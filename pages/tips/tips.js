@@ -861,19 +861,20 @@ async function confirmStablecoin() {
       ? networkEntry[selectedCryptoToken.toLowerCase()] || null
       : null;
 
-    const openWalletBtn = document.getElementById("open-wallet-btn");
-    const openWalletBtnConnect = document.getElementById(
-      "open-wallet-btn-connect",
-    );
-
-    const isMobile = isMobileDevice();
-
-    if (isMobile) {
-      openWalletBtn.style.display =
-        currentTokenAddress && currentChainId ? "block" : "none";
-    } else {
-      openWalletBtnConnect.style.display =
-        currentTokenAddress && currentChainId ? "block" : "none";
+    const stablePrimaryBtn = document.getElementById("stable-primary-btn");
+    if (stablePrimaryBtn) {
+      if (isMobileDevice()) {
+        // Mobile: always show "Open Wallet" — openStableWallet() handles all chains
+        stablePrimaryBtn.textContent = "Open Wallet";
+        stablePrimaryBtn.style.display = "";
+        stablePrimaryBtn.onclick = () => openStableWallet();
+      } else {
+        // Web: "Connect and Pay" only for EVM chains; hide for non-EVM (Solana/Tron)
+        const hasEVMSupport = !!(currentTokenAddress && currentChainId);
+        stablePrimaryBtn.textContent = "Connect and Pay";
+        stablePrimaryBtn.style.display = hasEVMSupport ? "" : "none";
+        stablePrimaryBtn.onclick = () => connectAndPay();
+      }
     }
 
     // Render QR
@@ -891,24 +892,29 @@ async function confirmStablecoin() {
     }
 
     // Set labels
-    const networkLabelEl = document.getElementById("stable-network-label");
-    if (networkLabelEl) {
-      networkLabelEl.textContent =
+    const titleEl = document.getElementById("stable-screen-title");
+    if (titleEl) {
+      titleEl.textContent =
         "Send " +
         selectedCryptoToken +
         " on " +
         (NETWORK_LABELS[selectedStableNetwork] || selectedStableNetwork);
     }
-    const amountLabelEl = document.getElementById("stable-amount-label");
-    if (amountLabelEl) {
-      amountLabelEl.textContent =
+
+    const stableAmountEl = document.getElementById("stable-amount");
+    if (stableAmountEl) {
+      stableAmountEl.textContent =
         formatTokenAmount(amountInRaw, 6) + " " + selectedCryptoToken;
     }
+
     const addrEl = document.getElementById("stable-address-text");
-    if (addrEl) addrEl.textContent = depositAddress;
-    const quoteEl = document.getElementById("stable-quote-id");
-    if (quoteEl)
-      quoteEl.textContent = currentQuoteId ? "Quote ID: " + currentQuoteId : "";
+    if (addrEl) {
+      // Show first 12 chars … last 6 chars for readability
+      addrEl.textContent = depositAddress;
+    }
+
+    const quoteValueEl = document.getElementById("stable-quote-id-value");
+    if (quoteValueEl) quoteValueEl.textContent = currentQuoteId || "";
 
     // Reset tx hash state
     txHashSubmitted = false;
@@ -935,6 +941,45 @@ async function confirmStablecoin() {
     } else {
       if (detectEl)
         detectEl.textContent = "Send the exact amount to the address above.";
+    }
+
+    // Wire copy handlers
+    const stableQrWrapper = document.getElementById("stable-qr-wrapper");
+    if (stableQrWrapper) {
+      stableQrWrapper.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(depositAddress);
+          showAlert("Copied!");
+        } catch (err) {
+          console.error("Failed to copy address:", err);
+        }
+      };
+    }
+
+    const copyAddrBtn = document.getElementById("copy-stable-addr-btn");
+    if (copyAddrBtn) {
+      copyAddrBtn.onclick = async (e) => {
+        e.stopPropagation();
+        try {
+          await navigator.clipboard.writeText(depositAddress);
+          showAlert("Copied!");
+        } catch (err) {
+          console.error("Failed to copy address:", err);
+        }
+      };
+    }
+
+    const copyQuoteBtn = document.getElementById("copy-quote-id-btn");
+    if (copyQuoteBtn) {
+      copyQuoteBtn.onclick = async (e) => {
+        e.stopPropagation();
+        try {
+          await navigator.clipboard.writeText(currentQuoteId || "");
+          showAlert("Copied!");
+        } catch (err) {
+          console.error("Failed to copy quote ID:", err);
+        }
+      };
     }
 
     showScreen("stable-pay-screen");
@@ -1114,6 +1159,15 @@ function stopAllStableWatchers() {
   }
 }
 
+function showAlert(message) {
+  document.getElementById("alert-message").textContent = message;
+  document.getElementById("alert-overlay").classList.add("active");
+}
+
+function closeAlert() {
+  document.getElementById("alert-overlay").classList.remove("active");
+}
+
 function resetToInputScreen() {
   stopAllStableWatchers();
   shouldPoll = false;
@@ -1138,18 +1192,16 @@ function resetToInputScreen() {
   tipButton.classList.remove("active");
 
   // Reset invoice screen paid state
-  const infoSection = document.querySelector(".info-section");
-  if (infoSection) infoSection.style.display = "";
-  const copyBtn = document.getElementById("copy-button");
-  if (copyBtn) copyBtn.style.display = "";
-  const cancelBtn = document.getElementById("cancel-button");
-  if (cancelBtn) {
-    cancelBtn.textContent = "Cancel";
-    cancelBtn.classList.add("secondary");
-  }
+  const primaryBtn = document.getElementById("invoice-primary-btn");
+  if (primaryBtn) primaryBtn.style.display = "";
+  const cancelBtn = document.getElementById("invoice-cancel-btn");
+  if (cancelBtn) cancelBtn.textContent = "Cancel";
   const verifyTxt = document.getElementById("verify-text");
-  if (verifyTxt) verifyTxt.classList.remove("invoice-paid");
-  const qrWrap = document.getElementById("qr-wrapper");
+  if (verifyTxt) {
+    verifyTxt.textContent = "Checking payment status...";
+    verifyTxt.classList.remove("success");
+  }
+  const qrWrap = document.getElementById("invoice-qr-wrapper");
   if (qrWrap) qrWrap.style.display = "";
 
   setTimeout(scaleFontSize, 10);
@@ -1237,38 +1289,78 @@ function renderSwapHistory() {
 
 // ── Copy address button ───────────────────────────────────────────────────────
 
-document
-  .getElementById("copy-addr-btn")
-  ?.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(depositAddress);
-      const btn = document.getElementById("copy-addr-btn");
-      btn.textContent = "Copied!";
-      setTimeout(() => {
-        btn.textContent = "Copy";
-      }, 2000);
-    } catch (err) {
-      console.error("Failed to copy address:", err);
-    }
-  });
-
 function showInvoiceScreen(amount) {
   const formattedAmount = formatCurrency({
     amount: amount.toFixed(2),
     code: selectedCurrency,
   });
 
+  // Populate display fields
+  const amountEl = document.getElementById("invoice-amount");
+  if (amountEl) amountEl.textContent = formattedAmount[0];
+
+  const addrTextEl = document.getElementById("invoice-address-text");
+  if (addrTextEl) addrTextEl.textContent = currentInvoice;
+
+  // Device-responsive primary button
+  const primaryBtn = document.getElementById("invoice-primary-btn");
+  if (primaryBtn) {
+    if (isMobileDevice()) {
+      primaryBtn.textContent = "Open Wallet";
+      primaryBtn.onclick = () => {
+        window.location.href = "lightning:" + currentInvoice;
+      };
+    } else {
+      primaryBtn.textContent = "Copy Invoice";
+      primaryBtn.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(currentInvoice);
+          showAlert("Copied!");
+        } catch (err) {
+          console.error("Failed to copy:", err);
+        }
+      };
+    }
+  }
+
+  // Wire cancel button
+  const cancelBtn = document.getElementById("invoice-cancel-btn");
+  if (cancelBtn) cancelBtn.onclick = () => resetToInputScreen();
+
+  // Wire QR wrapper click
+  const qrWrapper = document.getElementById("invoice-qr-wrapper");
+  if (qrWrapper) {
+    qrWrapper.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(currentInvoice);
+        showAlert("Copied!");
+      } catch (err) {
+        console.error("Failed to copy:", err);
+      }
+    };
+  }
+
+  // Wire clipboard icon button
+  const addrBtn = document.getElementById("copy-invoice-addr-btn");
+  if (addrBtn) {
+    addrBtn.onclick = async (e) => {
+      e.stopPropagation(); // prevent QR wrapper click from double-firing
+      try {
+        await navigator.clipboard.writeText(currentInvoice);
+        showAlert("Copied!");
+      } catch (err) {
+        console.error("Failed to copy:", err);
+      }
+    };
+  }
+
   showScreen("invoice-screen");
-  document.getElementById("display-amount").textContent = formattedAmount[0];
-
-  // Generate QR code with dynamic sizing
   generateQRCode();
-
   startInvoiceVerification();
 }
 
 function generateQRCode() {
-  const container = document.getElementById("qr-wrapper");
+  const container = document.getElementById("invoice-qr-wrapper");
   const containerWidth = container.getBoundingClientRect().width;
 
   // Calculate QR size: 85% of container width, but max 250px
@@ -1300,7 +1392,6 @@ function clearRunningItems() {
 
 function startInvoiceVerification() {
   const reverifyText = document.getElementById("verify-text");
-  const maxTime = document.getElementById("amount-badge");
   const maxDuration = 5 * 60; // 5 minutes in seconds
   const startTime = Date.now();
   let nextCheckTime = Date.now() + 10000; // First check in 10s
@@ -1333,7 +1424,6 @@ function startInvoiceVerification() {
     );
 
     reverifyText.textContent = `Reverifying if invoice is paid (${countdown}s)`;
-    maxTime.textContent = formatTime(remaining);
 
     if (remaining <= 0) {
       stopVerification("Stopped verifying (time limit reached)");
@@ -1393,23 +1483,6 @@ function formatTime(seconds) {
   const secs = seconds % 60;
   return `${minutes}:${secs.toString().padStart(2, "0")}`;
 }
-
-document.getElementById("copy-button").addEventListener("click", async () => {
-  try {
-    await navigator.clipboard.writeText(currentInvoice);
-    const btn = document.getElementById("copy-button");
-    btn.textContent = "Copied!";
-    setTimeout(() => {
-      btn.textContent = "Copy";
-    }, 2000);
-  } catch (err) {
-    console.error("Failed to copy:", err);
-  }
-});
-
-document.getElementById("cancel-button").addEventListener("click", () => {
-  resetToInputScreen();
-});
 
 // Window resize handler for QR code
 window.addEventListener("resize", () => {

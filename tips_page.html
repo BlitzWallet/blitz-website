@@ -157,10 +157,7 @@
               <div
                 class="payment-option-icon-wrap payment-option-icon-wrap--bitcoin"
               >
-                <i
-                  data-lucide="bitcoin"
-                  class="payment-option-lucide payment-option-lucide--bitcoin"
-                ></i>
+                <img src="/src/assets/images/bitcoinIcon.png" />
               </div>
               <div class="payment-option-text">
                 <span class="payment-option-label">Bitcoin</span>
@@ -176,10 +173,7 @@
               <div
                 class="payment-option-icon-wrap payment-option-icon-wrap--stable"
               >
-                <i
-                  data-lucide="dollar-sign"
-                  class="payment-option-lucide payment-option-lucide--stable"
-                ></i>
+                <img src="/src/assets/images/dollarIcon.png" />
               </div>
               <div class="payment-option-text">
                 <span class="payment-option-label">Stablecoins</span>
@@ -283,43 +277,49 @@
 
         <!-- Stable Pay Screen -->
         <div class="tips-screen" id="stable-pay-screen">
-          <p class="stable-network-label" id="stable-network-label">
+          <p class="qr-screen-title" id="stable-screen-title">
             Send USDC on Ethereum
           </p>
-          <p class="stable-amount-label" id="stable-amount-label">0.00 USDC</p>
-          <div class="qr-wrapper" id="stable-qr-wrapper">
+          <p class="qr-amount" id="stable-amount">0.00 USDC</p>
+          <div class="qr-wrapper clickable" id="stable-qr-wrapper">
             <div id="qr-stable-address"></div>
+            <span class="qr-tap-hint">Tap to copy</span>
           </div>
-          <div class="address-copy-row">
-            <span class="stable-address-text" id="stable-address-text"></span>
-            <button class="copy-addr-btn" id="copy-addr-btn">Copy</button>
+          <div class="qr-copy-row">
+            <span class="qr-copy-text" id="stable-address-text"></span>
+            <button
+              class="qr-clipboard-btn"
+              id="copy-stable-addr-btn"
+              aria-label="Copy address"
+            >
+              <i size="18" data-lucide="copy"></i>
+            </button>
           </div>
-          <div class="address-copy-row">
-            <p class="stable-quote-id" id="stable-quote-id"></p>
+          <div class="qr-info-section">
+            <div class="qr-info-row">
+              <span class="qr-info-label">Quote ID:</span>
+              <span class="qr-info-value" id="stable-quote-id-value"></span>
+              <button
+                class="qr-clipboard-btn"
+                id="copy-quote-id-btn"
+                aria-label="Copy quote ID"
+              >
+                <i size="18" data-lucide="copy"></i>
+              </button>
+            </div>
           </div>
-          <button
-            class="action-button primary"
-            id="open-wallet-btn"
-            style="display: none; margin-bottom: 0; margin-top: 1rem"
-            onclick="openStableWallet()"
-          >
-            Open Wallet
-          </button>
-          <button
-            class="action-button primary"
-            id="open-wallet-btn-connect"
-            style="display: none; margin-bottom: 0; margin-top: 1rem"
-            onclick="connectAndPay()"
-          >
-            Connect &amp; Pay
-          </button>
-          <button
-            class="action-button secondary"
-            style="margin-bottom: 0"
-            onclick="resetToInputScreen()"
-          >
-            Cancel
-          </button>
+          <div class="qr-actions">
+            <button class="action-button primary" id="stable-primary-btn">
+              Connect and Pay
+            </button>
+            <button
+              class="action-button secondary"
+              id="stable-cancel-btn"
+              onclick="resetToInputScreen()"
+            >
+              Cancel
+            </button>
+          </div>
         </div>
 
         <!-- Processing Screen -->
@@ -337,6 +337,7 @@
             <h2 class="success-title">Payment Received!</h2>
             <p class="success-sub">The swap was completed successfully.</p>
             <button
+              style="margin: bottom 0"
               class="action-button primary"
               onclick="resetToInputScreen()"
             >
@@ -381,42 +382,32 @@
         </div>
 
         <!-- Invoice Screen -->
-        <div class="invoice-screen" id="invoice-screen">
-          <div class="invoice-header">
-            <div class="user-info">
-              <div class="avatar" id="invoice-avatar">B</div>
-              <span class="username-display" id="username-display"
-                >username</span
-              >
-            </div>
-            <div class="amount-badge" id="amount-badge">5:00</div>
-          </div>
-
-          <div id="qr-wrapper" class="qr-wrapper">
-            <div id="invoice-qr-code"></div>
-            <p class="qr-hint">
-              <i data-lucide="scan-qr-code"></i>
-              Scan with your Bitcoin wallet
-            </p>
-          </div>
-
+        <div class="tips-screen" id="invoice-screen">
+          <p class="qr-screen-title">Send Bitcoin Via Lightning</p>
+          <p class="qr-amount" id="invoice-amount"></p>
           <p class="verify-text" id="verify-text">Checking payment status...</p>
-
-          <div class="info-section" id="info-section">
-            <div class="info-row">
-              <span class="info-label">Amount</span>
-              <span class="amount-badge info-value" id="display-amount"
-                >$0.00</span
-              >
-            </div>
+          <div class="qr-wrapper clickable" id="invoice-qr-wrapper">
+            <div id="invoice-qr-code"></div>
+            <span class="qr-tap-hint">Tap to copy</span>
           </div>
-
-          <button class="action-button primary" id="copy-button">
-            Copy Invoice
-          </button>
-          <button class="action-button secondary" id="cancel-button">
-            Cancel
-          </button>
+          <div class="qr-copy-row">
+            <span class="qr-copy-text" id="invoice-address-text"></span>
+            <button
+              class="qr-clipboard-btn"
+              id="copy-invoice-addr-btn"
+              aria-label="Copy invoice"
+            >
+              <i data-lucide="copy"></i>
+            </button>
+          </div>
+          <div class="qr-actions">
+            <button class="action-button primary" id="invoice-primary-btn">
+              Copy Invoice
+            </button>
+            <button class="action-button secondary" id="invoice-cancel-btn">
+              Cancel
+            </button>
+          </div>
         </div>
 
         <!-- Success Screen -->
@@ -431,6 +422,15 @@
             >
               Pay Again
             </button>
+          </div>
+        </div>
+
+        <!-- Copy overlay -->
+        <div id="alert-overlay" class="overlay-backdrop">
+          <div class="overlay-card">
+            <p class="overlay-title">Notice</p>
+            <p id="alert-message" class="overlay-body"></p>
+            <button class="btn-primary" onclick="closeAlert()">OK</button>
           </div>
         </div>
       </div>
