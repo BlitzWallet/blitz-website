@@ -125,7 +125,6 @@
     "NullVox": "a4e6f35b6e717d5cdc7a70ee8f2a372078f14c0d54c928a297a0b880f3fd4178",
     "oskarjpe": "e57744d6f5a6583fe89a4431721e56d721db93ce3f0cc2f4567926eea88591b8",
     "oluengo": "6712a46a0fde2438d7f7b214c62e5536a8e514d351e629b8a9be01809075160a",
-    "nameless": "1fd64f2465012eeaabf505d05c1d8058adde1d99d4c5825e3d50dd2022cadc33",
     "Jimfromjax": "3af187bfe00920d87068a6bcdffc48f4b241d1d82594cd395119a30891041654",
     "Otavio": "2dd9250b28f62c7c49415745423d01ffff74084de3ed7e51379853be6e928072",
     "FloweyTheFlower": "ed5cfd82e57e0d79fa7888264432d1d7b6dddde361616a2bd32ad8532f526915",
@@ -142,7 +141,9 @@
     "satoshisanmini": "7715eceaa56b8be5cd62ca41aaf79a0af251b4d52feee0d50ec5c4e83491188e",
     "DIG": "beb6bdc9caef0eaf320528be4b4deb6df71b84894c913e80e983242ceeb17df3",
     "sszolee": "f47610f594ee8197226d291b1a22a8811e6d79a0db623ad5f5aca8da8c4b93e6",
-    "kruusexpress": "cd4602ab0909789a858093d1220312331006a2bcb73312cfe50c098a35a11b46"
+    "kruusexpress": "cd4602ab0909789a858093d1220312331006a2bcb73312cfe50c098a35a11b46",
+    "cbat": "1fd64f2465012eeaabf505d05c1d8058adde1d99d4c5825e3d50dd2022cadc33",
+    "ji2000": "3a6fca321a3ba1b004dd60dcfba652906e99f34694bf0b60a44299f802a23fca"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -1290,6 +1291,14 @@
       "wss://relay.primal.net"
     ],
     "f47610f594ee8197226d291b1a22a8811e6d79a0db623ad5f5aca8da8c4b93e6": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "3a6fca321a3ba1b004dd60dcfba652906e99f34694bf0b60a44299f802a23fca": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
