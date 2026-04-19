@@ -95,18 +95,25 @@
 
     <!-- Main Content -->
     <main>
+      <div class="profile-loader" id="profile-loader">
+        <div class="profile-loader__spinner"></div>
+      </div>
       <div class="tips-container">
         <!-- Input Screen -->
         <div class="input-screen" id="input-screen">
           <h1 class="page-title">Send Payment</h1>
 
           <div class="profile-section">
-            <div class="avatar-container">
-              <div class="avatar" id="avatar">B</div>
-              <span class="username-display" id="username-display"
-                >username</span
-              >
+            <div class="avatar-toggle" id="avatar-toggle">
+              <div class="avatar-primary" id="avatar-primary">
+                <i
+                  style="width: 40px; height: 40px"
+                  data-lucide="user-round"
+                ></i>
+              </div>
+              <div class="avatar-badge" id="avatar-badge"></div>
             </div>
+            <span class="username-display" id="username-display">username</span>
           </div>
 
           <div class="amount-section">

@@ -227,6 +227,14 @@ X-Content-Type-Options = "nosniff"
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
 
+[[redirects]]
+  from = "/getTipsData/:username"
+  to = "https://getTipsData-6krimtymjq-uc.a.run.app/:username"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
 
 [[redirects]]
   from = "/:username"

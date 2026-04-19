@@ -420,6 +420,73 @@ const formatCurrency = ({ amount, code }) => {
   return switchOptions[upperCode] || switchOptions.DEFAULT;
 };
 
+const SPOKE_COUNTS = [4, 6, 8, 10, 12];
+
+function getBadgeConfig(bytes) {
+  const b = bytes;
+  const spokeCount = SPOKE_COUNTS[b[0] % 5];
+  const spokeBits = (b[1] << 16) | (b[2] << 8) | b[3];
+  const rotationSteps = b[4] % 16;
+  const baseAngle = rotationSteps * (360 / spokeCount / 16);
+  const spokes = Array.from({ length: spokeCount }, (_, i) => {
+    const bits = (spokeBits >> (i * 2)) & 0b11;
+    const height =
+      bits === 0b11
+        ? "tall"
+        : bits === 0b01 || bits === 0b10
+          ? "medium"
+          : "short";
+    return { angle: baseAngle + i * (360 / spokeCount), height };
+  });
+  return { spokes };
+}
+
+function buildIdenticonSVG(bytes, size) {
+  // Unique clip id prevents SVG id collisions if called multiple times in a session
+  const clipId = `ic-clip-${Math.random().toString(36).slice(2, 8)}`;
+  const { spokes } = getBadgeConfig(bytes);
+  const cx = size / 2,
+    cy = size / 2,
+    r = size / 2;
+  const bgColor = "#f2f2f2";
+  const strokeColor = "#262626";
+  const tallOuterR = r * 0.85,
+    mediumOuterR = r * 0.65,
+    shortOuterR = r * 0.45;
+  const hubR = r * 0.1,
+    ringR = r * 0.3;
+  const sw = Math.max(1.5, size * 0.03);
+
+  const lines = spokes
+    .map(({ angle, height }) => {
+      const rad = (angle - 90) * (Math.PI / 180);
+      const tipR =
+        height === "tall"
+          ? tallOuterR
+          : height === "medium"
+            ? mediumOuterR
+            : shortOuterR;
+      const opacity = height === "tall" ? 1 : height === "medium" ? 0.7 : 0.4;
+      const x1 = cx + hubR * Math.cos(rad),
+        y1 = cy + hubR * Math.sin(rad);
+      const x2 = cx + tipR * Math.cos(rad),
+        y2 = cy + tipR * Math.sin(rad);
+      return `<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="${strokeColor}" stroke-width="${sw}" stroke-linecap="round" opacity="${opacity}"/>`;
+    })
+    .join("");
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" width="${size}" height="${size}">
+    <defs><clipPath id="${clipId}"><circle cx="${cx}" cy="${cy}" r="${r}"/></clipPath></defs>
+    <circle cx="${cx}" cy="${cy}" r="${r}" fill="${bgColor}"/>
+    <g clip-path="url(#${clipId})">
+      ${lines}
+      <circle cx="${cx}" cy="${cy}" r="${ringR}" fill="none" stroke="${strokeColor}" stroke-width="2"/>
+      <circle cx="${cx}" cy="${cy}" r="${hubR}" fill="${bgColor}"/>
+      <circle cx="${cx}" cy="${cy}" r="${(hubR * 0.55).toFixed(2)}" fill="${strokeColor}"/>
+    </g>
+  </svg>`;
+}
+
 const CHARS = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789";
 const SWAP_HISTORY_KEY = "blitz_tip_swap_history";
 const generatePayLinkId = () =>
@@ -465,9 +532,57 @@ document
   .querySelectorAll(".username-display")
   .forEach((item) => (item.textContent = username));
 
-document
-  .querySelectorAll(".avatar")
-  .forEach((item) => (item.textContent = username.charAt(0).toUpperCase()));
+const loader = document.getElementById("profile-loader");
+const container = document.querySelector(".tips-container");
+container.style.display = "none";
+
+async function loadProfile() {
+  try {
+    const res = await fetch(`/getTipsData/${username}`);
+    if (res.ok) return await res.json();
+  } catch (err) {
+    console.log(err);
+  }
+  return { uuid: null, hasProfileImage: false, storageBaseUrl: null };
+}
+
+async function renderAvatar(profile) {
+  const { uuid, hasProfileImage, storageBaseUrl } = profile;
+  const primaryEl = document.getElementById("avatar-primary");
+  const badgeEl = document.getElementById("avatar-badge");
+  const toggleEl = document.getElementById("avatar-toggle");
+
+  primaryEl.textContent = username.charAt(0).toUpperCase();
+
+  if (!uuid) {
+    badgeEl.style.display = "none";
+    toggleEl.style.cursor = "default";
+    return;
+  }
+
+  if (crypto?.subtle) {
+    const bytes = new Uint8Array(
+      await crypto.subtle.digest("SHA-256", new TextEncoder().encode(uuid)),
+    );
+    badgeEl.innerHTML = buildIdenticonSVG(bytes, 125);
+    toggleEl.addEventListener("click", () =>
+      toggleEl.classList.toggle("flipped"),
+    );
+  } else {
+    badgeEl.style.display = "none";
+    toggleEl.style.cursor = "default";
+  }
+
+  if (hasProfileImage && storageBaseUrl) {
+    const img = document.createElement("img");
+    img.alt = username;
+    img.onload = () => {
+      primaryEl.textContent = "";
+      primaryEl.appendChild(img);
+    };
+    img.src = storageBaseUrl;
+  }
+}
 
 // Amount input handling
 const amountInput = document.getElementById("amount-input");
@@ -554,6 +669,7 @@ function scaleFontSize() {
     code: selectedCurrency,
   });
 
+  console.log(fullString, amount, symbol, isBehind);
   const container = document.querySelector(".amount-display");
   const oldSymbol = container.querySelector(".dollar-sign");
   const amountInput = document.querySelector("#amount-input");
@@ -590,7 +706,7 @@ function scaleFontSize() {
   let textWidth = tempSpan.offsetWidth;
   let contentWidth = newSymbol.offsetWidth + textWidth;
 
-  if (contentWidth > containerWidth - 40) {
+  if (contentWidth && containerWidth && contentWidth > containerWidth - 40) {
     const ratio = (containerWidth - 40) / contentWidth;
     fontSize = Math.max(32, Math.floor(80 * ratio));
     tempSpan.style.fontSize = fontSize + "px";
@@ -618,9 +734,9 @@ amountInput.addEventListener("input", (e) => {
     value = parts[0] + "." + parts[1].substring(0, 2);
   }
 
-  if (parts[0]?.length > 4) {
+  if (parts[0]?.length > 8) {
     value =
-      parts[0].substring(0, 4) + `${parts[1]?.length ? "." + parts[1] : ""}`;
+      parts[0].substring(0, 8) + `${parts[1]?.length ? "." + parts[1] : ""}`;
   }
 
   e.target.value = value || "";
@@ -1503,3 +1619,12 @@ window.addEventListener("resize", () => {
 // Initialize
 createCurrencySelector();
 scaleFontSize();
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const profile = await loadProfile();
+  if (profile.status === "SUCCESS") {
+    await renderAvatar(profile.data);
+  }
+  loader.classList.add("hidden");
+  container.style.display = "flex";
+});

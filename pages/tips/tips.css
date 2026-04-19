@@ -9,14 +9,16 @@ main {
 }
 
 .tips-container {
+  display: flex;
   background: white;
   border-radius: 24px;
   padding: 2.5rem;
-  max-width: 480px;
+  max-width: 680px;
   width: 100%;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   border: 1px solid var(--lm-backgroundOffset);
   position: relative;
+  justify-content: center;
 }
 
 /* Input Screen */
@@ -39,22 +41,23 @@ main {
 .profile-section {
   text-align: center;
   margin-bottom: 3rem;
-}
-
-.avatar-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  background: var(--lm-background);
-  padding: 1rem 1.5rem;
-  border-radius: 50px;
-  display: inline-flex;
 }
 
-.avatar:first-child {
-  width: 48px;
-  height: 48px;
+.avatar-toggle {
+  position: relative;
+  width: 125px;
+  height: 125px;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-bottom: 1rem;
+}
+
+.avatar-primary {
+  position: absolute;
+  inset: 0;
   border-radius: 50%;
   background: linear-gradient(
     135deg,
@@ -64,9 +67,64 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: white;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+  transform-origin: bottom right;
+  z-index: 1;
+}
+.avatar-primary img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-badge {
+  position: absolute;
+  bottom: -3px;
+  right: -3px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  transition:
+    transform 0.3s ease,
+    width 0.3s ease,
+    height 0.3s ease,
+    bottom 0.3s ease,
+    right 0.3s ease,
+    border 0.3s ease;
+  transform-origin: bottom right;
+  z-index: 2;
+}
+.avatar-badge svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/*
+ * Flipped state: identicon (badge) expands to primary position,
+ * primary shrinks to badge corner.
+ * scale(0.38) from transform-origin: bottom right anchors the
+ * 52px primary element into the ~20px badge position naturally.
+ */
+.avatar-toggle.flipped .avatar-primary {
+  transform: scale(0.32);
+  opacity: 0.9;
+  z-index: 2;
+}
+.avatar-toggle.flipped .avatar-badge {
+  width: 125px;
+  height: 125px;
+  bottom: 0;
+  right: 0;
+  border: none;
+  z-index: 1;
 }
 
 .username-display {
@@ -1085,4 +1143,23 @@ footer {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
+}
+
+/* loadng */
+.profile-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+.profile-loader__spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--lm-background);
+  border-top-color: var(--primary_color);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite; /* reuses existing @keyframes spin */
+}
+.profile-loader.hidden {
+  display: none;
 }
