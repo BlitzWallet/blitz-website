@@ -125,7 +125,6 @@
     "NullVox": "a4e6f35b6e717d5cdc7a70ee8f2a372078f14c0d54c928a297a0b880f3fd4178",
     "oskarjpe": "e57744d6f5a6583fe89a4431721e56d721db93ce3f0cc2f4567926eea88591b8",
     "oluengo": "6712a46a0fde2438d7f7b214c62e5536a8e514d351e629b8a9be01809075160a",
-    "nameless": "1fd64f2465012eeaabf505d05c1d8058adde1d99d4c5825e3d50dd2022cadc33",
     "Jimfromjax": "3af187bfe00920d87068a6bcdffc48f4b241d1d82594cd395119a30891041654",
     "Otavio": "2dd9250b28f62c7c49415745423d01ffff74084de3ed7e51379853be6e928072",
     "FloweyTheFlower": "ed5cfd82e57e0d79fa7888264432d1d7b6dddde361616a2bd32ad8532f526915",
@@ -142,7 +141,20 @@
     "satoshisanmini": "7715eceaa56b8be5cd62ca41aaf79a0af251b4d52feee0d50ec5c4e83491188e",
     "DIG": "beb6bdc9caef0eaf320528be4b4deb6df71b84894c913e80e983242ceeb17df3",
     "sszolee": "f47610f594ee8197226d291b1a22a8811e6d79a0db623ad5f5aca8da8c4b93e6",
-    "kruusexpress": "cd4602ab0909789a858093d1220312331006a2bcb73312cfe50c098a35a11b46"
+    "kruusexpress": "cd4602ab0909789a858093d1220312331006a2bcb73312cfe50c098a35a11b46",
+    "cbat": "1fd64f2465012eeaabf505d05c1d8058adde1d99d4c5825e3d50dd2022cadc33",
+    "ji2000": "3a6fca321a3ba1b004dd60dcfba652906e99f34694bf0b60a44299f802a23fca",
+    "decoyowl": "318c6318d90d80fc77b4c8dca160e17b94a7ab30aa7b01afbe76bb65de4b28e0",
+    "fiatlux": "0f42c61e64468fbf45ddcc78aa7d86751c912aeb08ade91e82392688980064d6",
+    "RawInstinctAI": "dc602bc6c95d478b6a9d19bdc68d98867dbcb8557a4f234180df819d776b9944",
+    "DollarBill": "3c7abf2ef0fee1ad7c88e2037eaeb46a4e26b41bee3fc20e18eb4b2858ac2092",
+    "Oskar": "170ec80ba18c58721cfac9c3c1006aec1886efc52781375e7a74551397d857ce",
+    "ricemoon": "5f1d434104a2cad55ccee69b106cd4c10977bee01220e63a0bb00e58afd00fed",
+    "darkroastjedi": "1b2da867b0bb5a048fd0fa61a95af4ed82df385ad052b485df6fca18fe291f17",
+    "carlos": "ce4446d03e99590cc48ca58ecbbf476f161927cd28b96d7459466f420581579e",
+    "kesadillaman": "2c5244be0a24bc98667b9321453fe87c70c3e030a313230f92aa90dbbf3d55d8",
+    "josuan": "f03a35edfb947c9a6cc36955c9252762bea8d6d9b3cfa8bcee3e0f5dd57d8865",
+    "jespada": "f57d8cf57ba293a764cd30f3461ce21b0a3849c5c03533391a1074412602f7c9"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -1290,6 +1302,102 @@
       "wss://relay.primal.net"
     ],
     "f47610f594ee8197226d291b1a22a8811e6d79a0db623ad5f5aca8da8c4b93e6": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "3a6fca321a3ba1b004dd60dcfba652906e99f34694bf0b60a44299f802a23fca": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "318c6318d90d80fc77b4c8dca160e17b94a7ab30aa7b01afbe76bb65de4b28e0": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "0f42c61e64468fbf45ddcc78aa7d86751c912aeb08ade91e82392688980064d6": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "dc602bc6c95d478b6a9d19bdc68d98867dbcb8557a4f234180df819d776b9944": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "3c7abf2ef0fee1ad7c88e2037eaeb46a4e26b41bee3fc20e18eb4b2858ac2092": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "170ec80ba18c58721cfac9c3c1006aec1886efc52781375e7a74551397d857ce": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "5f1d434104a2cad55ccee69b106cd4c10977bee01220e63a0bb00e58afd00fed": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "1b2da867b0bb5a048fd0fa61a95af4ed82df385ad052b485df6fca18fe291f17": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "ce4446d03e99590cc48ca58ecbbf476f161927cd28b96d7459466f420581579e": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "2c5244be0a24bc98667b9321453fe87c70c3e030a313230f92aa90dbbf3d55d8": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "f03a35edfb947c9a6cc36955c9252762bea8d6d9b3cfa8bcee3e0f5dd57d8865": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "f57d8cf57ba293a764cd30f3461ce21b0a3849c5c03533391a1074412602f7c9": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
