@@ -845,9 +845,12 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         }, 300);
       }
 
-
       function openInApp() {
-        window.location.href = \`blitz-wallet://gift/\${giftId}\`;
+        const secret = window.location.hash.slice(1);
+        const deeplink = secret
+          ? \`blitz-wallet://gift/\${giftId}/\${secret}\`
+          : \`blitz-wallet://gift/\${giftId}\`;
+        window.location.href = deeplink;
       }
 
       function copyGift() {
