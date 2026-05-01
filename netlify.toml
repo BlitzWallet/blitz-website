@@ -120,13 +120,13 @@ X-Content-Type-Options = "nosniff"
 # LNURL redirects
 [[redirects]]
   from = "/.well-known/lnurlp/:username"
-  to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app/:username"
+  to = "/.netlify/functions/lnurl-proxy"
   status = 200
   force = true
 
 [[redirects]]
   from = "/p/:username"
-  to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app/:username"
+  to = "/.netlify/functions/lnurl-proxy"
   status = 200
   force = true
 
