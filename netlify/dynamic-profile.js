@@ -419,37 +419,13 @@ export async function handler(event, context) {
       }
       return "other";
     }
-
-
-    function buildLinks() {
-      const safeUsername = encodeURIComponent(username || "");
-      const httpsLink =
-        currentUrl.origin +
-        currentUrl.pathname +
-        currentUrl.search +
-        currentUrl.hash;
-      const deepLink =
-        "blitz-wallet://u/" + safeUsername + currentUrl.search + currentUrl.hash;
-      return { httpsLink, deepLink };
-    }
-
-
+  
     function openInApp(event) {
       if (event && event.isTrusted !== true) return;
-      const os = detectOS();
-      const links = buildLinks();
 
-      if (os === "other") {
-        window.location.href = links.httpsLink;
-        return;
-      }
+      const deepLink = "blitz-wallet://u/" + username
 
-      if (os === "android") {
-        window.location.href = links.deepLink;
-        return;
-      }
-
-      window.location.href = links.httpsLink;
+      window.location.href = deepLink;
     }
 
     async function fetchProfileData() {
@@ -479,8 +455,6 @@ export async function handler(event, context) {
    
       document.addEventListener("DOMContentLoaded", async function () {
       document.getElementById("blitzLink").addEventListener("click", (e) => {
-        const os = detectOS();
-        if (os === "ios" || os === "other") return;
         e.preventDefault();
         openInApp(e);
       });
@@ -585,7 +559,7 @@ export async function handler(event, context) {
       <p class="subHeader">Or download Blitz Wallet</p>
 
       <div class="buttonContainer">
-        <a id="blitzLink" href="https://blitzwalletapp.com/u/${username}" class="button">
+        <a id="blitzLink" class="button">
           <p>Open the app</p>
         </a>
         <a id="downloadBtn" class="button download-btn">
