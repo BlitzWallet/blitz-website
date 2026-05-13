@@ -164,7 +164,8 @@
     "brittanyyeoh": "b80a1b7452be6a021f6c1463ba9853f5c3f87d433bc31ceb0fd12cea31c6de49",
     "latif": "5b74518c28b06ac942e841d30e70c3ca46bbd7603ba52ee22f1f71383944a20c",
     "ketama": "25d5d22c1552a034fe95e7e208780a9bfab3552d4b8b41344960a6412a72be2c",
-    "AOR4Life": "6b54c5695c7120fefda93acaf18b1fae78ad9bc31ed99cd3db95516cc385f659"
+    "AOR4Life": "6b54c5695c7120fefda93acaf18b1fae78ad9bc31ed99cd3db95516cc385f659",
+    "massimo": "47b6df7f0c2e14f9b2b6cbd2a1854ee516ace840694648f315b53e3e390fcc0f"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -1488,6 +1489,14 @@
       "wss://relay.primal.net"
     ],
     "6b54c5695c7120fefda93acaf18b1fae78ad9bc31ed99cd3db95516cc385f659": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "47b6df7f0c2e14f9b2b6cbd2a1854ee516ace840694648f315b53e3e390fcc0f": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
