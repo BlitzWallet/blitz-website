@@ -465,6 +465,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       }
 
       .btn-secondary {
+        display: flex;
         background: transparent;
         color: var(--primary_color);
         padding: 1rem 2rem;
@@ -477,11 +478,54 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         width: 100%;
         margin-top: 0.75rem;
         font-family: var(--description_font);
+        align-items: center;
+        justify-content: center;
       }
 
       .btn-secondary:hover {
         background: var(--lm-background);
         border-color: var(--primary_color);
+      }
+
+      .btn-secondary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .btn-content {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .btn-content img {
+        width: 20px;
+        height: 20px;
+        display: block;
+      }
+
+      .loading-dots {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
+      }
+
+      .loading-dots span {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+        animation: button-dot-pulse 1.2s infinite ease-in-out both;
+      }
+
+      .loading-dots span:nth-child(1) { animation-delay: -0.24s; }
+      .loading-dots span:nth-child(2) { animation-delay: -0.12s; }
+
+      @keyframes button-dot-pulse {
+        0%, 80%, 100% { transform: scale(0.4); opacity: 0.45; }
+        40% { transform: scale(1); opacity: 1; }
       }
 
       .btn-back {
@@ -1311,6 +1355,12 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                 <button class="btn-primary" onclick="generateInvoice()" id="generateInvoiceBtn">
                   Generate Invoice
                 </button>
+                <button class="btn-secondary" onclick="generateCashAppInvoice()" id="generateCashAppInvoiceBtn">
+                  <span class="btn-content">
+                    <img src="/src/assets/images/cashapp-logo.svg" alt="" aria-hidden="true" />
+                    <span>Pay with Cash App</span>
+                  </span>
+                </button>
               </div>
 
               <!-- STEP: QR / Payment -->
@@ -1424,14 +1474,22 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       let currentInvoice = '';
       let currentInvoiceId = '';
+      const CASH_APP_BUTTON_HTML = '<span class="btn-content"><img src="/src/assets/images/cashapp-logo.svg" alt="" aria-hidden="true" /><span>Pay with Cash App</span></span>';
+      const CASH_APP_LOADING_HTML = '<span class="btn-content"><span>Opening Cash App</span><span class="loading-dots" aria-hidden="true"><span></span><span></span><span></span></span></span>';
+
+      function buildCashAppLightningUrl(invoice) {
+        return \`https://cash.app/launch/lightning/\${encodeURIComponent(invoice)}\`;
+      }
 
       async function generateInvoice() {
         const name = document.getElementById('contributorNameInput')?.value?.trim() || '';
         const btn = document.getElementById('generateInvoiceBtn');
+        const cashAppBtn = document.getElementById('generateCashAppInvoiceBtn');
         const errorContainer = document.getElementById('invoiceErrorContainer');
         
         btn.disabled = true;
         btn.textContent = 'Generating...';
+        if (cashAppBtn) cashAppBtn.disabled = true;
         errorContainer.innerHTML = '';
 
         const { data, error } = await createInvoice(selectedAmountSats, name);
@@ -1439,6 +1497,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         if (!data) {
           btn.disabled = false;
           btn.textContent = 'Retry Invoice Generation';
+          if (cashAppBtn) cashAppBtn.disabled = false;
           errorContainer.innerHTML = '<p class="error-text">Failed to generate invoice. Please try again.</p>';
           return;
         }
@@ -1470,6 +1529,46 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
         btn.disabled = false;
         btn.textContent = 'Generate Invoice';
+        if (cashAppBtn) cashAppBtn.disabled = false;
+      }
+
+      async function generateCashAppInvoice() {
+        const name = document.getElementById('contributorNameInput')?.value?.trim() || '';
+        const btn = document.getElementById('generateInvoiceBtn');
+        const cashAppBtn = document.getElementById('generateCashAppInvoiceBtn');
+        const errorContainer = document.getElementById('invoiceErrorContainer');
+
+        if (btn) btn.disabled = true;
+        if (cashAppBtn) {
+          cashAppBtn.disabled = true;
+          cashAppBtn.innerHTML = CASH_APP_LOADING_HTML;
+        }
+        if (errorContainer) errorContainer.innerHTML = '';
+
+        const { data } = await createInvoice(selectedAmountSats, name);
+
+        if (!data) {
+          if (btn) btn.disabled = false;
+          if (cashAppBtn) {
+            cashAppBtn.disabled = false;
+            cashAppBtn.innerHTML = CASH_APP_BUTTON_HTML;
+          }
+          if (errorContainer) {
+            errorContainer.innerHTML = '<p class="error-text">Failed to generate invoice. Please try again.</p>';
+          }
+          return;
+        }
+
+        currentInvoice = data.invoice.encodedInvoice;
+        currentInvoiceId = data.id;
+        startPaymentPolling();
+        window.location.href = buildCashAppLightningUrl(currentInvoice);
+
+        if (btn) btn.disabled = false;
+        if (cashAppBtn) {
+          cashAppBtn.disabled = false;
+          cashAppBtn.innerHTML = CASH_APP_BUTTON_HTML;
+        }
       }
 
       async function pollPayment() {
@@ -1574,8 +1673,8 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           pageHidden = true;
         } else {
           pageHidden = false;
-          // Resume polling if we're on the payment step
-          if (currentStep === 'payment' && paymentPollInterval && !isPolling) {
+          // Resume polling if an invoice is active.
+          if (paymentPollInterval && !isPolling) {
             pollPayment();
           }
         }

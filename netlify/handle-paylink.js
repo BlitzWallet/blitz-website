@@ -567,6 +567,47 @@ function generateHTML({
         border-color: var(--primary_color);
       }
 
+      .btn-secondary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .btn-content {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .btn-content img {
+        width: 20px;
+        height: 20px;
+        display: block;
+      }
+
+      .loading-dots {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.2rem;
+      }
+
+      .loading-dots span {
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: currentColor;
+        animation: button-dot-pulse 1.2s infinite ease-in-out both;
+      }
+
+      .loading-dots span:nth-child(1) { animation-delay: -0.24s; }
+      .loading-dots span:nth-child(2) { animation-delay: -0.12s; }
+
+      @keyframes button-dot-pulse {
+        0%, 80%, 100% { transform: scale(0.4); opacity: 0.45; }
+        40% { transform: scale(1); opacity: 1; }
+      }
+
       .btn-back {
         background: none;
         border: none;
@@ -1193,6 +1234,12 @@ function generateHTML({
           <div id="paid-notice" class="paid-notice">This payment has already been completed.</div>
           <button class="btn-primary" id="btn-btc" onclick="startBtcFlow()">Pay with Bitcoin</button>
           <button class="btn-secondary" id="btn-stable" onclick="showNetworkSelect()">Pay with USDC or USDT</button>
+          <button class="btn-secondary" id="btn-cashapp" onclick="startCashAppFlow()">
+            <span class="btn-content">
+              <img src="/src/assets/images/cashapp-logo.svg" alt="" aria-hidden="true" />
+              <span>Pay with Cash App</span>
+            </span>
+          </button>
           `
               : `
           <div class="error-box">
@@ -1348,6 +1395,8 @@ function generateHTML({
       let processingStatusTimer = null;
       let processingStatusIndex = 0;
       let refundAddress = null;
+      const CASH_APP_BUTTON_HTML = '<span class="btn-content"><img src="/src/assets/images/cashapp-logo.svg" alt="" aria-hidden="true" /><span>Pay with Cash App</span></span>';
+      const CASH_APP_LOADING_HTML = '<span class="btn-content"><span>Opening Cash App</span><span class="loading-dots" aria-hidden="true"><span></span><span></span><span></span></span></span>';
       const processingStatusMessages = [
         'Deposit received…',
         'Securing funds…',
@@ -1688,6 +1737,43 @@ function generateHTML({
         }
       }
 
+      function buildCashAppLightningUrl(invoice) {
+        return \`https://cash.app/launch/lightning/\${encodeURIComponent(invoice)}\`;
+      }
+
+      async function startCashAppFlow() {
+        const cashAppButton = document.getElementById('btn-cashapp');
+        if (cashAppButton) {
+          cashAppButton.disabled = true;
+          cashAppButton.innerHTML = CASH_APP_LOADING_HTML;
+        }
+
+        try {
+          const res = await fetch('/createPayLinkInvoice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ paylinkId: PAYLINK_ID }),
+          });
+          const json = await res.json();
+          if (!json || json.status !== 'SUCCESS' || !json.invoice) {
+            throw new Error('invoice');
+          }
+
+          bitcoinInvoice = json.invoice;
+          depositAddress = json.invoice;
+          startPolling();
+          window.location.href = buildCashAppLightningUrl(json.invoice);
+        } catch (err) {
+          showAlert('Could not create a Lightning invoice. Please try again.');
+        } finally {
+         if (cashAppButton) {
+            cashAppButton.disabled = false;
+            cashAppButton.innerHTML = CASH_APP_BUTTON_HTML;
+          }
+        
+        }
+      }
+
       function copyBitcoinAddress() {
         if (!bitcoinInvoice) return;
         event.preventDefault();
@@ -2025,6 +2111,7 @@ function generateHTML({
         const paidNotice = document.getElementById('paid-notice');
         const btcButton = document.getElementById('btn-btc');
         const stableButton = document.getElementById('btn-stable');
+        const cashAppButton = document.getElementById('btn-cashapp');
         if (PAYLINK_DATA) {
           try {
             const res = await fetch('/getPaylinkData', {
@@ -2038,6 +2125,7 @@ function generateHTML({
               paidNotice.style.display = 'block';
               btcButton.style.display = 'none';
               stableButton.style.display = 'none';
+              if (cashAppButton) cashAppButton.style.display = 'none';
                
               }
             }
