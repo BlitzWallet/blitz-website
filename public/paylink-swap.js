@@ -18924,6 +18924,34 @@ ${prettyStateOverride(stateOverride)}`;
     }
   });
 
+  // node_modules/viem/_esm/chains/definitions/bsc.js
+  var bsc = /* @__PURE__ */ defineChain({
+    id: 56,
+    name: "BNB Smart Chain",
+    blockTime: 750,
+    nativeCurrency: {
+      decimals: 18,
+      name: "BNB",
+      symbol: "BNB"
+    },
+    rpcUrls: {
+      default: { http: ["https://56.rpc.thirdweb.com"] }
+    },
+    blockExplorers: {
+      default: {
+        name: "BscScan",
+        url: "https://bscscan.com",
+        apiUrl: "https://api.bscscan.com/api"
+      }
+    },
+    contracts: {
+      multicall3: {
+        address: "0xca11bde05977b3631167028862be2a173976ca11",
+        blockCreated: 15921452
+      }
+    }
+  });
+
   // node_modules/viem/_esm/chains/definitions/mainnet.js
   var mainnet = /* @__PURE__ */ defineChain({
     id: 1,
@@ -19035,7 +19063,8 @@ ${prettyStateOverride(stateOverride)}`;
     137: polygon,
     42161: arbitrum,
     10: optimism,
-    8453: base
+    8453: base,
+    56: bsc
   };
   var TRANSFER_EVENT = parseAbiItem(
     "event Transfer(address indexed from, address indexed to, uint256 value)"
@@ -19100,7 +19129,14 @@ ${prettyStateOverride(stateOverride)}`;
     });
   }
   function pollForBalance(params) {
-    const { tokenAddress, depositAddress, chainId, expectedAmount, onFound, intervalMs = 15e3 } = params;
+    const {
+      tokenAddress,
+      depositAddress,
+      chainId,
+      expectedAmount,
+      onFound,
+      intervalMs = 15e3
+    } = params;
     const chain = CHAIN_MAP[chainId];
     if (!chain) throw new Error(`Unsupported chainId: ${chainId}`);
     const client = createPublicClient({ chain, transport: http() });
@@ -19111,11 +19147,14 @@ ${prettyStateOverride(stateOverride)}`;
       try {
         const balance = await client.readContract({
           address: tokenAddress,
-          abi: [parseAbiItem("function balanceOf(address) view returns (uint256)")],
+          abi: [
+            parseAbiItem("function balanceOf(address) view returns (uint256)")
+          ],
           functionName: "balanceOf",
           args: [depositAddress]
         });
-        if (balance >= expectedAmount) {
+        console.log(balance, "balance in address");
+        if (balance) {
           stopped = true;
           clearInterval(intervalId);
           try {

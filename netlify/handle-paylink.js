@@ -1356,23 +1356,24 @@ function generateHTML({
       const SWAP_HISTORY_KEY = 'blitz_swap_history'
 
      const NETWORK_MAP = {
-        ethereum: { chainId: 1,     usdc: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', usdt: '0xdac17f958d2ee523a2206206994597c13d831ec7' },
-        polygon:  { chainId: 137,   usdc: '0x3c499c542cef5e3811e1192ce70d8cc03d5c3359', usdt: null },
-        arbitrum: { chainId: 42161, usdc: '0xaf88d065e77c8cc2239327c5edb3a432268e5831', usdt: '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9' },
-        optimism: { chainId: 10,    usdc: '0x0b2c639c533813f4aa9d7837caf62653d097ff85', usdt: '0x94b008aa00579c1307b0ef2c499ad98a8ce58e58' },
-        base:     { chainId: 8453,  usdc: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913', usdt: null },
+        ethereum: { chainId: 1,     usdc: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', usdt: '0xdac17f958d2ee523a2206206994597c13d831ec7', decimals: 6 },
+        polygon:  { chainId: 137,   usdc: '0x3c499c542cef5e3811e1192ce70d8cc03d5c3359', usdt: null, decimals: 6 },
+        arbitrum: { chainId: 42161, usdc: '0xaf88d065e77c8cc2239327c5edb3a432268e5831', usdt: '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9', decimals: 6 },
+        optimism: { chainId: 10,    usdc: '0x0b2c639c533813f4aa9d7837caf62653d097ff85', usdt: '0x94b008aa00579c1307b0ef2c499ad98a8ce58e58', decimals: 6 },
+        base:     { chainId: 8453,  usdc: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913', usdt: null, decimals: 6 },
+        bsc:      { chainId: 56,    usdc: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d', usdt: '0x55d398326f99059fF775485246999027B3197955', decimals: 18 },
         solana:   { chainId: null,  usdc: null, usdt: null },
         tron:     { chainId: null,  usdc: null, usdt: null },
       };
 
       const NETWORK_LABELS = {
         ethereum: 'Ethereum', polygon: 'Polygon', arbitrum: 'Arbitrum',
-        optimism: 'Optimism', base: 'Base', solana: 'Solana', tron: 'Tron',
+        optimism: 'Optimism', base: 'Base', bsc: 'BNB', solana: 'Solana', tron: 'Tron',
       };
 
       const CURRENCY_NETWORKS = {
-        USDC: ['ethereum', 'arbitrum', 'optimism', 'polygon', 'base', 'solana'],
-        USDT: ['ethereum', 'arbitrum', 'optimism', 'tron'],
+        USDC: ['ethereum', 'arbitrum', 'optimism', 'polygon', 'base', 'bsc', 'solana'],
+        USDT: ['ethereum', 'arbitrum', 'optimism', 'bsc', 'tron'],
       };
 
       let selectedNetwork = null;
@@ -1861,11 +1862,12 @@ function generateHTML({
 
           const chain = (entry.selectedNetwork || entry.network || '').toLowerCase();
           const currency = (entry.selectedCurrency || entry.currency || '').toLowerCase();
+          const iconName = chain === 'bsc' ? 'bnb' : chain;
 
           // Handle polygon PNG vs others SVG
           const chainImage = chain === 'polygon'
-            ? \`src/assets/images/chain-\${chain}.png\`
-            : \`src/assets/images/chain-\${chain}.svg\`;
+            ? \`src/assets/images/chain-\${iconName}.png\`
+            : \`src/assets/images/chain-\${iconName}.svg\`;
 
           const tokenImage = currency === 'usdc'
             ? \`src/assets/images/usdc.svg\`
@@ -2002,7 +2004,7 @@ function generateHTML({
           const networkLabelEl = document.getElementById('stable-network-label');
           if (networkLabelEl) networkLabelEl.textContent = 'Send ' + selectedCurrency + ' on ' + (NETWORK_LABELS[selectedNetwork] || selectedNetwork);
           const amountLabelEl = document.getElementById('stable-amount-label');
-          if (amountLabelEl) amountLabelEl.textContent = formatTokenAmount(amountInRaw, 6) + ' ' + selectedCurrency;
+          if (amountLabelEl) amountLabelEl.textContent = formatTokenAmount(amountInRaw, (NETWORK_MAP[selectedNetwork]?.decimals || 6)) + ' ' + selectedCurrency;
           const addrEl = document.getElementById('stable-address-text');
           if (addrEl) addrEl.textContent = depositAddress;
           const quoteEl = document.getElementById('stable-quote-id');
