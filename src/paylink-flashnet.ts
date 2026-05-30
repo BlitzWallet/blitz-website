@@ -1,5 +1,5 @@
 import { createPublicClient, http, parseAbiItem } from "viem";
-import { mainnet, polygon, arbitrum, optimism, base } from "viem/chains";
+import { mainnet, polygon, arbitrum, optimism, base, bsc } from "viem/chains";
 
 const CHAIN_MAP = {
   1: mainnet,
@@ -7,6 +7,7 @@ const CHAIN_MAP = {
   42161: arbitrum,
   10: optimism,
   8453: base,
+  56: bsc,
 } as const;
 
 const TRANSFER_EVENT = parseAbiItem(
