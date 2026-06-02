@@ -170,14 +170,15 @@
     "Deki3": "904e8e8df0e4983768bb47bad6886bda3816b2fc2331846703e6abdf252b639a",
     "ejjejeje": "b8d010717d7da756edc08c329b5b80b3b195160c3ebfe87e5f7f3339dba8855c",
     "deathflare": "7088112a6b993d29d3328ed7351069f43741c6d4dd303416316689e12f005608",
-    "jorgevasquez": "f42362f2a412e44c42579d9160f85def42afb861777f5fa65ade85ed96e9c898",
+    "jorgevasquez": "f5c70f70cda05b4a9ab5015b88b18aed524a754c95728ba3d090757c8b944da3",
     "nolzeik": "7d36a8fa5bd3e679a2cb40631910ee1648f2ec0d5ef5b0f39f204d0c75aa2431",
     "tekdout": "98b223ab71b4f83148e1afb29761f13f607dc37d2327d93e63404cdac84b9702",
     "theforester": "5766ace618ab3443c1e8bca2f77d8b268353bda304d45e5c7d14b75238c741c1",
     "sgjj": "9d4a0fd865a01256dc2ec573cf954f33b7696e3f40ca17d2df882a49a77a0f98",
     "AnomyTsad": "d3a0c18b4c9fc1273dcc636d08d1d23990a1ebedae59046280585176c888f919",
     "Jackw": "51eb506489efc3f780f88c53f88ba0ccd7022f3d142aca95450288b4eaf1ce4b",
-    "chico": "e37b62ce938b31666af4ff8ad066bb063241555eee34542c31cb1da8c44d8c34"
+    "chico": "e37b62ce938b31666af4ff8ad066bb063241555eee34542c31cb1da8c44d8c34",
+    "floze": "969565333ee1f32e26a6b2136ec236cc729cb7879ad2e3958178f1d3e1f65f09"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -1613,6 +1614,22 @@
       "wss://relay.primal.net"
     ],
     "e37b62ce938b31666af4ff8ad066bb063241555eee34542c31cb1da8c44d8c34": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "969565333ee1f32e26a6b2136ec236cc729cb7879ad2e3958178f1d3e1f65f09": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "f5c70f70cda05b4a9ab5015b88b18aed524a754c95728ba3d090757c8b944da3": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
