@@ -131,18 +131,6 @@ X-Content-Type-Options = "nosniff"
   force = true
 
 [[redirects]]
-  from = "/.well-known/lnurlverify/:sparkIDCode"
-  to = "https://verifylnurlinvoice-6krimtymjq-uc.a.run.app/:sparkIDCode"
-  status = 200
-  force = true
-
-  [redirects.rate_limit]
-    window_limit = 30
-    window_size = 60
-    aggregate_by = ["ip", "domain"]
-
-
-[[redirects]]
   from = "/getInvoice"
   to = "https://getInvoiceForTipFeature-6krimtymjq-uc.a.run.app"
   status = 200
@@ -180,10 +168,6 @@ X-Content-Type-Options = "nosniff"
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
 
-  [redirects.rate_limit]
-    window_limit = 10
-    window_size = 60
-    aggregate_by = ["ip", "domain"]
 
 [[redirects]]
   from = "/createPoolInvoice"
