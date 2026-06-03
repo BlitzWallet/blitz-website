@@ -136,6 +136,11 @@ X-Content-Type-Options = "nosniff"
   status = 200
   force = true
 
+  [redirects.rate_limit]
+    window_limit = 30
+    window_size = 60
+    aggregate_by = ["ip", "domain"]
+
 
 [[redirects]]
   from = "/getInvoice"
@@ -174,6 +179,11 @@ X-Content-Type-Options = "nosniff"
   force = true
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
+
+  [redirects.rate_limit]
+    window_limit = 10
+    window_size = 60
+    aggregate_by = ["ip", "domain"]
 
 [[redirects]]
   from = "/createPoolInvoice"
