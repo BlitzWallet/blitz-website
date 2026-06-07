@@ -53,7 +53,7 @@ function buildOgImageUrl(baseUrl, paylinkId, data) {
     (data.rawAmount ?? 0) +
     "&currencyType=" +
     (data.currencyType ?? "BTC") +
-    "&v=2"
+    "&v=3"
   );
 }
 

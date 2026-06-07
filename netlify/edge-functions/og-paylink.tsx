@@ -23,11 +23,19 @@ const FONTS = [
   },
 ];
 
+const IMAGE_CACHE_HEADERS = {
+  "Cache-Control": "public, max-age=31536000, immutable",
+  "CDN-Cache-Control": "public, s-maxage=31536000, immutable",
+  "Netlify-CDN-Cache-Control": "public, s-maxage=31536000, immutable",
+  "Netlify-Cache-ID": "blitz-og-images",
+  "Content-Type": "image/png",
+  "Access-Control-Allow-Origin": "*",
+};
+
 async function loadFonts(origin: string) {
   return await Promise.all(
     FONTS.map(async ({ name, weight, style, filePath }) => {
       const url = `${origin}/fonts/${filePath}`;
-      console.log(url);
       const res = await fetch(url);
       const data = await res.arrayBuffer();
       return { name, weight, style, data };
@@ -199,13 +207,10 @@ export default async (request: Request, _context: Context) => {
   );
 
   const response = new Response(image.body, image);
-  response.headers.set(
-    "Cache-Control",
-    "public, max-age=86400, stale-while-revalidate=604800",
-  );
-  response.headers.set("Content-Type", "image/png");
-  response.headers.set("Access-Control-Allow-Origin", "*");
+  for (const [key, value] of Object.entries(IMAGE_CACHE_HEADERS)) {
+    response.headers.set(key, value);
+  }
   return response;
 };
 
-export const config: Config = { path: "/og-paylink" };
+export const config: Config = { cache: "manual", path: "/og-paylink" };

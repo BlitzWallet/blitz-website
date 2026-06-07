@@ -31,18 +31,14 @@ function buildGiftOgImageUrl(baseUrl, giftId, data) {
   const amount = data?.amount ?? "";
   const denom = data?.denomination ?? "BTC"; // "BTC" | "USD"
   const satDisplay = data?.satDisplay ?? "SAT"; // "SAT" | "BTC"
-  const message = encodeURIComponent(data?.giftMessage ?? "");
-  const sender = encodeURIComponent(data?.senderName ?? "");
 
   return (
     `${baseUrl}/og-gift` +
     `?amount=${amount}` +
     `&denom=${encodeURIComponent(denom)}` +
     `&satDisplay=${encodeURIComponent(satDisplay)}` +
-    `&message=${message}` +
-    `&sender=${sender}` +
     `&id=${encodeURIComponent(giftId)}` +
-    `&v=1`
+    `&v=2`
   );
 }
 

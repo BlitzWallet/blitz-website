@@ -1,4 +1,28 @@
-async function fetchPoolData(poolId, baseUrl) {
+const POOL_DATA_CACHE_TTL_MS = Number(
+  process.env.POOL_DATA_CACHE_TTL_MS ?? 60_000,
+);
+const POOL_DATA_CACHE_MAX_ENTRIES = Number(
+  process.env.POOL_DATA_CACHE_MAX_ENTRIES ?? 250,
+);
+const poolDataCache = new Map();
+
+function readPoolDataCache(cacheKey) {
+  const cached = poolDataCache.get(cacheKey);
+  if (!cached) return null;
+  if (cached.expiresAt > Date.now()) return cached;
+  poolDataCache.delete(cacheKey);
+  return null;
+}
+
+function writePoolDataCache(cacheKey, entry) {
+  if (poolDataCache.size >= POOL_DATA_CACHE_MAX_ENTRIES) {
+    const oldestKey = poolDataCache.keys().next().value;
+    if (oldestKey) poolDataCache.delete(oldestKey);
+  }
+  poolDataCache.set(cacheKey, entry);
+}
+
+async function fetchFreshPoolData(poolId, baseUrl) {
   try {
     const res = await fetch(baseUrl + "/getPoolData", {
       method: "POST",
@@ -22,6 +46,28 @@ async function fetchPoolData(poolId, baseUrl) {
     console.error("[OG pool] fetch error:", err.message);
     return null;
   }
+}
+
+async function fetchPoolData(poolId, baseUrl) {
+  const cacheKey = String(poolId || "").trim();
+  if (!cacheKey) return null;
+
+  const cached = readPoolDataCache(cacheKey);
+  if (cached?.promise) return cached.promise;
+  if (cached && "data" in cached) return cached.data;
+
+  const promise = fetchFreshPoolData(cacheKey, baseUrl);
+  writePoolDataCache(cacheKey, {
+    promise,
+    expiresAt: Date.now() + POOL_DATA_CACHE_TTL_MS,
+  });
+
+  const data = await promise;
+  writePoolDataCache(cacheKey, {
+    data,
+    expiresAt: Date.now() + POOL_DATA_CACHE_TTL_MS,
+  });
+  return data;
 }
 
 // ── 2. Format goal amount for display ─────────────────────────────────────────
@@ -56,31 +102,17 @@ function formatPoolGoal(data, btcPrice) {
   }
 }
 
-// ── 3. Compute progress percentage ───────────────────────────────────────────
+// ── 3. Build og:image URL ─────────────────────────────────────────────────────
 
-function computeProgressPct(data) {
-  const raised = Number(data?.currentAmount ?? 0);
-  const goal = Number(data?.goalAmount ?? 0);
-  if (!goal) return 0;
-  return Math.round((raised / goal) * 100);
-}
-
-// ── 4. Build og:image URL ─────────────────────────────────────────────────────
-
-function buildPoolOgImageUrl(baseUrl, poolId, data, goalLabel) {
-  const title = encodeURIComponent(data?.poolTitle ?? "Pool");
-  const creator = encodeURIComponent(data?.creatorName ?? "");
+function buildPoolOgImageUrl(baseUrl, poolId, goalLabel) {
   const goal = encodeURIComponent(goalLabel ?? "");
-  const pct = computeProgressPct(data);
 
   return (
     `${baseUrl}/og-pool` +
-    `?title=${title}` +
-    `&creator=${creator}` +
-    `&goal=${goal}` +
-    `&pct=${pct}` +
+    `?goal=${goal}` +
+    `&pct=0` +
     `&id=${encodeURIComponent(poolId)}` +
-    `&v=1`
+    `&v=2`
   );
 }
 
@@ -94,8 +126,6 @@ export async function handler(event, context) {
   }
   const baseUrl = process.env.URL || "https://blitzwalletapp.com";
   const poolData = await fetchPoolData(poolId, baseUrl);
-
-  console.log(poolData);
 
   let ogTitle, ogDescription, ogImage;
 
@@ -116,7 +146,6 @@ export async function handler(event, context) {
     ogImage = buildPoolOgImageUrl(
       baseUrl,
       poolId,
-      poolData,
       Number(poolData.goalAmount ?? 0),
     );
   } else {
@@ -138,6 +167,7 @@ export async function handler(event, context) {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
+      "Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
     },
     body: html,
   };
@@ -145,7 +175,7 @@ export async function handler(event, context) {
 
 function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
   const inlinedData = JSON.stringify(poolData ?? null);
-  console.log(inlinedData);
+  const inlinedPoolId = JSON.stringify(poolId);
   return `<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -1077,7 +1107,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       const IOS_STORE_URL = 'https://apps.apple.com/us/app/blitz-wallet/id6476810582';
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
       const POOL_DATA = ${inlinedData};
-      const poolId = '${poolId}';
+      const poolId = ${inlinedPoolId};
       let pageHidden = false;
       let poolData = null;
       let selectedAmountSats = 0;
@@ -1687,7 +1717,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       document.addEventListener('DOMContentLoaded', () => {
          btcPrice = POOL_DATA?.btcPrice;
          poolData = POOL_DATA;
-         poolCurrency = POOL_DATA.poolDenomination || 'USD';
+         poolCurrency = POOL_DATA?.poolDenomination || 'USD';
          displayDenomination = poolCurrency;
         renderPoolInfo(POOL_DATA, POOL_DATA?.contributions || []);
       });

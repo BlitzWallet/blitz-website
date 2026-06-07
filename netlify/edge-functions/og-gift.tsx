@@ -29,6 +29,15 @@ const FONTS = [
   },
 ];
 
+const IMAGE_CACHE_HEADERS = {
+  "Cache-Control": "public, max-age=31536000, immutable",
+  "CDN-Cache-Control": "public, s-maxage=31536000, immutable",
+  "Netlify-CDN-Cache-Control": "public, s-maxage=31536000, immutable",
+  "Netlify-Cache-ID": "blitz-og-images",
+  "Content-Type": "image/png",
+  "Access-Control-Allow-Origin": "*",
+};
+
 async function loadFonts(origin: string) {
   return Promise.all(
     FONTS.map(async ({ name, weight, style, filePath }) => {
@@ -132,12 +141,10 @@ function GiftIcon({
 function GiftCard({
   primary,
   unit,
-  message,
   isBtc,
 }: {
   primary: string;
   unit: string;
-  message: string;
   isBtc: boolean;
 }) {
   const amountFontSize =
@@ -271,24 +278,20 @@ export default async (request: Request, _context: Context) => {
   const amount = p.get("amount") ?? "";
   const denom = p.get("denom") ?? "BTC";
   const satDisplay = p.get("satDisplay") ?? "SAT";
-  const message = decodeURIComponent(p.get("message") ?? "");
 
   const { primary, unit, isBtc } = formatAmount(amount, denom, satDisplay);
   const fonts = await loadFonts(origin);
 
   const image = new ImageResponse(
-    <GiftCard primary={primary} unit={unit} message={message} isBtc={isBtc} />,
+    <GiftCard primary={primary} unit={unit} isBtc={isBtc} />,
     { width: 1200, height: 628, fonts },
   );
 
   const response = new Response(image.body, image);
-  response.headers.set(
-    "Cache-Control",
-    "public, max-age=86400, stale-while-revalidate=604800",
-  );
-  response.headers.set("Content-Type", "image/png");
-  response.headers.set("Access-Control-Allow-Origin", "*");
+  for (const [key, value] of Object.entries(IMAGE_CACHE_HEADERS)) {
+    response.headers.set(key, value);
+  }
   return response;
 };
 
-export const config: Config = { path: "/og-gift" };
+export const config: Config = { cache: "manual", path: "/og-gift" };
