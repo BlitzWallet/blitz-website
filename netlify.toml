@@ -131,6 +131,17 @@ X-Content-Type-Options = "nosniff"
   force = true
 
 [[redirects]]
+  from = "/.well-known/lnurlverify/:sparkIDCode"
+  to = "https://verifylnurlinvoice-6krimtymjq-uc.a.run.app/:sparkIDCode"
+  status = 200
+  force = true
+
+  [redirects.rate_limit]
+    window_limit = 100
+    window_size = 60
+    aggregate_by = ["ip", "domain"]
+
+[[redirects]]
   from = "/getInvoice"
   to = "https://getInvoiceForTipFeature-6krimtymjq-uc.a.run.app"
   status = 200
