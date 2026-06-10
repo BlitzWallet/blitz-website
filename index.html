@@ -79,6 +79,7 @@
     <script src="/src/components/downloadModal/index.js" defer></script>
     <script src="./pages/home/expandContent.js" defer></script>
     <script src="./pages/home/slideshow.js" defer></script>
+    <script src="./pages/home/homeAnimations.js" defer></script>
     <script src="/src/js/font-loader.js" defer></script>
   </head>
 
@@ -105,119 +106,227 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-container">
-        <div class="hero-content">
-          <h1>Bitcoin Payments Made Simple</h1>
-          <p>
-            Send money to anyone in the world — instantly, for free.
-            Contacts-based payments, payment pools, stablecoin support, and
-            more.
-          </p>
-          <div class="cta-buttons">
-            <a href="#" class="btn-primary download-btn">Download Now →</a>
-            <a href="#products" class="btn-secondary">Explore Products</a>
+    <section class="hero" data-phone-scroll>
+      <div class="hero-scroll-container">
+        <div class="hero-scroll-inner">
+          <div class="hero-content">
+            <h1 class="hero-title">
+              <span class="hero-title-static">Money that moves</span>
+              <span class="hero-rotate" aria-hidden="true">
+                <span class="hero-rotate-word">globally</span>
+                <span class="hero-rotate-word">instantly</span>
+                <span class="hero-rotate-word">freely</span>
+                <span class="hero-rotate-word">securely</span>
+                <span class="hero-rotate-word">everywhere</span>
+              </span>
+            </h1>
+            <p>
+              A global payments app for Bitcoin, stablecoins, gifts, pools, and
+              everyday spending.
+            </p>
+            <div class="hero-actions">
+              <a href="#" class="btn-primary download-btn hero-cta">
+                Download now <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
           </div>
-        </div>
-        <div class="hero-visual">
-          <div class="phone-mockup">
-            <img
-              src="./src/assets/images/blitzHomepage.webp"
-              alt="Blitz Wallet Global Payments App Interface"
-            />
+
+          <div class="hero-phone-stage" aria-label="Blitz Wallet app preview">
+            <div class="scroll-phone-shell">
+              <span class="phone-speaker" aria-hidden="true"></span>
+              <img
+                src="./src/assets/images/homescreen.png"
+                alt="Blitz Wallet Global Payments App Interface"
+              />
+              <div class="phone-glare" aria-hidden="true"></div>
+              <span class="phone-home-indicator" aria-hidden="true"></span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
+    <section class="manifesto">
+      <p class="reveal-words">
+        Traditional payments slow you down. Banks add borders, fees, and
+        permission. Blitz puts global payments back in your hands.
+      </p>
+    </section>
+
     <!-- Products Section -->
     <section class="products" id="products">
-      <div class="section-header">
+      <div class="products-header">
         <span class="section-label">Our Products</span>
         <h2>A Complete Global Payments Suite</h2>
-        <p>Four powerful products designed to cover every payments need</p>
+        <p>
+          One mission at the center, four products in orbit. Tap a product to
+          see how Blitz moves money like the internet.
+        </p>
       </div>
-      <div class="products-grid">
-        <div class="product-card fade-in">
-          <div class="product-icon">
-            <i data-lucide="smartphone"></i>
+
+      <div class="orbital fade-in" data-orbital>
+        <div
+          class="orbital-stage"
+          data-orbital-stage
+          role="group"
+          aria-label="Blitz products orbiting the Blitz logo"
+        >
+          <div
+            class="orbital-ring orbital-ring--outer"
+            aria-hidden="true"
+          ></div>
+
+          <div class="orbital-line" data-orbital-line aria-hidden="true"></div>
+
+          <div class="orbital-core" aria-hidden="true">
+            <span class="orbital-core-badge">
+              <img src="/favicon.png" alt="" />
+            </span>
           </div>
-          <h3>Mobile App</h3>
-          <p>
-            Our flagship self-custodial payments app for iOS and Android. Pay
-            contacts for free, gift Bitcoin or stablecoins, pool payments with
-            groups, and manage your money with complete control.
-          </p>
-          <ul class="product-features">
-            <li>Zero-fee contact payments</li>
-            <li>Bitcoin &amp; stablecoin support</li>
-            <li>Blitz Gifts &amp; Payment Pools</li>
-            <li>Self-custodial security</li>
-          </ul>
-          <a href="#" class="product-link download-btn">Download App →</a>
+
+          <button
+            class="orbital-node"
+            type="button"
+            data-orbital-node
+            data-index="0"
+            aria-label="Mobile App"
+          >
+            <span class="orbital-node-dot"
+              ><i data-lucide="smartphone"></i
+            ></span>
+            <span class="orbital-node-label">Mobile App</span>
+          </button>
+
+          <button
+            class="orbital-node"
+            type="button"
+            data-orbital-node
+            data-index="1"
+            aria-label="Web Wallet"
+          >
+            <span class="orbital-node-dot"><i data-lucide="globe"></i></span>
+            <span class="orbital-node-label">Web Wallet</span>
+          </button>
+
+          <button
+            class="orbital-node"
+            type="button"
+            data-orbital-node
+            data-index="2"
+            aria-label="Point of Sale"
+          >
+            <span class="orbital-node-dot"><i data-lucide="store"></i></span>
+            <span class="orbital-node-label">Point of Sale</span>
+          </button>
+
+          <button
+            class="orbital-node"
+            type="button"
+            data-orbital-node
+            data-index="3"
+            aria-label="Recovery Platform"
+          >
+            <span class="orbital-node-dot"
+              ><i data-lucide="life-buoy"></i
+            ></span>
+            <span class="orbital-node-label">Recovery</span>
+          </button>
         </div>
 
-        <div class="product-card fade-in">
-          <div class="product-icon">
-            <i data-lucide="globe"></i>
-          </div>
-          <h3>Web Wallet</h3>
-          <p>
-            Access your funds from any browser — no app required. The same
-            powerful global payments experience, everywhere you are. Still in
-            development.
-          </p>
-          <ul class="product-features">
-            <li>No installation needed</li>
-            <li>Cross-platform access</li>
-            <li>Instant account creation</li>
-            <li>Same self-custodial security</li>
-          </ul>
-          <a href="https://wallet.blitzwalletapp.com" class="product-link"
-            >Try Web Wallet →</a
-          >
-        </div>
+        <p class="orbital-hint" data-orbital-hint>
+          <i data-lucide="hand-pointer"></i> Tap a product to explore
+        </p>
 
-        <div class="product-card fade-in">
-          <div class="product-icon">
-            <i data-lucide="store"></i>
-          </div>
-          <h3>Point of Sale</h3>
-          <p>
-            Accept Bitcoin and stablecoin payments at any business. Generate
-            payment requests, track tips, and settle instantly — no bank account
-            required.
-          </p>
-          <ul class="product-features">
-            <li>Easy merchant onboarding</li>
-            <li>External website</li>
-            <li>Real-time confirmations</li>
-            <li>Tips for employees</li>
-          </ul>
-          <a href="https://pay.blitzwalletapp.com" class="product-link"
-            >Get Started →</a
-          >
-        </div>
+        <div class="orbital-detail" data-orbital-detail aria-live="polite">
+          <article class="orbital-card" data-detail="0">
+            <!-- <div class="orbital-card-media">
+              <img
+                src="./src/assets/images/blitzHomepage.webp"
+                alt="Blitz mobile wallet home screen"
+                loading="lazy"
+              />
+            </div> -->
+            <div class="orbital-card-body">
+              <span class="orbital-card-tag">iOS &amp; Android</span>
+              <h3>Mobile App</h3>
+              <p>
+                Pay contacts for free, gift Bitcoin or stablecoins, pool money
+                with groups, and manage your funds with complete control.
+              </p>
+              <a href="#" class="orbital-card-cta download-btn">
+                Download App <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+          </article>
 
-        <div class="product-card fade-in">
-          <div class="product-icon">
-            <i data-lucide="shield-check"></i>
-          </div>
-          <h3>Recovery Platform</h3>
-          <p>
-            Your access to your money should never depend on us. Our open-source
-            recovery platform ensures you can always restore your wallet —
-            independently.
-          </p>
-          <ul class="product-features">
-            <li>Open-source</li>
-            <li>Self-hosted</li>
-            <li>Non-Blitz dependent</li>
-            <li>Simple so anyone can use it</li>
-          </ul>
-          <a href="https://recover.blitzwalletapp.com" class="product-link"
-            >Learn More →</a
-          >
+          <article class="orbital-card" data-detail="1">
+            <!-- <div class="orbital-card-media">
+              <img
+                src="./src/assets/images/blitzTransactions.webp"
+                alt="Blitz transaction history"
+                loading="lazy"
+              />
+            </div> -->
+            <div class="orbital-card-body">
+              <span class="orbital-card-tag">Browser wallet</span>
+              <h3>Web Wallet</h3>
+              <p>
+                Access the same powerful global payments experience from any
+                browser, with no app install required.
+              </p>
+              <a
+                href="https://wallet.blitzwalletapp.com"
+                class="orbital-card-cta"
+              >
+                Try Web Wallet <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="orbital-card" data-detail="2">
+            <!-- <div class="orbital-card-media">
+              <img
+                src="./src/assets/images/posPage.webp"
+                alt="Blitz point of sale screen"
+                loading="lazy"
+              />
+            </div> -->
+            <div class="orbital-card-body">
+              <span class="orbital-card-tag">For merchants</span>
+              <h3>Point of Sale</h3>
+              <p>
+                Accept Bitcoin and stablecoin payments at any business, track
+                tips, and settle instantly.
+              </p>
+              <a href="https://pay.blitzwalletapp.com" class="orbital-card-cta">
+                Get Started <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+          </article>
+
+          <article class="orbital-card" data-detail="3">
+            <!-- <div class="orbital-card-media">
+              <img
+                src="./src/assets/images/blitzContactPage.webp"
+                alt="Blitz contacts screen"
+                loading="lazy"
+              />
+            </div> -->
+            <div class="orbital-card-body">
+              <span class="orbital-card-tag">Open-source backup</span>
+              <h3>Recovery Platform</h3>
+              <p>
+                Restore your wallet independently through an open-source
+                recovery path that does not depend on Blitz.
+              </p>
+              <a
+                href="https://recover.blitzwalletapp.com"
+                class="orbital-card-cta"
+              >
+                Launch platform <i data-lucide="arrow-right"></i>
+              </a>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -233,125 +342,158 @@
         </p>
       </div>
       <div class="features-grid">
-        <div class="feature-card fade-in">
-          <div class="feature-icon">
-            <i data-lucide="users-round"></i>
+        <article class="feature-card feature-card-metric fade-in">
+          <div class="feature-visual feature-fees" aria-hidden="true">
+            <svg viewBox="0 0 254 104" focusable="false">
+              <path
+                d="M112.891 97.7022C140.366 97.0802 171.004 94.6715 201.087 87.5116C210.43 85.2881 219.615 82.6412 228.284 78.2473C232.198 76.3179 235.905 73.9942 239.348 71.3124C241.85 69.2557 243.954 66.7571 245.555 63.9408C249.34 57.3235 248.281 50.5341 242.498 45.6109C239.033 42.7237 235.228 40.2703 231.169 38.3054C219.443 32.7209 207.141 28.4382 194.482 25.534C184.013 23.1927 173.358 21.7755 162.64 21.2989C161.376 21.3512 160.113 21.181 158.908 20.796C158.034 20.399 156.857 19.1682 156.962 18.4535C157.115 17.8927 157.381 17.3689 157.743 16.9139C158.104 16.4588 158.555 16.0821 159.067 15.8066C160.14 15.4683 161.274 15.3733 162.389 15.5286C179.805 15.3566 196.626 18.8373 212.998 24.462C220.978 27.2494 228.798 30.4747 236.423 34.1232C240.476 36.1159 244.202 38.7131 247.474 41.8258C254.342 48.2578 255.745 56.9397 251.841 65.4892C249.793 69.8582 246.736 73.6777 242.921 76.6327C236.224 82.0192 228.522 85.4602 220.502 88.2924C205.017 93.7847 188.964 96.9081 172.738 99.2109C153.442 101.949 133.993 103.478 114.506 103.79C91.1468 104.161 67.9334 102.97 45.1169 97.5831C36.0094 95.5616 27.2626 92.1655 19.1771 87.5116C13.839 84.5746 9.1557 80.5802 5.41318 75.7725C-0.54238 67.7259 -1.13794 59.1763 3.25594 50.2827C5.82447 45.3918 9.29572 41.0315 13.4863 37.4319C24.2989 27.5721 37.0438 20.9681 50.5431 15.7272C68.1451 8.8849 86.4883 5.1395 105.175 2.83669C129.045 0.0992292 153.151 0.134761 177.013 2.94256C197.672 5.23215 218.04 9.01724 237.588 16.3889C240.089 17.3418 242.498 18.5197 244.933 19.6446C246.627 20.4387 247.725 21.6695 246.997 23.615C246.455 25.1105 244.814 25.5605 242.63 24.5811C230.322 18.9961 217.233 16.1904 204.117 13.4376C188.761 10.3438 173.2 8.36665 157.558 7.52174C129.914 5.70776 102.154 8.06792 75.2124 14.5228C60.6177 17.8788 46.5758 23.2977 33.5102 30.6161C26.6595 34.3329 20.4123 39.0673 14.9818 44.658C12.9433 46.8071 11.1336 49.1622 9.58207 51.6855C4.87056 59.5336 5.61172 67.2494 11.9246 73.7608C15.2064 77.0494 18.8775 79.925 22.8564 82.3236C31.6176 87.7101 41.3848 90.5291 51.3902 92.5804C70.6068 96.5773 90.0219 97.7419 112.891 97.7022Z"
+              />
+            </svg>
+            <strong>0</strong>
+            <span>fees</span>
           </div>
-          <h3>Zero-Fee Contact Payments</h3>
-          <p>
-            Pay anyone in your contacts by name — no invoices, no QR codes, no
-            fees. Sending money to a Blitz contact is as easy as a text message.
-          </p>
-        </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon">
-            <i data-lucide="gift"></i>
+          <div class="feature-copy">
+            <h3>Zero-Fee Contact Payments</h3>
+            <p>
+              Pay anyone in your contacts by name with no invoices, no QR codes,
+              and no app-to-app transfer fees.
+            </p>
           </div>
-          <h3>Blitz Gifts</h3>
-          <p>
-            Send Bitcoin or stablecoin gifts to anyone via a shareable link —
-            even if they don't have Blitz yet. The simplest way to onboard
-            friends and family to global payments.
-          </p>
-        </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon">
-            <i data-lucide="users"></i>
+        </article>
+
+        <article class="feature-card fade-in">
+          <div class="feature-visual feature-orbit" aria-hidden="true">
+            <span class="orbit-ring"></span>
+            <span class="orbit-node gift-node"><i data-lucide="gift"></i></span>
+            <span class="orbit-node avatar-node">BK</span>
+            <span class="orbit-node avatar-node avatar-node-green">SA</span>
           </div>
-          <h3>Payment Pools</h3>
-          <p>
-            Coordinate group payments and collections with ease. Split costs,
-            collect contributions, and settle instantly — powered by Bitcoin.
-          </p>
-        </div>
-        <div class="feature-card fade-in">
+          <div class="feature-copy">
+            <h3>Blitz Gifts</h3>
+            <p>
+              Send Bitcoin or stablecoin gifts through a shareable link, even
+              when the recipient has not joined Blitz yet.
+            </p>
+          </div>
+        </article>
+
+        <article class="feature-card fade-in">
+          <div class="feature-visual feature-speed" aria-hidden="true">
+            <div class="speed-pill">settled</div>
+            <svg
+              viewBox="0 0 360 140"
+              preserveAspectRatio="none"
+              focusable="false"
+            >
+              <path
+                class="speed-area"
+                d="M4 132C31 84 54 91 78 82C104 72 112 38 137 52C162 66 163 112 188 103C213 94 220 45 244 50C270 56 280 104 303 94C326 84 331 57 356 42V132H4Z"
+              />
+              <path
+                class="speed-line"
+                d="M4 132C31 84 54 91 78 82C104 72 112 38 137 52C162 66 163 112 188 103C213 94 220 45 244 50C270 56 280 104 303 94C326 84 331 57 356 42"
+              />
+            </svg>
+          </div>
+          <div class="feature-copy">
+            <h3>Instant Global Settlement</h3>
+            <p>
+              Payments settle in seconds, whether you are paying across the
+              street or across the world.
+            </p>
+          </div>
+        </article>
+
+        <article class="feature-card feature-card-wide fade-in">
+          <div class="feature-copy">
+            <div class="feature-icon">
+              <i data-lucide="shield-check"></i>
+            </div>
+            <h3>Fully Self-Custodial</h3>
+            <p>
+              Your keys, your money. Hold Bitcoin and stablecoins without giving
+              a bank, exchange, or payment company control over your balance.
+            </p>
+          </div>
+          <div class="feature-window self-custody-window" aria-hidden="true">
+            <div class="window-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="custody-key-row">
+              <span><i data-lucide="key-round"></i></span>
+              <strong>private key</strong>
+            </div>
+            <div class="custody-bars">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="feature-card feature-card-wide fade-in">
+          <div class="feature-copy">
+            <div class="feature-icon">
+              <i data-lucide="users"></i>
+            </div>
+            <h3>Payment Pools</h3>
+            <p>
+              Coordinate group collections, split shared costs, and track
+              contributions while funds move on Bitcoin's open rails.
+            </p>
+          </div>
+          <div class="feature-timeline" aria-hidden="true">
+            <div class="timeline-row timeline-row-left">
+              <span class="timeline-label">Alex paid</span>
+              <span class="timeline-avatar">A</span>
+            </div>
+            <div class="timeline-row timeline-row-right">
+              <span class="timeline-avatar">J</span>
+              <span class="timeline-label">Jamie joined</span>
+            </div>
+            <div class="timeline-row timeline-row-left">
+              <span class="timeline-label">Pool funded</span>
+              <span class="timeline-avatar timeline-avatar-blue">✓</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="feature-card feature-card-split fade-in">
           <div class="feature-icon">
             <i data-lucide="piggy-bank"></i>
           </div>
-          <h3>USDB Stablecoin Savings</h3>
-          <p>
-            Hold your balance in USDB, a USD-pegged stablecoin, to protect
-            against volatility. Set savings goals, earn rewards, and stay on
-            Bitcoin's rails — all under your control.
-          </p>
-        </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon">
-            <i data-lucide="dollar-sign"></i>
+          <div class="feature-copy">
+            <h3>USDB Stablecoin Savings</h3>
+            <p>
+              Hold a USD-pegged balance, set savings goals, and stay on
+              Bitcoin's rails while reducing day-to-day volatility.
+            </p>
           </div>
-          <h3>Stablecoin Integration</h3>
-          <p>
-            Seamlessly swap between Bitcoin and stablecoins. Transact in the
-            currency that works for you — without ever leaving the app or
-            trusting a custodian.
-          </p>
-        </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon">
-            <i data-lucide="zap"></i>
-          </div>
-          <h3>Instant Global Settlement</h3>
-          <p>
-            Payments settle in seconds, not days. Whether you're paying across
-            the street or across the world, Bitcoin's open rails deliver your
-            money instantly.
-          </p>
-        </div>
-        <div class="feature-card fade-in">
-          <div class="feature-icon">
-            <i data-lucide="lock"></i>
-          </div>
-          <h3>Fully Self-Custodial</h3>
-          <p>
-            Your keys, your money. No middlemen, no freeze risk, no permission
-            required. You own your funds completely — always.
-          </p>
-        </div>
-        <div class="feature-card fade-in">
+        </article>
+
+        <article class="feature-card feature-card-split fade-in">
           <div class="feature-icon">
             <i data-lucide="moon"></i>
           </div>
-          <h3>Receive Anytime, Offline</h3>
-          <p>
-            Receive payments even when your phone is off. No channels to manage,
-            no node to run. Money arrives when it's sent — on your schedule.
-          </p>
-        </div>
-      </div>
-    </section>
+          <div class="feature-copy">
+            <h3>Receive Anytime, Offline</h3>
+            <p>
+              Receive funds even when your phone is off, with no channels to
+              manage and no always-on node to run.
+            </p>
+          </div>
+        </article>
 
-    <!-- How It Works -->
-    <section class="how-it-works">
-      <div class="section-header">
-        <span class="section-label">How It Works</span>
-        <h2>Start Sending Money Globally in 3 Steps</h2>
-        <p>No bank account needed. No fees. No borders.</p>
-      </div>
-      <div class="steps-container">
-        <div class="step fade-in">
-          <div class="step-number">1</div>
-          <h3>Download &amp; Create</h3>
-          <p>
-            Download Blitz Wallet and set up your self-custodial account in
-            under a minute. No ID required, no waiting period.
-          </p>
-        </div>
-        <div class="step fade-in">
-          <div class="step-number">2</div>
-          <h3>Add Funds</h3>
-          <p>
-            Deposit Bitcoin or swap into USDB stablecoins. Transfer from an
-            exchange or receive directly from anyone, anywhere.
-          </p>
-        </div>
-        <div class="step fade-in">
-          <div class="step-number">3</div>
-          <h3>Pay Anyone, Anywhere</h3>
-          <p>
-            Send to contacts for free, gift money to friends, pool payments with
-            groups, or pay merchants globally — all from one app.
-          </p>
-        </div>
+        <article class="feature-card feature-card-split fade-in">
+          <div class="feature-icon">
+            <i data-lucide="repeat-2"></i>
+          </div>
+          <div class="feature-copy">
+            <h3>Stablecoin Integration</h3>
+            <p>
+              Swap between Bitcoin and stablecoins in the app so every payment
+              can use the unit that makes sense.
+            </p>
+          </div>
+        </article>
       </div>
     </section>
 
