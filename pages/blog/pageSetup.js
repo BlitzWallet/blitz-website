@@ -37,13 +37,15 @@ window.addEventListener("load", () => {
 
 function setMetaDescription(newDescription) {
   if (!newDescription) return;
-  if (!document.querySelector('meta[name="description"]')) {
+  const existing = document.querySelector('meta[name="description"]');
+  // Preserve a unique, hand-written static description if one already exists.
+  if (existing && existing.getAttribute("content")?.trim()) return;
+  if (!existing) {
     const metaDescription = document.createElement("meta");
     metaDescription.name = "description";
     metaDescription.content = newDescription;
     document.head.appendChild(metaDescription);
-  } else
-    document
-      .querySelector('meta[name="description"]')
-      .setAttribute("content", newDescription);
+  } else {
+    existing.setAttribute("content", newDescription);
+  }
 }

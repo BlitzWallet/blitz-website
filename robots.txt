@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Block Netlify internals and dynamic claim/transactional routes from indexing
+Disallow: /.netlify/
+Disallow: /gift/
+Disallow: /pools/
+
+Sitemap: https://blitzwalletapp.com/sitemap.xml
