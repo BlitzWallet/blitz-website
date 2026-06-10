@@ -1482,7 +1482,7 @@
   }
 
   .hero-content h1 {
-    font-size: 2.5rem;
+    font-size: min(4rem, 12vw);
     overflow-wrap: break-word;
   }
 
@@ -1561,7 +1561,7 @@
 
 @media (max-width: 550px) {
   .orbital-stage {
-    --stage: 200px;
+    --stage: 250px;
     --node: 54px;
     --core: 60px;
   }

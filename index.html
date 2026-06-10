@@ -82,52 +82,54 @@
     <script src="./pages/home/homeAnimations.js" defer></script>
     <script src="/src/js/font-loader.js" defer></script>
     <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
       {
-        "@type": "Organization",
-        "@id": "https://blitzwalletapp.com/#organization",
-        "name": "Blitz Wallet",
-        "url": "https://blitzwalletapp.com/",
-        "logo": "https://blitzwalletapp.com/public/BlitzFull.png",
-        "sameAs": [
-          "https://github.com/BlitzWallet/BlitzWallet",
-          "https://twitter.com/blitzwalletapp"
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://blitzwalletapp.com/#organization",
+            "name": "Blitz Wallet",
+            "url": "https://blitzwalletapp.com/",
+            "logo": "https://blitzwalletapp.com/public/BlitzFull.png",
+            "sameAs": [
+              "https://github.com/BlitzWallet/BlitzWallet",
+              "https://twitter.com/blitzwalletapp"
+            ]
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://blitzwalletapp.com/#website",
+            "url": "https://blitzwalletapp.com/",
+            "name": "Blitz Wallet",
+            "publisher": {
+              "@id": "https://blitzwalletapp.com/#organization"
+            }
+          },
+          {
+            "@type": "SoftwareApplication",
+            "name": "Blitz Wallet",
+            "operatingSystem": "iOS, Android, Web",
+            "applicationCategory": "FinanceApplication",
+            "url": "https://blitzwalletapp.com/",
+            "description": "Blitz Wallet is a global, self-custodial Bitcoin payments app. Send money to contacts for free, gift Bitcoin, pool payments, and pay anyone worldwide instantly.",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            }
+          }
         ]
-      },
-      {
-        "@type": "WebSite",
-        "@id": "https://blitzwalletapp.com/#website",
-        "url": "https://blitzwalletapp.com/",
-        "name": "Blitz Wallet",
-        "publisher": {
-          "@id": "https://blitzwalletapp.com/#organization"
-        }
-      },
-      {
-        "@type": "SoftwareApplication",
-        "name": "Blitz Wallet",
-        "operatingSystem": "iOS, Android, Web",
-        "applicationCategory": "FinanceApplication",
-        "url": "https://blitzwalletapp.com/",
-        "description": "Blitz Wallet is a global, self-custodial Bitcoin payments app. Send money to contacts for free, gift Bitcoin, pool payments, and pay anyone worldwide instantly.",
-        "offers": {
-          "@type": "Offer",
-          "price": "0",
-          "priceCurrency": "USD"
-        }
       }
-    ]
-  }
-  </script>
+    </script>
   </head>
 
   <body>
     <!-- Navigation -->
     <nav>
       <div class="nav-container">
-        <a href="/" class="logo"><img src="/favicon.png" alt="Blitz Wallet logo" /></a>
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
         <ul class="nav-links">
           <li><a href="#products">Products</a></li>
           <li><a href="#features">Features</a></li>
@@ -151,18 +153,18 @@
         <div class="hero-scroll-inner">
           <div class="hero-content">
             <h1 class="hero-title">
-              <span class="hero-title-static">Money that moves</span>
+              <span class="hero-title-static">Money without</span>
               <span class="hero-rotate" aria-hidden="true">
-                <span class="hero-rotate-word">globally</span>
-                <span class="hero-rotate-word">instantly</span>
-                <span class="hero-rotate-word">freely</span>
-                <span class="hero-rotate-word">securely</span>
-                <span class="hero-rotate-word">everywhere</span>
+                <span class="hero-rotate-word">borders</span>
+                <span class="hero-rotate-word">banks</span>
+                <span class="hero-rotate-word">limits</span>
+                <span class="hero-rotate-word">permission</span>
               </span>
             </h1>
             <p>
-              A global payments app for Bitcoin, stablecoins, gifts, pools, and
-              everyday spending.
+              A Bitcoin and stablecoin wallet for borderless payments. Send to
+              anyone, anywhere, in seconds. No bank, no permission, just your
+              money.
             </p>
             <div class="hero-actions">
               <a href="#" class="btn-primary download-btn hero-cta">
@@ -542,7 +544,7 @@
       <div class="cta-content">
         <h2>Ready to Send Money Without Borders?</h2>
         <p>
-          Join thousands using Bitcoin's open rails to pay anyone, anywhere —
+          Join thousands using Bitcoin's open rails to pay anyone, anywhere,
           instantly and for free
         </p>
         <a href="#" class="btn-primary download-btn hero-cta">
