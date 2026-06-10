@@ -140,6 +140,8 @@
   margin-top: auto;
   font-size: 0.85rem;
   color: #777;
+  background-color: transparent;
+  border: unset;
 }
 .blogContentContainer footer {
   padding: 0;
