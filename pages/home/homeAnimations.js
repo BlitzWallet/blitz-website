@@ -243,45 +243,11 @@
       const rect = phoneScroll.getBoundingClientRect();
       const travelDistance = Math.max(rect.height - window.innerHeight, 1);
       const progress = clamp(-rect.top / travelDistance, 0, 1);
-      const isMobile = window.innerWidth <= 768;
       const startScale = 1;
       const endScale = 0.9;
       const scale = startScale + (endScale - startScale) * progress;
-      const rotate = 0 * (1 - progress);
-      const translate = -72 * progress;
-      const copyY = -90 * progress;
-      const copyOpacity = clamp((0.58 - progress) / 0.28, 0, 1);
-      const glareOpacity = 0.55 - progress * 0.35;
-      const shadowOpacity = 0.85 - progress * 0.2;
-      const shadowScale = 1 - progress * 0.18;
 
-      phoneScroll.style.setProperty("--phone-progress", progress.toFixed(3));
-      phoneScroll.style.setProperty(
-        "--phone-rotate",
-        `${rotate.toFixed(2)}deg`,
-      );
       phoneScroll.style.setProperty("--phone-scale", scale.toFixed(3));
-      phoneScroll.style.setProperty(
-        "--phone-translate",
-        `${translate.toFixed(2)}px`,
-      );
-      phoneScroll.style.setProperty("--phone-copy-y", `${copyY.toFixed(2)}px`);
-      phoneScroll.style.setProperty(
-        "--hero-copy-opacity",
-        copyOpacity.toFixed(3),
-      );
-      phoneScroll.style.setProperty(
-        "--phone-glare-opacity",
-        glareOpacity.toFixed(3),
-      );
-      phoneScroll.style.setProperty(
-        "--phone-shadow-opacity",
-        shadowOpacity.toFixed(3),
-      );
-      phoneScroll.style.setProperty(
-        "--phone-shadow-scale",
-        shadowScale.toFixed(3),
-      );
     }
   }
 

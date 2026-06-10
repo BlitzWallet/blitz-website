@@ -1,14 +1,6 @@
 /* Hero Section */
 .hero {
-  --phone-progress: 0;
-  --phone-rotate: 0deg;
   --phone-scale: 1.05;
-  --phone-translate: 0px;
-  --phone-copy-y: 0px;
-  --hero-copy-opacity: 1;
-  --phone-glare-opacity: 0.55;
-  --phone-shadow-opacity: 0.85;
-  --phone-shadow-scale: 1;
   min-height: 178dvh;
   padding: 0;
   overflow: clip;
@@ -39,9 +31,6 @@
   margin: 0 auto;
   text-align: center;
   color: #121111;
-  translate: 0 var(--phone-copy-y);
-  opacity: var(--hero-copy-opacity);
-  will-change: translate;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -177,8 +166,8 @@
   border-radius: 50%;
   background: rgba(18, 17, 17, 0.16);
   filter: blur(18px);
-  opacity: var(--phone-shadow-opacity);
-  transform: translateX(-50%) scaleX(var(--phone-shadow-scale));
+  opacity: 0.85;
+  transform: translateX(-50%);
 }
 
 .hero-phone-stage::after {
@@ -190,7 +179,6 @@
   border-radius: 999px;
   filter: blur(22px);
   opacity: 0.72;
-  transform: translateY(calc(var(--phone-translate) * -0.18));
 }
 
 .scroll-phone-shell {
@@ -202,8 +190,7 @@
   border: 4px solid #262626;
   border-radius: 46px;
   background: #111;
-  transform: rotateX(var(--phone-rotate)) scale(var(--phone-scale))
-    translateY(var(--phone-translate));
+  transform: scale(var(--phone-scale));
   transform-origin: center center;
   transform-style: preserve-3d;
   will-change: transform;
@@ -249,7 +236,7 @@
     rgba(255, 255, 255, 0.18),
     rgba(255, 255, 255, 0) 38%
   );
-  opacity: var(--phone-glare-opacity);
+  opacity: 0.55;
 }
 
 .phone-home-indicator {
@@ -1455,7 +1442,7 @@
   }
 
   .hero-scroll-container {
-    padding: 5.5rem 1rem 6rem;
+    padding: 8rem 1rem 6rem;
   }
 
   .hero-content h1 {
@@ -1491,7 +1478,7 @@
   }
 
   .hero-scroll-container {
-    padding: 5.25rem 1rem 4rem;
+    padding: 8rem 1rem 4rem;
   }
 
   .hero-content h1 {
@@ -1588,11 +1575,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .hero {
-    --phone-rotate: 0deg;
     --phone-scale: 1;
-    --phone-translate: 0px;
-    --phone-copy-y: 0px;
-    --hero-copy-opacity: 1;
     min-height: auto;
   }
 
