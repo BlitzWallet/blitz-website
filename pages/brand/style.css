@@ -1,12 +1,8 @@
-/* ================================================
-   BRAND RESOURCES PAGE STYLES
-   ================================================ */
-
 /* Hero Section */
 .brand-hero {
-  padding: 10rem 2rem 6rem;
+  padding: clamp(8rem, 16vw, 11rem) 2rem clamp(4rem, 8vw, 6rem);
   text-align: center;
-  background: linear-gradient(180deg, white 0%, var(--lm-background) 100%);
+  background: #fbfaf7;
   position: relative;
   overflow: hidden;
 }
@@ -14,50 +10,57 @@
 .brand-hero::before {
   content: "";
   position: absolute;
-  top: 0;
+  top: -10%;
   left: 50%;
   transform: translateX(-50%);
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, var(--primary_color) 0%, transparent 70%);
-  opacity: 0.05;
+  width: 640px;
+  height: 640px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(3, 117, 246, 0.08) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .brand-hero-content {
-  max-width: 800px;
+  max-width: 820px;
   margin: 0 auto;
   position: relative;
 }
 
 .hero-badge {
-  display: inline-block;
-  background: white;
-  padding: 0.5rem 1.5rem;
-  border-radius: 50px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0.45rem 0.85rem;
   margin-bottom: 1.5rem;
-  border: 1px solid var(--primary_color);
-  color: var(--primary_color);
-  box-shadow: 0 2px 10px rgba(3, 117, 246, 0.1);
+  border-radius: 999px;
+  background: #edebe7;
+  color: rgba(18, 17, 17, 0.64);
+  font-size: 0.85rem;
+  font-weight: 650;
 }
 
 .brand-hero h1 {
-  font-size: 3.5rem;
-  font-weight: 700;
+  color: #121111;
+  font-size: clamp(2.75rem, 6vw, 4.6rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 0.98;
   margin-bottom: 1.5rem;
-  line-height: 1.2;
 }
 
 .brand-hero p {
-  font-size: 1.3rem;
-  line-height: 1.8;
-  opacity: 0.9;
-  max-width: 650px;
+  font-size: 1.15rem;
+  line-height: 1.6;
+  color: rgba(18, 17, 17, 0.58);
+  max-width: 640px;
   margin: 0 auto;
 }
 
-/* Shared Section Styles */
+/* Shared Section Scaffolding */
 .section-container {
   max-width: 1200px;
   margin: 0 auto;
@@ -65,43 +68,49 @@
 
 .section-header {
   text-align: center;
-  margin-bottom: 4rem;
+  width: min(100%, 920px);
+  margin: 0 auto clamp(2.75rem, 6vw, 4.5rem);
 }
 
 .section-label {
-  display: inline-block;
-  background: var(--lm-backgroundOffset);
-  padding: 0.5rem 1.5rem;
-  border-radius: 50px;
-  font-size: 0.9rem;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0.45rem 0.85rem;
   margin-bottom: 1rem;
-  color: var(--primary_color);
+  border-radius: 999px;
+  background: #edebe7;
+  color: rgba(18, 17, 17, 0.64);
+  font-size: 0.85rem;
+  font-weight: 650;
 }
 
 .section-header h2 {
-  font-size: 2.5rem;
-  font-weight: 700;
+  color: #121111;
+  font-size: clamp(2.5rem, 5.5vw, 4rem);
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 0.98;
   margin-bottom: 1rem;
 }
 
 .section-description {
   max-width: 600px;
   margin: 0 auto;
-  opacity: 0.8;
-  line-height: 1.7;
+  color: rgba(18, 17, 17, 0.58);
+  line-height: 1.6;
 }
 
 /* Shared Download Link */
 .brand-download-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  color: var(--primary_color);
+  gap: 0.45rem;
+  color: #0375f6;
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 650;
   font-size: 0.9rem;
-  transition: all 0.3s ease;
+  transition: gap 0.3s ease;
 }
 
 .brand-download-link svg {
@@ -115,39 +124,41 @@
 
 /* ---- Logo Files Section ---- */
 .brand-logos {
-  padding: 6rem 2rem;
-  background: white;
+  padding: clamp(5rem, 9vw, 8rem) 2rem;
+  background: #fff;
 }
 
 .logo-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .logo-card {
-  background: var(--lm-background);
-  border-radius: 20px;
+  background: #fbfaf7;
+  border-radius: 8px;
   overflow: hidden;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
+  border: 1px solid rgba(18, 17, 17, 0.08);
+  transition:
+    transform 360ms ease,
+    box-shadow 360ms ease;
   display: flex;
   flex-direction: column;
 }
 
 .logo-card:hover {
-  border-color: var(--primary_color);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(3, 117, 246, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 22px 52px rgba(18, 17, 17, 0.09);
 }
 
 .logo-preview {
-  min-height: 160px;
+  min-height: 180px;
   max-height: 60dvh;
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-bottom: 1px solid rgba(18, 17, 17, 0.08);
 }
 
 .logo-preview.light-bg {
@@ -155,7 +166,8 @@
 }
 
 .logo-preview.dark-bg {
-  background: var(--secondary_color);
+  background: #121111;
+  border-bottom-color: rgba(255, 255, 255, 0.08);
 }
 
 .logo-preview-tall {
@@ -200,45 +212,48 @@
 }
 
 .logo-card-info h3 {
+  color: #121111;
   font-size: 1.1rem;
-  margin-bottom: 0.3rem;
+  font-weight: 650;
+  margin-bottom: 0.35rem;
 }
 
 .logo-card-info p {
+  color: rgba(18, 17, 17, 0.6);
   font-size: 0.9rem;
-  opacity: 0.8;
-  line-height: 1.5;
-  margin-bottom: 1rem;
+  line-height: 1.55;
+  margin-bottom: 1.1rem;
 }
 
 /* ---- Brand Colors Section ---- */
 .brand-colors {
-  padding: 6rem 2rem;
-  background: var(--lm-background);
+  padding: clamp(5rem, 9vw, 8rem) 2rem;
+  background: #f6f4ef;
 }
 
 .colors-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
+  gap: 1rem;
 }
 
 .color-card {
-  background: white;
-  border-radius: 20px;
+  background: #fff;
+  border-radius: 8px;
   overflow: hidden;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
+  border: 1px solid rgba(18, 17, 17, 0.08);
+  transition:
+    transform 360ms ease,
+    box-shadow 360ms ease;
 }
 
 .color-card:hover {
-  border-color: var(--primary_color);
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(3, 117, 246, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 22px 52px rgba(18, 17, 17, 0.09);
 }
 
 .color-swatch {
-  height: 120px;
+  height: 130px;
   width: 100%;
 }
 
@@ -247,32 +262,36 @@
 }
 
 .color-info h3 {
+  color: #121111;
   font-size: 1.1rem;
+  font-weight: 650;
   margin-bottom: 0.3rem;
 }
 
 .color-label {
   display: inline-block;
   font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--primary_color);
-  margin-bottom: 0.5rem;
+  font-weight: 650;
+  color: #0375f6;
+  margin-bottom: 0.6rem;
 }
 
 .color-info code {
   display: block;
-  background: var(--lm-background);
-  padding: 0.4rem 0.8rem;
-  border-radius: 8px;
+  background: #f6f4ef;
+  padding: 0.45rem 0.8rem;
+  border-radius: 6px;
+  border: 1px solid rgba(18, 17, 17, 0.08);
   font-family: "Courier New", monospace;
   font-size: 0.9rem;
+  color: #121111;
   margin-top: 0.5rem;
 }
 
 /* ---- Typography Section ---- */
 .brand-typography {
-  padding: 6rem 2rem;
-  background: white;
+  padding: clamp(5rem, 9vw, 8rem) 2rem;
+  background: #fff;
 }
 
 .type-grid {
@@ -281,21 +300,18 @@
 }
 
 .type-card {
-  background: var(--lm-background);
-  padding: 2.5rem;
-  border-radius: 20px;
+  background: #fbfaf7;
+  padding: clamp(2rem, 5vw, 3rem);
+  border-radius: 8px;
+  border: 1px solid rgba(18, 17, 17, 0.08);
   text-align: center;
 }
 
 .type-icon {
-  width: 60px;
-  height: 60px;
-  background: linear-gradient(
-    135deg,
-    var(--primary_color),
-    var(--tertiary_color)
-  );
-  border-radius: 15px;
+  width: 56px;
+  height: 56px;
+  background: #121111;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -303,61 +319,58 @@
 }
 
 .type-icon svg {
-  width: 30px;
-  height: 30px;
+  width: 26px;
+  height: 26px;
   color: white;
+  stroke-width: 2;
 }
 
 .type-card h3 {
+  color: #121111;
   font-size: 2rem;
+  font-weight: 650;
   margin-bottom: 0.3rem;
 }
 
 .type-usage {
   display: inline-block;
   font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--primary_color);
+  font-weight: 650;
+  color: #0375f6;
   margin-bottom: 1rem;
 }
 
 .type-sample {
-  font-size: 1.8rem;
+  font-size: 1.9rem;
   font-weight: 500;
   letter-spacing: 2px;
   margin-bottom: 1rem;
-  opacity: 0.6;
+  color: rgba(18, 17, 17, 0.4);
 }
 
 .type-description {
+  color: rgba(18, 17, 17, 0.62);
   line-height: 1.7;
-  opacity: 0.9;
-  margin-bottom: 1.5rem;
+  margin: 0 auto 1.5rem;
   max-width: 500px;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 /* ---- Additional Resources Section ---- */
 .brand-resources {
-  padding: 6rem 2rem;
-  background: var(--lm-background);
+  padding: clamp(5rem, 9vw, 8rem) 2rem;
+  background: #f6f4ef;
 }
 
 .resources-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
+  gap: 1rem;
 }
 
 /* ---- Support CTA Section ---- */
 .brand-cta {
-  padding: 6rem 2rem;
-  background: linear-gradient(
-    135deg,
-    var(--secondary_color) 0%,
-    var(--primary_color) 100%
-  );
+  padding: clamp(5rem, 10vw, 8rem) 2rem;
+  background: var(--primary_color);
   color: white;
   text-align: center;
 }
@@ -368,16 +381,18 @@
 }
 
 .brand-cta h2 {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
+  color: #fff;
+  font-size: clamp(2.25rem, 5vw, 3.6rem);
+  font-weight: 500;
+  line-height: 0.98;
+  margin-bottom: 1.25rem;
 }
 
 .brand-cta p {
-  font-size: 1.2rem;
-  opacity: 0.9;
-  margin-bottom: 2.5rem;
-  line-height: 1.7;
-  color: white;
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.66);
+  margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
 .brand-cta-links {
@@ -388,25 +403,31 @@
 }
 
 .btn-primary {
-  padding: 1rem 2.5rem;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1rem;
+  min-height: 48px;
+  padding: 0.9rem 1.75rem;
+  border-radius: 8px;
+  font-weight: 650;
+  font-size: 0.98rem;
   cursor: pointer;
-  transition: all 0.3s ease;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  border: none;
-  background: white;
-  color: var(--primary_color);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid transparent;
+  background: #fff;
+  color: #121111;
+  transition:
+    transform 260ms ease,
+    background 260ms ease,
+    color 260ms ease,
+    box-shadow 260ms ease;
 }
 
 .btn-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+  /* background: #0375f6; */
+  /* color: #fff; */
 }
 
 .btn-primary svg {
@@ -415,25 +436,30 @@
 }
 
 .btn-secondary {
-  padding: 1rem 2.5rem;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1rem;
+  min-height: 48px;
+  padding: 0.9rem 1.75rem;
+  border-radius: 8px;
+  font-weight: 650;
+  font-size: 0.98rem;
   cursor: pointer;
-  transition: all 0.3s ease;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  border: 2px solid rgba(255, 255, 255, 0.5);
-  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.12);
   color: white;
+  transition:
+    transform 260ms ease,
+    background 260ms ease,
+    color 260ms ease;
 }
 
 .btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: white;
-  transform: translateY(-3px);
+  background: white;
+  color: #121111;
+  transform: translateY(-2px);
 }
 
 .btn-secondary svg {
@@ -458,32 +484,12 @@
 
 /* ---- Responsive: 768px ---- */
 @media (max-width: 768px) {
-  .brand-hero {
-    padding: 8rem 1.5rem 4rem;
-  }
-
-  .brand-hero h1 {
-    font-size: 2.5rem;
-  }
-
-  .brand-hero p {
-    font-size: 1.1rem;
-  }
-
-  .section-header h2 {
-    font-size: 2rem;
-  }
-
   .logo-grid {
     grid-template-columns: 1fr;
   }
 
   .colors-grid {
     grid-template-columns: 1fr;
-  }
-
-  .brand-cta h2 {
-    font-size: 2rem;
   }
 
   .brand-cta-links {
@@ -495,11 +501,13 @@
 /* ---- Scroll Animations ---- */
 .fade-in {
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
+  transform: translateY(34px) scale(0.98);
+  transition:
+    opacity 760ms ease,
+    transform 760ms ease;
 }
 
 .fade-in.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) scale(1);
 }
