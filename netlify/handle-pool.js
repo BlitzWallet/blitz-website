@@ -167,7 +167,8 @@ export async function handler(event, context) {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
-      "Cache-Control": "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
+      "Cache-Control":
+        "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
     },
     body: html,
   };
@@ -1861,15 +1862,6 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
         lucide.createIcons();
       })();
-    </script>
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-WNRJ7Y4RVE');
     </script>
   </body>
 </html>`;

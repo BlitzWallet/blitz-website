@@ -1021,15 +1021,6 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         lucide.createIcons();
       })();
     </script>
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-WNRJ7Y4RVE');
-    </script>
   </body>
 </html>`;
 }
