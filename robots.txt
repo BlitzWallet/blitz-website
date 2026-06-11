@@ -7,3 +7,5 @@ Disallow: /gift/
 Disallow: /pools/
 
 Sitemap: https://blitzwalletapp.com/sitemap.xml
+LLMs: https://blitzwalletapp.com/llms.txt
+LLMs-Full: https://blitzwalletapp.com/llms-full.txt

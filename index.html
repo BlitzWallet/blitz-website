@@ -22,14 +22,24 @@
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
 
     <!-- Primary Meta Tags -->
-    <title>Blitz Wallet - Global Payments App on Bitcoin's Open Rails</title>
-    <meta
-      name="title"
-      content="Blitz Wallet - Global Payments App on Bitcoin’s Open Rails"
-    />
+    <title>Blitz Wallet: Send Money Anywhere, Instantly</title>
+    <meta name="title" content="Blitz Wallet: Send Money Anywhere, Instantly" />
     <meta
       name="description"
-      content="Blitz Wallet is a global payments app built on Bitcoin. Send money to contacts for free, gift Bitcoin, pool payments, and pay anyone worldwide in seconds."
+      content="Blitz Wallet is a global payments app. Send money to anyone, anywhere, in seconds, powered by Bitcoin and stablecoins."
+    />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      href="https://blitzwalletapp.com/llms.txt"
+      title="Blitz Wallet LLM guide"
+    />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      href="https://blitzwalletapp.com/llms-full.txt"
+      title="Blitz Wallet full LLM context"
     />
 
     <!-- Open Graph / Facebook -->
@@ -37,11 +47,11 @@
     <meta property="og:url" content="https://blitzwalletapp.com/" />
     <meta
       property="og:title"
-      content="Blitz Wallet - Global Payments App on Bitcoin's Open Rails"
+      content="Blitz Wallet: Send Money Anywhere, Instantly"
     />
     <meta
       property="og:description"
-      content="Blitz Wallet is a global payments app built on Bitcoin. Send money to contacts for free, gift Bitcoin, pool payments, and pay anyone worldwide in seconds."
+      content="Send money to anyone, anywhere, in seconds. The global payments app powered by Bitcoin and stablecoins."
     />
     <meta
       property="og:image"
@@ -57,11 +67,11 @@
     <meta property="twitter:url" content="https://blitzwalletapp.com/" />
     <meta
       property="twitter:title"
-      content="Blitz Wallet - Global Payments App on Bitcoin's Open Rails"
+      content="Blitz Wallet: Send Money Anywhere, Instantly"
     />
     <meta
       property="twitter:description"
-      content="Blitz Wallet is a global payments app built on Bitcoin. Send money to contacts for free, gift Bitcoin, pool payments, and pay anyone worldwide in seconds."
+      content="Send money to anyone, anywhere, in seconds. The global payments app powered by Bitcoin and stablecoins."
     />
 
     <link rel="stylesheet" href="./src/assets/styles/index.css" />
@@ -111,12 +121,66 @@
             "operatingSystem": "iOS, Android, Web",
             "applicationCategory": "FinanceApplication",
             "url": "https://blitzwalletapp.com/",
-            "description": "Blitz Wallet is a global, self-custodial Bitcoin payments app. Send money to contacts for free, gift Bitcoin, pool payments, and pay anyone worldwide instantly.",
+            "description": "Blitz Wallet is a global payments app for sending money to anyone, anywhere. Payments are free between contacts, instant across borders, powered by Bitcoin and stablecoins, and designed so users stay in control of their own funds.",
+            "keywords": "global payments app, send money internationally, free payments app, Bitcoin wallet, stablecoin payments, Lightning wallet, Spark wallet, payment links, Bitcoin gifts, group payments, Bitcoin point of sale",
+            "downloadUrl": [
+              "https://apps.apple.com/us/app/blitz-wallet/id6476810582",
+              "https://play.google.com/store/apps/details?id=com.blitzwallet",
+              "https://wallet.blitzwalletapp.com/"
+            ],
+            "featureList": [
+              "Free contact payments",
+              "International payments",
+              "Bitcoin gifts",
+              "Payment links",
+              "Group payment pools",
+              "Stablecoin swaps",
+              "Merchant point of sale",
+              "Independent wallet recovery"
+            ],
             "offers": {
               "@type": "Offer",
               "price": "0",
               "priceCurrency": "USD"
             }
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://blitzwalletapp.com/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is Blitz Wallet?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Blitz Wallet is a global payments app for sending money to anyone, anywhere. It supports contact payments, Bitcoin gifts, payment links, group pools, point-of-sale, Bitcoin, and stablecoins."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is Blitz Wallet self-custodial?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Blitz Wallet is designed so users stay in control of their funds. Blitz does not hold user balances like a bank or custodial exchange."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can businesses accept payments with Blitz?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Blitz Point of Sale helps merchants accept Bitcoin and stablecoin payments, track confirmations, and manage tips."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How is Blitz different from Cash App, Strike, and Wallet of Satoshi?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Blitz focuses on simple global payments with contact payments, gifts, pools, payment links, stablecoins, merchant tools, and self-custody. It is broader than a Lightning-only wallet and more globally open than domestic bank-based payment apps."
+                }
+              }
+            ]
           }
         ]
       }
@@ -132,7 +196,7 @@
         /></a>
         <ul class="nav-links">
           <li><a href="#products">Products</a></li>
-          <li><a href="#why-use">Features</a></li>
+          <li><a href="#features">Features</a></li>
           <li><a href="/pages/about">About</a></li>
           <li><a href="/pages/contact/">Contact</a></li>
           <li>
@@ -158,12 +222,12 @@
                 <span class="hero-rotate-word">borders</span>
                 <span class="hero-rotate-word">banks</span>
                 <span class="hero-rotate-word">limits</span>
-                <span class="hero-rotate-word">permission</span>
+                <span class="hero-rotate-word">waiting</span>
               </span>
             </h1>
             <p>
-              Send Bitcoin to anyone, anywhere, in seconds. No bank, no
-              middleman, no permission. Just your money.
+              Send money to anyone, anywhere, in seconds. As easy as a text,
+              powered by Bitcoin.
             </p>
             <div class="hero-actions">
               <a href="#" class="btn-primary download-btn hero-cta">
@@ -187,13 +251,13 @@
       </div>
     </section>
 
-    <section class="why-use" id="why-use">
+    <section class="why-use" id="features">
       <div class="why-use-header fade-in">
         <span class="section-label">Why use Blitz</span>
         <h2>Everything You Need to Pay Anyone, Anywhere</h2>
         <p>
           Free contact payments, gifts, pools, payment links, and stablecoin
-          swaps. One wallet built on Bitcoin's open rails.
+          swaps. One simple wallet, powered by Bitcoin.
         </p>
       </div>
 
@@ -349,10 +413,11 @@
             <i data-lucide="shield-check"></i>
           </div>
           <div class="feature-copy">
-            <h3>Fully Self-Custodial</h3>
+            <h3>Your Money Stays Yours</h3>
             <p>
-              Your keys, your money. Hold Bitcoin and stablecoins without giving
-              a bank or exchange control over your balance.
+              Your balance lives in your wallet, not ours. Hold Bitcoin and
+              stablecoins with no bank or exchange holding your funds. It is
+              fully self-custodial, so only you can access your money.
             </p>
           </div>
         </article>
@@ -364,8 +429,8 @@
           <div class="feature-copy">
             <h3>Receive Anytime, Offline</h3>
             <p>
-              Receive funds even when your phone is off, with no channels to
-              manage and no always-on node to run.
+              Get paid even when your phone is off. No setup to manage and
+              nothing to keep running in the background.
             </p>
           </div>
         </article>
@@ -374,8 +439,8 @@
 
     <section class="manifesto">
       <p class="reveal-words">
-        Traditional payments slow you down. Banks add borders, fees, and
-        permission. Blitz puts payments back in your hands.
+        Sending money shouldn't be slow, expensive, or stuck at a border. Blitz
+        makes paying anyone, across the room or across the world, simple.
       </p>
     </section>
 
@@ -562,8 +627,8 @@
       <div class="cta-content">
         <h2>Ready to Send Money Without Borders?</h2>
         <p>
-          Join thousands using Bitcoin's open rails to pay anyone, anywhere,
-          instantly and for free
+          Join thousands using Blitz to pay anyone, anywhere, instantly and for
+          free
         </p>
         <a href="#" class="btn-primary download-btn hero-cta">
           Download now <i data-lucide="arrow-right"></i>

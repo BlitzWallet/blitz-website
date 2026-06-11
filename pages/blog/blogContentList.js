@@ -5,7 +5,7 @@ export const postList = [
     type: "Release", // Can be "Release", "Learn", or "Podcast"
     title: "Why We Need More Familiarity in Bitcoin’s User Experience ",
     description:
-      "Bitcoin adoption stalls not because the technology lacks value, but because unfamiliar user experiences amplify perceived risk—making familiarity, not education or ideology, the real driver of mass adoption.",
+      "Bitcoin adoption stalls not because the technology lacks value, but because unfamiliar user experiences amplify perceived risk - making familiarity, not education or ideology, the real driver of mass adoption.",
     htmlPageLink: "/pages/blog/bitcoin-familiarity",
     searchName: "bitcoin-familiarity",
     readingLengthEST: 2, //In minutes
@@ -50,9 +50,9 @@ export const postList = [
   },
   {
     type: "Learn", // Can be "Release", "Learn", or "Podcast"
-    title: "Day 3/14: Privacy On the Go – VPN Access with Bitcoin",
+    title: "Day 3/14: Privacy On the Go - VPN Access with Bitcoin",
     description:
-      "Protect your privacy with Blitz Wallet’s VPN integration via LNVPN. For the first time, you can buy VPN access directly with Bitcoin — pay by the hour or the quarter, no subscriptions, no hassle.",
+      "Protect your privacy with Blitz Wallet’s VPN integration via LNVPN. For the first time, you can buy VPN access directly with Bitcoin  -  pay by the hour or the quarter, no subscriptions, no hassle.",
     htmlPageLink: "/pages/blog/vpn-access-with-bitcoin",
     searchName: "vpn-access-with-bitcoin",
     readingLengthEST: 2, //In minutes
@@ -67,7 +67,7 @@ export const postList = [
     type: "Learn", // Can be "Release", "Learn", or "Podcast"
     title: "Day 2/14: Send Gift Cards to Contacts",
     description:
-      "Send gift cards to friends instantly — no codes, no emails, just wallet-to-phone. A first in Bitcoin wallets with Blitz.",
+      "Send gift cards to friends instantly  -  no codes, no emails, just wallet-to-phone. A first in Bitcoin wallets with Blitz.",
     htmlPageLink: "/pages/blog/send-gifts-to-contacts",
     searchName: "send-gifts-to-contacts",
     readingLengthEST: 2, //In minutes
@@ -82,7 +82,7 @@ export const postList = [
     type: "Learn", // Can be "Release", "Learn", or "Podcast"
     title: "Day 1/14: Gift Cards in Seconds",
     description:
-      "Turn your Bitcoin into real-world spending power instantly. With Blitz Wallet’s integration with the Bitcoin Company, you can buy gift cards in seconds—no exchanges, no middlemen, just seamless Bitcoin spending.",
+      "Turn your Bitcoin into real-world spending power instantly. With Blitz Wallet’s integration with the Bitcoin Company, you can buy gift cards in seconds - no exchanges, no middlemen, just seamless Bitcoin spending.",
     htmlPageLink: "/pages/blog/gift-cards-in-seconds",
     searchName: "gift-cards-in-seconds",
     readingLengthEST: 2, //In minutes
