@@ -1006,10 +1006,6 @@
   place-items: center;
 }
 
-.feature-card-metric .feature-copy {
-  text-align: center;
-}
-
 .feature-fees {
   min-height: 170px;
   color: rgba(18, 17, 17, 0.14);
