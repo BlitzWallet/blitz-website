@@ -1,6 +1,62 @@
+const PREVIEW_HTML_CACHE_SECONDS = numberFromEnv(
+  process.env.PREVIEW_HTML_CACHE_SECONDS,
+  31_536_000,
+);
+const PREVIEW_HTML_FAILURE_CACHE_SECONDS = numberFromEnv(
+  process.env.PREVIEW_HTML_FAILURE_CACHE_SECONDS,
+  60,
+);
+const PAYLINK_DATA_CACHE_TTL_MS = numberFromEnv(
+  process.env.PAYLINK_DATA_CACHE_TTL_MS,
+  PREVIEW_HTML_CACHE_SECONDS * 1000,
+);
+const PAYLINK_DATA_FAILURE_CACHE_TTL_MS = numberFromEnv(
+  process.env.PAYLINK_DATA_FAILURE_CACHE_TTL_MS,
+  5_000,
+);
+const PAYLINK_DATA_CACHE_MAX_ENTRIES = numberFromEnv(
+  process.env.PAYLINK_DATA_CACHE_MAX_ENTRIES,
+  500,
+);
+
+const paylinkDataCache = new Map();
+
+function numberFromEnv(value, fallback) {
+  const number = Number(value);
+  return Number.isFinite(number) && number >= 0 ? number : fallback;
+}
+
+function buildPreviewCacheHeaders(hasPreviewData) {
+  const ttl = hasPreviewData
+    ? PREVIEW_HTML_CACHE_SECONDS
+    : PREVIEW_HTML_FAILURE_CACHE_SECONDS;
+
+  return {
+    "Cache-Control": "public, max-age=0, must-revalidate",
+    "CDN-Cache-Control": `public, s-maxage=${ttl}, stale-while-revalidate=${ttl}`,
+    "Netlify-CDN-Cache-Control": `public, s-maxage=${ttl}, stale-while-revalidate=${ttl}`,
+  };
+}
+
+function readPaylinkDataCache(cacheKey) {
+  const cached = paylinkDataCache.get(cacheKey);
+  if (!cached) return null;
+  if (cached.expiresAt > Date.now()) return cached;
+  paylinkDataCache.delete(cacheKey);
+  return null;
+}
+
+function writePaylinkDataCache(cacheKey, entry) {
+  if (paylinkDataCache.size >= PAYLINK_DATA_CACHE_MAX_ENTRIES) {
+    const oldestKey = paylinkDataCache.keys().next().value;
+    if (oldestKey) paylinkDataCache.delete(oldestKey);
+  }
+  paylinkDataCache.set(cacheKey, entry);
+}
+
 // ── 1. Fetch paylink data from Cloud Function ──────────────────────────────
 
-async function fetchPaylinkData(paylinkId, baseUrl) {
+async function fetchFreshPaylinkData(paylinkId, baseUrl) {
   try {
     const res = await fetch(baseUrl + "/getPaylinkData", {
       method: "POST",
@@ -27,6 +83,30 @@ async function fetchPaylinkData(paylinkId, baseUrl) {
     console.error("[handle-paylink] fetch error:", err.message);
     return null;
   }
+}
+
+async function fetchPaylinkData(paylinkId, baseUrl) {
+  const cacheKey = String(paylinkId || "").trim();
+  if (!cacheKey) return null;
+
+  const cached = readPaylinkDataCache(cacheKey);
+  if (cached?.promise) return cached.promise;
+  if (cached && "data" in cached) return cached.data;
+
+  const promise = fetchFreshPaylinkData(cacheKey, baseUrl);
+  writePaylinkDataCache(cacheKey, {
+    promise,
+    expiresAt: Date.now() + PAYLINK_DATA_CACHE_TTL_MS,
+  });
+
+  const data = await promise;
+  writePaylinkDataCache(cacheKey, {
+    data,
+    expiresAt:
+      Date.now() +
+      (data ? PAYLINK_DATA_CACHE_TTL_MS : PAYLINK_DATA_FAILURE_CACHE_TTL_MS),
+  });
+  return data;
 }
 
 // ── 2. Format amount label ─────────────────────────────────────────────────
@@ -99,6 +179,7 @@ export async function handler(event, context) {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
+      ...buildPreviewCacheHeaders(!!paylinkData),
     },
     body: html,
   };
@@ -1352,6 +1433,7 @@ function generateHTML({
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
       const PAYLINK_ID = ${JSON.stringify(paylinkId)};
       const PAYLINK_DATA = ${inlinedData};
+      let currentPaylinkData = PAYLINK_DATA;
       const SWAP_STORAGE_KEY = \`paylink_swap_\${PAYLINK_ID}\`;
       const SWAP_HISTORY_KEY = 'blitz_swap_history'
 
@@ -1791,14 +1873,14 @@ function generateHTML({
       // ── Stablecoin flow ───────────────────────────────────────────────
       function showNetworkSelect() {
         let satAmount;
-        const rawAmt   = Number(PAYLINK_DATA?.rawAmount   ?? 0);
-        const btcPrice = Number(PAYLINK_DATA?.bitcoinPrice ?? 0);
-        if (PAYLINK_DATA?.currencyType !== 'BTC' && rawAmt > 0 && btcPrice > 0) {
+        const rawAmt   = Number(currentPaylinkData?.rawAmount   ?? 0);
+        const btcPrice = Number(currentPaylinkData?.bitcoinPrice ?? 0);
+        if (currentPaylinkData?.currencyType !== 'BTC' && rawAmt > 0 && btcPrice > 0) {
           // Dollar-type paylink with rawAmount present: convert to sats for min check
           satAmount = Math.round((rawAmt / btcPrice) * 100_000_000);
         } else {
           // BTC type, or older dollar paylink without rawAmount/bitcoinPrice — use sats directly
-          satAmount = ${amount};
+          satAmount = Number(currentPaylinkData?.amount ?? ${amount});
         }
         if (satAmount < 1300) {
           showAlert('Minimum USDC/USDT amount is ${formatAmountLabel({ amount: 1300 })}');
@@ -2053,6 +2135,50 @@ function generateHTML({
         showAlert('Text copied successfully!')
       }
 
+      async function fetchCurrentPaylinkData() {
+        try {
+          const res = await fetch('/getPaylinkData', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              paylinkId: PAYLINK_ID,
+              shouldLoadBitcoinPrice: true,
+            }),
+            cache: 'no-store',
+            signal: AbortSignal.timeout(6000),
+          });
+          if (!res.ok) return { data: null, notFound: false };
+          const json = await res.json();
+          if (json?.status !== 'SUCCESS') {
+            return { data: null, notFound: true };
+          }
+          return { data: json?.data ?? null, notFound: !json?.data };
+        } catch (err) {
+          return { data: null, notFound: false };
+        }
+      }
+
+      function showPaylinkUnavailable() {
+        const initialScreen = document.getElementById('screen-initial');
+        if (!initialScreen) return;
+        initialScreen.innerHTML = \`
+          <div class="error-box">
+            <h2>Payment Request Not Found</h2>
+            <p>This paylink doesn't exist or has expired.</p>
+          </div>
+        \`;
+      }
+
+      function updatePaidNotice(data) {
+        const paidNotice = document.getElementById('paid-notice');
+        const isPaid = !!data?.isPaid;
+        if (paidNotice) paidNotice.style.display = isPaid ? 'block' : 'none';
+        ['btn-btc', 'btn-stable', 'btn-cashapp'].forEach(function(id) {
+          const el = document.getElementById(id);
+          if (el) el.style.display = isPaid ? 'none' : '';
+        });
+      }
+
 
       // ── payment polling ───────────────────────────────────────────────
       // Unbounded polling while a payer waits on an invoice/deposit (LN flow).
@@ -2122,17 +2248,14 @@ function generateHTML({
 
       // ── init ──────────────────────────────────────────────────────────
       document.addEventListener('DOMContentLoaded', async () => {
-        // isPaid is already inlined in PAYLINK_DATA by the server handler, so we
-        // read it directly — no extra round-trip (and no Spark wallet init) just
-        // to render the "already completed" notice on a fresh page view.
-        const paidNotice = document.getElementById('paid-notice');
-        if (PAYLINK_DATA && PAYLINK_DATA.isPaid) {
-          if (paidNotice) paidNotice.style.display = 'block';
-          ['btn-btc', 'btn-stable', 'btn-cashapp'].forEach(function(id) {
-            const el = document.getElementById(id);
-            if (el) el.style.display = 'none';
-          });
+        const livePaylink = await fetchCurrentPaylinkData();
+        if (livePaylink.data) {
+          currentPaylinkData = livePaylink.data;
+        } else if (livePaylink.notFound) {
+          currentPaylinkData = null;
+          showPaylinkUnavailable();
         }
+        updatePaidNotice(currentPaylinkData);
 
         // Resume if we have a txHash from a previous stablecoin submission.
         // Discard stale Lendaswap entries (those have a swapId key).

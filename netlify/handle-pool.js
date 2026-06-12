@@ -1,15 +1,43 @@
-const POOL_DATA_CACHE_TTL_MS = Number(
-  process.env.POOL_DATA_CACHE_TTL_MS ?? 60_000,
+const PREVIEW_HTML_CACHE_SECONDS = numberFromEnv(
+  process.env.PREVIEW_HTML_CACHE_SECONDS,
+  31_536_000,
 );
-const POOL_DATA_CACHE_MAX_ENTRIES = Number(
-  process.env.POOL_DATA_CACHE_MAX_ENTRIES ?? 250,
+const PREVIEW_HTML_FAILURE_CACHE_SECONDS = numberFromEnv(
+  process.env.PREVIEW_HTML_FAILURE_CACHE_SECONDS,
+  60,
+);
+const POOL_DATA_CACHE_TTL_MS = numberFromEnv(
+  process.env.POOL_DATA_CACHE_TTL_MS,
+  PREVIEW_HTML_CACHE_SECONDS * 1000,
+);
+const POOL_DATA_CACHE_MAX_ENTRIES = numberFromEnv(
+  process.env.POOL_DATA_CACHE_MAX_ENTRIES,
+  250,
 );
 // Failed fetches are cached briefly so one timeout doesn't serve
 // "pool does not exist" for the full TTL.
-const POOL_DATA_FAILURE_CACHE_TTL_MS = Number(
-  process.env.POOL_DATA_FAILURE_CACHE_TTL_MS ?? 5_000,
+const POOL_DATA_FAILURE_CACHE_TTL_MS = numberFromEnv(
+  process.env.POOL_DATA_FAILURE_CACHE_TTL_MS,
+  5_000,
 );
 const poolDataCache = new Map();
+
+function numberFromEnv(value, fallback) {
+  const number = Number(value);
+  return Number.isFinite(number) && number >= 0 ? number : fallback;
+}
+
+function buildPreviewCacheHeaders(hasPreviewData) {
+  const ttl = hasPreviewData
+    ? PREVIEW_HTML_CACHE_SECONDS
+    : PREVIEW_HTML_FAILURE_CACHE_SECONDS;
+
+  return {
+    "Cache-Control": "public, max-age=0, must-revalidate",
+    "CDN-Cache-Control": `public, s-maxage=${ttl}, stale-while-revalidate=${ttl}`,
+    "Netlify-CDN-Cache-Control": `public, s-maxage=${ttl}, stale-while-revalidate=${ttl}`,
+  };
+}
 
 function readPoolDataCache(cacheKey) {
   const cached = poolDataCache.get(cacheKey);
@@ -58,6 +86,7 @@ async function fetchPoolData(poolId, baseUrl) {
   if (!cacheKey) return null;
 
   const cached = readPoolDataCache(cacheKey);
+  console.log(cached);
   if (cached?.promise) return cached.promise;
   if (cached && "data" in cached) return cached.data;
 
@@ -174,8 +203,7 @@ export async function handler(event, context) {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
-      "Cache-Control":
-        "public, max-age=0, s-maxage=60, stale-while-revalidate=300",
+      ...buildPreviewCacheHeaders(!!poolData),
     },
     body: html,
   };
@@ -1123,7 +1151,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       const BOLT11_DECODER_URL = 'https://esm.sh/light-bolt11-decoder@3.2.0';
       // Optional: the pool receiving wallet's spark address (sp1...). When set,
       // enables transfer-based detection for invoices without a sparkInvoice.
-      const POOL_WALLET_SPARK_ADDRESS = POOL_DATA?.sparkAddress;
+      let poolWalletSparkAddress = POOL_DATA?.sparkAddress || null;
       const SPARK_POLL_MS = 5000;
       const BACKEND_SAFETY_POLL_MS = 60000;
       const DEFAULT_INVOICE_EXPIRY_SECONDS = 3600;
@@ -1150,28 +1178,31 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         return 'other';
       }
 
+      function applyPoolData(data) {
+        poolData = data || null;
+        btcPrice = data?.btcPrice || null;
+        poolCurrency = data?.poolDenomination || 'USD';
+        displayDenomination = poolCurrency;
+        poolWalletSparkAddress = data?.sparkAddress || null;
+        return poolData;
+      }
+
       async function fetchPoolData() {
         try {
           const response = await fetch('/getPoolData', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ poolId })
+            body: JSON.stringify({ poolId }),
+            cache: 'no-store'
           });
           if (!response.ok) throw new Error('Failed to fetch pool data');
           const {data,status} = await response.json();
-          if (status !== 'SUCCESS')throw new Error('Failed to feth pool data')
+          if (status !== 'SUCCESS') return { data: null, error: null, notFound: true };
 
-          
-          // Extract btcPrice and poolDenomination
-          if (data && data.btcPrice && data.btcPrice > 0) {
-            btcPrice = data.btcPrice;
-            poolCurrency = data.poolDenomination || 'USD';
-            displayDenomination = poolCurrency;
-          }
-
-          return { data, error: null };
+          applyPoolData(data);
+          return { data, error: null, notFound: !data };
         } catch (error) {
-          return { data: null, error: error.message };
+          return { data: null, error: error.message, notFound: false };
         }
       }
 
@@ -1651,7 +1682,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       let bolt11DecoderPromise = null;
 
       function sparkDetectorAvailable() {
-        return !sparkDetectorDisabled && !!POOL_WALLET_SPARK_ADDRESS;
+        return !sparkDetectorDisabled && !!poolWalletSparkAddress;
       }
 
       function backendBackoffDelay() {
@@ -1682,7 +1713,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       async function sparkCheckPaid() {
         const client = await getSparkClient();
         const out = await client.getTransfers({
-          sparkAddress: POOL_WALLET_SPARK_ADDRESS,
+          sparkAddress: poolWalletSparkAddress,
           limit: 20,
           createdAfter: new Date(invoiceCreatedAtMs - 60000),
         });
@@ -1863,8 +1894,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         showStep('info');
         const { data } = await fetchPoolData();
         if (data) {
-          poolData = data;
-          renderPoolInfo(data, data.contributions || []);
+          renderPoolInfo(poolData, poolData.contributions || []);
         }
       }
 
@@ -1928,17 +1958,16 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       });
 
       document.addEventListener('DOMContentLoaded', async () => {
-        let initialData = POOL_DATA;
-        if (!initialData) {
-          // The server render may have hit a transient getPoolData failure —
-          // retry once from the client before declaring the pool missing.
-          const { data } = await fetchPoolData();
-          if (data) initialData = data;
+        const livePool = await fetchPoolData();
+        let initialData = livePool.data;
+        console.log(initialData,!initialData)
+        if (!initialData && !livePool.notFound) {
+          // Cached preview HTML can be stale; use embedded data only when the
+          // fresh page-load fetch failed or timed out.
+          initialData = POOL_DATA;
+          if (initialData) applyPoolData(initialData);
         }
-        btcPrice = initialData?.btcPrice;
-        poolData = initialData;
-        poolCurrency = initialData?.poolDenomination || 'USD';
-        displayDenomination = poolCurrency;
+        if (!initialData) applyPoolData(null);
         renderPoolInfo(initialData, initialData?.contributions || []);
       });
     </script>
