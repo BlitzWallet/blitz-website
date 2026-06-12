@@ -4,6 +4,11 @@ const POOL_DATA_CACHE_TTL_MS = Number(
 const POOL_DATA_CACHE_MAX_ENTRIES = Number(
   process.env.POOL_DATA_CACHE_MAX_ENTRIES ?? 250,
 );
+// Failed fetches are cached briefly so one timeout doesn't serve
+// "pool does not exist" for the full TTL.
+const POOL_DATA_FAILURE_CACHE_TTL_MS = Number(
+  process.env.POOL_DATA_FAILURE_CACHE_TTL_MS ?? 5_000,
+);
 const poolDataCache = new Map();
 
 function readPoolDataCache(cacheKey) {
@@ -65,7 +70,9 @@ async function fetchPoolData(poolId, baseUrl) {
   const data = await promise;
   writePoolDataCache(cacheKey, {
     data,
-    expiresAt: Date.now() + POOL_DATA_CACHE_TTL_MS,
+    expiresAt:
+      Date.now() +
+      (data ? POOL_DATA_CACHE_TTL_MS : POOL_DATA_FAILURE_CACHE_TTL_MS),
   });
   return data;
 }
@@ -1109,12 +1116,23 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
       const POOL_DATA = ${inlinedData};
       const poolId = ${inlinedPoolId};
+
+      // Payment detection config. Status checks go straight to Spark's free
+      // read-only API; the Blitz backend is only called to confirm + record.
+      const SPARK_SDK_URL = 'https://esm.sh/@buildonspark/spark-sdk@0.8.6?bundle';
+      const BOLT11_DECODER_URL = 'https://esm.sh/light-bolt11-decoder@3.2.0';
+      // Optional: the pool receiving wallet's spark address (sp1...). When set,
+      // enables transfer-based detection for invoices without a sparkInvoice.
+      const POOL_WALLET_SPARK_ADDRESS = POOL_DATA?.sparkAddress;
+      const SPARK_POLL_MS = 5000;
+      const BACKEND_SAFETY_POLL_MS = 60000;
+      const DEFAULT_INVOICE_EXPIRY_SECONDS = 3600;
+
       let pageHidden = false;
       let poolData = null;
       let selectedAmountSats = 0;
       let currentStep = 'info';
-      let paymentPollInterval = null;
-      let isPolling = false;
+      let paymentActive = false;
       let invoiceError = '';
 
       // Denomination state
@@ -1143,7 +1161,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           const {data,status} = await response.json();
           if (status !== 'SUCCESS')throw new Error('Failed to feth pool data')
 
-          console.log(data)
+          
           // Extract btcPrice and poolDenomination
           if (data && data.btcPrice && data.btcPrice > 0) {
             btcPrice = data.btcPrice;
@@ -1179,11 +1197,11 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ invoiceId })
           });
-          if (!response.ok) throw new Error('Failed to check payment');
+          if (!response.ok) return { paid: false, error: true };
           const data = await response.json();
           return data;
         } catch {
-          return { paid: false };
+          return { paid: false, error: true };
         }
       }
 
@@ -1351,7 +1369,6 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                     : PRESET_AMOUNTS_FIAT.map(fiat => {
                         const sats = fiatToSats(fiat);
                         const formatted = formatCurrency({ amount: fiat, code: displayDenomination })[0];
-                        console.log({fiat, sats, formatted,displayDenomination})
                         return \`<button class="amount-option" onclick="selectPreset(\${sats}, this)" data-sats="\${sats}">\${formatted}</button>\`;
                       }).join('')
                   }
@@ -1411,8 +1428,16 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                   <span style="margin-left:0.25rem;">Waiting for payment</span>
                 </div>
 
+                <div class="expired-notice" id="invoiceExpiredNotice" style="display:none;">
+                  This invoice has expired. Generate a new one to contribute.
+                </div>
+
                 <button class="copy-invoice-btn" onclick="copyInvoice()" id="copyInvoiceBtn">
                   Copy Invoice
+                </button>
+
+                <button class="btn-primary" id="regenerateInvoiceBtn" style="display:none;" onclick="regenerateInvoice()">
+                  Generate New Invoice
                 </button>
               </div>
 
@@ -1540,6 +1565,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         // Update name step amount display
         showStep('payment');
         lucide.createIcons();
+        resetPaymentStepUI();
 
         document.getElementById('paymentAmountDisplay').textContent = formatAmount(selectedAmountSats, displayDenomination);
 
@@ -1602,46 +1628,228 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         }
       }
 
-      async function pollPayment() {
-        if (isPolling) return;
-        if (document.hidden || document.visibilityState === 'hidden') return;
-        
-        isPolling = true;
+      // ── Payment detection ──────────────────────────────────────────────
+      // Layer 1 polls Spark's read-only API every 5s (no Blitz backend cost).
+      // Layer 2 calls /checkPoolPayment: a 60s safety net while the Spark
+      // detector works, or a backoff poll (5s→10s→20s→30s) when it doesn't.
+      // Everything stops once the invoice expires.
+
+      let invoiceAmountSats = 0;
+      let invoiceCreatedAtMs = 0;
+      let invoiceExpiresAtMs = 0;
+      let sparkTimer = null;
+      let backendTimer = null;
+      // Transfer ids the backend has already rejected for this invoice. The
+      // Spark pre-filter only matches by amount, so two screens picking the
+      // same amount both match a single payment's transfer; once the backend
+      // says a transfer isn't ours we stop re-checking it.
+      const triedTransferIds = new Set();
+      let sparkDetectorDisabled = false;
+      let backendCheckInFlight = false;
+      let sparkSdkPromise = null;
+      let sparkClient = null;
+      let bolt11DecoderPromise = null;
+
+      function sparkDetectorAvailable() {
+        return !sparkDetectorDisabled && !!POOL_WALLET_SPARK_ADDRESS;
+      }
+
+      function backendBackoffDelay() {
+        const elapsed = Date.now() - invoiceCreatedAtMs;
+        if (elapsed < 60000) return 5000;
+        if (elapsed < 180000) return 10000;
+        if (elapsed < 600000) return 20000;
+        return 30000;
+      }
+
+      function invoiceHasExpired() {
+        return !!invoiceExpiresAtMs && Date.now() >= invoiceExpiresAtMs;
+      }
+
+      async function getSparkClient() {
+        if (sparkClient) return sparkClient;
+        if (!sparkSdkPromise) sparkSdkPromise = import(SPARK_SDK_URL);
+        const sdk = await sparkSdkPromise;
+        sparkClient = sdk.SparkReadonlyClient.createPublic({ network: 'MAINNET' });
+        return sparkClient;
+      }
+
+      // Pre-filter: ask Spark (not the Blitz backend) for transfers to the pool
+      // wallet that match this invoice's amount and haven't already been
+      // rejected by the backend. Returns the array of new candidate transfer
+      // ids ([] when none). Matching by amount is not unique, so the backend
+      // is what ultimately confirms a given candidate is ours.
+      async function sparkCheckPaid() {
+        const client = await getSparkClient();
+        const out = await client.getTransfers({
+          sparkAddress: POOL_WALLET_SPARK_ADDRESS,
+          limit: 20,
+          createdAfter: new Date(invoiceCreatedAtMs - 60000),
+        });
+        const transfers = (out && out.transfers) || [];
+        return transfers
+          .filter(function (t) {
+            return Number(t.totalValue) === invoiceAmountSats && !triedTransferIds.has(t.id);
+          })
+          .map(function (t) { return t.id; });
+      }
+
+      function scheduleSparkCheck(delayMs) {
+        if (sparkTimer) clearTimeout(sparkTimer);
+        sparkTimer = setTimeout(sparkLoop, delayMs);
+      }
+
+      function scheduleBackendCheck(delayMs) {
+        if (backendTimer) clearTimeout(backendTimer);
+        backendTimer = setTimeout(backendLoop, delayMs);
+      }
+
+      async function sparkLoop() {
+        sparkTimer = null;
+        if (!paymentActive || !sparkDetectorAvailable()) return;
+        if (invoiceHasExpired()) { handleInvoiceExpired(); return; }
+        if (!document.hidden) {
+          try {
+            const newTransferIds = await sparkCheckPaid();
+            if (!paymentActive) return;
+            if (newTransferIds.length) {
+              const result = await confirmWithBackend();
+              if (!paymentActive) return;
+              if (result === true) return; // paid — success UI already shown
+              if (result === false) {
+                // Backend says our invoice isn't paid, so none of these
+                // transfers belong to this screen. Stop re-checking them.
+                newTransferIds.forEach(function (id) { triedTransferIds.add(id); });
+              }
+              // result === null (in flight / backend error): leave untried, retry.
+            }
+          } catch (error) {
+            console.error('Spark status check failed, falling back to backend polling:', error);
+            sparkDetectorDisabled = true;
+            scheduleBackendCheck(backendBackoffDelay());
+            return;
+          }
+        }
+        scheduleSparkCheck(SPARK_POLL_MS);
+      }
+
+      async function backendLoop() {
+        backendTimer = null;
+        if (!paymentActive) return;
+        if (invoiceHasExpired()) { handleInvoiceExpired(); return; }
+        if (!document.hidden) {
+          const confirmed = await confirmWithBackend();
+          if (confirmed || !paymentActive) return;
+        }
+        scheduleBackendCheck(sparkDetectorAvailable() ? BACKEND_SAFETY_POLL_MS : backendBackoffDelay());
+      }
+
+      // The backend confirm is what records the contribution in Firestore, so
+      // it always runs at least once even when Spark already reports paid.
+      async function confirmWithBackend() {
+        if (backendCheckInFlight) return null;
+        backendCheckInFlight = true;
         try {
           const result = await checkPayment(currentInvoiceId);
+          if (!paymentActive) return null;
           if (result.paid) {
             stopPaymentPolling();
             showStep('success');
             lucide.createIcons();
-          } else {
-            // Wait 5 seconds before next poll
-            setTimeout(() => {
-              isPolling = false;
-              if (paymentPollInterval) {
-                pollPayment();
-              }
-            }, 5000);
+            return true;
           }
-        } catch (error) {
-          console.error('Poll error:', error);
-          setTimeout(() => {
-            isPolling = false;
-            if (paymentPollInterval) {
-              pollPayment();
-            }
-          }, 3000);
+          if (result.error) return null; // transient — don't mark tried, retry
+          return false; // genuine not-paid → safe to mark candidates tried
+        } finally {
+          backendCheckInFlight = false;
         }
       }
 
+      async function resolveInvoiceExpiry() {
+        invoiceExpiresAtMs = invoiceCreatedAtMs + DEFAULT_INVOICE_EXPIRY_SECONDS * 1000;
+        try {
+          if (!bolt11DecoderPromise) bolt11DecoderPromise = import(BOLT11_DECODER_URL);
+          const decoder = await bolt11DecoderPromise;
+          const decoded = decoder.decode(currentInvoice);
+          let timestamp = 0;
+          let expiry = DEFAULT_INVOICE_EXPIRY_SECONDS;
+          (decoded.sections || []).forEach(function (section) {
+            if (section.name === 'timestamp') timestamp = Number(section.value);
+            if (section.name === 'expiry') expiry = Number(section.value);
+          });
+          if (timestamp > 0 && expiry > 0) invoiceExpiresAtMs = (timestamp + expiry) * 1000;
+        } catch (error) {
+          console.error('Could not decode invoice expiry, using default:', error);
+        }
+      }
+
+      async function handleInvoiceExpired() {
+        if (!paymentActive) return;
+        stopPaymentPolling();
+        // One final check in case the payment landed at the buzzer.
+        const result = await checkPayment(currentInvoiceId);
+        if (result.paid) {
+          showStep('success');
+          lucide.createIcons();
+          return;
+        }
+        showInvoiceExpiredUI();
+      }
+
+      function showInvoiceExpiredUI() {
+        if (currentStep !== 'payment') return;
+        const notice = document.getElementById('invoiceExpiredNotice');
+        const regen = document.getElementById('regenerateInvoiceBtn');
+        const waiting = document.querySelector('#step-payment .waiting-text');
+        const copyBtn = document.getElementById('copyInvoiceBtn');
+        const qr = document.getElementById('qrCodeContainer');
+        if (notice) notice.style.display = 'block';
+        if (regen) regen.style.display = 'block';
+        if (waiting) waiting.style.display = 'none';
+        if (copyBtn) copyBtn.style.display = 'none';
+        if (qr) qr.style.opacity = '0.25';
+      }
+
+      function resetPaymentStepUI() {
+        const notice = document.getElementById('invoiceExpiredNotice');
+        const regen = document.getElementById('regenerateInvoiceBtn');
+        const waiting = document.querySelector('#step-payment .waiting-text');
+        const copyBtn = document.getElementById('copyInvoiceBtn');
+        const qr = document.getElementById('qrCodeContainer');
+        if (notice) notice.style.display = 'none';
+        if (regen) regen.style.display = 'none';
+        if (waiting) waiting.style.display = 'flex';
+        if (copyBtn) copyBtn.style.display = '';
+        if (qr) qr.style.opacity = '1';
+      }
+
+      function regenerateInvoice() {
+        stopPaymentPolling();
+        resetPaymentStepUI();
+        showStep('name');
+        lucide.createIcons();
+      }
+
       function startPaymentPolling() {
-        if (paymentPollInterval) return;
-        paymentPollInterval = true;
-        pollPayment();
+        stopPaymentPolling();
+        paymentActive = true;
+        sparkDetectorDisabled = false;
+        triedTransferIds.clear();
+        invoiceAmountSats = selectedAmountSats;
+        invoiceCreatedAtMs = Date.now();
+        resolveInvoiceExpiry();
+        if (sparkDetectorAvailable()) {
+          scheduleSparkCheck(SPARK_POLL_MS);
+          scheduleBackendCheck(BACKEND_SAFETY_POLL_MS);
+        } else {
+          scheduleBackendCheck(backendBackoffDelay());
+        }
       }
 
       function stopPaymentPolling() {
-        paymentPollInterval = null;
-        isPolling = false;
+        paymentActive = false;
+        if (sparkTimer) { clearTimeout(sparkTimer); sparkTimer = null; }
+        if (backendTimer) { clearTimeout(backendTimer); backendTimer = null; }
       }
 
       function cancelPayment() {
@@ -1704,9 +1912,13 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           pageHidden = true;
         } else {
           pageHidden = false;
-          // Resume polling if an invoice is active.
-          if (paymentPollInterval && !isPolling) {
-            pollPayment();
+          // Confirm immediately when the user returns to an active invoice.
+          if (paymentActive) {
+            if (invoiceHasExpired()) {
+              handleInvoiceExpired();
+            } else {
+              confirmWithBackend();
+            }
           }
         }
       });
@@ -1715,12 +1927,19 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         pageHidden = true;
       });
 
-      document.addEventListener('DOMContentLoaded', () => {
-         btcPrice = POOL_DATA?.btcPrice;
-         poolData = POOL_DATA;
-         poolCurrency = POOL_DATA?.poolDenomination || 'USD';
-         displayDenomination = poolCurrency;
-        renderPoolInfo(POOL_DATA, POOL_DATA?.contributions || []);
+      document.addEventListener('DOMContentLoaded', async () => {
+        let initialData = POOL_DATA;
+        if (!initialData) {
+          // The server render may have hit a transient getPoolData failure —
+          // retry once from the client before declaring the pool missing.
+          const { data } = await fetchPoolData();
+          if (data) initialData = data;
+        }
+        btcPrice = initialData?.btcPrice;
+        poolData = initialData;
+        poolCurrency = initialData?.poolDenomination || 'USD';
+        displayDenomination = poolCurrency;
+        renderPoolInfo(initialData, initialData?.contributions || []);
       });
     </script>
   </head>
