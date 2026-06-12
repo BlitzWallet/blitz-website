@@ -532,6 +532,11 @@ let pollTimer = null;
 let pollCount = 0;
 let shouldPoll = false;
 let currentPaylinkId = null;
+// Per-payer attempt doc returned by /createPayLinkInvoice. The backend moved
+// invoiceId/quoteId off the parent paylink doc into an `attempts` subcollection,
+// so this id must be threaded through /submitPaylinkSwap and /getPaylinkData or
+// the backend can't resolve this tip's quote.
+let currentAttemptId = null;
 const MAX_POLLS = 60;
 
 // Extract username from URL
@@ -972,6 +977,7 @@ async function confirmStablecoin() {
     depositAddress = json.depositAddress;
     amountInRaw = BigInt(String(json.amountIn));
     currentQuoteId = json.quoteId;
+    currentAttemptId = json.attemptId || null;
 
     saveToSwapHistory({
       paylinkId: currentPaylinkId,
@@ -1159,6 +1165,7 @@ async function handleTxHash(txHash, sourceAddress) {
         paylinkId: currentPaylinkId,
         txHash,
         sourceAddress: sourceAddress || null,
+        ...(currentAttemptId ? { attemptId: currentAttemptId } : {}),
       }),
       signal: AbortSignal.timeout(8000),
     });
@@ -1253,11 +1260,15 @@ async function doPoll() {
     const res = await fetch("/getPaylinkData", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ paylinkId: currentPaylinkId, checkInvoice: true }),
+      body: JSON.stringify({
+        paylinkId: currentPaylinkId,
+        checkInvoice: true,
+        ...(currentAttemptId ? { attemptId: currentAttemptId } : {}),
+      }),
       signal: AbortSignal.timeout(8000),
     });
     const json = await res.json();
-    if (json?.data?.isPaid) {
+    if (json?.data?.attemptPaid || json?.data?.isPaid) {
       shouldPoll = false;
       showScreen("stable-success-screen");
       return;
@@ -1316,6 +1327,7 @@ function resetToInputScreen() {
   currentTokenAddress = null;
   stableRefundAddress = null;
   currentPaylinkId = null;
+  currentAttemptId = null;
 
   // Reset Lightning invoice state too
   clearRunningItems();

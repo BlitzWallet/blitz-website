@@ -1389,8 +1389,9 @@ function generateHTML({
       let pollTimer = null;
       let shouldPoll = false;
       let pollCount = 0;
-      let isStablecoinPolling = false;
       let currentQuoteId = null;
+      let currentAttemptId = null;
+      let pollLimited = false;
       const MAX_POLLS = 50;
       let bitcoinInvoice = null;
       let processingStatusTimer = null;
@@ -1437,9 +1438,8 @@ function generateHTML({
 
       function stopPolling() {
         shouldPoll = false;
-        isStablecoinPolling = false
         if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
-      }   
+      }
 
       // ── Wallet deep link / MetaMask integration ───────────────────────
       function buildEip681Uri() {
@@ -1559,6 +1559,9 @@ function generateHTML({
 
        showScreen('screen-processing');
        setQuoteIdDisplays(currentQuoteId);
+       // Persist now: the deposit is already on-chain, so a reload must resume
+       // into the processing/poll flow regardless of how the submit below goes.
+       saveSwapContext({ txHash, sourceAddress: sourceAddress || null, currentQuoteId, currentAttemptId });
        startIsPaidPolling();
         try {
           const res = await fetch('/submitPaylinkSwap', {
@@ -1568,65 +1571,50 @@ function generateHTML({
               paylinkId: PAYLINK_ID,
               txHash,
               sourceAddress: sourceAddress || null,
+              ...(currentAttemptId ? { attemptId: currentAttemptId } : {}),
             }),
-            signal: AbortSignal.timeout(8000)
+            signal: AbortSignal.timeout(30000)
           });
           const json = await res.json();
           if (!json || json.status !== 'SUCCESS') throw new Error('submit-failed');
-          saveSwapContext({ txHash, sourceAddress: sourceAddress || null, currentQuoteId });
         } catch (err) {
-          txHashSubmitted = false;
-          showScreen('screen-stable-pay');
-          showTxHashError('Submission failed. Please try again.');
+        console.log(err)
+          // Best-effort notification failed (timeout / transient / non-SUCCESS).
+          // The funds are already detected on-chain and startIsPaidPolling() is
+          // running, so the backend still confirms the swap via its quote status.
+          // Stay on the processing screen and keep polling — bouncing back to the
+          // QR here dropped the loading state and misleadingly told the user to
+          // pay again, then a stray poll jumped straight to success from the QR.
+          // The poll is bounded (MAX_POLLS) and falls to the error screen on
+          // timeout, so we never hang here indefinitely.
+          console.warn('submitPaylinkSwap notification failed; continuing to poll for confirmation', err);
         }
       }
 
+      // Stablecoin post-submit polling: bounded by MAX_POLLS, falls to the
+      // error screen on timeout. Shares the single _doPoll loop below.
       function startIsPaidPolling() {
+        if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
         pollCount = 0;
+        pollLimited = true;
         shouldPoll = true;
-        isStablecoinPolling = true;
-        _schedulePaylinkPoll();
-      }
-
-      function _schedulePaylinkPoll() {
-        pollTimer = setTimeout(_doPaylinkPoll, 5000);
-      }
-
-      async function _doPaylinkPoll() {
-        pollTimer = null;
-        if (!shouldPoll) return;
-        pollCount++;
-        try {
-          const res = await fetch('/getPaylinkData', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ paylinkId: PAYLINK_ID, checkInvoice: true }),
-            signal: AbortSignal.timeout(8000),
-          });
-          const json = await res.json();
-          if (json?.data?.isPaid) {
-            shouldPoll = false;
-            isStablecoinPolling = false;
-            clearSwapContext();
-            showScreen('screen-success');
-            return;
-          }
-        } catch (e) { /* network error — continue polling */ }
-        if (pollCount >= MAX_POLLS) {
-          shouldPoll = false;
-          isStablecoinPolling = false;
-          showErrorScreen();
-          return;
-        }
-        _schedulePaylinkPoll();
+        _schedulePoll();
       }
 
       function retryIsPaidPolling() {
-        if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
-        pollCount = 0;
-        isStablecoinPolling = true;
-        shouldPoll = true;
-        _schedulePaylinkPoll();
+        startIsPaidPolling();
+      }
+
+      // Shown when the paylink was fulfilled by a *different* payment while this
+      // payer was waiting — never a success screen for a payment they didn't make.
+      function showAlreadyCompleted() {
+        const paidNotice = document.getElementById('paid-notice');
+        if (paidNotice) paidNotice.style.display = 'block';
+        ['btn-btc', 'btn-stable', 'btn-cashapp'].forEach(function(id) {
+          const el = document.getElementById(id);
+          if (el) el.style.display = 'none';
+        });
+        showScreen('screen-initial');
       }
 
       function showErrorScreen() {
@@ -1675,7 +1663,7 @@ function generateHTML({
     processingStatusTimer = setInterval(() => {
       processingStatusIndex = (processingStatusIndex + 1) % processingStatusMessages.length;
       setProcessingStatus(processingStatusMessages[processingStatusIndex]);
-    }, 5000);
+    }, 10000);
   }
 
   function stopProcessingStatusLoop() {
@@ -1730,6 +1718,7 @@ function generateHTML({
             correctLevel: QRCode.CorrectLevel.M,
           });
           bitcoinInvoice = json.invoice;
+          currentAttemptId = json.attemptId || null;
           startPolling();
         } catch (err) {
          console.log(err)
@@ -1762,6 +1751,7 @@ function generateHTML({
 
           bitcoinInvoice = json.invoice;
           depositAddress = json.invoice;
+          currentAttemptId = json.attemptId || null;
           startPolling();
           window.location.href = buildCashAppLightningUrl(json.invoice);
         } catch (err) {
@@ -1981,11 +1971,12 @@ function generateHTML({
           amountInRaw    = BigInt(String(json.amountIn));
           estimatedOut   = json.estimatedOut;
           currentQuoteId = json.quoteId;
+          currentAttemptId = json.attemptId || null;
 
           const networkEntry = NETWORK_MAP[selectedNetwork] || {};
           currentChainId      = networkEntry.chainId || null;
           currentTokenAddress = currentChainId ? (networkEntry[selectedCurrency.toLowerCase()] || null) : null;
-          const swapContext = { selectedNetwork, selectedCurrency, depositAddress, amountInRaw: amountInRaw.toString(), currentChainId, currentTokenAddress, currentQuoteId, time: Date.now() };
+          const swapContext = { selectedNetwork, selectedCurrency, depositAddress, amountInRaw: amountInRaw.toString(), currentChainId, currentTokenAddress, currentQuoteId, currentAttemptId, time: Date.now() };
           saveToSwapHistory(swapContext);
           
           // Render QR
@@ -2064,35 +2055,59 @@ function generateHTML({
 
 
       // ── payment polling ───────────────────────────────────────────────
+      // Unbounded polling while a payer waits on an invoice/deposit (LN flow).
       function startPolling() {
         stopPolling();
+        pollCount = 0;
+        pollLimited = false;
         shouldPoll = true;
         if (document.visibilityState !== 'hidden') _schedulePoll();
       }
 
       function _schedulePoll() {
-        pollTimer = setTimeout(_doPoll, 5000);
+        pollTimer = setTimeout(_doPoll, 10000);
       }
 
+      // Single poll loop shared by the LN wait and the stablecoin post-submit
+      // wait. Distinguishes THIS payer's attempt (attemptPaid → success) from
+      // the paylink being fulfilled by someone else (isPaid → already completed).
       async function _doPoll() {
         pollTimer = null;
         if (!shouldPoll) return;
+        pollCount++;
         try {
           const res = await fetch('/getPaylinkData', {
             method: 'POST',
-            body: JSON.stringify({ paylinkId: PAYLINK_ID, checkInvoice: true }),
-            signal: AbortSignal.timeout(6000),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              paylinkId: PAYLINK_ID,
+              checkInvoice: true,
+              ...(currentAttemptId ? { attemptId: currentAttemptId } : {}),
+            }),
+            signal: AbortSignal.timeout(15000),
           });
           if (res.ok) {
             const json = await res.json();
-            if (json?.data?.isPaid) {
+            if (json?.data?.attemptPaid) {
               stopPolling();
+              clearSwapContext();
               showScreen('screen-success');
               return;
             }
+            // if (json?.data?.isPaid) {
+            //   stopPolling();
+            //   clearSwapContext();
+            //   showAlreadyCompleted();
+            //   return;
+            // }
           }
         } catch (err) {
           // transient error — still reschedule
+        }
+        if (pollLimited && pollCount >= MAX_POLLS) {
+          stopPolling();
+          showErrorScreen();
+          return;
         }
         if (shouldPoll) _schedulePoll();
       }
@@ -2101,39 +2116,22 @@ function generateHTML({
         if (document.visibilityState === 'hidden') {
           if (pollTimer) { clearTimeout(pollTimer); pollTimer = null; }
         } else if (shouldPoll && !pollTimer) {
-         isStablecoinPolling ? _schedulePaylinkPoll() : _schedulePoll();
+          _schedulePoll();
         }
       });
 
       // ── init ──────────────────────────────────────────────────────────
       document.addEventListener('DOMContentLoaded', async () => {
-        // Check isPaid client-side so the serverless function can skip checkInvoice
-        // and return faster, improving first paint.
-
+        // isPaid is already inlined in PAYLINK_DATA by the server handler, so we
+        // read it directly — no extra round-trip (and no Spark wallet init) just
+        // to render the "already completed" notice on a fresh page view.
         const paidNotice = document.getElementById('paid-notice');
-        const btcButton = document.getElementById('btn-btc');
-        const stableButton = document.getElementById('btn-stable');
-        const cashAppButton = document.getElementById('btn-cashapp');
-        if (PAYLINK_DATA) {
-          try {
-            const res = await fetch('/getPaylinkData', {
-              method: 'POST',
-              body: JSON.stringify({ paylinkId: PAYLINK_ID, checkInvoice: true }),
-              signal: AbortSignal.timeout(6000),
-            });
-            if (res.ok) {
-              const json = await res.json();
-              if (json?.data?.isPaid) {
-              paidNotice.style.display = 'block';
-              btcButton.style.display = 'none';
-              stableButton.style.display = 'none';
-              if (cashAppButton) cashAppButton.style.display = 'none';
-               
-              }
-            }
-          } catch (err) {
-            // transient error — show screen-initial optimistically
-          }
+        if (PAYLINK_DATA && PAYLINK_DATA.isPaid) {
+          if (paidNotice) paidNotice.style.display = 'block';
+          ['btn-btc', 'btn-stable', 'btn-cashapp'].forEach(function(id) {
+            const el = document.getElementById(id);
+            if (el) el.style.display = 'none';
+          });
         }
 
         // Resume if we have a txHash from a previous stablecoin submission.
@@ -2141,6 +2139,9 @@ function generateHTML({
         const stored = loadSwapContext();
         if (stored && stored.txHash && !stored.swapId) {
           txHashSubmitted = true;
+          currentQuoteId = stored.currentQuoteId || null;
+          currentAttemptId = stored.currentAttemptId || null;
+          setQuoteIdDisplays(currentQuoteId);
           showScreen('screen-processing');
           startIsPaidPolling();
           return;
