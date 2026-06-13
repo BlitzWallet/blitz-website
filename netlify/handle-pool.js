@@ -1,6 +1,6 @@
 const PREVIEW_HTML_CACHE_SECONDS = numberFromEnv(
   process.env.PREVIEW_HTML_CACHE_SECONDS,
-  31_536_000,
+  3_600,
 );
 const PREVIEW_HTML_FAILURE_CACHE_SECONDS = numberFromEnv(
   process.env.PREVIEW_HTML_FAILURE_CACHE_SECONDS,
@@ -34,8 +34,8 @@ function buildPreviewCacheHeaders(hasPreviewData) {
 
   return {
     "Cache-Control": "public, max-age=0, must-revalidate",
-    "CDN-Cache-Control": `public, s-maxage=${ttl}, stale-while-revalidate=${ttl}`,
-    "Netlify-CDN-Cache-Control": `public, s-maxage=${ttl}, stale-while-revalidate=${ttl}`,
+    "CDN-Cache-Control": `public, s-maxage=${ttl}`,
+    "Netlify-CDN-Cache-Control": `public, s-maxage=${ttl}`,
   };
 }
 

@@ -36,9 +36,9 @@ const FONTS = [
 ];
 
 const IMAGE_CACHE_HEADERS = {
-  "Cache-Control": "public, max-age=31536000, immutable",
-  "CDN-Cache-Control": "public, s-maxage=31536000, immutable",
-  "Netlify-CDN-Cache-Control": "public, s-maxage=31536000, immutable",
+  "Cache-Control": "public, max-age=3600",
+  "CDN-Cache-Control": "public, s-maxage=3600",
+  "Netlify-CDN-Cache-Control": "public, s-maxage=3600",
 
   // Create separate Netlify cache entries for different paylink amounts/currencies
   "Netlify-Vary": "query=goal|pct",
