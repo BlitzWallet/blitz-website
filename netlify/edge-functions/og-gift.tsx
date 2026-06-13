@@ -33,7 +33,10 @@ const IMAGE_CACHE_HEADERS = {
   "Cache-Control": "public, max-age=31536000, immutable",
   "CDN-Cache-Control": "public, s-maxage=31536000, immutable",
   "Netlify-CDN-Cache-Control": "public, s-maxage=31536000, immutable",
-  "Netlify-Cache-ID": "blitz-og-images",
+
+  // Create separate Netlify cache entries for different paylink amounts/currencies
+  "Netlify-Vary": "query=amount|denom|satDisplay",
+
   "Content-Type": "image/png",
   "Access-Control-Allow-Origin": "*",
 };
