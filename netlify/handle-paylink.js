@@ -1397,6 +1397,7 @@ function generateHTML({
           </div>
           <div onclick="copyAddress()" class="address-box" id="stable-address-text"></div>
           <div onclick="copyQuoteId()" class="address-box quote-id-text" id="stable-quote-id"></div>
+           <button class="btn-primary" id="btn-copy-address" onclick="copyAddress()" style="display:none;">Copy Address</button>
           <button class="btn-primary" id="btn-open-wallet" onclick="openWallet()" style="display:none;">Open Wallet</button>
           <button class="btn-primary" id="btn-connect-pay" onclick="connectAndPay()" style="display:none;">Connect &amp; Pay</button>
         </div>
@@ -2108,8 +2109,10 @@ function generateHTML({
             // Non-EVM: hide wallet buttons
             const openBtn    = document.getElementById('btn-open-wallet');
             const connectBtn = document.getElementById('btn-connect-pay');
+            const openWalletBtn = document.getElementById('btn-copy-address');
             if (openBtn)    openBtn.style.display = 'none';
             if (connectBtn) connectBtn.style.display = 'none';
+            if (openWalletBtn)  openWalletBtn.style.display = 'block';
             if (detectEl) detectEl.textContent = 'Auto-detection unavailable for this network. Paste your tx hash after sending.';
           }
 
