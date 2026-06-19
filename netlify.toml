@@ -207,6 +207,11 @@ X-Content-Type-Options = "nosniff"
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
 
+   [redirects.rate_limit]
+    window_limit = 2
+    window_size = 60
+    aggregate_by = ["ip", "domain"]
+
 [[redirects]]
   from = "/checkPoolPayment"
   to = "https://checkpoolpayment-6krimtymjq-uc.a.run.app"
