@@ -445,62 +445,6 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         color: #065f46;
       }
 
-      /* Contributors */
-      .contributors-section {
-        margin: 1.5rem 0;
-        text-align: left;
-      }
-
-      .contributors-title {
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #888;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-bottom: 0.75rem;
-      }
-
-      .contributor-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0.6rem 0;
-      }
-
-      .contributor-item:not(:last-child) {
-        border-bottom: 1px solid var(--lm-backgroundOffset);
-      }
-
-      .contributor-info {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-      }
-
-      .contributor-avatar {
-        width: 32px;
-        height: 32px;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        font-size: 0.8rem;
-        font-weight: 500;
-      }
-
-      .contributor-name {
-        font-size: 0.95rem;
-        font-weight: 500;
-      }
-
-      .contributor-amount {
-        font-size: 0.95rem;
-        font-weight: 500;
-        color: var(--primary_color);
-      }
-
       /* Buttons */
       .btn-primary {
         background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
@@ -1273,17 +1217,13 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
         // Refresh the display
         if (poolData) {
-          renderPoolInfo(poolData, poolData.contributions || []);
+          renderPoolInfo(poolData);
         }
       }
 
       function getProgressPercent(current, goal) {
         if (goal === 0) return 0;
         return Math.min((current / goal) * 100, 100);
-      }
-
-      function getInitial(name) {
-        return (name || '?')[0].toUpperCase();
       }
 
 
@@ -1294,7 +1234,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         if (step) step.classList.add('active');
       }
 
-      function renderPoolInfo(pool, contributions) {
+      function renderPoolInfo(pool) {
         const container = document.getElementById('app');
         const loadingContainer = document.querySelector('.loading-container');
 
@@ -1322,8 +1262,6 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           const isClosed = pool.status === 'closed';
           const closedDate = pool.closedAt ? new Date(pool.closedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : '';
 
-          const topContribs = (pool.topContributors || []).slice(0, 5);
-
           container.innerHTML = \`
             <div class="content-container">
               <!-- STEP: Pool Info -->
@@ -1331,8 +1269,6 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                 <h1 class="pool-title">\${escapeHtml(pool.poolTitle)}</h1>
                 <p class="pool-meta">
                   By \${escapeHtml(pool.creatorName)}
-                  <span>&middot;</span>
-                  \${pool.contributorCount || 0} contributor\${(pool.contributorCount || 0) !== 1 ? 's' : ''}
                 </p>
 
                 \${isClosed ? '<span class="status-badge closed">Closed' + (closedDate ? ' ' + closedDate : '') + '</span>' : ''}
@@ -1364,20 +1300,6 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                   </div>
                 </div>
 
-                \${topContribs.length > 0 ? \`
-                  <div class="contributors-section">
-                    <div class="contributors-title">Top Contributors</div>
-                    \${topContribs.map(c => \`
-                      <div class="contributor-item">
-                        <div class="contributor-info">
-                          <div class="contributor-avatar">\${getInitial(c.name)}</div>
-                          <span class="contributor-name">\${escapeHtml(c.name)}</span>
-                        </div>
-                        <span class="contributor-amount">\${formatAmount(c.amount, displayDenomination)}</span>
-                      </div>
-                    \`).join('')}
-                  </div>
-                \` : ''}
 
                 \${!isClosed ? \`
                   <button class="btn-primary" onclick="showStep('amount')">
@@ -1894,7 +1816,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         showStep('info');
         const { data } = await fetchPoolData();
         if (data) {
-          renderPoolInfo(poolData, poolData.contributions || []);
+          renderPoolInfo(poolData);
         }
       }
 
@@ -1968,7 +1890,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           if (initialData) applyPoolData(initialData);
         }
         if (!initialData) applyPoolData(null);
-        renderPoolInfo(initialData, initialData?.contributions || []);
+        renderPoolInfo(initialData);
       });
     </script>
   </head>
