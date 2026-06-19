@@ -27,6 +27,13 @@ export default async (request, context) => {
 };
 
 export const config = {
-  // Guard both the API and the pages that trigger it.
-  path: ["/getPoolData", "/pools/*"],
+  // Guard the pool pages and every backend endpoint the pool flow calls.
+  // The bot has pivoted from reading data to generating invoices, so cover
+  // the whole flow, not just /getPoolData.
+  path: [
+    "/pools/*",
+    "/getPoolData",
+    "/createPoolInvoice",
+    "/checkPoolPayment",
+  ],
 };
