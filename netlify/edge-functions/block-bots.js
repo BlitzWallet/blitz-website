@@ -11,7 +11,7 @@
 
 // Substrings that identify the abusive client. Extend this list if the bot
 // rotates its UA. Exact, fabricated tokens are used to keep false positives ~0.
-const BLOCKED_UA_SUBSTRINGS = ["Gecko/20171809"];
+const BLOCKED_UA_SUBSTRINGS = ["Gecko/20171809", "Gecko/20100101"];
 
 export default async (request, context) => {
   const ua = request.headers.get("user-agent") || "";
@@ -30,10 +30,5 @@ export const config = {
   // Guard the pool pages and every backend endpoint the pool flow calls.
   // The bot has pivoted from reading data to generating invoices, so cover
   // the whole flow, not just /getPoolData.
-  path: [
-    "/pools/*",
-    "/getPoolData",
-    "/createPoolInvoice",
-    "/checkPoolPayment",
-  ],
+  path: ["/pools/*", "/getPoolData", "/createPoolInvoice", "/checkPoolPayment"],
 };
