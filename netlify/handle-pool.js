@@ -153,60 +153,138 @@ function buildPoolOgImageUrl(baseUrl, poolId, goalLabel) {
 }
 
 export async function handler(event, context) {
-  const path = (event.path || "").replace(/\/+$/, "");
-  let poolId = path.split("/").pop() || "";
-  try {
-    poolId = decodeURIComponent(poolId);
-  } catch (e) {
-    // Keep raw poolId if decode fails.
-  }
-  const baseUrl = process.env.URL || "https://blitzwalletapp.com";
-  const poolData = await fetchPoolData(poolId, baseUrl);
-
-  let ogTitle, ogDescription, ogImage;
-
-  if (poolData) {
-    const goalLabel = formatPoolGoal(poolData, poolData.btcPrice);
-    const poolTitle = poolData.poolTitle ?? "Pool";
-    const creatorName = poolData.creatorName ?? "";
-    const pct = Math.max(
-      Math.round(poolData.currentAmount / poolData.goalAmount),
-      100,
-    );
-
-    ogTitle =
-      `${creatorName} shared a pool for ${poolTitle}, Open the link to contribute.`
-        .trim()
-        .replace(/ — Pool by $/, "");
-    ogDescription = `Help raise ${goalLabel} for ${poolTitle} on Blitz Wallet.`;
-    ogImage = buildPoolOgImageUrl(
-      baseUrl,
-      poolId,
-      Number(poolData.goalAmount ?? 0),
-    );
-  } else {
-    ogTitle = "Join this Bitcoin Pool on Blitz Wallet";
-    ogDescription =
-      "Contribute to a community Bitcoin pool via Lightning — no app required.";
-    ogImage = `https://blitzwalletapp.com/public/twitterCard.png`;
-  }
-
-  const html = generateHTML({
-    poolId,
-    ogTitle,
-    ogDescription,
-    ogImage,
-    poolData,
-  });
+  // Pools are temporarily under maintenance. Serve a static maintenance
+  // screen and do NOT fetch any pool data.
+  const html = generateMaintenanceHTML();
 
   return {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
-      ...buildPreviewCacheHeaders(!!poolData),
+      ...buildPreviewCacheHeaders(false),
     },
     body: html,
   };
+}
+
+function generateMaintenanceHTML() {
+  const ogTitle = "Pools are under maintenance — Blitz Wallet";
+  const ogDescription =
+    "Pools are temporarily under maintenance. Coming back soon.";
+  const ogImage = "https://blitzwalletapp.com/public/twitterCard.png";
+
+  return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/public/favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link rel="apple-touch-icon" href="/public/favicon/favicon.ico" />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+
+    <title>${ogTitle}</title>
+    <meta name="description" content="${ogDescription}" />
+
+    <!-- Open Graph -->
+    <meta property="og:image"        content="${ogImage}" />
+    <meta property="og:image:width"  content="1200" />
+    <meta property="og:image:height" content="628" />
+    <meta property="og:image:type"   content="image/png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title"        content="${ogTitle}" />
+    <meta property="og:description"  content="${ogDescription}" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image"       content="${ogImage}" />
+    <meta property="twitter:title" content="${ogTitle}" />
+    <meta property="twitter:description" content="${ogDescription}" />
+
+    <meta name="robots" content="noindex,nofollow">
+    <meta name="googlebot" content="noindex,nofollow">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+      :root {
+        --title_font: "Poppins", "Noto Sans", sans-serif;
+        --description_font: "Poppins", "Noto Sans", sans-serif;
+        --primary_color: #0375f6;
+        --tertiary_color: #009bf0;
+        --lm-background: #f2f2f2;
+        --lm-backgroundOffset: #e3e3e3;
+        --lm-text: #262626;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--description_font);
+        background: var(--lm-background);
+        color: var(--lm-text);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 1rem;
+      }
+
+      .maintenance-card {
+        background: white;
+        border-radius: 24px;
+        padding: 3rem 2.5rem;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--lm-backgroundOffset);
+        text-align: center;
+        max-width: 460px;
+        width: 100%;
+      }
+
+      .maintenance-icon {
+        width: 72px;
+        height: 72px;
+        margin: 0 auto 1.5rem;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+      }
+
+      .maintenance-card h1 {
+        font-size: 1.6rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+
+      .maintenance-card p {
+        font-size: 1rem;
+        color: #888;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="maintenance-card">
+      <div class="maintenance-icon">🛠️</div>
+      <h1>Coming back soon</h1>
+      <p>Pools are under maintenance.</p>
+    </div>
+  </body>
+</html>`;
 }
 
 function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
