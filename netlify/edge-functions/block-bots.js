@@ -1,22 +1,43 @@
 // Edge-level bot filter for the pool endpoints.
 //
-// Context: a scraper has been crawling every /pools/* page (and the
-// /getPoolData API it calls) ~1.5 req/s from rotating source IPs, all sharing
-// one forged User-Agent. Per-IP rate limiting can't catch a rotating bot, but
-// the UA is a stable, low-false-positive signal: real desktop Firefox ALWAYS
-// reports "Gecko/20100101" — the bot reports a fabricated "Gecko/20171809".
+// Context: a scraper has been crawling /pools/* (and the backend endpoints the
+// pool flow calls) from rotating source IPs, all using a forged Firefox
+// User-Agent. Per-IP rate limiting can't catch a rotating bot, but its UA
+// *generator* leaves a structural fingerprint that a real browser never has.
 //
-// This runs before the /getPoolData proxy redirect, so a blocked request never
-// reaches the Cloud Function (no invocation, no Firestore read).
+// Rather than chase the exact strings the bot emits (which forces us to watch
+// logs and redeploy every time it rotates), we match the malformed *shape* of
+// its UA. This catches future rotations of the version/token automatically.
+//
+//   Observed bot UAs:
+//     ...rv:134.0esr) Gecko/20100101 Firefox/134.0esr/Z7Sa4EnmnXXfM9E-61
+//     ...Gecko/20171809...
+//
+//   Real Firefox always looks like:
+//     ...rv:134.0) Gecko/20100101 Firefox/134.0     (desktop)
+//     ...Gecko/134.0 Firefox/134.0                  (Android)
+//
+// This runs before the proxy redirects, so a blocked request never reaches the
+// Cloud Function (no invocation, no Firestore read).
 
-// Substrings that identify the abusive client. Extend this list if the bot
-// rotates its UA. Exact, fabricated tokens are used to keep false positives ~0.
-const BLOCKED_UA_SUBSTRINGS = ["Gecko/20171809", "Gecko/20100101"];
+const BLOCKED_UA_PATTERNS = [
+  // A random token appended after the Firefox version, e.g.
+  // "Firefox/134.0esr/Z7Sa4EnmnXXfM9E-61". A real UA ends at the version.
+  /Firefox\/[^\s/]+\/[A-Za-z0-9_-]{4,}/,
+
+  // The rv: token carrying an "esr" suffix, e.g. "rv:134.0esr". Real Firefox
+  // ESR reports "rv:128.0" — "esr" never appears inside the rv version.
+  /rv:[\d.]+esr/,
+
+  // The original bot's fabricated Gecko build date. Real desktop Firefox is
+  // always "Gecko/20100101"; Android uses "Gecko/<version>".
+  /Gecko\/20171809/,
+];
 
 export default async (request, context) => {
   const ua = request.headers.get("user-agent") || "";
 
-  if (BLOCKED_UA_SUBSTRINGS.some((needle) => ua.includes(needle))) {
+  if (BLOCKED_UA_PATTERNS.some((re) => re.test(ua))) {
     return new Response("Forbidden", {
       status: 403,
       headers: { "content-type": "text/plain" },
