@@ -155,13 +155,68 @@ function buildPoolOgImageUrl(baseUrl, poolId, goalLabel) {
 export async function handler(event, context) {
   // Pools are temporarily under maintenance. Serve a static maintenance
   // screen and do NOT fetch any pool data.
-  const html = generateMaintenanceHTML();
+  // const html = generateMaintenanceHTML();
+
+  // return {
+  //   statusCode: 200,
+  //   headers: {
+  //     "Content-Type": "text/html",
+  //     ...buildPreviewCacheHeaders(false),
+  //   },
+  //   body: html,
+  // };
+
+  const path = (event.path || "").replace(/\/+$/, "");
+  let poolId = path.split("/").pop() || "";
+  try {
+    poolId = decodeURIComponent(poolId);
+  } catch (e) {
+    // Keep raw poolId if decode fails.
+  }
+  const baseUrl = process.env.URL || "https://blitzwalletapp.com";
+  const poolData = await fetchPoolData(poolId, baseUrl);
+
+  let ogTitle, ogDescription, ogImage;
+
+  if (poolData) {
+    const goalLabel = formatPoolGoal(poolData, poolData.btcPrice);
+    const poolTitle = poolData.poolTitle ?? "Pool";
+    const creatorName = poolData.creatorName ?? "";
+    const pct = Math.max(
+      Math.round(poolData.currentAmount / poolData.goalAmount),
+      100,
+    );
+
+    ogTitle =
+      `${creatorName} shared a pool for ${poolTitle}, Open the link to contribute.`
+        .trim()
+        .replace(/ — Pool by $/, "");
+    ogDescription = `Help raise ${goalLabel} for ${poolTitle} on Blitz Wallet.`;
+    ogImage = buildPoolOgImageUrl(
+      baseUrl,
+      poolId,
+      Number(poolData.goalAmount ?? 0),
+    );
+  } else {
+    ogTitle = "Join this Bitcoin Pool on Blitz Wallet";
+    ogDescription =
+      "Contribute to a community Bitcoin pool via Lightning — no app required.";
+    ogImage = `https://blitzwalletapp.com/public/twitterCard.png`;
+  }
+
+  const html = generateHTML({
+    poolId,
+    ogTitle,
+    ogDescription,
+    ogImage,
+    poolData,
+  });
 
   return {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
-      ...buildPreviewCacheHeaders(false),
+      ...buildPreviewCacheHeaders(!!poolData),
     },
     body: html,
   };
