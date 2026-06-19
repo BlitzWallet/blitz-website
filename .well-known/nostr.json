@@ -181,7 +181,8 @@
     "jorgevasquez": "f5c70f70cda05b4a9ab5015b88b18aed524a754c95728ba3d090757c8b944da3",
     "jvx": "7b999b7d642864542ec72f96b6c543ded5a44d9f8ac2be3f97d40b8d93478c89",
     "odhodl": "15fd3fe16fb9b623f9bc3ee6e06d5732402f1d4fefe6b168029c15b1ad85a37e",
-    "Ablon": "7088112a6b993d29d3328ed7351069f43741c6d4dd303416316689e12f005608"
+    "Ablon": "7088112a6b993d29d3328ed7351069f43741c6d4dd303416316689e12f005608",
+    "bitcoin": "0000000000000000000000000000000000000000000000000000000000000000"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -1657,6 +1658,14 @@
       "wss://relay.primal.net"
     ],
     "15fd3fe16fb9b623f9bc3ee6e06d5732402f1d4fefe6b168029c15b1ad85a37e": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "0000000000000000000000000000000000000000000000000000000000000000": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
