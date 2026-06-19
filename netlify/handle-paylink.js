@@ -113,9 +113,9 @@ async function fetchPaylinkData(paylinkId, baseUrl) {
 
 function formatAmountLabel(data) {
   if (!data) return null;
-  if (data.currencyType !== "BTC" && Number(data.rawAmount ?? 0) > 0) {
-    const rawAmount = Number(data.rawAmount);
-    return `$${rawAmount.toLocaleString("en-US")}`;
+  if (data.currencyType !== "BTC" && Number(data.displayAmount ?? 0) > 0) {
+    const rawAmount = Number(data.displayAmount);
+    return `$${rawAmount.toFixed(2).toLocaleString("en-US")}`;
   }
   const amount = Number(data.amount ?? 0);
   return `\u20BF${amount.toLocaleString("en-US")}`;
@@ -199,10 +199,9 @@ function generateHTML({
   const username = paylinkData?.name ?? "";
   const amount = Number(paylinkData?.amount ?? 0);
   const rawAmount = Number(paylinkData?.rawAmount ?? 0);
+  const amountLabelNumber = formatAmountLabel(paylinkData);
   const amountLabel = amount
-    ? paylinkData.currencyType === "BTC" || !rawAmount
-      ? `<p class="amount"><span style="font-weight:400;">₿</span>${amount.toLocaleString("en-US")}</p>`
-      : `<p class="amount">$${rawAmount.toLocaleString("en-US")}</p>`
+    ? `<p class="amount">${amountLabelNumber}</p>`
     : "";
   const description = paylinkData?.description ?? "";
   const paylinkUrl = `https://blitzwalletapp.com/paylink/${paylinkId}`;
@@ -1336,9 +1335,7 @@ function generateHTML({
           <p class="requester">Pay ${username} via Lightning</p>
           ${
             amount
-              ? paylinkData.currencyType === "BTC" || !rawAmount
-                ? `<p class="status-text amount" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;"><span style="font-weight:400;">₿</span>${amount.toLocaleString("en-US")}</p>`
-                : `<p class="status-text amount" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;">$${rawAmount.toLocaleString("en-US")}</p>`
+              ? `<p class="status-text amount" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;">${amountLabelNumber}</p>`
               : ""
           }
           <div onclick="copyAddress()" class="qr-wrapper">
@@ -2114,6 +2111,7 @@ function generateHTML({
             if (connectBtn) connectBtn.style.display = 'none';
             if (openWalletBtn)  openWalletBtn.style.display = 'block';
             if (detectEl) detectEl.textContent = 'Auto-detection unavailable for this network. Paste your tx hash after sending.';
+            startIsPaidPolling()
           }
 
           showScreen('screen-stable-pay');
