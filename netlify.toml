@@ -138,11 +138,21 @@ X-Content-Type-Options = "nosniff"
   status = 200
   force = true
 
+  [redirects.rate_limit]
+    window_limit = 20
+    window_size = 60
+    aggregate_by = ["ip", "domain"]
+
 [[redirects]]
   from = "/p/:username"
   to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app/:username"
   status = 200
   force = true
+
+  [redirects.rate_limit]
+    window_limit = 20
+    window_size = 60
+    aggregate_by = ["ip", "domain"]
 
 [[redirects]]
   from = "/.well-known/lnurlverify/:sparkIDCode"
