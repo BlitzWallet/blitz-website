@@ -1,47 +1,104 @@
 // Edge-level bot filter for the pool endpoints.
 //
-// Context: a scraper has been crawling /pools/* (and the backend endpoints the
-// pool flow calls) from rotating source IPs, all using a forged Firefox
-// User-Agent. Per-IP rate limiting can't catch a rotating bot, but its UA
-// *generator* leaves a structural fingerprint that a real browser never has.
+// All pool traffic flows through Netlify (the public *.run.app Cloud Functions
+// are only reached via the signed proxy redirects in netlify.toml), so this
+// edge function — which runs BEFORE those redirects — is the one place that can
+// inspect and block a request before it ever reaches the backend.
 //
-// Rather than chase the exact strings the bot emits (which forces us to watch
-// logs and redeploy every time it rotates), we match the malformed *shape* of
-// its UA. This catches future rotations of the version/token automatically.
+// Two layers, both chosen to have ~zero false positives:
+//   A. Forged Firefox User-Agent  (catches the scraper that keeps spoofing FF)
+//   B. Browser-fetch fingerprint on the API (catches okhttp / node / no-UA bots)
 //
-//   Observed bot UAs:
-//     ...rv:134.0esr) Gecko/20100101 Firefox/134.0esr/Z7Sa4EnmnXXfM9E-61
-//     ...Gecko/20171809...
-//
-//   Real Firefox always looks like:
-//     ...rv:134.0) Gecko/20100101 Firefox/134.0     (desktop)
-//     ...Gecko/134.0 Firefox/134.0                  (Android)
-//
-// This runs before the proxy redirects, so a blocked request never reaches the
-// Cloud Function (no invocation, no Firestore read).
+// Every block is logged as JSON so you can see exactly what's being dropped.
 
-const BLOCKED_UA_PATTERNS = [
-  // A random token appended after the Firefox version, e.g.
-  // "Firefox/134.0esr/Z7Sa4EnmnXXfM9E-61". A real UA ends at the version.
-  /Firefox\/[^\s/]+\/[A-Za-z0-9_-]{4,}/,
+// ---------------------------------------------------------------------------
+// Layer A: forged Firefox
+// ---------------------------------------------------------------------------
+// The scraper keeps impersonating desktop Firefox but gets details wrong that a
+// real Firefox never does. Observed samples:
+//   ...Gecko/20171809 Firefox/115.0
+//   ...rv:134.0esr) Gecko/20100101 Firefox/134.0esr/Z7Sa4EnmnXXfM9E-61
+//   ...rv:134.0) Gecko/20010101 Firefox/134.0      <- "20010101", year 2001
+//
+// Key fact: every real *desktop* Firefox reports the hardcoded literal
+// "Gecko/20100101". Mobile Firefox (Android) uses "Gecko/<version>" and iOS
+// Firefox uses "FxiOS" with no "Firefox/" token, so we exempt those and only
+// hold desktop Firefox to the 20100101 rule. This catches all three bot
+// variants — and any future one — without touching a single real user.
+function isForgedFirefox(ua) {
+  // Only desktop Firefox (and Firefox forks) carry the literal "Firefox/" token.
+  if (!ua.includes("Firefox/")) return false;
+  // Android Firefox legitimately uses Gecko/<version>, not the fixed date.
+  if (ua.includes("Android")) return false;
 
-  // The rv: token carrying an "esr" suffix, e.g. "rv:134.0esr". Real Firefox
-  // ESR reports "rv:128.0" — "esr" never appears inside the rv version.
-  /rv:[\d.]+esr/,
+  // Real desktop Firefox ALWAYS reports exactly "Gecko/20100101".
+  if (!ua.includes("Gecko/20100101")) return true;
+  // A token appended after the Firefox version (e.g. ".../Z7Sa4EnmnXXfM9E-61").
+  if (/Firefox\/\S*\/[A-Za-z0-9_-]{4,}/.test(ua)) return true;
+  // An "esr" suffix inside the rv: token — real ESR reports "rv:128.0".
+  if (/rv:[\d.]+esr/.test(ua)) return true;
 
-  // The original bot's fabricated Gecko build date. Real desktop Firefox is
-  // always "Gecko/20100101"; Android uses "Gecko/<version>".
-  /Gecko\/20171809/,
-];
+  return false;
+}
+
+// ---------------------------------------------------------------------------
+// Layer B: browser-fetch fingerprint (API endpoints only)
+// ---------------------------------------------------------------------------
+// These endpoints are POSTed exclusively by the pool page's same-origin fetch().
+// Every browser attaches an Origin header to a non-GET request, and modern ones
+// also send Sec-Fetch-Site: same-origin. A raw HTTP client (okhttp, node, etc.)
+// has to set those by hand and usually doesn't.
+const API_PATHS = new Set([
+  "/getPoolData",
+  "/createPoolInvoice",
+  "/checkPoolPayment",
+]);
+const ALLOWED_HOSTS = new Set(["blitzwalletapp.com", "www.blitzwalletapp.com"]);
+
+function looksLikeSameOriginFetch(request) {
+  if (request.headers.get("sec-fetch-site") === "same-origin") return true;
+  const origin = request.headers.get("origin");
+  if (origin) {
+    try {
+      if (ALLOWED_HOSTS.has(new URL(origin).hostname)) return true;
+    } catch {
+      /* malformed Origin -> not same-origin */
+    }
+  }
+  return false;
+}
+
+// ---------------------------------------------------------------------------
+
+function logBlock(reason, request, context) {
+  console.log(
+    JSON.stringify({
+      tag: "bot-filter",
+      reason,
+      ip: context.ip,
+      path: new URL(request.url).pathname,
+      ua: request.headers.get("user-agent") || "",
+    })
+  );
+}
+
+const FORBIDDEN = new Response("Forbidden", {
+  status: 403,
+  headers: { "content-type": "text/plain" },
+});
 
 export default async (request, context) => {
   const ua = request.headers.get("user-agent") || "";
+  const path = new URL(request.url).pathname;
 
-  if (BLOCKED_UA_PATTERNS.some((re) => re.test(ua))) {
-    return new Response("Forbidden", {
-      status: 403,
-      headers: { "content-type": "text/plain" },
-    });
+  if (isForgedFirefox(ua)) {
+    logBlock("forged-firefox", request, context);
+    return FORBIDDEN;
+  }
+
+  if (API_PATHS.has(path) && !looksLikeSameOriginFetch(request)) {
+    logBlock("not-same-origin-fetch", request, context);
+    return FORBIDDEN;
   }
 
   return context.next();
@@ -49,7 +106,5 @@ export default async (request, context) => {
 
 export const config = {
   // Guard the pool pages and every backend endpoint the pool flow calls.
-  // The bot has pivoted from reading data to generating invoices, so cover
-  // the whole flow, not just /getPoolData.
   path: ["/pools/*", "/getPoolData", "/createPoolInvoice", "/checkPoolPayment"],
 };
