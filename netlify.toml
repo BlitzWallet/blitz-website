@@ -194,7 +194,7 @@ X-Content-Type-Options = "nosniff"
   signed = "API_SIGNATURE_TOKEN"
 
   [redirects.rate_limit]
-    window_limit = 10
+    window_limit = 6
     window_size = 60
     aggregate_by = ["ip", "domain"]
 
