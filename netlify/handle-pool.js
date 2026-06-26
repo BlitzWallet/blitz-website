@@ -399,6 +399,9 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
     <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
+    <!-- Stablecoin deposit watcher (EVM Transfer detection) -->
+    <script src="/public/paylink-swap.js"></script>
+
     <!-- Currency formatting -->
     <script src="/src/js/format-currency.js"></script>
 
@@ -1337,7 +1340,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       let selectedUsdAmount = 0;
 
       const FLASHNET_STATUS_URL = 'https://orchestration.flashnet.xyz/v1/orchestration/status';
-      const FLASHNET_PUBLIC_KEY = 'fnp_W1qFzdz2SLBcUdaOLmlK5qY6KN0ZAhVlKxR6CdWs9RI';
+      const FLASHNET_PUBLIC_KEY = 'fnp_KlHu6sdy2HMwmMuJeGn4biHFl2mLmjeAb5u4o9gM0Zo';
       const STABLE_POLL_MS = 6000;
       const MAX_STABLE_POLLS = 100; // ~10 min
       const FLASHNET_DONE_STATUSES = new Set(['completed']);
@@ -1371,6 +1374,12 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       let currentChainId = null;
       let currentTokenAddress = null;
       let currentQuoteId = null;
+      let refundAddress = '';
+      let currentOrderId = null;
+      let currentReadToken = null;
+      let swapWatcher = null;
+      let balanceWatcher = null;
+      let txHashSubmitted = false;
 
       function detectOS() {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -1640,8 +1649,32 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
                 <div id="stableQuoteErrorContainer"></div>
 
-                <button class="btn-primary" id="generateStableBtn" onclick="generatePoolStablecoinQuote()">
+                <button class="btn-primary" id="generateStableBtn" onclick="goToRefundStep()">
                   Generate Invoice
+                </button>
+              </div>
+
+              <!-- STEP: Stablecoin refund address (optional) -->
+              <div id="step-stableRefund" class="step">
+                <button class="btn-back" onclick="showStep('stableNetwork')">
+                  <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
+                </button>
+                <h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.25rem;">Refund address</h2>
+                <p style="font-size:0.9rem;color:#888;margin-bottom:1rem;">
+                  Optional. Where should we send your funds if the swap fails? Leave blank to skip.
+                </p>
+                <input id="refundAddressInput" class="name-input" type="text"
+                  autocomplete="off" spellcheck="false"
+                  placeholder="Enter refund address" />
+                <div id="refundErrorContainer"></div>
+                <div id="refundSkipWarning" class="expired-notice" style="display:none;">
+                  No refund address set — if the swap fails, funds cannot be returned automatically.
+                </div>
+                <button class="btn-primary" id="refundContinueBtn" onclick="submitRefundAndQuote()">
+                  Continue
+                </button>
+                <button class="btn-secondary" id="refundSkipBtn" onclick="skipRefundAndQuote()">
+                  Skip
                 </button>
               </div>
 
@@ -1660,8 +1693,23 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                   <span class="waiting-dot"></span>
                   <span class="waiting-dot"></span>
                   <span class="waiting-dot"></span>
-                  <span style="margin-left:0.25rem;">Waiting for payment</span>
+                  <span id="stableWaitingLabel" style="margin-left:0.25rem;">Waiting for payment</span>
                 </div>
+
+                <div id="stableManualTx" style="display:none;margin-top:0.75rem;">
+                  <p style="font-size:0.85rem;color:#888;margin-bottom:0.5rem;">
+                    After sending, paste your transaction hash to confirm:
+                  </p>
+                  <input id="stableTxHashInput" class="name-input" type="text"
+                    autocomplete="off" spellcheck="false" placeholder="Transaction hash" />
+                  <div id="stableTxHashError"></div>
+                  <button class="btn-primary" id="stableTxHashSubmitBtn"
+                    onclick="onSwapDeposit((document.getElementById('stableTxHashInput')||{}).value, null)">
+                    Confirm payment
+                  </button>
+                </div>
+
+                <div id="stableSubmitError" class="expired-notice" style="display:none;"></div>
 
                 <div onclick="copyDepositAddress()" class="address-box" id="stableAddressText"></div>
 
@@ -1893,6 +1941,13 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       }
 
       function selectNetwork(network) {
+        // A different network invalidates any previously entered refund address
+        // (e.g. an EVM 0x… address must not carry over to Tron/Solana).
+        if (network !== selectedNetwork) {
+          refundAddress = '';
+          const ri = document.getElementById('refundAddressInput');
+          if (ri) ri.value = '';
+        }
         selectedNetwork = network;
         document.querySelectorAll('.network-card').forEach(function (c) { c.classList.remove('selected'); });
         const card = document.getElementById('card-' + network);
@@ -1921,6 +1976,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
               contributorName: params.contributorName,
               network: params.network,
               currency: params.currency,
+              refundAddress: params.refundAddress || undefined,
             }),
           });
           const json = await response.json().catch(function () { return null; });
@@ -1939,6 +1995,53 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         return (Number(raw) / Math.pow(10, decimals)).toFixed(2);
       }
 
+      function goToRefundStep() {
+        if (!selectedNetwork) { showStableQuoteError('Please select a network.'); return; }
+        const errEl = document.getElementById('refundErrorContainer');
+        if (errEl) errEl.innerHTML = '';
+        const warn = document.getElementById('refundSkipWarning');
+        if (warn) warn.style.display = 'none';
+        showStep('stableRefund');
+        lucide.createIcons();
+      }
+
+      // EVM networks (chainId present) require a 0x + 40 hex address.
+      // Non-EVM (Solana, Tron) only get a non-empty check.
+      function validateRefundAddress(value) {
+        const meta = NETWORK_MAP[selectedNetwork] || {};
+        const v = (value || '').trim();
+        if (!v) return { ok: true, value: '' };
+        if (meta.chainId) {
+          if (!/^0x[0-9a-fA-F]{40}$/.test(v)) {
+            return { ok: false, error: 'Enter a valid address for ' + (NETWORK_LABELS[selectedNetwork] || selectedNetwork) + ' (0x + 40 hex characters).' };
+          }
+        } else if (v.length < 10) {
+          return { ok: false, error: 'Enter a valid refund address.' };
+        }
+        return { ok: true, value: v };
+      }
+
+      function submitRefundAndQuote() {
+        const input = document.getElementById('refundAddressInput');
+        const errEl = document.getElementById('refundErrorContainer');
+        const result = validateRefundAddress(input ? input.value : '');
+        if (!result.ok) {
+          if (errEl) errEl.innerHTML = '<p class="error-text">' + escapeHtml(result.error) + '</p>';
+          return;
+        }
+        if (errEl) errEl.innerHTML = '';
+        refundAddress = result.value;
+        generatePoolStablecoinQuote();
+      }
+
+      function skipRefundAndQuote() {
+        refundAddress = '';
+        const warn = document.getElementById('refundSkipWarning');
+        if (warn) warn.style.display = 'block';
+        // Generate immediately; the warning is informational.
+        generatePoolStablecoinQuote();
+      }
+
       async function generatePoolStablecoinQuote() {
         if (!selectedNetwork) { showStableQuoteError('Please select a network.'); return; }
         const name = document.getElementById('contributorNameInput')?.value?.trim() || '';
@@ -1952,6 +2055,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           contributorName: name,
           network: selectedNetwork,
           currency: selectedCurrency,
+          refundAddress: refundAddress,
         });
 
         if (btn) { btn.disabled = false; btn.textContent = 'Generate Invoice'; }
@@ -1968,7 +2072,72 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         renderStablePayment();
         showStep('stablePayment');
         lucide.createIcons();
-        startStablePolling();
+        startStableDepositDetection();
+      }
+
+      let stableDetectTimer = null;
+
+      // Single source of truth for the lone loading message on the deposit
+      // screen. Pass null to hide the loading line entirely.
+      function setStableStatus(message) {
+        const waiting = document.getElementById('stableWaitingText');
+        const label = document.getElementById('stableWaitingLabel');
+        if (label && message != null) label.textContent = message;
+        if (waiting) waiting.style.display = (message == null) ? 'none' : 'flex';
+      }
+
+      function startStableDepositDetection() {
+        txHashSubmitted = false;
+        stopStableWatchers();
+        const manualEl = document.getElementById('stableManualTx');
+        const submitErr = document.getElementById('stableSubmitError');
+        if (submitErr) { submitErr.style.display = 'none'; submitErr.textContent = ''; }
+
+        if (currentChainId && currentTokenAddress) {
+          // EVM: auto-detect the deposit, with manual paste as a fallback.
+          setStableStatus('Monitoring for your transaction…');
+          if (manualEl) manualEl.style.display = 'block';
+          try {
+            swapWatcher = PaylinkSwap.watchForTransfer({
+              depositAddress: depositAddress,
+              tokenAddress: currentTokenAddress,
+              chainId: currentChainId,
+              onFound: function (h, f) { onSwapDeposit(h, f); },
+            });
+            balanceWatcher = PaylinkSwap.pollForBalance({
+              tokenAddress: currentTokenAddress,
+              depositAddress: depositAddress,
+              chainId: currentChainId,
+              expectedAmount: BigInt(amountInRaw),
+              onFound: function (h, f) { onSwapDeposit(h, f); },
+            });
+          } catch (e) {
+            // viem/bigint init failed — fall back to manual entry only.
+            setStableStatus('Auto-detection unavailable. Paste your tx hash after sending.');
+          }
+        } else {
+          // Non-EVM (Solana, Tron): no watcher available, manual entry only.
+          setStableStatus('Auto-detection unavailable for this network. Paste your tx hash after sending.');
+          if (manualEl) manualEl.style.display = 'block';
+        }
+
+        // Bound the detection phase to the quote's validity window. Without a
+        // submitted deposit there is no status poll running, so this timer is
+        // what stops the watchers (and their RPC polling) if the user never pays.
+        stableDetectTimer = setTimeout(onStableDetectTimeout, STABLE_POLL_MS * MAX_STABLE_POLLS);
+      }
+
+      function onStableDetectTimeout() {
+        stableDetectTimer = null;
+        if (txHashSubmitted) return; // a deposit was already submitted; polling owns the flow
+        stopStableWatchers();
+        showStableExpiredUI();
+      }
+
+      function stopStableWatchers() {
+        if (stableDetectTimer) { clearTimeout(stableDetectTimer); stableDetectTimer = null; }
+        if (swapWatcher) { try { swapWatcher.stop(); } catch (e) {} swapWatcher = null; }
+        if (balanceWatcher) { try { balanceWatcher.stop(); } catch (e) {} balanceWatcher = null; }
       }
 
       function renderStablePayment() {
@@ -2026,6 +2195,84 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         if (errEl) errEl.innerHTML = '<p class="error-text">' + escapeHtml(msg) + '</p>';
       }
 
+      // ── Deposit submission — obtain the order's read token from FlashNet ──
+      const FLASHNET_SUBMIT_URL = 'https://orchestration.flashnet.xyz/v1/orchestration/submit';
+
+      async function onSwapDeposit(txHash, sourceAddress) {
+        if (txHashSubmitted) return;
+        const raw = (txHash || '').trim();
+        const isEVM = /^0x[0-9a-fA-F]{64}$/.test(raw);
+        const isNonEVM = !currentChainId && raw.length > 10;
+        if (!isEVM && !isNonEVM) {
+          const errEl = document.getElementById('stableTxHashError');
+          if (errEl) errEl.innerHTML = '<p class="error-text">Invalid transaction hash format.</p>';
+          return;
+        }
+        txHashSubmitted = true;
+        stopStableWatchers();
+
+        const manualEl = document.getElementById('stableManualTx');
+        const copyBtn = document.getElementById('copyDepositBtn');
+        const openBtn = document.getElementById('openWalletBtn');
+        // Confirming: one loading message, and the deposit address is no longer
+        // actionable, so hide the copy / open-in-wallet buttons.
+        setStableStatus('Confirming your payment…');
+        if (manualEl) manualEl.style.display = 'none';
+        if (copyBtn) copyBtn.style.display = 'none';
+        if (openBtn) openBtn.style.display = 'none';
+
+        const ok = await submitStableDeposit(raw, sourceAddress);
+        if (!ok) {
+          txHashSubmitted = false;
+          // Back to waiting: re-open manual entry, restore the address actions,
+          // and re-arm the expiry bound so the screen can't sit indefinitely.
+          setStableStatus('Waiting for payment');
+          if (manualEl) manualEl.style.display = 'block';
+          if (copyBtn) copyBtn.style.display = '';
+          if (openBtn) openBtn.style.display = buildEip681Uri() ? 'block' : 'none';
+          if (stableDetectTimer) clearTimeout(stableDetectTimer);
+          stableDetectTimer = setTimeout(onStableDetectTimeout, STABLE_POLL_MS * MAX_STABLE_POLLS);
+          showStableSubmitError(raw);
+          return;
+        }
+        startStablePolling();
+      }
+
+      async function submitStableDeposit(txHash, sourceAddress) {
+        try {
+          const body = { quoteId: currentQuoteId, txHash: txHash };
+          if (sourceAddress) body.sourceAddress = sourceAddress;
+          const res = await fetch(FLASHNET_SUBMIT_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + FLASHNET_PUBLIC_KEY,
+              'X-Idempotency-Key': 'pool-quote:' + currentQuoteId,
+            },
+            body: JSON.stringify(body),
+          });
+          if (!res.ok) return false;
+          const json = await res.json();
+          currentOrderId = json.orderId || (json.order && json.order.orderId) || null;
+          currentReadToken = json.readToken || (json.order && json.order.readToken) || null;
+          // Both are required: status polling needs the read token bound to the order.
+          return !!(currentOrderId && currentReadToken);
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function showStableSubmitError(txHash) {
+        const el = document.getElementById('stableSubmitError');
+        if (el) {
+          el.style.display = 'block';
+          el.textContent = 'We could not confirm this payment automatically. Tx: ' + txHash +
+            ' — Quote: ' + (currentQuoteId || '') + '. Please contact support or generate a new invoice.';
+        }
+        const regen = document.getElementById('regenerateStableBtn');
+        if (regen) regen.style.display = 'block';
+      }
+
       // ── Stablecoin payment polling — direct to FlashNet, no backend ───
       let stablePollTimer = null;
       let stablePollCount = 0;
@@ -2041,31 +2288,34 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       function stopStablePolling() {
         stablePaymentActive = false;
         if (stablePollTimer) { clearTimeout(stablePollTimer); stablePollTimer = null; }
+        stopStableWatchers();
       }
 
-      // The public fnp_ client key is scoped to orders:read. If FlashNet
-      // requires a read-token for the client key, fall back to the
-      // unauthenticated call whose redacted record still carries a status.
-      async function fetchFlashnetStatus(quoteId) {
-        const url = FLASHNET_STATUS_URL + '?quoteId=' + encodeURIComponent(quoteId);
-        const headerVariants = [{ Authorization: 'Bearer ' + FLASHNET_PUBLIC_KEY }, {}];
-        for (const headers of headerVariants) {
-          try {
-            const res = await fetch(url, { headers });
-            if (!res.ok) continue;
-            const json = await res.json();
-            const status = (json && json.order && json.order.status) || (json && json.status) || null;
-            if (status) return status;
-          } catch (e) { /* try next variant */ }
+      // Read order status with the public client key. FlashNet requires the
+      // short-lived readToken (issued by submit) bound to this order.
+      async function fetchFlashnetStatus() {
+        if (!currentOrderId || !currentReadToken) return null;
+        const url = FLASHNET_STATUS_URL + '?id=' + encodeURIComponent(currentOrderId);
+        try {
+          const res = await fetch(url, {
+            headers: {
+              'Authorization': 'Bearer ' + FLASHNET_PUBLIC_KEY,
+              'X-Read-Token': currentReadToken,
+            },
+          });
+          if (!res.ok) return null;
+          const json = await res.json();
+          return (json && json.order && json.order.status) || (json && json.status) || null;
+        } catch (e) {
+          return null;
         }
-        return null;
       }
 
       async function pollStableStatus() {
         stablePollTimer = null;
         if (!stablePaymentActive) return;
-        if (!document.hidden && currentQuoteId) {
-          const status = await fetchFlashnetStatus(currentQuoteId);
+        if (!document.hidden && currentOrderId) {
+          const status = await fetchFlashnetStatus();
           if (!stablePaymentActive) return;
           if (status && FLASHNET_DONE_STATUSES.has(status)) {
             stopStablePolling();
@@ -2102,6 +2352,8 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         if (copyBtn) copyBtn.style.display = 'none';
         if (openBtn) openBtn.style.display = 'none';
         if (qr) qr.style.opacity = '0.25';
+        const manualEl = document.getElementById('stableManualTx');
+        if (manualEl) manualEl.style.display = 'none';
       }
 
       function resetStablePaymentUI() {
@@ -2110,15 +2362,21 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         const waiting = document.getElementById('stableWaitingText');
         const copyBtn = document.getElementById('copyDepositBtn');
         const qr = document.getElementById('qrStableContainer');
+        const submitErr = document.getElementById('stableSubmitError');
         if (notice) notice.style.display = 'none';
         if (regen) regen.style.display = 'none';
         if (waiting) waiting.style.display = 'flex';
         if (copyBtn) copyBtn.style.display = '';
         if (qr) qr.style.opacity = '1';
+        if (submitErr) { submitErr.style.display = 'none'; submitErr.textContent = ''; }
       }
 
       function regenerateStableQuote() {
         stopStablePolling();
+        stopStableWatchers();
+        txHashSubmitted = false;
+        currentOrderId = null;
+        currentReadToken = null;
         resetStablePaymentUI();
         showStep('stableNetwork');
         lucide.createIcons();
@@ -2126,6 +2384,10 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       function cancelStablePayment() {
         stopStablePolling();
+        stopStableWatchers();
+        txHashSubmitted = false;
+        currentOrderId = null;
+        currentReadToken = null;
         showStep('stableNetwork');
         lucide.createIcons();
       }
