@@ -493,16 +493,19 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       /* Progress Ring */
       .progress-ring-container {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        aspect-ratio: 1;
         position: relative;
-        width: 250px;
-        height: 250px;
         margin: 0 auto 1.5rem;
+
       }
 
       .progress-ring-svg {
         transform: rotate(-90deg);
-        width: 250px;
-        height: 250px;
+        width: 100%;
+        height: 100%;
       }
 
       .progress-ring-bg {
@@ -963,6 +966,85 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         transform: rotate(180deg);
       }
 
+      /* Stablecoin: network selection */
+      .network-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 0.75rem;
+        margin: 1rem 0 1.5rem;
+      }
+
+      .network-card {
+        border: 2px solid var(--lm-backgroundOffset);
+        border-radius: 12px;
+        padding: 1rem 0.5rem;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+        text-align: center;
+        width: 100%;
+        color: var(--lm-text);
+      }
+
+      .network-card:hover {
+        border-color: var(--primary_color);
+      }
+
+      .network-card.selected {
+        border-color: var(--primary_color);
+        background: rgba(3, 117, 246, 0.06);
+        color: var(--primary_color);
+      }
+
+      .currency-toggle {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        margin: 0.5rem 0 1rem;
+      }
+
+      .currency-toggle button {
+        padding: 0.6rem 1.5rem;
+        border-radius: 8px;
+        border: 2px solid var(--lm-backgroundOffset);
+        background: transparent;
+        font-family: var(--description_font);
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.95rem;
+        color: var(--lm-text);
+      }
+
+      .currency-toggle button.active {
+        border-color: var(--primary_color);
+        background: rgba(3, 117, 246, 0.06);
+        color: var(--primary_color);
+      }
+
+      .section-label {
+        font-size: 0.85rem;
+        font-weight: 500;
+        color: #888;
+        text-align: left;
+      }
+
+      .address-box {
+        width: 100%;
+        background: var(--lm-background);
+        border-radius: 10px;
+        padding: 0.75rem 1rem;
+        font-family: monospace;
+        font-size: 0.85rem;
+        margin: 1rem auto 0;
+        cursor: pointer;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: block;
+      }
+
       /* Navbar */
       nav {
         position: fixed;
@@ -1246,6 +1328,49 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       let displayDenomination = 'USD';
       const PRESET_AMOUNTS_SATS = [1000, 5000, 10000, 25000, 50000];
       const PRESET_AMOUNTS_FIAT = [1, 5, 10, 25, 50];
+      const PRESET_AMOUNTS_USD = [1, 5, 10, 25, 50];
+      const MIN_STABLECOIN_USD = 1;
+
+      // ── Stablecoin (FlashNet) payment ──────────────────────────────────
+      // 'bitcoin' (Lightning) or 'stablecoin' (USDC/USDT → BTC swap).
+      let paymentMode = 'bitcoin';
+      let selectedUsdAmount = 0;
+
+      const FLASHNET_STATUS_URL = 'https://orchestration.flashnet.xyz/v1/orchestration/status';
+      const FLASHNET_PUBLIC_KEY = 'fnp_HOWKrJlGOUsraIAnM8IzcSNv3FhuhiHP3pVnWA_E9qI';
+      const STABLE_POLL_MS = 6000;
+      const MAX_STABLE_POLLS = 100; // ~10 min
+      const FLASHNET_DONE_STATUSES = new Set(['completed']);
+      const FLASHNET_FAILED_STATUSES = new Set(['failed', 'expired', 'refunded']);
+
+      const NETWORK_MAP = {
+        ethereum: { chainId: 1,     usdc: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', usdt: '0xdac17f958d2ee523a2206206994597c13d831ec7', decimals: 6 },
+        polygon:  { chainId: 137,   usdc: '0x3c499c542cef5e3811e1192ce70d8cc03d5c3359', usdt: null, decimals: 6 },
+        arbitrum: { chainId: 42161, usdc: '0xaf88d065e77c8cc2239327c5edb3a432268e5831', usdt: '0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9', decimals: 6 },
+        optimism: { chainId: 10,    usdc: '0x0b2c639c533813f4aa9d7837caf62653d097ff85', usdt: '0x94b008aa00579c1307b0ef2c499ad98a8ce58e58', decimals: 6 },
+        base:     { chainId: 8453,  usdc: '0x833589fcd6edb6e08f4c7c32d4f71b54bda02913', usdt: null, decimals: 6 },
+        bsc:      { chainId: 56,    usdc: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d', usdt: '0x55d398326f99059fF775485246999027B3197955', decimals: 18 },
+        solana:   { chainId: null,  usdc: null, usdt: null },
+        tron:     { chainId: null,  usdc: null, usdt: null },
+      };
+
+      const NETWORK_LABELS = {
+        ethereum: 'Ethereum', polygon: 'Polygon', arbitrum: 'Arbitrum',
+        optimism: 'Optimism', base: 'Base', bsc: 'BNB', solana: 'Solana', tron: 'Tron',
+      };
+
+      const CURRENCY_NETWORKS = {
+        USDC: ['ethereum', 'arbitrum', 'optimism', 'polygon', 'base', 'bsc', 'solana'],
+        USDT: ['ethereum', 'arbitrum', 'optimism', 'bsc', 'tron'],
+      };
+
+      let selectedNetwork = null;
+      let selectedCurrency = 'USDC';
+      let depositAddress = null;
+      let amountInRaw = null;
+      let currentChainId = null;
+      let currentTokenAddress = null;
+      let currentQuoteId = null;
 
       function detectOS() {
         const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -1404,9 +1529,10 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                   By \${escapeHtml(pool.creatorName)}
                 </p>
 
-                \${isClosed ? '<span class="status-badge closed">Closed' + (closedDate ? ' ' + closedDate : '') + '</span>' : ''}
+                 \${isClosed ? '<span class="status-badge closed">Closed' + (closedDate ? ' ' + closedDate : '') + '</span>' : ''}
+               
 
-                \${btcPrice && btcPrice > 0 ? \`
+                \${btcPrice && btcPrice > 0 && !isClosed ? \`
                   <button class="denomination-toggle-btn" onclick="toggleDenomination()" id="denomToggleBtn">
                     <i data-lucide="refresh-cw" style="width:14px;height:14px;"></i>
                     Switch to \${displayDenomination === 'SAT' ? poolCurrency : 'BTC'}
@@ -1434,9 +1560,19 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                 </div>
 
 
+                 \${btcPrice && btcPrice > 0 && isClosed ? \`
+                  <button class="denomination-toggle-btn" onclick="toggleDenomination()" id="denomToggleBtn">
+                    <i data-lucide="refresh-cw" style="width:14px;height:14px;"></i>
+                    Switch to \${displayDenomination === 'SAT' ? poolCurrency : 'BTC'}
+                  </button>
+                \` : ''}
+
                 \${!isClosed ? \`
-                  <button class="btn-primary" onclick="showStep('amount')">
-                    Contribute
+                  <button class="btn-primary" onclick="startContribute('bitcoin')">
+                    Pay with Bitcoin
+                  </button>
+                  <button class="btn-secondary" onclick="startContribute('stablecoin')">
+                    Pay with Stablecoins
                   </button>
                 \` : ''}
               </div>
@@ -1446,29 +1582,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                 <button class="btn-back" onclick="showStep('info')">
                   <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
                 </button>
-                <h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.5rem;">Choose an amount</h2>
-                <p style="font-size:0.9rem;color:#888;margin-bottom:1rem;">Select a preset or enter a custom amount\${displayDenomination === 'SAT' ? ' in sats' : ''}.</p>
-
-                <div class="amount-grid">
-                  \${displayDenomination === 'SAT'
-                    ? PRESET_AMOUNTS_SATS.map(sats => \`<button class="amount-option" onclick="selectPreset(\${sats}, this)" data-sats="\${sats}">\${sats.toLocaleString() + " SAT"}</button>\`).join('')
-                    : PRESET_AMOUNTS_FIAT.map(fiat => {
-                        const sats = fiatToSats(fiat);
-                        const formatted = formatCurrency({ amount: fiat, code: displayDenomination })[0];
-                        return \`<button class="amount-option" onclick="selectPreset(\${sats}, this)" data-sats="\${sats}">\${formatted}</button>\`;
-                      }).join('')
-                  }
-                  <button class="amount-option custom-btn" onclick="toggleCustomAmount()">...</button>
-                </div>
-
-                <div class="custom-amount-wrapper" id="customAmountWrapper">
-                  <input type="number" class="custom-amount-input" id="customAmountInput"
-                    placeholder="\${displayDenomination === 'SAT' ? 'Enter sats' : 'Enter ' + displayDenomination + ' amount'}" min="1" oninput="onCustomAmountInput(this.value)">
-                </div>
-
-                <button class="btn-primary" id="continueToNameBtn" disabled onclick="showStep('name')">
-                  Continue
-                </button>
+                <div id="amountStepBody"></div>
               </div>
 
               <!-- STEP: Name Input -->
@@ -1486,14 +1600,85 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
                 <div id="invoiceErrorContainer"></div>
 
-                <button class="btn-primary" onclick="generateInvoice()" id="generateInvoiceBtn">
+                <!-- Bitcoin actions -->
+                <div id="nameButtonsBitcoin">
+                  <button class="btn-primary" onclick="generateInvoice()" id="generateInvoiceBtn">
+                    Generate Invoice
+                  </button>
+                  <button class="btn-secondary" onclick="generateCashAppInvoice()" id="generateCashAppInvoiceBtn">
+                    <span class="btn-content">
+                      <img src="/src/assets/images/cashapp-logo.svg" alt="" aria-hidden="true" />
+                      <span>Pay with Cash App</span>
+                    </span>
+                  </button>
+                </div>
+
+                <!-- Stablecoin action -->
+                <div id="nameButtonsStablecoin" style="display:none;">
+                  <button class="btn-primary" onclick="goToStableNetwork()" id="continueToStableBtn">
+                    Continue
+                  </button>
+                </div>
+              </div>
+
+              <!-- STEP: Stablecoin network/currency selection -->
+              <div id="step-stableNetwork" class="step">
+                <button class="btn-back" onclick="showStep('name')">
+                  <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
+                </button>
+                <h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.25rem;">Pay with stablecoin</h2>
+                <p style="font-size:0.9rem;color:#888;margin-bottom:1rem;">Choose a token and the chain you'll send from.</p>
+
+                <p class="section-label">Token</p>
+                <div class="currency-toggle">
+                  <button id="btn-usdc" class="active" onclick="selectCurrency('USDC')">USDC</button>
+                  <button id="btn-usdt" onclick="selectCurrency('USDT')">USDT</button>
+                </div>
+
+                <p class="section-label">Network</p>
+                <div class="network-cards" id="network-grid"></div>
+
+                <div id="stableQuoteErrorContainer"></div>
+
+                <button class="btn-primary" id="generateStableBtn" onclick="generatePoolStablecoinQuote()">
                   Generate Invoice
                 </button>
-                <button class="btn-secondary" onclick="generateCashAppInvoice()" id="generateCashAppInvoiceBtn">
-                  <span class="btn-content">
-                    <img src="/src/assets/images/cashapp-logo.svg" alt="" aria-hidden="true" />
-                    <span>Pay with Cash App</span>
-                  </span>
+              </div>
+
+              <!-- STEP: Stablecoin deposit / scan to pay -->
+              <div id="step-stablePayment" class="step">
+                <button class="btn-back" onclick="cancelStablePayment()">
+                  <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
+                </button>
+                <h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.5rem;">Scan to Pay</h2>
+                <p class="pool-meta" id="stableNetworkLabel" style="margin-bottom:0.25rem;"></p>
+                <div class="invoice-amount-display" id="stableAmountLabel"></div>
+
+                <div class="qr-code-container" id="qrStableContainer"></div>
+
+                <div class="waiting-text" id="stableWaitingText">
+                  <span class="waiting-dot"></span>
+                  <span class="waiting-dot"></span>
+                  <span class="waiting-dot"></span>
+                  <span style="margin-left:0.25rem;">Waiting for payment</span>
+                </div>
+
+                <div onclick="copyDepositAddress()" class="address-box" id="stableAddressText"></div>
+
+                <div class="expired-notice" id="stableExpiredNotice" style="display:none;">
+                  This quote has expired. Generate a new one to contribute.
+                </div>
+
+                <button class="copy-invoice-btn" onclick="copyDepositAddress()" id="copyDepositBtn">
+                  Copy Invoice
+                </button>
+
+                <button class="btn-secondary" id="openWalletBtn" style="display:none;" onclick="openWallet()">
+                  Open in Wallet
+                </button>
+
+                <button class="btn-primary" id="regenerateStableBtn" style="display:none;" onclick="regenerateStableQuote()">
+                  Generate New Invoice
                 </button>
               </div>
 
@@ -1612,6 +1797,337 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           selectedAmountSats = 0;
           document.getElementById('continueToNameBtn').disabled = true;
         }
+      }
+
+      // ── Payment-mode entry + amount step rendering ────────────────────
+      function startContribute(mode) {
+        paymentMode = mode;
+        selectedAmountSats = 0;
+        selectedUsdAmount = 0;
+        renderAmountStep();
+        const btcBtns = document.getElementById('nameButtonsBitcoin');
+        const stableBtns = document.getElementById('nameButtonsStablecoin');
+        if (btcBtns) btcBtns.style.display = (mode === 'bitcoin') ? 'block' : 'none';
+        if (stableBtns) stableBtns.style.display = (mode === 'stablecoin') ? 'block' : 'none';
+        showStep('amount');
+        lucide.createIcons();
+      }
+
+      function renderAmountStep() {
+        const body = document.getElementById('amountStepBody');
+        if (!body) return;
+        let grid = '';
+        let inputAttrs = '';
+        let desc = '';
+        if (paymentMode === 'stablecoin') {
+          desc = 'Select a preset or enter a custom amount in USD.';
+          grid = PRESET_AMOUNTS_USD.map(function (usd) {
+            return '<button class="amount-option" onclick="selectPresetUsd(' + usd + ', this)" data-usd="' + usd + '">$' + usd + '</button>';
+          }).join('');
+          inputAttrs = 'placeholder="Enter USD amount" min="1" step="0.01" oninput="onCustomUsdInput(this.value)"';
+        } else {
+          desc = 'Select a preset or enter a custom amount' + (displayDenomination === 'SAT' ? ' in sats' : '') + '.';
+          if (displayDenomination === 'SAT') {
+            grid = PRESET_AMOUNTS_SATS.map(function (sats) {
+              return '<button class="amount-option" onclick="selectPreset(' + sats + ', this)" data-sats="' + sats + '">' + sats.toLocaleString() + ' SAT</button>';
+            }).join('');
+          } else {
+            grid = PRESET_AMOUNTS_FIAT.map(function (fiat) {
+              const sats = fiatToSats(fiat);
+              const formatted = formatCurrency({ amount: fiat, code: displayDenomination })[0];
+              return '<button class="amount-option" onclick="selectPreset(' + sats + ', this)" data-sats="' + sats + '">' + formatted + '</button>';
+            }).join('');
+          }
+          inputAttrs = 'placeholder="' + (displayDenomination === 'SAT' ? 'Enter sats' : 'Enter ' + displayDenomination + ' amount') + '" min="1" oninput="onCustomAmountInput(this.value)"';
+        }
+
+        body.innerHTML =
+          '<h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.5rem;">Choose an amount</h2>' +
+          '<p style="font-size:0.9rem;color:#888;margin-bottom:1rem;">' + desc + '</p>' +
+          '<div class="amount-grid">' + grid +
+          '<button class="amount-option custom-btn" onclick="toggleCustomAmount()">...</button></div>' +
+          '<div class="custom-amount-wrapper" id="customAmountWrapper">' +
+          '<input type="number" class="custom-amount-input" id="customAmountInput" ' + inputAttrs + '></div>' +
+          '<button class="btn-primary" id="continueToNameBtn" disabled onclick="showStep(\\'name\\')">Continue</button>';
+      }
+
+      function selectPresetUsd(usd, el) {
+        selectedUsdAmount = parseFloat(el.getAttribute('data-usd')) || usd;
+        document.querySelectorAll('.amount-option').forEach(function (b) { b.classList.remove('selected'); });
+        el.classList.add('selected');
+        const customInput = document.getElementById('customAmountInput');
+        if (customInput) customInput.value = '';
+        document.getElementById('customAmountWrapper').classList.remove('visible');
+        document.getElementById('continueToNameBtn').disabled = false;
+      }
+
+      function onCustomUsdInput(value) {
+        const usd = parseFloat(value);
+        if (usd && usd >= 1) {
+          selectedUsdAmount = usd;
+          document.getElementById('continueToNameBtn').disabled = false;
+        } else {
+          selectedUsdAmount = 0;
+          document.getElementById('continueToNameBtn').disabled = true;
+        }
+      }
+
+      // ── Stablecoin network / currency selection ───────────────────────
+      function goToStableNetwork() {
+        if (selectedUsdAmount < MIN_STABLECOIN_USD) {
+          alert('Minimum stablecoin amount is $' + MIN_STABLECOIN_USD);
+          return;
+        }
+        selectCurrency('USDC');
+        showStep('stableNetwork');
+        lucide.createIcons();
+      }
+
+      function updateCurrencyGrid() {
+        const grid = document.getElementById('network-grid');
+        if (!grid) return;
+        const networks = CURRENCY_NETWORKS[selectedCurrency] || [];
+        grid.innerHTML = networks.map(function (n) {
+          return '<div class="network-card" id="card-' + n + '" onclick="selectNetwork(\\'' + n + '\\')">' + NETWORK_LABELS[n] + '</div>';
+        }).join('');
+      }
+
+      function selectNetwork(network) {
+        selectedNetwork = network;
+        document.querySelectorAll('.network-card').forEach(function (c) { c.classList.remove('selected'); });
+        const card = document.getElementById('card-' + network);
+        if (card) card.classList.add('selected');
+      }
+
+      function selectCurrency(currency) {
+        selectedCurrency = currency;
+        selectedNetwork = null;
+        const usdcBtn = document.getElementById('btn-usdc');
+        const usdtBtn = document.getElementById('btn-usdt');
+        if (usdcBtn) usdcBtn.classList.toggle('active', currency === 'USDC');
+        if (usdtBtn) usdtBtn.classList.toggle('active', currency === 'USDT');
+        updateCurrencyGrid();
+      }
+
+      // ── Stablecoin quote creation + deposit screen ────────────────────
+      async function createStablecoinQuote(params) {
+        try {
+          const response = await fetch('/createPoolInvoice', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              poolId,
+              usdAmount: params.usdAmount,
+              contributorName: params.contributorName,
+              network: params.network,
+              currency: params.currency,
+            }),
+          });
+          const json = await response.json().catch(function () { return null; });
+          if (!response.ok || !json || json.status !== 'SUCCESS' || !json.data) {
+            return { data: null, error: (json && json.message) || 'Failed to generate invoice. Please try again.' };
+          }
+          return { data: json.data, error: null };
+        } catch (error) {
+          return { data: null, error: error.message };
+        }
+      }
+
+      function formatTokenAmount(raw, decimals) {
+        if (!raw) return '';
+        if (!decimals) return String(raw);
+        return (Number(raw) / Math.pow(10, decimals)).toFixed(2);
+      }
+
+      async function generatePoolStablecoinQuote() {
+        if (!selectedNetwork) { showStableQuoteError('Please select a network.'); return; }
+        const name = document.getElementById('contributorNameInput')?.value?.trim() || '';
+        const btn = document.getElementById('generateStableBtn');
+        const errEl = document.getElementById('stableQuoteErrorContainer');
+        if (errEl) errEl.innerHTML = '';
+        if (btn) { btn.disabled = true; btn.textContent = 'Generating...'; }
+
+        const { data, error } = await createStablecoinQuote({
+          usdAmount: selectedUsdAmount,
+          contributorName: name,
+          network: selectedNetwork,
+          currency: selectedCurrency,
+        });
+
+        if (btn) { btn.disabled = false; btn.textContent = 'Generate Invoice'; }
+
+        if (!data) { showStableQuoteError(error || 'Failed to generate invoice.'); return; }
+
+        depositAddress = data.depositAddress;
+        amountInRaw = data.amountIn;
+        currentQuoteId = data.quoteId;
+        const meta = NETWORK_MAP[selectedNetwork] || {};
+        currentChainId = meta.chainId || null;
+        currentTokenAddress = currentChainId ? (meta[selectedCurrency.toLowerCase()] || null) : null;
+
+        renderStablePayment();
+        showStep('stablePayment');
+        lucide.createIcons();
+        startStablePolling();
+      }
+
+      function renderStablePayment() {
+        resetStablePaymentUI();
+        const meta = NETWORK_MAP[selectedNetwork] || {};
+        const netLabel = document.getElementById('stableNetworkLabel');
+        const amtLabel = document.getElementById('stableAmountLabel');
+        const addrEl = document.getElementById('stableAddressText');
+        if (netLabel) netLabel.textContent = 'Send ' + selectedCurrency + ' on ' + (NETWORK_LABELS[selectedNetwork] || selectedNetwork);
+        if (amtLabel) amtLabel.textContent = formatTokenAmount(amountInRaw, meta.decimals || 6) + ' ' + selectedCurrency;
+        if (addrEl) addrEl.textContent = depositAddress || '';
+
+        const qr = document.getElementById('qrStableContainer');
+        if (qr) {
+          qr.innerHTML = '';
+          if (depositAddress) {
+            new QRCode(qr, {
+              text: depositAddress,
+              width: 220,
+              height: 220,
+              colorDark: '#000000',
+              colorLight: '#ffffff',
+              correctLevel: QRCode.CorrectLevel.M,
+            });
+          }
+        }
+
+        const openBtn = document.getElementById('openWalletBtn');
+        if (openBtn) openBtn.style.display = buildEip681Uri() ? 'block' : 'none';
+      }
+
+      function buildEip681Uri() {
+        if (!currentTokenAddress || !depositAddress || !currentChainId || !amountInRaw) return null;
+        return 'ethereum:' + currentTokenAddress + '@' + currentChainId + '/transfer?address=' + depositAddress + '&uint256=' + String(amountInRaw);
+      }
+
+      function openWallet() {
+        const uri = buildEip681Uri();
+        if (uri) window.location.href = uri;
+      }
+
+      function copyDepositAddress() {
+        if (!depositAddress) return;
+        navigator.clipboard.writeText(depositAddress);
+        const btn = document.getElementById('copyDepositBtn');
+        if (btn) {
+          const original = btn.textContent;
+          btn.textContent = 'Copied!';
+          setTimeout(function () { btn.textContent = original; }, 2000);
+        }
+      }
+
+      function showStableQuoteError(msg) {
+        const errEl = document.getElementById('stableQuoteErrorContainer');
+        if (errEl) errEl.innerHTML = '<p class="error-text">' + escapeHtml(msg) + '</p>';
+      }
+
+      // ── Stablecoin payment polling — direct to FlashNet, no backend ───
+      let stablePollTimer = null;
+      let stablePollCount = 0;
+      let stablePaymentActive = false;
+
+      function startStablePolling() {
+        stopStablePolling();
+        stablePaymentActive = true;
+        stablePollCount = 0;
+        stablePollTimer = setTimeout(pollStableStatus, STABLE_POLL_MS);
+      }
+
+      function stopStablePolling() {
+        stablePaymentActive = false;
+        if (stablePollTimer) { clearTimeout(stablePollTimer); stablePollTimer = null; }
+      }
+
+      // The public fnp_ client key is scoped to orders:read. If FlashNet
+      // requires a read-token for the client key, fall back to the
+      // unauthenticated call whose redacted record still carries a status.
+      async function fetchFlashnetStatus(quoteId) {
+        const url = FLASHNET_STATUS_URL + '?quoteId=' + encodeURIComponent(quoteId);
+        const headerVariants = [{ Authorization: 'Bearer ' + FLASHNET_PUBLIC_KEY }, {}];
+        for (const headers of headerVariants) {
+          try {
+            const res = await fetch(url, { headers });
+            if (!res.ok) continue;
+            const json = await res.json();
+            const status = (json && json.order && json.order.status) || (json && json.status) || null;
+            if (status) return status;
+          } catch (e) { /* try next variant */ }
+        }
+        return null;
+      }
+
+      async function pollStableStatus() {
+        stablePollTimer = null;
+        if (!stablePaymentActive) return;
+        if (!document.hidden && currentQuoteId) {
+          const status = await fetchFlashnetStatus(currentQuoteId);
+          if (!stablePaymentActive) return;
+          if (status && FLASHNET_DONE_STATUSES.has(status)) {
+            stopStablePolling();
+            showStep('success');
+            lucide.createIcons();
+            return;
+          }
+          if (status && FLASHNET_FAILED_STATUSES.has(status)) {
+            stopStablePolling();
+            showStableExpiredUI();
+            return;
+          }
+        }
+        stablePollCount++;
+        if (stablePollCount >= MAX_STABLE_POLLS) {
+          stopStablePolling();
+          showStableExpiredUI();
+          return;
+        }
+        stablePollTimer = setTimeout(pollStableStatus, STABLE_POLL_MS);
+      }
+
+      function showStableExpiredUI() {
+        if (currentStep !== 'stablePayment') return;
+        const notice = document.getElementById('stableExpiredNotice');
+        const regen = document.getElementById('regenerateStableBtn');
+        const waiting = document.getElementById('stableWaitingText');
+        const copyBtn = document.getElementById('copyDepositBtn');
+        const openBtn = document.getElementById('openWalletBtn');
+        const qr = document.getElementById('qrStableContainer');
+        if (notice) notice.style.display = 'block';
+        if (regen) regen.style.display = 'block';
+        if (waiting) waiting.style.display = 'none';
+        if (copyBtn) copyBtn.style.display = 'none';
+        if (openBtn) openBtn.style.display = 'none';
+        if (qr) qr.style.opacity = '0.25';
+      }
+
+      function resetStablePaymentUI() {
+        const notice = document.getElementById('stableExpiredNotice');
+        const regen = document.getElementById('regenerateStableBtn');
+        const waiting = document.getElementById('stableWaitingText');
+        const copyBtn = document.getElementById('copyDepositBtn');
+        const qr = document.getElementById('qrStableContainer');
+        if (notice) notice.style.display = 'none';
+        if (regen) regen.style.display = 'none';
+        if (waiting) waiting.style.display = 'flex';
+        if (copyBtn) copyBtn.style.display = '';
+        if (qr) qr.style.opacity = '1';
+      }
+
+      function regenerateStableQuote() {
+        stopStablePolling();
+        resetStablePaymentUI();
+        showStep('stableNetwork');
+        lucide.createIcons();
+      }
+
+      function cancelStablePayment() {
+        stopStablePolling();
+        showStep('stableNetwork');
+        lucide.createIcons();
       }
 
       let currentInvoice = '';
