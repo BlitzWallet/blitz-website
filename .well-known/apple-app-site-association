@@ -8,7 +8,8 @@
           "/u/*",
           "/gift/*",
           "/pools/*",
-          "/paylink/*"
+          "/paylink/*",
+          "/child/*"
         ]
       }
     ]

@@ -84,6 +84,12 @@ X-Content-Type-Options = "nosniff"
   to = "/.netlify/functions/handle-gift"
   status = 200
 
+# Child account invite landing page (static)
+[[redirects]]
+  from = "/child/*"
+  to = "/pages/child/child.html"
+  status = 200
+
 # Favicon redirects
 [[redirects]]
   from = "/favicon.ico"
