@@ -2319,8 +2319,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           if (!stablePaymentActive) return;
           if (status && FLASHNET_DONE_STATUSES.has(status)) {
             stopStablePolling();
-            showStep('success');
-            lucide.createIcons();
+            showContributionSuccess(fiatToSats(selectedUsdAmount) || 0);
             return;
           }
           if (status && FLASHNET_FAILED_STATUSES.has(status)) {
@@ -2499,6 +2498,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       // Everything stops once the invoice expires.
 
       let invoiceAmountSats = 0;
+      let lastContributionSats = 0;
       let invoiceCreatedAtMs = 0;
       let invoiceExpiresAtMs = 0;
       let sparkTimer = null;
@@ -2618,8 +2618,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           if (!paymentActive) return null;
           if (result.paid) {
             stopPaymentPolling();
-            showStep('success');
-            lucide.createIcons();
+            showContributionSuccess(invoiceAmountSats);
             return true;
           }
           if (result.error) return null; // transient — don't mark tried, retry
@@ -2653,8 +2652,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         // One final check in case the payment landed at the buzzer.
         const result = await checkPayment(currentInvoiceId);
         if (result.paid) {
-          showStep('success');
-          lucide.createIcons();
+          showContributionSuccess(invoiceAmountSats);
           return;
         }
         showInvoiceExpiredUI();
@@ -2722,13 +2720,23 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         lucide.createIcons();
       }
 
-      async function returnToPool() {
-        // Refresh pool data
-        showStep('info');
-        const { data } = await fetchPoolData();
-        if (data) {
-          renderPoolInfo(poolData);
+      function showContributionSuccess(contributedSats) {
+        lastContributionSats = Number(contributedSats) || 0;
+        showStep('success');
+        lucide.createIcons();
+      }
+
+      function returnToPool() {
+        // Backend caches pool data (~45s), so a fresh fetch here can still return
+        // the pre-contribution total. Optimistically apply the amount we just
+        // contributed; a full page refresh later pulls the corrected value from
+        // the backend.
+        if (poolData && lastContributionSats > 0) {
+          poolData.currentAmount = (Number(poolData.currentAmount) || 0) + lastContributionSats;
         }
+        lastContributionSats = 0;
+        showStep('info');
+        renderPoolInfo(poolData);
       }
 
       function copyPoolLink() {
