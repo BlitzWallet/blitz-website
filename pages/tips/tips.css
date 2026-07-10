@@ -187,11 +187,7 @@ main {
 }
 
 .tip-button.active {
-  background: linear-gradient(
-    135deg,
-    var(--primary_color),
-    var(--tertiary_color)
-  );
+  background: linear-gradient(135deg, var(--primary_color));
   color: white;
   cursor: pointer;
   box-shadow: 0 4px 15px rgba(3, 117, 246, 0.3);
@@ -404,11 +400,7 @@ main {
 }
 
 .action-button.primary {
-  background: linear-gradient(
-    135deg,
-    var(--primary_color),
-    var(--tertiary_color)
-  );
+  background: linear-gradient(135deg, var(--primary_color));
   color: white;
   box-shadow: 0 4px 15px rgba(3, 117, 246, 0.3);
 }
@@ -1068,11 +1060,7 @@ main {
 .btn-primary {
   width: 100%;
   padding: 0.75rem;
-  background: linear-gradient(
-    135deg,
-    var(--primary_color),
-    var(--tertiary_color)
-  );
+  background: linear-gradient(135deg, var(--primary_color));
   color: white;
   border: none;
   border-radius: 12px;
