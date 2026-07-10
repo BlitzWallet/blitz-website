@@ -61,6 +61,9 @@ X-Content-Type-Options = "nosniff"
   [headers.values]
     Content-Security-Policy = "frame-ancestors 'none';"
     X-Frame-Options = "DENY"
+    # Pin HTTPS so a first-hit downgrade / SSL-strip can't reach a wallet page.
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Referrer-Policy = "strict-origin-when-cross-origin"
 
 
 # Main redirection for user profiles
@@ -140,7 +143,7 @@ X-Content-Type-Options = "nosniff"
 # LNURL redirects
 [[redirects]]
   from = "/.well-known/lnurlp/:username"
-  to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app/:username"
+  to = "https://proxy.blitz-wallet.com/.well-known/lnurlp/:username"
   status = 200
   force = true
 
@@ -151,7 +154,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/p/:username"
-  to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app/:username"
+  to = "https://proxy.blitz-wallet.com/p/:username"
   status = 200
   force = true
 
@@ -162,7 +165,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/.well-known/lnurlverify/:sparkIDCode"
-  to = "https://verifylnurlinvoice-6krimtymjq-uc.a.run.app/:sparkIDCode"
+  to = "https://proxy.blitz-wallet.com/.well-known/lnurlverify/:sparkIDCode"
   status = 200
   force = true
 
@@ -173,7 +176,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/getInvoice"
-  to = "https://getInvoiceForTipFeature-6krimtymjq-uc.a.run.app"
+  to = "https://proxy.blitz-wallet.com/getInvoice"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -183,7 +186,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/getBitcoinGiftDetails"
-  to = "https://getbitcoingiftdetails-6krimtymjq-uc.a.run.app"
+  to = "https://proxy.blitz-wallet.com/getBitcoinGiftDetails"
    status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -204,7 +207,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/getPoolData"
-  to = "https://getpooldata-6krimtymjq-uc.a.run.app"
+  to = "https://proxy.blitz-wallet.com/getPoolData"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -218,7 +221,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/createPoolInvoice"
-  to = "https://createpoolinvoice-6krimtymjq-uc.a.run.app"
+  to = "https://proxy.blitz-wallet.com/createPoolInvoice"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -231,7 +234,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/checkPoolPayment"
-  to = "https://checkpoolpayment-6krimtymjq-uc.a.run.app"
+  to = "https://proxy.blitz-wallet.com/checkPoolPayment"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -251,7 +254,7 @@ X-Content-Type-Options = "nosniff"
 # Paylinks API proxies
 [[redirects]]
   from = "/getPaylinkData"
-  to = "https://getpaylinkdata-6krimtymjq-uc.a.run.app"
+  to = "https://proxy.blitz-wallet.com/getPaylinkData"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -259,7 +262,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/createPayLinkInvoice"
-  to = "https://createlnurlinvoice-6krimtymjq-uc.a.run.app"
+  to = "https://proxy.blitz-wallet.com/createPayLinkInvoice"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -267,7 +270,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/submitPaylinkSwap"
-  to = "https://submitPaylinkSwap-6krimtymjq-uc.a.run.app"
+  to = "https://proxy.blitz-wallet.com/submitPaylinkSwap"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
@@ -275,7 +278,7 @@ X-Content-Type-Options = "nosniff"
 
 [[redirects]]
   from = "/getTipsData/:username"
-  to = "https://getTipsData-6krimtymjq-uc.a.run.app/:username"
+  to = "https://proxy.blitz-wallet.com/getTipsData/:username"
   status = 200
   force = true
   headers = {X-From = "Netlify"}
