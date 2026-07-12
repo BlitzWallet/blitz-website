@@ -177,16 +177,12 @@ function generateHTML({
   paylinkData,
   domain,
 }) {
+  // Only inlinedData (to seed the client) and amount (a numeric fallback below)
+  // are still consumed server-side. All display text is now rendered client-side
+  // from the live fetch — see renderInitialScreen() — so the server no longer
+  // bakes username/amount/description into the markup.
   const inlinedData = JSON.stringify(paylinkData ?? null);
-  const username = paylinkData?.name ?? "";
   const amount = Number(paylinkData?.amount ?? 0);
-  const rawAmount = Number(paylinkData?.rawAmount ?? 0);
-  const amountLabelNumber = formatAmountLabel(paylinkData);
-  const amountLabel = amount
-    ? `<p class="amount">${amountLabelNumber}</p>`
-    : "";
-  const description = paylinkData?.description ?? "";
-  const paylinkUrl = `https://blitzwalletapp.com/paylink/${paylinkId}`;
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -1282,15 +1278,15 @@ function generateHTML({
         </div>
 
         <!-- Screen 1: initial -->
+        <!-- Content is populated client-side by renderInitialScreen() from the
+             live paylink fetch. Server-inlined paylinkData is unreliable in
+             production, so the screen is never rendered conditionally here. -->
         <div id="screen-initial" class="screen">
-          ${
-            paylinkData
-              ? `
           <div class="request-layout">
             <div class="request-text">
-              <p class="requester">${username} requested</p>
-              ${amountLabel}
-              ${description ? `<p class="pay-description">for "${description}"</p>` : ""}
+              <p class="requester" id="initial-requester"></p>
+              <p class="amount" id="initial-amount" style="display:none;"></p>
+              <p class="pay-description" id="initial-description" style="display:none;"></p>
             </div>
           </div>
           <div id="paid-notice" class="paid-notice">This payment has already been completed.</div>
@@ -1302,24 +1298,12 @@ function generateHTML({
               <span>Pay with Cash App</span>
             </span>
           </button>
-          `
-              : `
-          <div class="error-box">
-            <h2>Payment Request Not Found</h2>
-            <p>This paylink doesn't exist or has expired.</p>
-          </div>
-          `
-          }
         </div>
 
         <!-- Screen 2a: Bitcoin QR -->
         <div id="screen-btc" class="screen">
-          <p class="requester">Pay ${username} via Lightning</p>
-          ${
-            amount
-              ? `<p class="status-text amount" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem;">${amountLabelNumber}</p>`
-              : ""
-          }
+          <p class="requester" id="btc-requester">Pay via Lightning</p>
+          <p class="status-text amount" id="btc-amount" style="margin-bottom:1.5rem; margin-top:0.5rem; font-size:1.5rem; display:none;"></p>
           <div onclick="copyAddress()" class="qr-wrapper">
             <div id="qr-btc-invoice"></div>
           </div>
@@ -1764,6 +1748,18 @@ function generateHTML({
             return;
           }
           showScreen('screen-btc');
+          const btcRequester = document.getElementById('btc-requester');
+          if (btcRequester) btcRequester.textContent = 'Pay ' + (currentPaylinkData?.name ?? 'Someone') + ' via Lightning';
+          const btcAmount = document.getElementById('btc-amount');
+          if (btcAmount) {
+            const label = formatClientAmountLabel(currentPaylinkData);
+            if (Number(currentPaylinkData?.amount ?? 0) > 0 && label) {
+              btcAmount.textContent = label;
+              btcAmount.style.display = '';
+            } else {
+              btcAmount.style.display = 'none';
+            }
+          }
           const qrEl = document.getElementById('qr-btc-invoice');
           const address = document.getElementById('bitcoin-address-text');
           const openWalletButton = document.getElementById('bitcoin-open-buttn');
@@ -2154,6 +2150,47 @@ function generateHTML({
         \`;
       }
 
+      // Client-side mirror of the server formatAmountLabel().
+      function formatClientAmountLabel(data) {
+        if (!data) return null;
+        if (data.currencyType !== 'BTC' && Number(data.displayAmount ?? 0) > 0) {
+          const rawAmount = Number(data.displayAmount);
+          return '$' + rawAmount.toFixed(2).toLocaleString('en-US');
+        }
+        const amount = Number(data.amount ?? 0);
+        return '₿' + amount.toLocaleString('en-US');
+      }
+
+      // Populate the initial screen from live paylink data (fetched client-side).
+      function renderInitialScreen(data) {
+        const requesterEl = document.getElementById('initial-requester');
+        const amountEl = document.getElementById('initial-amount');
+        const descEl = document.getElementById('initial-description');
+
+        const username = data?.name ?? 'Someone';
+        if (requesterEl) requesterEl.textContent = username + ' requested';
+
+        const amountLabel = formatClientAmountLabel(data);
+        if (amountEl) {
+          if (Number(data?.amount ?? 0) > 0 && amountLabel) {
+            amountEl.textContent = amountLabel;
+            amountEl.style.display = '';
+          } else {
+            amountEl.style.display = 'none';
+          }
+        }
+
+        const description = data?.description ?? '';
+        if (descEl) {
+          if (description) {
+            descEl.textContent = 'for "' + description + '"';
+            descEl.style.display = '';
+          } else {
+            descEl.style.display = 'none';
+          }
+        }
+      }
+
       function updatePaidNotice(data) {
         const paidNotice = document.getElementById('paid-notice');
         const isPaid = !!data?.isPaid;
@@ -2232,21 +2269,17 @@ function generateHTML({
       });
 
       // ── init ──────────────────────────────────────────────────────────
+      // The page renders with the loading spinner (#screen-loading) active. This
+      // handler is the single source of truth for which screen to show: it waits
+      // on the live paylink fetch, then decides — never the server-inlined data.
       document.addEventListener('DOMContentLoaded', async () => {
         const livePaylink = await fetchCurrentPaylinkData();
-        console.log(livePaylink,'live paylink data')
-        if (livePaylink.data) {
-          currentPaylinkData = livePaylink.data;
-        } else if (livePaylink.notFound) {
-          currentPaylinkData = null;
-          showPaylinkUnavailable();
-        }
-        updatePaidNotice(currentPaylinkData);
 
         // Resume if we have a txHash from a previous stablecoin submission.
         // Discard stale Lendaswap entries (those have a swapId key).
         const stored = loadSwapContext();
         if (stored && stored.txHash && !stored.swapId) {
+          if (livePaylink.data) currentPaylinkData = livePaylink.data;
           txHashSubmitted = true;
           currentQuoteId = stored.currentQuoteId || null;
           currentAttemptId = stored.currentAttemptId || null;
@@ -2256,7 +2289,18 @@ function generateHTML({
           return;
         }
 
-        showScreen('screen-initial');
+        if (livePaylink.data) {
+          currentPaylinkData = livePaylink.data;
+          renderInitialScreen(currentPaylinkData);
+          updatePaidNotice(currentPaylinkData);
+          showScreen('screen-initial');
+        } else {
+          // No live data — genuinely missing/expired, or the fetch failed.
+          // Either way the payment can't proceed, so show the unavailable box.
+          currentPaylinkData = null;
+          showPaylinkUnavailable();
+          showScreen('screen-initial');
+        }
       });
 
       (function() {
