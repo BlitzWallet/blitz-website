@@ -86,26 +86,8 @@ async function fetchFreshPaylinkData(paylinkId, baseUrl) {
 }
 
 async function fetchPaylinkData(paylinkId, baseUrl) {
-  const cacheKey = String(paylinkId || "").trim();
-  if (!cacheKey) return null;
-
-  const cached = readPaylinkDataCache(cacheKey);
-  if (cached?.promise) return cached.promise;
-  if (cached && "data" in cached) return cached.data;
-
-  const promise = fetchFreshPaylinkData(cacheKey, baseUrl);
-  writePaylinkDataCache(cacheKey, {
-    promise,
-    expiresAt: Date.now() + PAYLINK_DATA_CACHE_TTL_MS,
-  });
-
+  const promise = fetchFreshPaylinkData(paylinkId, baseUrl);
   const data = await promise;
-  writePaylinkDataCache(cacheKey, {
-    data,
-    expiresAt:
-      Date.now() +
-      (data ? PAYLINK_DATA_CACHE_TTL_MS : PAYLINK_DATA_FAILURE_CACHE_TTL_MS),
-  });
   return data;
 }
 
