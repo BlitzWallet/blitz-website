@@ -1413,6 +1413,7 @@ function generateHTML({
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
       const PAYLINK_ID = ${JSON.stringify(paylinkId)};
       const PAYLINK_DATA = ${inlinedData};
+      console.log(PAYLINK_ID,PAYLINK_DATA)
       let currentPaylinkData = PAYLINK_DATA;
       const SWAP_STORAGE_KEY = \`paylink_swap_\${PAYLINK_ID}\`;
       const SWAP_HISTORY_KEY = 'blitz_swap_history'
@@ -2132,6 +2133,7 @@ function generateHTML({
           });
           if (!res.ok) return { data: null, notFound: false };
           const json = await res.json();
+          console.log(json)
           if (json?.status !== 'SUCCESS') {
             return { data: null, notFound: true };
           }
@@ -2232,6 +2234,7 @@ function generateHTML({
       // ── init ──────────────────────────────────────────────────────────
       document.addEventListener('DOMContentLoaded', async () => {
         const livePaylink = await fetchCurrentPaylinkData();
+        console.log(livePaylink,'live paylink data')
         if (livePaylink.data) {
           currentPaylinkData = livePaylink.data;
         } else if (livePaylink.notFound) {
