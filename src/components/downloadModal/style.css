@@ -31,7 +31,7 @@
 }
 
 .download-modal {
-  background: white;
+  background: var(--color-surface);
   border-radius: 30px 30px 0 0;
   padding: 2.5rem 2rem 2rem;
   max-width: 600px;
@@ -102,7 +102,7 @@
   background: transparent;
   border-radius: 50px;
   cursor: pointer;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.95rem;
   color: var(--lm-text);
   transition: all 0.3s ease;
@@ -118,7 +118,7 @@
 }
 
 .modal-tab.active {
-  background: white;
+  background: var(--color-surface);
   color: var(--primary_color);
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -128,7 +128,7 @@
 }
 
 .qr-wrapper {
-  background: white;
+  background: var(--color-surface);
   padding: 1.5rem;
   border-radius: 20px;
   display: inline-block;
@@ -159,14 +159,16 @@
   align-items: center;
   gap: 0.7rem;
   padding: 0.8rem 1.5rem;
-  background: var(--lm-text);
+  background: var(--color-brand);
   color: white;
   text-decoration: none;
   border-radius: 12px;
-  font-weight: 600;
+  font-weight: 500;
   transition: all 0.3s ease;
 }
-
+.store-badge span {
+  color: white;
+}
 .store-badge svg {
   width: 24px;
   height: 24px;
