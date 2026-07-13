@@ -8,20 +8,6 @@ const PREVIEW_HTML_FAILURE_CACHE_SECONDS = numberFromEnv(
   process.env.PREVIEW_HTML_FAILURE_CACHE_SECONDS,
   60,
 );
-const PAYLINK_DATA_CACHE_TTL_MS = numberFromEnv(
-  process.env.PAYLINK_DATA_CACHE_TTL_MS,
-  PREVIEW_HTML_CACHE_SECONDS * 1000,
-);
-const PAYLINK_DATA_FAILURE_CACHE_TTL_MS = numberFromEnv(
-  process.env.PAYLINK_DATA_FAILURE_CACHE_TTL_MS,
-  5_000,
-);
-const PAYLINK_DATA_CACHE_MAX_ENTRIES = numberFromEnv(
-  process.env.PAYLINK_DATA_CACHE_MAX_ENTRIES,
-  500,
-);
-
-const paylinkDataCache = new Map();
 
 function numberFromEnv(value, fallback) {
   const number = Number(value);
@@ -38,22 +24,6 @@ function buildPreviewCacheHeaders(hasPreviewData) {
     "CDN-Cache-Control": `public, s-maxage=${ttl}`,
     "Netlify-CDN-Cache-Control": `public, s-maxage=${ttl}`,
   };
-}
-
-function readPaylinkDataCache(cacheKey) {
-  const cached = paylinkDataCache.get(cacheKey);
-  if (!cached) return null;
-  if (cached.expiresAt > Date.now()) return cached;
-  paylinkDataCache.delete(cacheKey);
-  return null;
-}
-
-function writePaylinkDataCache(cacheKey, entry) {
-  if (paylinkDataCache.size >= PAYLINK_DATA_CACHE_MAX_ENTRIES) {
-    const oldestKey = paylinkDataCache.keys().next().value;
-    if (oldestKey) paylinkDataCache.delete(oldestKey);
-  }
-  paylinkDataCache.set(cacheKey, entry);
 }
 
 // ── 1. Fetch paylink data from Cloud Function ──────────────────────────────
