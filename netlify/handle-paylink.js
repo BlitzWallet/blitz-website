@@ -1,4 +1,4 @@
-import { signedRequestHeaders } from "./lib/sign-request.js";
+import { signedRequestHeaders, PROXY_ORIGIN } from "./lib/sign-request.js";
 
 const PREVIEW_HTML_CACHE_SECONDS = numberFromEnv(
   process.env.PREVIEW_HTML_CACHE_SECONDS,
@@ -60,7 +60,7 @@ function writePaylinkDataCache(cacheKey, entry) {
 
 async function fetchFreshPaylinkData(paylinkId, baseUrl) {
   try {
-    const res = await fetch(baseUrl + "/getPaylinkData", {
+    const res = await fetch(PROXY_ORIGIN + "/getPaylinkData", {
       method: "POST",
       headers: signedRequestHeaders(),
       body: JSON.stringify({

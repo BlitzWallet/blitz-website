@@ -1,8 +1,8 @@
-import { signedRequestHeaders } from "./lib/sign-request.js";
+import { signedRequestHeaders, PROXY_ORIGIN } from "./lib/sign-request.js";
 
 async function fetchGiftData(giftId, baseUrl) {
   try {
-    const res = await fetch(baseUrl + "/getBitcoinGiftDetails", {
+    const res = await fetch(PROXY_ORIGIN + "/getBitcoinGiftDetails", {
       method: "POST",
       headers: signedRequestHeaders(),
       body: JSON.stringify({ giftUUID: giftId }),

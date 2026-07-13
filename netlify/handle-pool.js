@@ -1,4 +1,4 @@
-import { signedRequestHeaders } from "./lib/sign-request.js";
+import { signedRequestHeaders, PROXY_ORIGIN } from "./lib/sign-request.js";
 
 const PREVIEW_HTML_CACHE_SECONDS = numberFromEnv(
   process.env.PREVIEW_HTML_CACHE_SECONDS,
@@ -59,7 +59,7 @@ function writePoolDataCache(cacheKey, entry) {
 
 async function fetchFreshPoolData(poolId, baseUrl) {
   try {
-    const res = await fetch(baseUrl + "/getPoolData", {
+    const res = await fetch(PROXY_ORIGIN + "/getPoolData", {
       method: "POST",
       headers: signedRequestHeaders(),
       body: JSON.stringify({ poolId }),
