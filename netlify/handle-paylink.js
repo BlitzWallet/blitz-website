@@ -1397,7 +1397,6 @@ function generateHTML({
       const ANDROID_STORE_URL = 'https://play.google.com/store/apps/details?id=com.blitzwallet';
       const PAYLINK_ID = ${JSON.stringify(paylinkId)};
       const PAYLINK_DATA = ${inlinedData};
-      console.log(PAYLINK_ID,PAYLINK_DATA)
       let currentPaylinkData = PAYLINK_DATA;
       const SWAP_STORAGE_KEY = \`paylink_swap_\${PAYLINK_ID}\`;
       const SWAP_HISTORY_KEY = 'blitz_swap_history'
@@ -1840,7 +1839,6 @@ function generateHTML({
         const grid = document.getElementById('network-grid');
         if (grid) {
           const networks = CURRENCY_NETWORKS[selectedCurrency] || [];
-          console.log(CURRENCY_NETWORKS,selectedCurrency,networks  )
           grid.innerHTML = networks.map(n =>
             \`<div class="network-card" id="card-\${n}" onclick="selectNetwork('\${n}')">\${NETWORK_LABELS[n]}</div>\`
           ).join('');
@@ -2129,7 +2127,6 @@ function generateHTML({
           });
           if (!res.ok) return { data: null, notFound: false };
           const json = await res.json();
-          console.log(json)
           if (json?.status !== 'SUCCESS') {
             return { data: null, notFound: true };
           }
