@@ -1,7 +1,10 @@
+import { signedRequestHeaders } from "./lib/sign-request.js";
+
 async function fetchGiftData(giftId, baseUrl) {
   try {
     const res = await fetch(baseUrl + "/getBitcoinGiftDetails", {
       method: "POST",
+      headers: signedRequestHeaders(),
       body: JSON.stringify({ giftUUID: giftId }),
       signal: AbortSignal.timeout(6000),
     });

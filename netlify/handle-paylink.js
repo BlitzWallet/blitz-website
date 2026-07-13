@@ -1,3 +1,5 @@
+import { signedRequestHeaders } from "./lib/sign-request.js";
+
 const PREVIEW_HTML_CACHE_SECONDS = numberFromEnv(
   process.env.PREVIEW_HTML_CACHE_SECONDS,
   3_600,
@@ -60,6 +62,7 @@ async function fetchFreshPaylinkData(paylinkId, baseUrl) {
   try {
     const res = await fetch(baseUrl + "/getPaylinkData", {
       method: "POST",
+      headers: signedRequestHeaders(),
       body: JSON.stringify({
         paylinkId,
         shouldLoadBitcoinPrice: true,

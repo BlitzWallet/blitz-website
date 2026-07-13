@@ -1,3 +1,5 @@
+import { signedRequestHeaders } from "./lib/sign-request.js";
+
 const PREVIEW_HTML_CACHE_SECONDS = numberFromEnv(
   process.env.PREVIEW_HTML_CACHE_SECONDS,
   3_600,
@@ -59,6 +61,7 @@ async function fetchFreshPoolData(poolId, baseUrl) {
   try {
     const res = await fetch(baseUrl + "/getPoolData", {
       method: "POST",
+      headers: signedRequestHeaders(),
       body: JSON.stringify({ poolId }),
       signal: AbortSignal.timeout(6000),
     });
