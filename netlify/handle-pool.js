@@ -85,27 +85,8 @@ async function fetchFreshPoolData(poolId, baseUrl) {
 }
 
 async function fetchPoolData(poolId, baseUrl) {
-  const cacheKey = String(poolId || "").trim();
-  if (!cacheKey) return null;
-
-  const cached = readPoolDataCache(cacheKey);
-  console.log(cached);
-  if (cached?.promise) return cached.promise;
-  if (cached && "data" in cached) return cached.data;
-
-  const promise = fetchFreshPoolData(cacheKey, baseUrl);
-  writePoolDataCache(cacheKey, {
-    promise,
-    expiresAt: Date.now() + POOL_DATA_CACHE_TTL_MS,
-  });
-
+  const promise = fetchFreshPoolData(poolId, baseUrl);
   const data = await promise;
-  writePoolDataCache(cacheKey, {
-    data,
-    expiresAt:
-      Date.now() +
-      (data ? POOL_DATA_CACHE_TTL_MS : POOL_DATA_FAILURE_CACHE_TTL_MS),
-  });
   return data;
 }
 
