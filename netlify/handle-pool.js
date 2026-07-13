@@ -2,27 +2,12 @@ import { signedRequestHeaders, PROXY_ORIGIN } from "./lib/sign-request.js";
 
 const PREVIEW_HTML_CACHE_SECONDS = numberFromEnv(
   process.env.PREVIEW_HTML_CACHE_SECONDS,
-  3_600,
+  0,
 );
 const PREVIEW_HTML_FAILURE_CACHE_SECONDS = numberFromEnv(
   process.env.PREVIEW_HTML_FAILURE_CACHE_SECONDS,
-  60,
+  0,
 );
-const POOL_DATA_CACHE_TTL_MS = numberFromEnv(
-  process.env.POOL_DATA_CACHE_TTL_MS,
-  PREVIEW_HTML_CACHE_SECONDS * 1000,
-);
-const POOL_DATA_CACHE_MAX_ENTRIES = numberFromEnv(
-  process.env.POOL_DATA_CACHE_MAX_ENTRIES,
-  250,
-);
-// Failed fetches are cached briefly so one timeout doesn't serve
-// "pool does not exist" for the full TTL.
-const POOL_DATA_FAILURE_CACHE_TTL_MS = numberFromEnv(
-  process.env.POOL_DATA_FAILURE_CACHE_TTL_MS,
-  5_000,
-);
-const poolDataCache = new Map();
 
 function numberFromEnv(value, fallback) {
   const number = Number(value);
@@ -36,25 +21,9 @@ function buildPreviewCacheHeaders(hasPreviewData) {
 
   return {
     "Cache-Control": "public, max-age=0, must-revalidate",
-    "CDN-Cache-Control": `public, s-maxage=${ttl}`,
-    "Netlify-CDN-Cache-Control": `public, s-maxage=${ttl}`,
+    "CDN-Cache-Control": `public, s-maxage=${0}`,
+    "Netlify-CDN-Cache-Control": `public, s-maxage=${0}`,
   };
-}
-
-function readPoolDataCache(cacheKey) {
-  const cached = poolDataCache.get(cacheKey);
-  if (!cached) return null;
-  if (cached.expiresAt > Date.now()) return cached;
-  poolDataCache.delete(cacheKey);
-  return null;
-}
-
-function writePoolDataCache(cacheKey, entry) {
-  if (poolDataCache.size >= POOL_DATA_CACHE_MAX_ENTRIES) {
-    const oldestKey = poolDataCache.keys().next().value;
-    if (oldestKey) poolDataCache.delete(oldestKey);
-  }
-  poolDataCache.set(cacheKey, entry);
 }
 
 async function fetchFreshPoolData(poolId, baseUrl) {
