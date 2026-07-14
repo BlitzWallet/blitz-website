@@ -1,32 +1,6 @@
 import { signedRequestHeaders, PROXY_ORIGIN } from "./lib/sign-request.js";
 import { designCss } from "./lib/design-css.js";
 
-const PREVIEW_HTML_CACHE_SECONDS = numberFromEnv(
-  process.env.PREVIEW_HTML_CACHE_SECONDS,
-  3_600,
-);
-const PREVIEW_HTML_FAILURE_CACHE_SECONDS = numberFromEnv(
-  process.env.PREVIEW_HTML_FAILURE_CACHE_SECONDS,
-  60,
-);
-
-function numberFromEnv(value, fallback) {
-  const number = Number(value);
-  return Number.isFinite(number) && number >= 0 ? number : fallback;
-}
-
-function buildPreviewCacheHeaders(hasPreviewData) {
-  const ttl = hasPreviewData
-    ? PREVIEW_HTML_CACHE_SECONDS
-    : PREVIEW_HTML_FAILURE_CACHE_SECONDS;
-
-  return {
-    "Cache-Control": "public, max-age=0, must-revalidate",
-    "CDN-Cache-Control": `public, s-maxage=${ttl}`,
-    "Netlify-CDN-Cache-Control": `public, s-maxage=${ttl}`,
-  };
-}
-
 // ── 1. Fetch paylink data from Cloud Function ──────────────────────────────
 
 async function fetchFreshPaylinkData(paylinkId, baseUrl) {
@@ -135,7 +109,6 @@ export async function handler(event, context) {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
-      ...buildPreviewCacheHeaders(!!paylinkData),
     },
     body: html,
   };
