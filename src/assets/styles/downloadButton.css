@@ -4,9 +4,9 @@
   height: fit-content;
   display: flex;
   align-items: center;
-  border-radius: 40px;
+  border-radius: var(--radius-pill);
   padding: 20px 30px;
-  border: 2px solid var(--dm-text);
+  border: 2px solid var(--color-ink);
   margin-right: 15px;
   overflow: hidden;
   background-color: unset;
@@ -18,10 +18,10 @@
   bottom: 0;
 }
 .downloadButton:hover .downloadText {
-  color: var(--lm-text);
+  color: var(--color-surface);
 }
 .downloadButton:hover .seperator {
-  background-color: var(--lm-text);
+  background-color: var(--color-surface);
 }
 .downloadButton:hover img {
   filter: brightness(0) saturate(100%) invert(0%) sepia(0%) saturate(7460%)
@@ -31,7 +31,7 @@
 .downloadButton .hoverContainer {
   width: 100%;
   height: 100%;
-  background-color: var(--dm-text);
+  background-color: var(--color-ink);
   position: absolute;
   bottom: 100%;
   right: 0;
@@ -41,7 +41,7 @@
 .downloadButton .seperator {
   width: 1px;
   height: 20px;
-  background-color: var(--dm-text);
+  background-color: var(--color-ink);
   margin: 0 10px;
   transform: rotate(15deg);
   transition: background-color 0.5s ease-in-out;
