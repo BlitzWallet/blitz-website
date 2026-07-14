@@ -1,0 +1,223 @@
+/* ============================================================================
+   Blitz Wallet — Shared Component Primitives
+   Reusable UI atoms built on the tokens in index.css. Link this right after
+   index.css on every page. Prefer these classes over hand-rolled equivalents
+   so buttons, spinners, error boxes, toasts, and loaders stay consistent.
+   See docs/design-system.md.
+   ========================================================================== */
+
+/* --- Buttons -------------------------------------------------------------- */
+/* Canonical button, matching the home hero (index.html). Solid Blitz blue. */
+
+.btn-primary,
+.btn-secondary {
+  min-height: 48px;
+  padding: 0.9rem 1.25rem;
+  border-radius: var(--radius-card);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 1px solid transparent;
+  text-decoration: none;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition:
+    transform var(--ease-micro),
+    background var(--ease-micro),
+    color var(--ease-micro),
+    box-shadow var(--ease-micro);
+}
+
+.btn-primary {
+  background: var(--color-brand);
+  color: #fff;
+  box-shadow: var(--shadow-btn);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 34px var(--color-brand-strong);
+}
+
+/* Light-surface secondary: brand outline. (The home hero ships its own
+   over-dark .btn-secondary, which overrides this on that page.) */
+.btn-secondary {
+  background: transparent;
+  color: var(--color-brand);
+  border-color: var(--color-surface-offset);
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  background: var(--color-surface-offset);
+}
+
+/* --- Spinner -------------------------------------------------------------- */
+/* Single canonical spinner. Size via --spinner-size (default 40px). */
+
+.spinner {
+  width: var(--spinner-size, 40px);
+  height: var(--spinner-size, 40px);
+  border-radius: 50%;
+  border: 4px solid color-mix(in srgb, var(--color-brand) 16%, transparent);
+  border-top-color: var(--color-brand);
+  animation: spin 0.95s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* --- Full-screen branded loader ------------------------------------------ */
+
+.loading-screen {
+  width: 100%;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  padding: var(--space-gutter);
+}
+
+.loading-screen[hidden],
+.loading-screen.hidden {
+  display: none;
+}
+
+.loading-screen-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1.25rem;
+}
+
+.loading-wordmark {
+  width: 220px;
+  max-width: 65vw;
+}
+
+.loading-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.loading-copy h1 {
+  margin: 0;
+  color: var(--color-ink);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 400;
+}
+
+.loading-copy p {
+  margin: 0;
+  color: var(--color-ink-70);
+}
+
+/* --- Error box ------------------------------------------------------------ */
+/* Single error component. Replaces .error-message / .error-box /
+   .loading-error / .creating-error. */
+
+.error-box {
+  padding: 2rem;
+  border-radius: 12px;
+  background: var(--color-error-bg);
+  border: 1px solid var(--color-error-border);
+  text-align: center;
+}
+
+.error-box h2 {
+  color: var(--color-error-text);
+  margin-bottom: 1rem;
+}
+
+.error-box p {
+  color: var(--color-error-text);
+  margin-top: 0.5rem;
+}
+
+/* --- Toast / overlay ------------------------------------------------------ */
+/* Single notification pattern. Replaces native alert() and button-text
+   swaps for "Copied!", validation and network errors. */
+
+.overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 9990;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.overlay-backdrop.active {
+  display: flex;
+}
+
+.overlay-card {
+  background: var(--color-surface);
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+  box-shadow: var(--shadow-card);
+}
+
+.overlay-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: var(--color-ink);
+}
+
+.overlay-body {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-ink-70);
+  margin-bottom: 1rem;
+}
+
+/* --- Layout utilities ----------------------------------------------------- */
+
+.section {
+  padding: var(--space-section) var(--space-gutter);
+}
+
+.section-inner {
+  width: 100%;
+  max-width: var(--container-max);
+  margin: 0 auto;
+}
+
+.hairline {
+  border: 1px solid var(--color-hairline);
+}
+
+@media (max-width: 680px) {
+  .section {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* --- Reduced motion ------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-primary,
+  .btn-secondary {
+    transition: none;
+  }
+  .spinner {
+    animation-duration: 2s;
+  }
+}
