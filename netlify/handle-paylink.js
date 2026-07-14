@@ -1104,7 +1104,7 @@ function generateHTML({
           </div>
           <div class="qr-actions" style="margin-top:20px;">
             <button class="action-button primary" id="invoice-primary-btn">Copy Invoice</button>
-            <button class="action-button secondary" onclick="resetToInitifal()">Cancel</button>
+            <button class="action-button secondary" onclick="resetToInitial()">Cancel</button>
           </div>
         </div>
 
