@@ -11,7 +11,15 @@ const NETWORK_LABELS = {
 };
 
 const CURRENCY_NETWORKS = {
-  USDC: ["ethereum", "arbitrum", "optimism", "polygon", "base", "bsc", "solana"],
+  USDC: [
+    "ethereum",
+    "arbitrum",
+    "optimism",
+    "polygon",
+    "base",
+    "bsc",
+    "solana",
+  ],
   USDT: ["ethereum", "arbitrum", "optimism", "bsc", "tron"],
 };
 
@@ -516,6 +524,24 @@ let verifyInterval = null;
 let verifyTimeout = null;
 let resizeTimeout = null;
 
+// FlashNet orchestration — swap processing is driven directly off FlashNet's
+// status endpoint (no EVM RPC balance polling). Deposits to auto-detected chains
+// create an order automatically; Tron requires a manual proof-of-payment submit.
+const FLASHNET_STATUS_URL =
+  "https://orchestration.flashnet.xyz/v1/orchestration/status";
+const FLASHNET_SUBMIT_URL =
+  "https://orchestration.flashnet.xyz/v1/orchestration/submit";
+const FLASHNET_PUBLIC_KEY = "fnp_bAo-P5knxK04W3ZjPOu0vRkXQ_hlaBkrmYiW7E_ZuYQ";
+const STABLE_POLL_MS = 6000;
+const MAX_STABLE_POLLS = 100; // ~10 min
+const FLASHNET_DONE_STATUSES = new Set(["completed"]);
+const FLASHNET_FAILED_STATUSES = new Set([
+  "failed",
+  "expired",
+  "refunded",
+  "unfulfilled",
+]);
+
 // Stablecoin state
 let selectedCryptoToken = "USDC";
 let selectedStableNetwork = null;
@@ -524,20 +550,23 @@ let amountInRaw = 0n;
 let currentQuoteId = null;
 let currentChainId = null;
 let currentTokenAddress = null;
-let swapWatcher = null;
-let balanceWatcher = null;
 let stableRefundAddress = null;
+// Guards the Tron manual proof-of-payment submit (double-submit protection).
 let txHashSubmitted = false;
-let pollTimer = null;
-let pollCount = 0;
-let shouldPoll = false;
 let currentPaylinkId = null;
 // Per-payer attempt doc returned by /createPayLinkInvoice. The backend moved
 // invoiceId/quoteId off the parent paylink doc into an `attempts` subcollection,
-// so this id must be threaded through /submitPaylinkSwap and /getPaylinkData or
-// the backend can't resolve this tip's quote.
+// so this id must be threaded through /getPaylinkData or the backend can't
+// resolve this tip's quote to mark it paid.
 let currentAttemptId = null;
-const MAX_POLLS = 60;
+// FlashNet order tracking. currentOrderId is captured once a deposit creates an
+// order; currentReadToken is only issued by Tron's /submit call.
+let currentOrderId = null;
+let currentReadToken = null;
+let stablePollTimer = null;
+let stablePollCount = 0;
+let stablePaymentActive = false;
+let depositDetected = false;
 
 // Extract username from URL
 const username = window.location.pathname.split("/").filter(Boolean)[0];
@@ -630,8 +659,36 @@ function createCurrencySelector() {
 
   currencyButton.addEventListener("click", (e) => {
     e.stopPropagation();
+    hideSwapHistory();
     currencyDropdown.classList.toggle("active");
   });
+
+  // Past swaps dropdown — close button + outside-click (mirrors currency)
+  const swapHistoryOverlay = document.getElementById(
+    "tip-swap-history-overlay",
+  );
+  const swapHistoryClose = document.getElementById("swap-history-close");
+  if (swapHistoryClose) {
+    swapHistoryClose.addEventListener("click", (e) => {
+      e.stopPropagation();
+      hideSwapHistory();
+    });
+  }
+  if (swapHistoryOverlay) {
+    swapHistoryOverlay.addEventListener("click", (e) => e.stopPropagation());
+  }
+  document.addEventListener("click", () => hideSwapHistory());
+
+  // Close button inside the dropdown
+  const currencyDropdownClose = document.getElementById(
+    "currency-dropdown-close",
+  );
+  if (currencyDropdownClose) {
+    currencyDropdownClose.addEventListener("click", (e) => {
+      e.stopPropagation();
+      currencyDropdown.classList.remove("active");
+    });
+  }
 
   // Close dropdown when clicking outside
   document.addEventListener("click", () => {
@@ -914,7 +971,7 @@ function selectStableNetwork(network) {
 
 function showRefundAddressScreen() {
   if (!selectedStableNetwork) {
-    alert("Please select a network first.");
+    showAlert("Please select a network first.");
     return;
   }
   const input = document.getElementById("refund-address-input");
@@ -1040,7 +1097,7 @@ async function confirmStablecoin() {
       stableAmountEl.textContent =
         formatTokenAmount(
           amountInRaw,
-          NETWORK_MAP[selectedStableNetwork]?.decimals || 6
+          NETWORK_MAP[selectedStableNetwork]?.decimals || 6,
         ) +
         " " +
         selectedCryptoToken;
@@ -1055,31 +1112,25 @@ async function confirmStablecoin() {
     const quoteValueEl = document.getElementById("stable-quote-id-value");
     if (quoteValueEl) quoteValueEl.textContent = currentQuoteId || "";
 
-    // Reset tx hash state
+    // Reset FlashNet order/submit state for this attempt.
     txHashSubmitted = false;
-    const txErrEl = document.getElementById("txhash-error");
-    if (txErrEl) txErrEl.style.display = "none";
+    depositDetected = false;
+    currentOrderId = null;
+    currentReadToken = null;
 
-    // Start blockchain watcher for EVM chains
-    const detectEl = document.getElementById("txhash-detect-status");
-    if (currentChainId && typeof PaylinkSwap !== "undefined") {
-      swapWatcher = PaylinkSwap.watchForTransfer({
-        depositAddress,
-        tokenAddress: currentTokenAddress,
-        chainId: currentChainId,
-        onFound: (txHash, from) => handleTxHash(txHash, from),
-      });
-      balanceWatcher = PaylinkSwap.pollForBalance({
-        tokenAddress: currentTokenAddress,
-        depositAddress,
-        chainId: currentChainId,
-        expectedAmount: amountInRaw,
-        onFound: (txHash, from) => handleTxHash(txHash, from),
-      });
-      if (detectEl) detectEl.textContent = "Monitoring for transaction…";
+    // Tron deposits are not auto-detected by FlashNet — the payer must submit
+    // proof of payment. Show the manual tx-hash input and wait for submit. All
+    // other chains create an order automatically, so poll status by quoteId.
+    const tronBlock = document.getElementById("stable-tron-submit");
+    const tronInput = document.getElementById("stable-tron-txhash");
+    const tronErr = document.getElementById("stable-tron-error");
+    if (tronErr) tronErr.style.display = "none";
+    if (selectedStableNetwork === "tron") {
+      if (tronInput) tronInput.value = "";
+      if (tronBlock) tronBlock.style.display = "flex";
     } else {
-      if (detectEl)
-        detectEl.textContent = "Send the exact amount to the address above.";
+      if (tronBlock) tronBlock.style.display = "none";
+      startStableStatusPolling();
     }
 
     // Wire copy handlers
@@ -1134,53 +1185,56 @@ async function confirmStablecoin() {
   }
 }
 
-// ── Handle detected transaction ───────────────────────────────────────────────
+// ── Tron manual submit ────────────────────────────────────────────────────────
 
-async function handleTxHash(txHash, sourceAddress) {
-  if (txHashSubmitted) return;
-  txHashSubmitted = true;
-  stopAllStableWatchers();
+function showTronError(message) {
+  const errEl = document.getElementById("stable-tron-error");
+  if (errEl) {
+    errEl.textContent = message;
+    errEl.style.display = "block";
+  }
+}
 
-  const isEVM = /^0x[0-9a-fA-F]{64}$/.test(txHash);
-  if (!isEVM) {
-    txHashSubmitted = false;
-    const txErrEl = document.getElementById("txhash-error");
-    if (txErrEl) {
-      txErrEl.textContent = "Invalid transaction hash format.";
-      txErrEl.style.display = "block";
-    }
+// Tron is the only chain FlashNet does not auto-detect, so the payer submits
+// their transaction hash. We POST it to FlashNet's /submit to create the order,
+// capture the orderId (+ readToken), then poll status by orderId.
+async function submitTronDeposit() {
+  const input = document.getElementById("stable-tron-txhash");
+  const txHash = (input?.value || "").trim();
+  if (txHash.length < 10) {
+    showTronError("Enter a valid transaction hash.");
     return;
   }
+  if (txHashSubmitted) return;
+  txHashSubmitted = true;
 
-  const procQEl = document.getElementById("processing-quote-id");
-  if (procQEl)
-    procQEl.textContent = currentQuoteId ? "Quote ID: " + currentQuoteId : "";
   showScreen("stable-processing-screen");
+  setProcessingStatus("Confirming your payment…");
 
   try {
-    const res = await fetch("/submitPaylinkSwap", {
+    const res = await fetch(FLASHNET_SUBMIT_URL, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        paylinkId: currentPaylinkId,
-        txHash,
-        sourceAddress: sourceAddress || null,
-        ...(currentAttemptId ? { attemptId: currentAttemptId } : {}),
-      }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + FLASHNET_PUBLIC_KEY,
+        "X-Idempotency-Key": "tips-quote:" + currentQuoteId,
+      },
+      body: JSON.stringify({ quoteId: currentQuoteId, txHash }),
       signal: AbortSignal.timeout(8000),
     });
+    if (!res.ok) throw new Error("submit-failed");
     const json = await res.json();
-    if (!json || json.status !== "SUCCESS") throw new Error("submit-failed");
-    startIsPaidPolling();
+    currentOrderId =
+      json.orderId || json.order?.orderId || json.order?.id || null;
+    currentReadToken = json.readToken || json.order?.readToken || null;
+    if (!currentOrderId) throw new Error("no-order-id");
+    depositDetected = true;
+    startStableStatusPolling();
   } catch (err) {
-    console.error("Swap submission failed:", err);
+    console.error("Tron submit failed:", err);
     txHashSubmitted = false;
     showScreen("stable-pay-screen");
-    const txErrEl = document.getElementById("txhash-error");
-    if (txErrEl) {
-      txErrEl.textContent = "Submission failed. Please try again.";
-      txErrEl.style.display = "block";
-    }
+    showTronError("Submission failed. Check the hash and try again.");
   }
 }
 
@@ -1227,81 +1281,179 @@ async function connectAndPay() {
       .padStart(64, "0");
     const amtPadded = amountInRaw.toString(16).padStart(64, "0");
     const data = "0xa9059cbb" + addrPadded + amtPadded;
-    const txHash = await window.ethereum.request({
+    // Fire the transfer. FlashNet auto-detects the deposit and the status poll
+    // (already running) picks it up — nothing to submit from the client here.
+    await window.ethereum.request({
       method: "eth_sendTransaction",
       params: [{ from: accounts[0], to: currentTokenAddress, data }],
     });
-    handleTxHash(txHash, accounts[0]);
   } catch (err) {
     // All wallet errors treated identically (rejection, chain switch failure, etc.)
     // wallet_addEthereumChain fallback is out of scope for v1.
-    // txHashSubmitted not set (handleTxHash not called), so no reset needed.
-    showTxHashError("Wallet error: " + (err.message || "Request rejected."));
+    showAlert("Wallet error: " + (err.message || "Request rejected."));
   }
 }
 
-// ── isPaid polling ────────────────────────────────────────────────────────────
+// ── FlashNet status polling ───────────────────────────────────────────────────
 
-function startIsPaidPolling() {
-  pollCount = 0;
-  shouldPoll = true;
-  schedulePoll();
+function setProcessingStatus(text) {
+  const el = document.getElementById("stable-processing-status");
+  if (el) el.textContent = text;
 }
 
-function schedulePoll() {
-  pollTimer = setTimeout(doPoll, 5000);
-}
-
-async function doPoll() {
-  pollTimer = null;
-  if (!shouldPoll) return;
-  pollCount++;
-  try {
-    const res = await fetch("/getPaylinkData", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        paylinkId: currentPaylinkId,
-        checkInvoice: true,
-        ...(currentAttemptId ? { attemptId: currentAttemptId } : {}),
-      }),
-      signal: AbortSignal.timeout(8000),
-    });
-    const json = await res.json();
-    if (json?.data?.attemptPaid || json?.data?.isPaid) {
-      shouldPoll = false;
-      showScreen("stable-success-screen");
-      return;
-    }
-  } catch (e) {
-    /* network error — continue */
+// Friendly copy for the FlashNet order phases.
+function statusLabel(status) {
+  switch (status) {
+    case "processing":
+    case "confirming":
+      return "Confirming your payment…";
+    case "bridging":
+    case "swapping":
+    case "awaiting_approval":
+      return "Swapping to Bitcoin…";
+    case "delivering":
+      return "Delivering your Bitcoin…";
+    case "refunding":
+      return "Refunding your payment…";
+    default:
+      return "Processing swap…";
   }
-  if (pollCount >= MAX_POLLS) {
-    shouldPoll = false;
-    showScreen("stable-pay-screen");
-    const txErrEl = document.getElementById("txhash-error");
-    if (txErrEl) {
-      txErrEl.textContent =
-        "Payment verification timed out. Contact support with your Quote ID.";
-      txErrEl.style.display = "block";
+}
+
+// startStableStatusPolling() does NOT reset currentOrderId / depositDetected —
+// the caller sets them (null for the quoteId path; populated for Tron post-submit).
+function startStableStatusPolling() {
+  stopStablePolling();
+  stablePaymentActive = true;
+  stablePollCount = 0;
+  stablePollTimer = setTimeout(pollStableStatus, STABLE_POLL_MS);
+}
+
+function stopStablePolling() {
+  stablePaymentActive = false;
+  if (stablePollTimer) {
+    clearTimeout(stablePollTimer);
+    stablePollTimer = null;
+  }
+}
+
+async function fetchFlashnetStatus() {
+  // Phase 1: no orderId yet → query by quoteId to detect the deposit + capture
+  // the auto-created orderId. Phase 2: orderId known → query by orderId.
+  const param = currentOrderId
+    ? "id=" + encodeURIComponent(currentOrderId)
+    : "quoteId=" + encodeURIComponent(currentQuoteId);
+  const headers = { Authorization: "Bearer " + FLASHNET_PUBLIC_KEY };
+  // Tron's submit issues a readToken bound to the order; send it when present.
+  if (currentReadToken) headers["X-Read-Token"] = currentReadToken;
+  const res = await fetch(FLASHNET_STATUS_URL + "?" + param, {
+    headers,
+    signal: AbortSignal.timeout(8000),
+  });
+  if (!res.ok) return null;
+  return await res.json();
+}
+
+async function pollStableStatus() {
+  stablePollTimer = null;
+  if (!stablePaymentActive) return;
+  if (!document.hidden) {
+    try {
+      const json = await fetchFlashnetStatus();
+      if (!stablePaymentActive) return;
+      const order = json && json.order;
+      // Deposit detected: an order now exists for this quote.
+      if (order && order.id) {
+        currentOrderId = order.id;
+        if (!depositDetected) {
+          depositDetected = true;
+          showScreen("stable-processing-screen");
+        }
+        const status = order.status;
+        if (status) setProcessingStatus(statusLabel(status));
+        if (status && FLASHNET_DONE_STATUSES.has(status)) {
+          onSwapCompleted();
+          return;
+        }
+        if (status && FLASHNET_FAILED_STATUSES.has(status)) {
+          onSwapFailed();
+          return;
+        }
+      }
+    } catch (e) {
+      /* transient — keep polling */
     }
+  }
+  stablePollCount++;
+  if (stablePollCount >= MAX_STABLE_POLLS) {
+    onSwapTimeout();
     return;
   }
-  schedulePoll();
+  stablePollTimer = setTimeout(pollStableStatus, STABLE_POLL_MS);
+}
+
+async function onSwapCompleted() {
+  stopStablePolling();
+  markTipPaid(); // fire-and-retry; records the tip in the Blitz backend
+  showScreen("stable-success-screen");
+}
+
+function showStableProcessingError(message) {
+  stopStablePolling();
+  const spinner = document.getElementById("stable-processing-spinner");
+  if (spinner) spinner.style.display = "none";
+  setProcessingStatus("");
+  const errEl = document.getElementById("stable-processing-error");
+  if (errEl) {
+    errEl.textContent = message;
+    errEl.style.display = "block";
+  }
+  const restartBtn = document.getElementById("stable-processing-restart-btn");
+  if (restartBtn) restartBtn.style.display = "block";
+}
+
+function onSwapFailed() {
+  showStableProcessingError(
+    "The swap could not be completed. If you were charged, contact support with Quote ID: " +
+      (currentQuoteId || "") +
+      ".",
+  );
+}
+
+function onSwapTimeout() {
+  showStableProcessingError(
+    "Payment verification timed out. Contact support with Quote ID: " +
+      (currentQuoteId || "") +
+      ".",
+  );
+}
+
+// Retained /getPaylinkData call — this is what marks the tip paid in the Blitz
+// backend. Bounded retry so a slow backend still records the credit; the success
+// screen is not blocked on it.
+async function markTipPaid() {
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      const res = await fetch("/getPaylinkData", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          paylinkId: currentPaylinkId,
+          checkInvoice: true,
+          ...(currentAttemptId ? { attemptId: currentAttemptId } : {}),
+        }),
+        signal: AbortSignal.timeout(8000),
+      });
+      const json = await res.json();
+      if (json?.data?.attemptPaid || json?.data?.isPaid) return;
+    } catch (e) {
+      /* network error — retry */
+    }
+    await new Promise((r) => setTimeout(r, 3000));
+  }
 }
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
-
-function stopAllStableWatchers() {
-  if (swapWatcher) {
-    swapWatcher.stop();
-    swapWatcher = null;
-  }
-  if (balanceWatcher) {
-    balanceWatcher.stop();
-    balanceWatcher = null;
-  }
-}
 
 function showAlert(message) {
   document.getElementById("alert-message").textContent = message;
@@ -1313,13 +1465,11 @@ function closeAlert() {
 }
 
 function resetToInputScreen() {
-  stopAllStableWatchers();
-  shouldPoll = false;
-  if (pollTimer) {
-    clearTimeout(pollTimer);
-    pollTimer = null;
-  }
+  stopStablePolling();
   txHashSubmitted = false;
+  depositDetected = false;
+  currentOrderId = null;
+  currentReadToken = null;
   selectedStableNetwork = null;
   depositAddress = "";
   currentQuoteId = null;
@@ -1328,6 +1478,14 @@ function resetToInputScreen() {
   stableRefundAddress = null;
   currentPaylinkId = null;
   currentAttemptId = null;
+
+  // Restore the processing screen to its default (non-error) state.
+  const procSpinner = document.getElementById("stable-processing-spinner");
+  if (procSpinner) procSpinner.style.display = "";
+  const procErr = document.getElementById("stable-processing-error");
+  if (procErr) procErr.style.display = "none";
+  const procRestart = document.getElementById("stable-processing-restart-btn");
+  if (procRestart) procRestart.style.display = "none";
 
   // Reset Lightning invoice state too
   clearRunningItems();
@@ -1341,11 +1499,6 @@ function resetToInputScreen() {
   if (primaryBtn) primaryBtn.style.display = "";
   const cancelBtn = document.getElementById("invoice-cancel-btn");
   if (cancelBtn) cancelBtn.textContent = "Cancel";
-  const verifyTxt = document.getElementById("verify-text");
-  if (verifyTxt) {
-    verifyTxt.textContent = "Checking payment status...";
-    verifyTxt.classList.remove("success");
-  }
   const qrWrap = document.getElementById("invoice-qr-wrapper");
   if (qrWrap) qrWrap.style.display = "";
 
@@ -1376,13 +1529,18 @@ function saveToSwapHistory(entry) {
   localStorage.setItem(SWAP_HISTORY_KEY, JSON.stringify(history.slice(0, 50)));
 }
 
-function showSwapHistory() {
+function showSwapHistory(e) {
+  if (e) e.stopPropagation();
   renderSwapHistory();
-  document.getElementById("tip-swap-history-overlay").style.display = "flex";
+  // Only one panel open at a time
+  document.getElementById("currency-dropdown").classList.remove("active");
+  document.getElementById("tip-swap-history-overlay").classList.add("active");
 }
 
 function hideSwapHistory() {
-  document.getElementById("tip-swap-history-overlay").style.display = "none";
+  document
+    .getElementById("tip-swap-history-overlay")
+    .classList.remove("active");
 }
 
 function renderSwapHistory() {
@@ -1427,8 +1585,20 @@ function renderSwapHistory() {
     .join("");
 
   listEl.querySelectorAll(".copy-btn").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      navigator.clipboard.writeText(btn.dataset.qid);
+    btn.addEventListener("click", async () => {
+      let ok = true;
+      try {
+        await navigator.clipboard.writeText(btn.dataset.qid);
+      } catch (err) {
+        ok = false;
+      }
+      clearTimeout(btn._copyTimer);
+      btn.classList.toggle("copied", ok);
+      btn.textContent = ok ? "Copied!" : "Failed";
+      btn._copyTimer = setTimeout(() => {
+        btn.classList.remove("copied");
+        btn.textContent = "Copy";
+      }, 1500);
     });
   });
 }
@@ -1537,7 +1707,6 @@ function clearRunningItems() {
 }
 
 function startInvoiceVerification() {
-  const reverifyText = document.getElementById("verify-text");
   const maxDuration = 5 * 60; // 5 minutes in seconds
   const startTime = Date.now();
   let nextCheckTime = Date.now() + 10000; // First check in 10s
@@ -1568,8 +1737,6 @@ function startInvoiceVerification() {
       0,
       Math.ceil((nextCheckTime - Date.now()) / 1000),
     );
-
-    reverifyText.textContent = `Reverifying if invoice is paid (${countdown}s)`;
 
     if (remaining <= 0) {
       stopVerification("Stopped verifying (time limit reached)");
