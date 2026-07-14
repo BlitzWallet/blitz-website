@@ -211,11 +211,7 @@ export async function handler(event, context) {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: linear-gradient(
-    135deg,
-    var(--primary_color),
-    var(--tertiary_color)
-  );
+  background: var(--primary_color);
   display: flex;
   align-items: center;
   justify-content: center;
