@@ -1129,11 +1129,7 @@ function generateHTML({
             <div id="invoice-qr-code"></div>
             <span class="qr-tap-hint"><i data-lucide="copy"></i> Tap to copy</span>
           </div>
-          <div class="qr-copy-row">
-            <span class="qr-copy-text" id="invoice-address-text"></span>
-            <button class="qr-clipboard-btn" id="copy-invoice-addr-btn" aria-label="Copy invoice"><i data-lucide="copy"></i></button>
-          </div>
-          <div class="qr-actions">
+          <div class="qr-actions" style="margin-top:20px;">
             <button class="action-button primary" id="invoice-primary-btn">Copy Invoice</button>
             <button class="action-button secondary" onclick="resetToInitifal()">Cancel</button>
           </div>
