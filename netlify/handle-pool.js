@@ -10,7 +10,6 @@ async function fetchFreshPoolData(poolId, baseUrl) {
       signal: AbortSignal.timeout(6000),
     });
 
-    console.log(signedRequestHeaders(), PROXY_ORIGIN);
     if (!res.ok) {
       console.error("[OG pool] Cloud Function returned", res.status);
       return null;
@@ -44,24 +43,7 @@ async function fetchPoolData(poolId, baseUrl) {
 function formatPoolGoal(data, btcPrice) {
   if (!data) return null;
   const goalSats = Number(data.goalAmount ?? 0);
-  const denomination = data.poolDenomination ?? "SAT";
-  const price = Number(btcPrice ?? 0);
-
-  // Fiat display preference → convert sats to that currency (same math the
-  // client uses: sats * btcPrice / 1e8).
-  if (denomination && denomination !== "SAT" && price > 0) {
-    const fiat = goalSats * (price / 100000000);
-    try {
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: denomination,
-      }).format(fiat);
-    } catch (e) {
-      // Unknown currency code — fall through to SAT.
-    }
-  }
-
-  return `${goalSats.toLocaleString("en-US")} SAT`;
+  return goalSats;
 }
 
 // ── 3. Build og:image URL ─────────────────────────────────────────────────────
@@ -110,6 +92,7 @@ export async function handler(event, context) {
         .trim()
         .replace(/ — Pool by $/, "");
     ogDescription = `Help raise ${goalLabel} for ${poolTitle} on Blitz Wallet.`;
+    console.log(baseUrl, poolId, goalLabel, pct);
     ogImage = buildPoolOgImageUrl(baseUrl, poolId, goalLabel, pct);
   } else {
     ogTitle = "Join this Bitcoin Pool on Blitz Wallet";
