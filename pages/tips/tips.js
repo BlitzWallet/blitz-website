@@ -531,7 +531,7 @@ const FLASHNET_STATUS_URL =
   "https://orchestration.flashnet.xyz/v1/orchestration/status";
 const FLASHNET_SUBMIT_URL =
   "https://orchestration.flashnet.xyz/v1/orchestration/submit";
-const FLASHNET_PUBLIC_KEY = "fnp_bAo-P5knxK04W3ZjPOu0vRkXQ_hlaBkrmYiW7E_ZuYQ";
+const FLASHNET_PUBLIC_KEY = "fnp_gB0ManH30zJsGBqjMtFLJ-Yl85QJUI5FYADItJqEMtg";
 const STABLE_POLL_MS = 6000;
 const MAX_STABLE_POLLS = 100; // ~10 min
 const FLASHNET_DONE_STATUSES = new Set(["completed"]);
