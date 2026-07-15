@@ -744,8 +744,6 @@ function generateHTML({
       .qr-clipboard-btn:hover { opacity: 1; }
       .qr-clipboard-btn svg { width: 18px; height: 18px; }
 
-      .qr-info-section { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; }
-
       .qr-info-row {
         display: flex;
         align-items: center;
@@ -1070,13 +1068,6 @@ function generateHTML({
           <div class="qr-copy-row">
             <span class="qr-copy-text" id="stable-address-text"></span>
             <button class="qr-clipboard-btn" id="copy-stable-addr-btn" aria-label="Copy address"><i data-lucide="copy"></i></button>
-          </div>
-          <div class="qr-info-section">
-            <div class="qr-info-row">
-              <span class="qr-info-label">Quote ID:</span>
-              <span class="qr-info-value" id="stable-quote-id-value"></span>
-              <button class="qr-clipboard-btn" id="copy-quote-id-btn" aria-label="Copy quote ID"><i data-lucide="copy"></i></button>
-            </div>
           </div>
           <div class="stable-tron-submit" id="stable-tron-submit" style="display:none;">
             <p class="screen-subtitle">Paste your Tron transaction hash to confirm your payment.</p>
@@ -1594,9 +1585,6 @@ function generateHTML({
         const addrEl = document.getElementById('stable-address-text');
         if (addrEl) addrEl.textContent = depositAddress;
 
-        const quoteEl = document.getElementById('stable-quote-id-value');
-        if (quoteEl) quoteEl.textContent = currentQuoteId || '';
-
         const qrEl = document.getElementById('qr-stable-address');
         if (qrEl) {
           qrEl.innerHTML = '';
@@ -1993,6 +1981,7 @@ function generateHTML({
       // ── initial render ─────────────────────────────────────────────────
       async function fetchCurrentPaylinkData() {
         try {
+        console.log(currentPaylinkData)
           if (currentPaylinkData) {
              return { data: currentPaylinkData, notFound: false };
           }
@@ -2075,7 +2064,7 @@ function generateHTML({
 
         // Resume an in-flight stablecoin swap (FlashNet model).
         const stored = loadSwapContext();
-        if (stored && stored.quoteId) {
+        if (stored && stored.quoteId && !livePaylinkData?.data?.isPaid) {
           if (livePaylink.data) currentPaylinkData = livePaylink.data;
           currentQuoteId = stored.quoteId;
           currentAttemptId = stored.attemptId || null;
