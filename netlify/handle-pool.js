@@ -1018,8 +1018,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       .payment-option-icon-wrap--bitcoin { background: var(--color-orange); }
       .payment-option-icon-wrap--stable  { background: var(--color-green); }
-      .payment-option-icon-wrap--cashapp { background: #00d54b; }
-      .payment-option-icon-wrap--cashapp img { width: 62%; height: 62%; }
+      .payment-option-icon-wrap--cashapp img { width: 100%; height: 100%; }
 
       .payment-option-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
       .payment-option-label { font-weight: 500; font-size: 0.95rem; color: var(--color-ink); }
