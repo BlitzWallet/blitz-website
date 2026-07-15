@@ -580,7 +580,6 @@ document
 
 const loader = document.getElementById("profile-loader");
 const container = document.querySelector(".tips-container");
-container.style.display = "none";
 
 async function loadProfile() {
   try {
