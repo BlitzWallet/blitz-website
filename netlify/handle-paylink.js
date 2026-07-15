@@ -489,6 +489,11 @@ function generateHTML({
 
       .payment-option-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
 
+      .options-text{
+       opacity:0.5;
+      
+      }
+
       .payment-option-icon-wrap {
         width: 44px;
         height: 44px;
@@ -982,6 +987,7 @@ function generateHTML({
           </div>
           <div id="paid-notice" class="paid-notice">This payment has already been completed.</div>
           <div class="payment-options" id="payment-options">
+            <p class="options-text">Pay with</p>
             <button class="payment-option-btn" id="btn-btc" onclick="startBtcFlow()">
               <span class="payment-option-icon-wrap payment-option-icon-wrap--bitcoin">
                 <img src="/src/assets/images/bitcoinIcon.png" alt="Bitcoin" />
@@ -1164,7 +1170,7 @@ function generateHTML({
       // ── FlashNet orchestration (mirrors the tips page) ─────────────────
       const FLASHNET_STATUS_URL = 'https://orchestration.flashnet.xyz/v1/orchestration/status';
       const FLASHNET_SUBMIT_URL = 'https://orchestration.flashnet.xyz/v1/orchestration/submit';
-      const FLASHNET_PUBLIC_KEY = 'fnp_bAo-P5knxK04W3ZjPOu0vRkXQ_hlaBkrmYiW7E_ZuYQ';
+      const FLASHNET_PUBLIC_KEY = 'fnp_zwfRyEeGGIMRI1bkHViIRm_6Zp3q_IV0tkKfniSGvF0';
       const STABLE_POLL_MS = 6000;
       const MAX_STABLE_POLLS = 150; // ~10 min
       const FLASHNET_DONE_STATUSES = new Set(['completed']);
