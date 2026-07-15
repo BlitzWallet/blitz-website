@@ -1120,9 +1120,6 @@ async function confirmStablecoin() {
       addrEl.textContent = depositAddress;
     }
 
-    const quoteValueEl = document.getElementById("stable-quote-id-value");
-    if (quoteValueEl) quoteValueEl.textContent = currentQuoteId || "";
-
     // Reset FlashNet order/submit state for this attempt.
     txHashSubmitted = false;
     depositDetected = false;
