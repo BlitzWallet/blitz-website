@@ -2064,7 +2064,7 @@ function generateHTML({
 
         // Resume an in-flight stablecoin swap (FlashNet model).
         const stored = loadSwapContext();
-        if (stored && stored.quoteId && !livePaylinkData?.data?.isPaid) {
+        if (stored && stored.quoteId && !livePaylink?.data?.isPaid) {
           if (livePaylink.data) currentPaylinkData = livePaylink.data;
           currentQuoteId = stored.quoteId;
           currentAttemptId = stored.attemptId || null;
