@@ -1981,7 +1981,6 @@ function generateHTML({
       // ── initial render ─────────────────────────────────────────────────
       async function fetchCurrentPaylinkData() {
         try {
-        console.log(currentPaylinkData)
           if (currentPaylinkData) {
              return { data: currentPaylinkData, notFound: false };
           }

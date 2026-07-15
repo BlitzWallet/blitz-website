@@ -91,8 +91,7 @@ export async function handler(event, context) {
       `${creatorName} shared a pool for ${poolTitle}, Open the link to contribute.`
         .trim()
         .replace(/ — Pool by $/, "");
-    ogDescription = `Help raise ${goalLabel} for ${poolTitle} on Blitz Wallet.`;
-    console.log(baseUrl, poolId, goalLabel, pct);
+    ogDescription = ogTitle;
     ogImage = buildPoolOgImageUrl(baseUrl, poolId, goalLabel, pct);
   } else {
     ogTitle = "Join this Bitcoin Pool on Blitz Wallet";
@@ -2296,13 +2295,6 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         generatePoolStablecoinQuote();
       }
 
-      function skipRefundAndQuote() {
-        refundAddress = '';
-        const warn = document.getElementById('refundSkipWarning');
-        if (warn) warn.style.display = 'block';
-        // Generate immediately; the warning is informational.
-        generatePoolStablecoinQuote();
-      }
 
       // Loader helpers for the dedicated "creating swap" screen.
       function resetCreatingSwapUI() {
