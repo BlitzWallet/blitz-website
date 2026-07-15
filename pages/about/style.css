@@ -1,10 +1,15 @@
 /* Hero Section */
 .hero {
+  min-height: 100dvh;
   padding: clamp(8rem, 16vw, 11rem) 2rem clamp(4rem, 8vw, 6rem);
   text-align: center;
-  background: #fbfaf7;
+  background: var(--color-bg);
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero::before {
@@ -24,6 +29,10 @@
   margin: 0 auto;
   position: relative;
 }
+.hero-content h1 span {
+  font-size: inherit;
+  color: var(--color-brand);
+}
 
 .hero-badge {
   display: inline-flex;
@@ -32,14 +41,14 @@
   padding: 0.45rem 0.85rem;
   margin-bottom: 1.5rem;
   border-radius: 999px;
-  background: #edebe7;
+  background: var(--color-surface-offset);
   color: rgba(18, 17, 17, 0.64);
   font-size: 0.85rem;
-  font-weight: 650;
+  font-weight: 500;
 }
 
 .hero h1 {
-  color: #121111;
+  color: var(--color-ink);
   font-size: clamp(2.75rem, 6vw, 4.6rem);
   font-weight: 500;
   letter-spacing: 0;
@@ -71,7 +80,7 @@
 .stat-number {
   font-size: clamp(1.9rem, 4vw, 2.5rem);
   font-weight: 500;
-  color: #121111;
+  color: var(--color-ink);
   line-height: 1;
   display: block;
   margin-bottom: 0.5rem;
@@ -79,7 +88,7 @@
 
 .stat-label {
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(18, 17, 17, 0.55);
 }
 
@@ -102,14 +111,14 @@
   padding: 0.45rem 0.85rem;
   margin-bottom: 1rem;
   border-radius: 999px;
-  background: #edebe7;
+  background: var(--color-surface-offset);
   color: rgba(18, 17, 17, 0.64);
   font-size: 0.85rem;
-  font-weight: 650;
+  font-weight: 500;
 }
 
 .section-header h2 {
-  color: #121111;
+  color: var(--color-ink);
   font-size: clamp(2.5rem, 5.5vw, 4rem);
   font-weight: 500;
   letter-spacing: 0;
@@ -130,7 +139,7 @@
 }
 
 .mission-card {
-  background: #fbfaf7;
+  background: var(--color-bg);
   padding: 2.25rem;
   border-radius: 8px;
   border: 1px solid rgba(18, 17, 17, 0.08);
@@ -165,9 +174,9 @@
 }
 
 .mission-card h3 {
-  color: #121111;
+  color: var(--color-ink);
   font-size: 1.4rem;
-  font-weight: 650;
+  font-weight: 500;
   margin-bottom: 0.7rem;
 }
 
@@ -179,7 +188,7 @@
 /* Problem & Solution */
 .problem-solution {
   padding: clamp(5rem, 9vw, 8rem) 2rem;
-  background: #f6f4ef;
+  background: var(--color-surface-warm);
 }
 
 .content-block {
@@ -196,9 +205,9 @@
 }
 
 .content-block h3 {
-  color: #121111;
+  color: var(--color-ink);
   font-size: clamp(1.6rem, 3vw, 2rem);
-  font-weight: 650;
+  font-weight: 500;
   line-height: 1.1;
   margin-bottom: 1.5rem;
   display: flex;
@@ -237,34 +246,34 @@
 
 .content-block li::marker {
   color: rgba(18, 17, 17, 0.4);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .content-block strong {
-  color: #121111;
-  font-weight: 650;
+  color: var(--color-ink);
+  font-weight: 500;
 }
 
 .content-block code {
-  background: #f6f4ef;
+  background: var(--color-surface-warm);
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
   border: 1px solid rgba(18, 17, 17, 0.08);
   font-family: "Courier New", monospace;
   font-size: 0.9rem;
-  color: #121111;
+  color: var(--color-ink);
 }
 
 .content-block a {
-  color: #0375f6;
+  color: var(--color-brand);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
   border-bottom: 2px solid transparent;
   transition: border-color 0.3s ease;
 }
 
 .content-block a:hover {
-  border-bottom-color: #0375f6;
+  border-bottom-color: var(--color-brand);
 }
 
 /* Story / Testimonial Section */
@@ -298,7 +307,7 @@
 
 .story-author {
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 500;
   color: rgba(255, 255, 255, 0.75);
 }
 
@@ -319,7 +328,7 @@
 .value-card {
   text-align: center;
   padding: 2.5rem 2rem;
-  background: #fbfaf7;
+  background: var(--color-bg);
   border: 1px solid rgba(18, 17, 17, 0.08);
   border-radius: 8px;
   transition:
@@ -354,9 +363,9 @@
 }
 
 .value-card h3 {
-  color: #121111;
+  color: var(--color-ink);
   font-size: 1.3rem;
-  font-weight: 650;
+  font-weight: 500;
   margin-bottom: 0.7rem;
 }
 
@@ -390,32 +399,8 @@
 }
 
 .btn-primary {
-  min-height: 48px;
-  padding: 0.9rem 1.75rem;
-  border-radius: 8px;
-  font-weight: 650;
-  font-size: 0.98rem;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border: 1px solid transparent;
+  color: var(--color-ink);
   background: #fff;
-  color: #121111;
-  transition:
-    transform 260ms ease,
-    background 260ms ease,
-    color 260ms ease,
-    box-shadow 260ms ease;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  background: #0375f6;
-  color: #fff;
-  box-shadow: 0 18px 34px rgba(3, 117, 246, 0.28);
 }
 
 /* Responsive */

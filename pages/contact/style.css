@@ -48,10 +48,10 @@ textarea {
 }
 .formContainer button {
   width: 150px;
-  height: 40px;
-  background-color: var(--lm-text);
-  font-family: var(--other_font);
-  color: var(--dm-text);
+  /* height: 40px; */
+  /* background-color: var(--lm-text); */
+  /* font-family: var(--other_font); */
+  /* color: var(--dm-text); */
   border: unset;
   margin-left: auto;
   font-size: 18px;

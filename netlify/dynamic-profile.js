@@ -73,7 +73,8 @@ export async function handler(event, context) {
     <meta name="googlebot" content="noindex,nofollow">
     <script src="/src/js/font-loader.js" defer></script>
 
-    <link rel="stylesheet" href="../src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
     <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
     <script src="/src/components/downloadModal/index.js" defer></script>
@@ -177,7 +178,11 @@ export async function handler(event, context) {
   align-items: center;
 }
 
-.loading-screen {
+/* .loading-screen, .loading-screen-content, .loading-copy, .spinner and its
+   keyframes come from the shared components.css (linked above). Only the
+   error-screen wrapper below is page-specific. */
+
+.error-screen {
   width: 100%;
   min-height: 100dvh;
   display: grid;
@@ -185,58 +190,12 @@ export async function handler(event, context) {
   padding: 2rem;
 }
 
-.loading-screen[hidden] {
+.error-screen[hidden] {
   display: none;
 }
 
-.loading-screen-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  gap: 1.25rem;
-}
-
-.loading-wordmark {
-  width: 220px;
-  max-width: 65vw;
-}
-
-.loading-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-}
-
-.loading-copy h1 {
-  margin: 0;
-  color: var(--lm-text);
-  font-size: clamp(2rem, 4vw, 3.5rem);
-  font-weight: 400;
-}
-
-.loading-copy p {
-  margin: 0;
-  color: var(--lm-text);
-  opacity: 0.72;
-}
-
-.loading-indicator {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: 4px solid color-mix(in srgb, var(--primary_color) 16%, transparent);
-  border-top-color: var(--primary_color);
-  animation: loading-screen-spin 0.95s linear infinite;
-}
-
-@keyframes loading-screen-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.error-screen .error-box {
+  max-width: 440px;
 }
 
 .avatar-toggle {
@@ -252,16 +211,12 @@ export async function handler(event, context) {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  background: linear-gradient(
-    135deg,
-    var(--primary_color),
-    var(--tertiary_color)
-  );
+  background: var(--primary_color);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.4rem;
-  font-weight: 700;
+  font-weight: 500;
   color: white;
   overflow: hidden;
   transition:
@@ -428,6 +383,9 @@ export async function handler(event, context) {
       window.location.href = deepLink;
     }
 
+    // Returns the profile object on success, or null on a hard failure
+    // (network error / non-OK response) so the caller can show the error screen
+    // instead of silently rendering an empty profile.
     async function fetchProfileData() {
       try {
         const res = await fetch(
@@ -435,7 +393,7 @@ export async function handler(event, context) {
         );
 
         if (!res.ok) {
-          return getEmptyProfile();
+          return null;
         }
 
         const payload = await res.json();
@@ -446,7 +404,7 @@ export async function handler(event, context) {
         return payload || getEmptyProfile();
       } catch (err) {
         console.error("Failed to load profile data", err);
-        return getEmptyProfile();
+        return null;
       }
     }
 
@@ -461,11 +419,14 @@ export async function handler(event, context) {
 
       const loadingScreenEl = document.getElementById("loadingScreen");
       const loadedScreenEl = document.getElementById("loadedScreen");
+      const errorScreenEl = document.getElementById("errorScreen");
 
       function setScreenState(state) {
         const isLoading = state === "loading";
+        const isError = state === "error";
         loadingScreenEl.hidden = !isLoading;
-        loadedScreenEl.hidden = isLoading;
+        loadedScreenEl.hidden = isLoading || isError;
+        errorScreenEl.hidden = !isError;
         loadingScreenEl.setAttribute("aria-busy", isLoading ? "true" : "false");
       }
 
@@ -517,12 +478,15 @@ export async function handler(event, context) {
 
       try {
         const profileData = await fetchProfileData();
+        if (!profileData) {
+          setScreenState("error");
+          return;
+        }
         await renderAvatar(profileData);
+        setScreenState("loaded");
       } catch (err) {
         console.error("Failed to render loaded profile screen", err);
-        await renderAvatar(getEmptyProfile());
-      } finally {
-        setScreenState("loaded");
+        setScreenState("error");
       }
 
       });
@@ -531,7 +495,13 @@ export async function handler(event, context) {
   <body>
   <section class="loading-screen" id="loadingScreen" aria-live="polite" aria-busy="true">
     <div class="loading-screen-content">
-      <div class="loading-indicator" aria-hidden="true"></div>
+      <div class="spinner" aria-hidden="true"></div>
+    </div>
+  </section>
+  <section class="error-screen" id="errorScreen" hidden aria-live="polite">
+    <div class="error-box">
+      <h2>Profile Not Found</h2>
+      <p>We couldn't load this profile. It may not exist, or something went wrong. Please check the link and try again.</p>
     </div>
   </section>
   <section class="container" id="loadedScreen" hidden>

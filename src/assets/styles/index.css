@@ -1,50 +1,116 @@
-/* @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"); */
-/* @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;500&display=swap"); */
-/* @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"); */
-/* @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap"); */
+/* ============================================================================
+   Blitz Wallet — Design System Tokens
+   Single source of truth for color, type, spacing, radius, shadow, and motion.
+   Values are canonical to the home page (index.html / pages/home/home.css).
+   See docs/design-system.md before adding new literals to any stylesheet.
+   ========================================================================== */
 
 :root {
-  --title_font: "Poppins", sans-serif;
-  --description_font: "Poppins", sans-serif;
-  --other_font: "Poppins", sans-serif;
+  /* --- Brand ------------------------------------------------------------- */
+  --color-brand: #0375f6; /* Blitz blue — primary accent, links, active states */
+  --color-brand-strong: rgba(3, 117, 246, 0.28); /* button hover shadow tint */
+  --color-green: #44be82; /* success / secondary accent */
+  --color-orange: #ffac30; /* BTC token accent */
 
-  --primary_color: #0375f6;
-  --secondary_color: #121111;
-  --tertiary_color: #44be82;
+  /* --- Ink (text) + opacity ramp on light surfaces ---------------------- */
+  --color-ink: #121111; /* near-black, primary text */
+  --color-ink-70: rgba(18, 17, 17, 0.68); /* nav links, strong secondary */
+  --color-ink-60: rgba(18, 17, 17, 0.6); /* body copy */
+  --color-ink-45: rgba(18, 17, 17, 0.45); /* muted / meta */
+  --color-hairline: rgba(18, 17, 17, 0.08); /* universal 1px card border */
 
+  /* --- Surfaces (warm neutrals) ----------------------------------------- */
+  --color-bg: #fbfaf7; /* page base */
+  --color-surface: #ffffff; /* cards / panels */
+  --color-surface-warm: #f6f4ef; /* footer, subtle sections */
+  --color-surface-offset: #edebe7; /* chips, offsets, borders */
+
+  /* --- Feedback ---------------------------------------------------------- */
+  --color-error-bg: #fef2f2;
+  --color-error-border: #fecaca;
+  --color-error-text: #991b1b;
+  --color-success: var(--color-green);
+
+  /* --- Typography -------------------------------------------------------- */
+  --font-sans: "Poppins", sans-serif;
+  --fs-hero: clamp(4.1rem, 8.4vw, 5rem);
+  --fs-h2: clamp(2.75rem, 6vw, 4.9rem);
+  --fs-lead: 1.15rem;
+  --fs-body: 1rem;
+  --fs-label: 0.85rem;
+
+  /* --- Spacing / layout -------------------------------------------------- */
+  --space-section: clamp(5rem, 9vw, 8rem); /* vertical section padding */
+  --space-gutter: 2rem; /* horizontal gutter (1rem under 680px) */
+  --container-max: 1120px;
+
+  /* --- Radius ------------------------------------------------------------ */
+  --radius-card: 8px;
+  --radius-pill: 999px;
+
+  /* --- Shadow ------------------------------------------------------------ */
+  --shadow-card: 0 22px 52px rgba(18, 17, 17, 0.09);
+  --shadow-nav: 0 12px 34px rgba(18, 17, 17, 0.08);
+  --shadow-btn: 0 12px 24px rgba(0, 0, 0, 0.22);
+
+  /* --- Motion ------------------------------------------------------------ */
+  --ease-micro: 260ms ease; /* buttons, hovers, micro-interactions */
+  --ease-spring: cubic-bezier(0.22, 1.18, 0.36, 1); /* signature moments */
+
+  /* --- Back-compat aliases ----------------------------------------------
+     Existing stylesheets reference these names. They now resolve to the
+     semantic tokens above so nothing breaks mid-migration. Prefer the
+     semantic tokens in new/updated code; these can be removed once every
+     in-scope stylesheet has been migrated.
+     --------------------------------------------------------------------- */
+  --primary_color: var(--color-brand);
+  --secondary_color: var(--color-ink);
+  --tertiary_color: var(--color-green);
   --text_contrast_to_secondary: #9dcbff;
 
-  --lm-background: #f6f4ef;
-  --lm-backgroundOffset: #edebe7;
-  --dm-background: #00254e;
-  --dm-backgroundOffset: #013167;
+  --lm-background: var(--color-surface-warm);
+  --lm-backgroundOffset: var(--color-surface-offset);
+  --lm-text: var(--color-ink);
 
-  --lm-text: #262626;
-  --dm-text: #d9d9d9;
+  --title_font: var(--font-sans);
+  --description_font: var(--font-sans);
+  --other_font: var(--font-sans);
+
+  /* Legacy dark-mode navy tokens retired — no active dark mode.
+     --dm-background: #00254e; --dm-backgroundOffset: #013167; --dm-text: #d9d9d9; */
 }
+
+/* ============================================================================
+   Base reset + element defaults
+   Kept intentionally minimal so page-level CSS still governs layout; this
+   only establishes a consistent typographic + color baseline every page
+   inherits, instead of each page re-declaring it.
+   ========================================================================== */
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   border-radius: 0;
-  font-family: var(--title_font);
-}
-body {
-  font-family: var(--description_font);
-  background: var(--lm-background);
-  color: var(--lm-text);
-  overflow-x: hidden;
+  font-family: var(--font-sans);
 }
 
-/* h1,
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
 h2,
 h3,
 h4 {
-  font-family: var(--title_font);
-  color: var(--dm-text);
-  letter-spacing: 1px;
-  line-height: 1.3em;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  line-height: 1.1;
+  font-weight: 500;
 }
 
 p,
@@ -55,16 +121,14 @@ input,
 label,
 textarea,
 time {
-  font-family: var(--other_font);
-  color: var(--dm-text);
-  letter-spacing: 0.5px;
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.5em;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  font-size: var(--fs-body);
+  line-height: 1.5;
 }
 
 a {
-  color: unset;
+  color: inherit;
   text-decoration: none;
 }
 
@@ -72,6 +136,7 @@ a {
   width: 30px;
   height: 30px;
 }
+
 .screen {
   width: 100%;
   height: 100%;
@@ -80,24 +145,3 @@ a {
   left: 0;
   cursor: pointer;
 }
-
-.button {
-  background-color: var(--dm-text);
-  color: var(--lm-text);
-  padding: 15px 12px;
-  border: 0;
-  border-radius: 8px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-  display: flex;
-  align-items: center;
-}
-.button:hover {
-  background-color: #b8b8b8;
-}
-.button .buttonImage {
-  width: 20px;
-  height: 20px;
-  margin-left: 10px;
-} */

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -20,47 +20,77 @@
     <meta name="googlebot" content="noindex,nofollow" />
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
-    <link rel="stylesheet" href="../src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/pages/404/stye.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <script src="/src/js/navbar.js" defer></script>
     <script src="/src/js/font-loader.js" defer></script>
     <title>Page Not Found</title>
-    <style>
-      body {
-        min-height: 100dvh;
-        width: 100dvw;
-        font-family: Arial, sans-serif;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 50px;
-      }
-      img {
-        width: 95%;
-        max-width: 200px;
-        height: auto;
-      }
-      h1 {
-        font-size: 50px;
-      }
-      p {
-        font-size: 20px;
-        margin-bottom: 10px;
-      }
-      a {
-        text-decoration: none;
-        background-color: var(--lm-background);
-        padding: 10px;
-        border-radius: 8px;
-        font-size: 15px;
-      }
-    </style>
   </head>
   <body>
-    <img alt="Page not found" src="../public/questionMark.svg" alt="" srcset="" />
-    <h1>404</h1>
-    <p>Oops! The page you are looking for does not exist.</p>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/#features">Features</a></li>
+          <li><a href="/pages/about">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="/" class="nav-download-btn">Download</a>
+          </li>
+        </ul>
+        <div class="mobile-menu" id="mobileMenu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+    </nav>
 
-    <a href="/">Go back home</a>
+    <main class="notfound">
+      <svg
+        viewBox="0 0 620 300"
+        xmlns="http://www.w3.org/2000/svg"
+        role="img"
+        aria-label="404"
+      >
+        <defs>
+          <filter id="crayon" x="-6%" y="-6%" width="112%" height="112%">
+            <feTurbulence
+              type="fractalNoise"
+              baseFrequency="0.022 0.038"
+              numOctaves="2"
+              seed="12"
+              result="noise"
+            />
+            <feDisplacementMap
+              in="SourceGraphic"
+              in2="noise"
+              scale="8"
+              xChannelSelector="R"
+              yChannelSelector="G"
+            />
+          </filter>
+        </defs>
+        <text
+          x="50%"
+          y="50%"
+          dy="0.34em"
+          text-anchor="middle"
+          font-size="240"
+          filter="url(#crayon)"
+        >
+          404
+        </text>
+      </svg>
+
+      <h1>Page not found</h1>
+
+      <a href="/" class="btn-primary">Back to home</a>
+    </main>
   </body>
 </html>

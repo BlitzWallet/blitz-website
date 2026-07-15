@@ -1,30 +1,5 @@
 import { signedRequestHeaders, PROXY_ORIGIN } from "./lib/sign-request.js";
-
-const PREVIEW_HTML_CACHE_SECONDS = numberFromEnv(
-  process.env.PREVIEW_HTML_CACHE_SECONDS,
-  0,
-);
-const PREVIEW_HTML_FAILURE_CACHE_SECONDS = numberFromEnv(
-  process.env.PREVIEW_HTML_FAILURE_CACHE_SECONDS,
-  0,
-);
-
-function numberFromEnv(value, fallback) {
-  const number = Number(value);
-  return Number.isFinite(number) && number >= 0 ? number : fallback;
-}
-
-function buildPreviewCacheHeaders(hasPreviewData) {
-  const ttl = hasPreviewData
-    ? PREVIEW_HTML_CACHE_SECONDS
-    : PREVIEW_HTML_FAILURE_CACHE_SECONDS;
-
-  return {
-    "Cache-Control": "public, max-age=0, must-revalidate",
-    "CDN-Cache-Control": `public, s-maxage=${0}`,
-    "Netlify-CDN-Cache-Control": `public, s-maxage=${0}`,
-  };
-}
+import { designCss } from "./lib/design-css.js";
 
 async function fetchFreshPoolData(poolId, baseUrl) {
   try {
@@ -35,7 +10,6 @@ async function fetchFreshPoolData(poolId, baseUrl) {
       signal: AbortSignal.timeout(6000),
     });
 
-    console.log(signedRequestHeaders(), PROXY_ORIGIN);
     if (!res.ok) {
       console.error("[OG pool] Cloud Function returned", res.status);
       return null;
@@ -62,64 +36,34 @@ async function fetchPoolData(poolId, baseUrl) {
 
 // ── 2. Format goal amount for display ─────────────────────────────────────────
 //
-// Mirrors the btcPrice conversion logic already in handle-pool.js.
-// Pass in the same btcPrice you already compute in handler().
+// goalAmount is always stored in SATS. poolDenomination is only a display
+// preference (which fiat currency to show the sat amount in), mirroring the
+// client's satsToFiat/formatAmount. Do NOT treat the goal as fiat cents.
 
 function formatPoolGoal(data, btcPrice) {
   if (!data) return null;
-  const goalAmount = Number(data.goalAmount ?? 0);
-  return `${goalAmount.toLocaleString("en-US")} SAT`;
-
-  const denomination = data.denomination ?? "SAT"; // "SAT" | "BTC" | "USD" | other fiat
-
-  if (
-    denomination === "USD" ||
-    (denomination !== "SAT" && denomination !== "BTC")
-  ) {
-    // Fiat goal stored in cents → divide by 100 for display
-    const fiatGoal = goalAmount / 100;
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency:
-        denomination === "SAT" || denomination === "BTC" ? "USD" : denomination,
-    }).format(fiatGoal);
-  }
-
-  // SAT / BTC goal
-  if (denomination === "BTC" || goalAmount >= 100_000) {
-    const btc = goalAmount / 1e8;
-    return `${btc.toLocaleString("en-US", { maximumFractionDigits: 8 })} BTC`;
-  }
+  const goalSats = Number(data.goalAmount ?? 0);
+  return goalSats;
 }
 
 // ── 3. Build og:image URL ─────────────────────────────────────────────────────
 
-function buildPoolOgImageUrl(baseUrl, poolId, goalLabel) {
+function buildPoolOgImageUrl(baseUrl, poolId, goalLabel, pct) {
   const goal = encodeURIComponent(goalLabel ?? "");
+  const pctValue = Number.isFinite(pct)
+    ? Math.max(0, Math.min(100, Math.round(pct)))
+    : 0;
 
   return (
     `${baseUrl}/og-pool` +
     `?goal=${goal}` +
-    `&pct=0` +
+    `&pct=${pctValue}` +
     `&id=${encodeURIComponent(poolId)}` +
     `&v=2`
   );
 }
 
 export async function handler(event, context) {
-  // Pools are temporarily under maintenance. Serve a static maintenance
-  // screen and do NOT fetch any pool data.
-  // const html = generateMaintenanceHTML();
-
-  // return {
-  //   statusCode: 200,
-  //   headers: {
-  //     "Content-Type": "text/html",
-  //     ...buildPreviewCacheHeaders(false),
-  //   },
-  //   body: html,
-  // };
-
   const path = (event.path || "").replace(/\/+$/, "");
   let poolId = path.split("/").pop() || "";
   try {
@@ -136,21 +80,19 @@ export async function handler(event, context) {
     const goalLabel = formatPoolGoal(poolData, poolData.btcPrice);
     const poolTitle = poolData.poolTitle ?? "Pool";
     const creatorName = poolData.creatorName ?? "";
-    const pct = Math.max(
-      Math.round(poolData.currentAmount / poolData.goalAmount),
-      100,
-    );
+    const goalAmount = Number(poolData.goalAmount ?? 0);
+    const currentAmount = Number(poolData.currentAmount ?? 0);
+    const pct =
+      goalAmount > 0
+        ? Math.min(Math.round((currentAmount / goalAmount) * 100), 100)
+        : 0;
 
     ogTitle =
       `${creatorName} shared a pool for ${poolTitle}, Open the link to contribute.`
         .trim()
         .replace(/ — Pool by $/, "");
-    ogDescription = `Help raise ${goalLabel} for ${poolTitle} on Blitz Wallet.`;
-    ogImage = buildPoolOgImageUrl(
-      baseUrl,
-      poolId,
-      Number(poolData.goalAmount ?? 0),
-    );
+    ogDescription = ogTitle;
+    ogImage = buildPoolOgImageUrl(baseUrl, poolId, goalLabel, pct);
   } else {
     ogTitle = "Join this Bitcoin Pool on Blitz Wallet";
     ogDescription =
@@ -170,130 +112,9 @@ export async function handler(event, context) {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
-      ...buildPreviewCacheHeaders(!!poolData),
     },
     body: html,
   };
-}
-
-function generateMaintenanceHTML() {
-  const ogTitle = "Pools are under maintenance — Blitz Wallet";
-  const ogDescription =
-    "Pools are temporarily under maintenance. Coming back soon.";
-  const ogImage = "https://blitzwalletapp.com/public/twitterCard.png";
-
-  return `<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/public/favicon/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
-    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
-    <link rel="apple-touch-icon" href="/public/favicon/favicon.ico" />
-    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
-    <link rel="manifest" href="/public/favicon/site.webmanifest" />
-
-    <title>${ogTitle}</title>
-    <meta name="description" content="${ogDescription}" />
-
-    <!-- Open Graph -->
-    <meta property="og:image"        content="${ogImage}" />
-    <meta property="og:image:width"  content="1200" />
-    <meta property="og:image:height" content="628" />
-    <meta property="og:image:type"   content="image/png" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title"        content="${ogTitle}" />
-    <meta property="og:description"  content="${ogDescription}" />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image"       content="${ogImage}" />
-    <meta property="twitter:title" content="${ogTitle}" />
-    <meta property="twitter:description" content="${ogDescription}" />
-
-    <meta name="robots" content="noindex,nofollow">
-    <meta name="googlebot" content="noindex,nofollow">
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-      :root {
-        --title_font: "Poppins", "Noto Sans", sans-serif;
-        --description_font: "Poppins", "Noto Sans", sans-serif;
-        --primary_color: #0375f6;
-        --tertiary_color: #009bf0;
-        --lm-background: #f2f2f2;
-        --lm-backgroundOffset: #e3e3e3;
-        --lm-text: #262626;
-      }
-
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
-
-      body {
-        font-family: var(--description_font);
-        background: var(--lm-background);
-        color: var(--lm-text);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 1rem;
-      }
-
-      .maintenance-card {
-        background: white;
-        border-radius: 24px;
-        padding: 3rem 2.5rem;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-        border: 1px solid var(--lm-backgroundOffset);
-        text-align: center;
-        max-width: 460px;
-        width: 100%;
-      }
-
-      .maintenance-icon {
-        width: 72px;
-        height: 72px;
-        margin: 0 auto 1.5rem;
-        border-radius: 50%;
-        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-      }
-
-      .maintenance-card h1 {
-        font-size: 1.6rem;
-        font-weight: 600;
-        margin-bottom: 0.75rem;
-      }
-
-      .maintenance-card p {
-        font-size: 1rem;
-        color: #888;
-        line-height: 1.5;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="maintenance-card">
-      <div class="maintenance-icon">🛠️</div>
-      <h1>Coming back soon</h1>
-      <p>Pools are under maintenance.</p>
-    </div>
-  </body>
-</html>`;
 }
 
 function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
@@ -344,8 +165,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -353,23 +173,11 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
     <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
-    <!-- Stablecoin deposit watcher (EVM Transfer detection) -->
-    <script src="/public/paylink-swap.js"></script>
-
     <!-- Currency formatting -->
     <script src="/src/js/format-currency.js"></script>
 
     <style>
-      :root {
-        --title_font: "Poppins", "Noto Sans", sans-serif;
-        --description_font: "Poppins", "Noto Sans", sans-serif;
-        --primary_color: #0375f6;
-        --secondary_color: #21374f;
-        --tertiary_color: #009bf0;
-        --lm-background: #f2f2f2;
-        --lm-backgroundOffset: #e3e3e3;
-        --lm-text: #262626;
-      }
+      ${designCss}
 
       * {
         margin: 0;
@@ -378,9 +186,9 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       }
 
       body {
-        font-family: var(--description_font);
-        background: var(--lm-background);
-        color: var(--lm-text);
+        font-family: var(--font-sans);
+        background: var(--color-bg);
+        color: var(--color-ink);
         min-height: 100vh;
         display: flex;
         flex-direction: column;
@@ -391,32 +199,24 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       .pool-container {
         width: 100%;
-        max-width: 500px;
+        max-width: 550px;
         margin: 25px auto;
       }
 
       .pool-card {
+        position: relative;
         background: white;
         border-radius: 24px;
-        padding: 3rem 2.5rem;
+        padding: 2rem;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
-        border: 1px solid var(--lm-backgroundOffset);
+        border: 1px solid var(--color-surface-offset);
         text-align: center;
       }
 
-      /* Loading */
-      .loading-spinner {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        border: 5px solid var(--lm-backgroundOffset);
-        border-radius: 50%;
-        border-top-color: var(--primary_color);
-        animation: spin 1s ease-in-out infinite;
-      }
-
-      @keyframes spin {
-        to { transform: rotate(360deg); }
+      /* Loading (.spinner + @keyframes spin come from the shared design CSS;
+         size it up to the 50px this page used) */
+      .loading-container .spinner {
+        --spinner-size: 50px;
       }
 
       .loading-container {
@@ -467,7 +267,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       .progress-ring-bg {
         fill: none;
-        stroke: var(--lm-backgroundOffset);
+        stroke: var(--color-surface-offset);
         stroke-width: 4;
       }
 
@@ -491,7 +291,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         font-size: 1.5rem;
         font-weight: 500;
         line-height:34px;
-        color: var(--lm-text);
+        color: var(--color-ink);
       }
 
       .progress-goal {
@@ -505,7 +305,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         font-size: 1.8rem;
         font-weight: 500;
         margin-bottom: 0.5rem;
-        color: var(--lm-text);
+        color: var(--color-ink);
       }
 
       .pool-meta {
@@ -540,7 +340,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       /* Buttons */
       .btn-primary {
-        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+        background: var(--color-brand);
         color: white;
         padding: 1rem 2rem;
         border: none;
@@ -551,7 +351,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         transition: all 0.3s ease;
         width: 100%;
         margin-top: 0.75rem;
-        font-family: var(--description_font);
+        font-family: var(--font-sans);
         box-shadow: 0 4px 15px rgba(3, 117, 246, 0.3);
       }
 
@@ -570,9 +370,9 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       .btn-secondary {
         display: flex;
         background: transparent;
-        color: var(--primary_color);
+        color: var(--lmt-text);
         padding: 1rem 2rem;
-        border: 1px solid var(--lm-backgroundOffset);
+        border: 1px solid var(--color-surface-offset);
         border-radius: 12px;
         font-size: 1rem;
         font-weight: 500;
@@ -580,14 +380,14 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         transition: all 0.3s ease;
         width: 100%;
         margin-top: 0.75rem;
-        font-family: var(--description_font);
+        font-family: var(--font-sans);
         align-items: center;
         justify-content: center;
       }
 
       .btn-secondary:hover {
-        background: var(--lm-background);
-        border-color: var(--primary_color);
+        background: var(--color-bg);
+        border-color: var(--color-brand);
       }
 
       .btn-secondary:disabled {
@@ -634,15 +434,136 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       .btn-back {
         background: none;
         border: none;
-        color: var(--primary_color);
+        color: var(--color-brand);
         font-size: 0.95rem;
         cursor: pointer;
         padding: 0.5rem 0;
         margin-bottom: 1rem;
-        font-family: var(--description_font);
+        font-family: var(--font-sans);
         display: flex;
         align-items: center;
         gap: 0.25rem;
+      }
+
+      /* ── Past contributions (mirrors the tips swap-history panel) ─────── */
+      .pool-history-btn {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--lm-background);
+        border: 1px solid var(--lm-backgroundOffset);
+        border-radius: 50%;
+        color: var(--lm-text);
+        cursor: pointer;
+        margin-left: auto;
+        z-index: 6;
+        transition: background var(--ease-micro), border-color var(--ease-micro), color var(--ease-micro);
+      }
+      .pool-history-btn:hover {
+        border-color: var(--primary_color);
+        color: var(--primary_color);
+      }
+      .pool-history-btn svg { width: 20px; height: 20px; stroke-width: 1.75; }
+
+      .pool-history-dropdown {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: white;
+        border-radius: 24px;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 10;
+      }
+      .pool-history-dropdown.active {
+        max-height: 100%;
+        opacity: 1;
+        padding: 2rem 2rem 0;
+      }
+      .pool-history-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .pool-history-title {
+        font-size: 1.1rem;
+        font-weight: 500;
+        color: var(--lm-text);
+      }
+      .pool-history-close {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--lm-background);
+        border: 1px solid var(--lm-backgroundOffset);
+        border-radius: 50%;
+        color: var(--lm-text);
+        cursor: pointer;
+        transition: background var(--ease-micro), border-color var(--ease-micro), color var(--ease-micro);
+      }
+      .pool-history-close:hover {
+        border-color: var(--primary_color);
+        color: var(--primary_color);
+      }
+      .pool-history-close svg { width: 18px; height: 18px; }
+
+      .pool-history-list {
+        max-height: calc(100% - 96px);
+        margin-top: 1rem;
+        overflow-y: auto;
+        color: var(--lm-text);
+        text-align: left;
+      }
+      .pool-history-item {
+        border-top: 1px solid var(--lm-backgroundOffset);
+        padding: 0.75rem 0;
+      }
+      .pool-history-item:first-child { border-top: none; }
+      .swap-quote { display: flex; align-items: center; gap: 10px; }
+      .chain-icon-wrapper { position: relative; width: 36px; height: 36px; flex-shrink: 0; }
+      .chain-icon { width: 36px; height: 36px; border-radius: 50%; }
+      .token-overlay {
+        position: absolute;
+        bottom: -4px;
+        right: -4px;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+      }
+      .quote-middle { flex: 1; min-width: 0; }
+      .pool-history-pool {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--lm-text);
+        word-break: break-word;
+      }
+      .pool-history-amount { font-size: 0.72rem; opacity: 0.6; margin-top: 1px; }
+      .quote-id { font-size: 0.75rem; word-break: break-all; opacity: 0.9; margin-top: 1px; }
+      .quote-time { font-size: 0.7rem; opacity: 0.45; margin-top: 2px; }
+      .copy-btn {
+        font-size: 0.7rem;
+        padding: 0.15rem 0.4rem;
+        border-radius: 4px;
+        border: 1px solid var(--lm-backgroundOffset);
+        background: transparent;
+        color: inherit;
+        cursor: pointer;
+        white-space: nowrap;
+        flex-shrink: 0;
+      }
+      .copy-btn:hover { background: var(--lm-background); }
+      .copy-btn.copied {
+        border-color: var(--color-brand);
+        color: var(--color-brand);
+        background: transparent;
       }
 
       /* Amount Grid */
@@ -655,24 +576,24 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       .amount-option {
         background: white;
-        border: 2px solid var(--lm-backgroundOffset);
+        border: 2px solid var(--color-surface-offset);
         border-radius: 12px;
         padding: 1rem;
         font-size: 1.1rem;
         cursor: pointer;
         transition: all 0.2s ease;
-        font-family: var(--description_font);
-        color: var(--lm-text);
+        font-family: var(--font-sans);
+        color: var(--color-ink);
       }
 
       .amount-option:hover {
-        border-color: var(--primary_color);
+        border-color: var(--color-brand);
       }
 
       .amount-option.selected {
-        border-color: var(--primary_color);
+        border-color: var(--color-brand);
         background: rgba(3, 117, 246, 0.05);
-        color: var(--primary_color);
+        color: var(--color-brand);
       }
 
       .amount-option.custom-btn {
@@ -694,17 +615,17 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         width: 100%;
         padding: 10px;
         font-size: 1rem;
-        font-family: var(--description_font);
-        border: 2px solid var(--lm-backgroundOffset);
+        font-family: var(--font-sans);
+        border: 2px solid var(--color-surface-offset);
         border-radius: 12px;
         text-align: center;
         outline: none;
         transition: border-color 0.2s ease;
-        color: var(--lm-text);
+        color: var(--color-ink);
       }
 
       .custom-amount-input:focus {
-        border-color: var(--primary_color);
+        border-color: var(--color-brand);
       }
 
       .custom-amount-input::placeholder {
@@ -728,16 +649,16 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         width: 100%;
         padding: 10px;
         font-size: 1rem;
-        font-family: var(--description_font);
-        border: 2px solid var(--lm-backgroundOffset);
+        font-family: var(--font-sans);
+        border: 2px solid var(--color-surface-offset);
         border-radius: 12px;
         outline: none;
         transition: border-color 0.2s ease;
-        color: var(--lm-text);
+        color: var(--color-ink);
       }
 
       .name-input:focus {
-        border-color: var(--primary_color);
+        border-color: var(--color-brand);
       }
 
       .name-input::placeholder {
@@ -763,7 +684,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         padding: 1rem;
         background: white;
         border-radius: 16px;
-        border: 1px solid var(--lm-backgroundOffset);
+        border: 1px solid var(--color-surface-offset);
         margin: 1rem 0;
       }
 
@@ -774,7 +695,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       .invoice-amount-display {
         font-size: 1.5rem;
         font-weight: 500;
-        color: var(--primary_color);
+        color: var(--color-brand);
         margin: 0.5rem 0;
       }
 
@@ -793,7 +714,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         width: 8px;
         height: 8px;
         border-radius: 50%;
-        background: var(--primary_color);
+        background: var(--color-brand);
         animation: pulse-dot 1.4s infinite ease-in-out both;
       }
 
@@ -808,12 +729,12 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       .copy-invoice-btn {
         background: none;
         border: none;
-        color: var(--primary_color);
+        color: var(--color-brand);
         font-size: 0.9rem;
         font-weight: 500;
         cursor: pointer;
         padding: 0.5rem 1rem;
-        font-family: var(--description_font);
+        font-family: var(--font-sans);
         text-decoration: underline;
       }
 
@@ -821,7 +742,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       .success-icon {
         width: 80px;
         height: 80px;
-        background: var(--primary_color);
+        background: var(--color-brand);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -832,7 +753,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       .success-icon svg {
         width: 40px;
         height: 40px;
-        color: var(--lm-background);
+        color: var(--color-bg);
       }
 
       .success-title {
@@ -847,22 +768,30 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         margin-bottom: 1.5rem;
       }
 
-      /* Error */
-      .error-message {
-        padding: 2rem;
-        border-radius: 12px;
-        background: #fef2f2;
-        border: 1px solid #fecaca;
+      /* Error (.error-box comes from the shared design CSS) */
+
+      /* Step progress dots */
+      .pool-stepper {
+        display: none; /* renderStepper toggles to flex when in-flow */
+        justify-content: center;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
       }
 
-      .error-message h2 {
-        color: #991b1b;
-        margin-bottom: 1rem;
+      .stepper-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--color-surface-offset); /* upcoming */
+        transition: width var(--ease-micro), background var(--ease-micro);
       }
 
-      .error-message p {
-        color: #991b1b;
-        margin-top: 0.5rem;
+      .stepper-dot.done { background: var(--color-brand-strong); }
+
+      .stepper-dot.active {
+        background: var(--color-brand);
+        width: 24px;
+        border-radius: 999px;
       }
 
       /* Step Transitions */
@@ -877,7 +806,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       /* Divider */
       .divider {
         height: 1px;
-        background: var(--lm-backgroundOffset);
+        background: var(--color-surface-offset);
         margin: 1.5rem 0;
       }
 
@@ -892,36 +821,45 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         color: #92400e;
       }
 
-      /* Denomination Toggle Button */
-      .denomination-toggle-btn {
-        background: transparent;
-        border: 2px solid var(--lm-backgroundOffset);
-        color: var(--primary_color);
-        padding: 0.6rem 1rem;
-        border-radius: 50px;
-        font-size: 0.85rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        margin-bottom: 1rem;
-        display: inline-flex;
+      /* Pool info header: history + currency-switch icons, top-left inline */
+      .pool-info-header {
+        display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-family: var(--description_font);
+        margin-bottom: 0.5rem;
+        justify-content: space-between;
       }
 
-      .denomination-toggle-btn:hover {
+      /* Currency switch icon (mirrors the app's CurrencySwitchButton) */
+      .currency-switch-btn {
+        position: relative;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         background: var(--lm-background);
+        border: 1px solid var(--lm-backgroundOffset);
+        border-radius: 50%;
+        color: var(--lm-text);
+        cursor: pointer;
+        transition: background var(--ease-micro), border-color var(--ease-micro), color var(--ease-micro);
+      }
+      .currency-switch-btn:hover {
         border-color: var(--primary_color);
+        color: var(--primary_color);
       }
-
-      .denomination-toggle-btn svg {
-        transition: transform 0.3s ease;
+      .currency-switch-btn .cs-main { width: 28px; height: 28px; stroke-width: 1.75; }
+      .cs-badge {
+       width: 10px; height: 10px; stroke-width: 2.25;  position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+       
+        
+        
       }
-
-      .denomination-toggle-btn:hover svg {
-        transform: rotate(180deg);
-      }
+     
 
       /* Stablecoin: network selection */
       .network-cards {
@@ -932,52 +870,58 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       }
 
       .network-card {
-        border: 2px solid var(--lm-backgroundOffset);
-        border-radius: 12px;
-        padding: 1rem 0.5rem;
+        border: 1.5px solid var(--color-surface-offset);
+        border-radius: 10px;
+        padding: 0.875rem 0.5rem;
         cursor: pointer;
         font-weight: 500;
-        font-size: 0.95rem;
-        transition: all 0.2s ease;
+        font-size: 0.9rem;
+        transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
         text-align: center;
         width: 100%;
-        color: var(--lm-text);
+        color: var(--color-ink);
+        background: var(--color-surface);
       }
 
       .network-card:hover {
-        border-color: var(--primary_color);
+        border-color: var(--color-brand);
       }
 
       .network-card.selected {
-        border-color: var(--primary_color);
+        border-color: var(--color-brand);
         background: rgba(3, 117, 246, 0.06);
-        color: var(--primary_color);
+        color: var(--color-brand);
+        box-shadow: 0 0 0 3px rgba(3, 117, 246, 0.12);
       }
 
       .currency-toggle {
         display: flex;
         gap: 0.5rem;
-        justify-content: center;
+        background: var(--color-surface-warm);
+        border-radius: 10px;
+        padding: 4px;
+        width: 100%;
         margin: 0.5rem 0 1rem;
       }
 
       .currency-toggle button {
-        padding: 0.6rem 1.5rem;
+        flex: 1;
+        padding: 0.5rem;
+        border: none;
         border-radius: 8px;
-        border: 2px solid var(--lm-backgroundOffset);
         background: transparent;
-        font-family: var(--description_font);
+        font-family: var(--font-sans);
         font-weight: 500;
         cursor: pointer;
-        transition: all 0.2s ease;
-        font-size: 0.95rem;
-        color: var(--lm-text);
+        transition: background 0.15s, color 0.15s;
+        font-size: 0.9rem;
+        color: var(--color-ink-60);
       }
 
       .currency-toggle button.active {
-        border-color: var(--primary_color);
-        background: rgba(3, 117, 246, 0.06);
-        color: var(--primary_color);
+        background: var(--color-surface);
+        color: var(--color-ink);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
       }
 
       .section-label {
@@ -985,11 +929,12 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         font-weight: 500;
         color: #888;
         text-align: left;
+        width: 100%;
       }
 
       .address-box {
         width: 100%;
-        background: var(--lm-background);
+        background: var(--color-bg);
         border-radius: 10px;
         padding: 0.75rem 1rem;
         font-family: monospace;
@@ -1002,6 +947,223 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         display: block;
       }
 
+      /* ─────────────────────────────────────────────────────────────────────
+         Ported UI from the paylink/tips pages: flex "flow" screens, payment-
+         method cards, dedicated loaders, and richer QR screens. Scoped to
+         .pool-card so nothing clashes with the download modal.
+         ───────────────────────────────────────────────────────────────────── */
+
+      /* Flex layout for the upgraded steps (method / loaders / payment) so the
+         ported components center exactly like the paylink screens. Existing
+         steps (info / amount / name) keep the plain block layout above. */
+      .step.flow-screen.active {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        animation: stepFadeIn 0.3s ease;
+      }
+
+      @keyframes stepFadeIn {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      .flow-screen .btn-back { align-self: flex-start; margin-bottom: 0.25rem; }
+      .flow-screen .btn-primary,
+      .flow-screen .btn-secondary { margin-top: 0; }
+
+      /* Payment-method chooser cards */
+      .payment-options {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        width: 100%;
+      }
+
+      .payment-option-btn {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 1.25rem;
+        background: var(--color-surface);
+        border: 1.5px solid var(--color-surface-offset);
+        border-radius: 14px;
+        cursor: pointer;
+        text-align: left;
+        transition: border-color 0.15s, box-shadow 0.15s, background 0.15s, transform 0.15s;
+        width: 100%;
+        font-family: var(--font-sans);
+      }
+
+      .payment-option-btn:hover {
+        border-color: var(--color-brand);
+        box-shadow: 0 0 0 3px rgba(3, 117, 246, 0.08);
+        transform: translateY(-1px);
+      }
+
+      .payment-option-btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+      .payment-option-icon-wrap {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        overflow: hidden;
+      }
+      .payment-option-icon-wrap img { width: 55%; height: 55%; object-fit: contain; }
+
+      .payment-option-icon-wrap--bitcoin { background: var(--color-orange); }
+      .payment-option-icon-wrap--stable  { background: var(--color-green); }
+      .payment-option-icon-wrap--cashapp img { width: 100%; height: 100%; }
+
+      .payment-option-text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+      .payment-option-label { font-weight: 500; font-size: 0.95rem; color: var(--color-ink); }
+      .payment-option-sub { font-size: 0.8rem; color: var(--color-ink-60); }
+
+      /* Dedicated loading screens (creating invoice / creating swap) */
+      .creating-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        padding: 2rem 0;
+        width: 100%;
+      }
+
+      .creating-spinner {
+        width: 40px;
+        height: 40px;
+        border: 3px solid var(--color-surface-offset);
+        border-top-color: var(--color-brand);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite; /* @keyframes spin from designCss */
+      }
+
+      .creating-status { font-size: 0.95rem; color: var(--color-ink-60); text-align: center; margin: 0; }
+      .creating-error { font-size: 0.875rem; color: var(--color-error-text); text-align: center; margin: 0; }
+
+      /* QR payment screens */
+      .qr-screen-title { font-weight: 500; font-size: 1.25rem; text-align: center; margin: 0; color: var(--color-ink); }
+
+      .qr-amount {
+        font-size: 1.5rem;
+        font-weight: 500;
+        line-height: 1.1;
+        color: var(--color-brand);
+        margin: 0;
+        text-align: center;
+      }
+
+      .pool-card .qr-wrapper {
+        width: 90%;
+        max-width: 320px;
+        background: var(--color-surface-warm);
+        border: none;
+        border-radius: 16px;
+        padding: 3%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        margin: 0 auto;
+      }
+
+      .pool-card .qr-wrapper.clickable { cursor: pointer; }
+      .pool-card .qr-wrapper.clickable:hover { opacity: 0.92; }
+
+      .pool-card #qrStableContainer,
+      .pool-card #qrCodeContainer {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: white;
+        padding: 6%;
+        border-radius: 12px;
+      }
+      .pool-card #qrStableContainer canvas,
+      .pool-card #qrCodeContainer canvas { display: block; }
+
+      .qr-tap-hint {
+        color: var(--color-ink);
+        font-size: 0.8rem;
+        text-align: center;
+        opacity: 0.7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .qr-tap-hint svg { width: 16px; height: 16px; }
+
+      .qr-copy-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: var(--color-surface-warm);
+        border-radius: 12px;
+        padding: 0.625rem 0.875rem;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .qr-copy-text {
+        flex: 1;
+        font-size: 0.85rem;
+        color: var(--color-ink);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .qr-clipboard-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+        color: var(--color-ink);
+        opacity: 0.6;
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+      }
+      .qr-clipboard-btn:hover { opacity: 1; }
+      .qr-clipboard-btn svg { width: 18px; height: 18px; }
+
+      .qr-info-section { display: flex; flex-direction: column; gap: 0.5rem; width: 100%; }
+
+      .qr-info-row {
+        display: flex;
+        align-items: center;
+        background: var(--color-surface-warm);
+        border-radius: 12px;
+        padding: 0.625rem 0.875rem;
+      }
+
+      .qr-info-label {
+        width: max-content;
+        font-size: 0.85rem;
+        color: var(--color-ink);
+        opacity: 0.8;
+        margin-right: 0.5rem;
+      }
+
+      .qr-info-value {
+        width: 100%;
+        font-size: 0.85rem;
+        color: var(--color-ink);
+        overflow: hidden;
+        text-align:center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        margin-right: auto;
+      }
+
+      .qr-actions { display: flex; flex-direction: column; gap: 0.75rem; width: 100%; }
+
       /* Navbar */
       nav {
         position: fixed;
@@ -1009,8 +1171,8 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         left: 0;
         width: 100%;
         z-index: 1000;
-        background: var(--lm-background);
-        border-bottom: 1px solid var(--lm-backgroundOffset);
+        background: var(--color-bg);
+        border-bottom: 1px solid var(--color-surface-offset);
         display: flex;
         justify-content: center;
         padding: 0 1rem;
@@ -1032,7 +1194,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       }
 
       .nav-download-btn {
-        background: linear-gradient(135deg, var(--primary_color) 0%, var(--tertiary_color) 100%);
+        background: var(--color-brand);
         color: white;
         padding: 0.6rem 1.2rem;
         border-radius: 50px;
@@ -1094,7 +1256,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         position: absolute;
         top: 1rem;
         right: 1rem;
-        background: var(--lm-backgroundOffset);
+        background: var(--color-surface-offset);
         border: none;
         width: 35px;
         height: 35px;
@@ -1107,13 +1269,13 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       }
 
       .modal-close:hover {
-        background: var(--lm-text);
+        background: var(--color-ink);
       }
 
       .modal-close svg {
         width: 20px;
         height: 20px;
-        color: var(--lm-text);
+        color: var(--color-ink);
       }
 
       .modal-close:hover svg {
@@ -1128,17 +1290,17 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       .modal-header h2 {
         font-size: 1.8rem;
         margin-bottom: 0.5rem;
-        color: var(--lm-text);
+        color: var(--color-ink);
       }
 
       .modal-header p {
-        color: var(--lm-text);
+        color: var(--color-ink);
         opacity: 0.7;
       }
 
       .modal-tabs {
         display: flex;
-        background: var(--lm-backgroundOffset);
+        background: var(--color-surface-offset);
         border-radius: 50px;
         padding: 0.3rem;
         margin-bottom: 2rem;
@@ -1154,7 +1316,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         cursor: pointer;
         font-weight: 500;
         font-size: 0.95rem;
-        color: var(--lm-text);
+        color: var(--color-ink);
         transition: all 0.3s ease;
         display: flex;
         align-items: center;
@@ -1169,7 +1331,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       .modal-tab.active {
         background: white;
-        color: var(--primary_color);
+        color: var(--color-brand);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
 
@@ -1177,22 +1339,22 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         text-align: center;
       }
 
-      .qr-wrapper {
+      .download-modal .qr-wrapper {
         background: white;
         padding: 1.5rem;
         border-radius: 20px;
         display: inline-block;
-        border: 2px solid var(--lm-backgroundOffset);
+        border: 2px solid var(--color-surface-offset);
         margin-bottom: 1.5rem;
       }
 
-      #qr-code {
+      .download-modal #qr-code {
         display: block;
       }
 
       .modal-instructions {
         font-size: 0.95rem;
-        color: var(--lm-text);
+        color: var(--color-ink);
         opacity: 0.8;
         margin-bottom: 1.5rem;
       }
@@ -1209,7 +1371,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         align-items: center;
         gap: 0.7rem;
         padding: 0.8rem 1.5rem;
-        background: var(--lm-text);
+        background: var(--color-ink);
         color: white;
         text-decoration: none;
         border-radius: 12px;
@@ -1225,6 +1387,32 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       .store-badge:hover {
         transform: translateY(-2px);
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .action-button {
+        width: 100%;
+        padding: 1rem;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-family: var(--description_font);
+      }
+
+      .action-button.secondary {
+        background: transparent;
+        color: var(--lm-text);
+        border: 1px solid var(--lm-backgroundOffset);
+      }
+      
+      .action-button.secondary.last {
+       margin-top: 1rem
+      }
+
+      .action-button.secondary:hover {
+        background: var(--lm-background);
       }
 
       @media screen and (max-width: 500px) {
@@ -1294,11 +1482,11 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       let selectedUsdAmount = 0;
 
       const FLASHNET_STATUS_URL = 'https://orchestration.flashnet.xyz/v1/orchestration/status';
-      const FLASHNET_PUBLIC_KEY = 'fnp_KlHu6sdy2HMwmMuJeGn4biHFl2mLmjeAb5u4o9gM0Zo';
+      const FLASHNET_PUBLIC_KEY = 'fnp_bAo-P5knxK04W3ZjPOu0vRkXQ_hlaBkrmYiW7E_ZuYQ';
       const STABLE_POLL_MS = 6000;
       const MAX_STABLE_POLLS = 100; // ~10 min
       const FLASHNET_DONE_STATUSES = new Set(['completed']);
-      const FLASHNET_FAILED_STATUSES = new Set(['failed', 'expired', 'refunded']);
+      const FLASHNET_FAILED_STATUSES = new Set(['failed', 'expired', 'refunded', 'unfulfilled']);
 
       const NETWORK_MAP = {
         ethereum: { chainId: 1,     usdc: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', usdt: '0xdac17f958d2ee523a2206206994597c13d831ec7', decimals: 6 },
@@ -1328,11 +1516,11 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       let currentChainId = null;
       let currentTokenAddress = null;
       let currentQuoteId = null;
+      let currentAttemptId = null;
       let refundAddress = '';
       let currentOrderId = null;
       let currentReadToken = null;
-      let swapWatcher = null;
-      let balanceWatcher = null;
+      let depositDetected = false;
       let txHashSubmitted = false;
 
       function detectOS() {
@@ -1353,6 +1541,10 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       }
 
       async function fetchPoolData() {
+        if (POOL_DATA) {
+          applyPoolData(POOL_DATA);
+          return { data: POOL_DATA, error: null, notFound: false };
+        }
         try {
           const response = await fetch('/getPoolData', {
             method: 'POST',
@@ -1448,11 +1640,44 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       }
 
 
+      // Input steps per payment path. Loader / QR / success screens are absent
+      // on purpose, so the stepper hides on them.
+      const STEP_FLOW = {
+        bitcoin:    ['amount', 'name'],
+        cashapp:    ['amount', 'name'],
+        stablecoin: ['amount', 'name', 'stableNetwork', 'stableRefund'],
+      };
+
+      function renderStepper(stepName) {
+        const el = document.getElementById('pool-stepper');
+        if (!el) return;
+        const flow = STEP_FLOW[paymentMode] || STEP_FLOW.bitcoin;
+        const idx = flow.indexOf(stepName);
+        if (idx === -1) { el.style.display = 'none'; el.innerHTML = ''; return; }
+        el.style.display = 'flex';
+        el.innerHTML = flow.map((_, i) =>
+          '<span class="stepper-dot' +
+          (i === idx ? ' active' : i < idx ? ' done' : '') + '"></span>'
+        ).join('');
+      }
+
       function showStep(stepName) {
         currentStep = stepName;
         document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
         const step = document.getElementById('step-' + currentStep);
         if (step) step.classList.add('active');
+        renderStepper(currentStep);
+      }
+
+      // Shared toast/overlay (replaces native alert()).
+      function showAlert(message) {
+        const el = document.getElementById('alert-message');
+        if (el) el.textContent = message;
+        document.getElementById('alert-overlay').classList.add('active');
+      }
+
+      function closeAlert() {
+        document.getElementById('alert-overlay').classList.remove('active');
       }
 
       function renderPoolInfo(pool) {
@@ -1487,27 +1712,32 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
             <div class="content-container">
               <!-- STEP: Pool Info -->
               <div id="step-info" class="step active">
+                <div class="pool-info-header">
+                 \${btcPrice && btcPrice > 0 ? \`
+                    <button type="button" class="currency-switch-btn" aria-label="Switch currency" title="Switch currency" onclick="toggleDenomination()">
+                      <i data-lucide="rotate-cw" class="cs-main"></i>
+                      <i class="cs-badge" data-lucide="\${displayDenomination === 'SAT' ? 'dollar-sign' : 'bitcoin'}"></i>
+                    </button>
+                  \` : ''}
+
+                  <button type="button" class="pool-history-btn" aria-label="Past swaps" title="Past swaps" onclick="showPoolHistory(event)">
+                    <i data-lucide="menu"></i>
+                  </button>
+                </div>
                 <h1 class="pool-title">\${escapeHtml(pool.poolTitle)}</h1>
                 <p class="pool-meta">
                   By \${escapeHtml(pool.creatorName)}
                 </p>
 
                  \${isClosed ? '<span class="status-badge closed">Closed' + (closedDate ? ' ' + closedDate : '') + '</span>' : ''}
-               
 
-                \${btcPrice && btcPrice > 0 && !isClosed ? \`
-                  <button class="denomination-toggle-btn" onclick="toggleDenomination()" id="denomToggleBtn">
-                    <i data-lucide="refresh-cw" style="width:14px;height:14px;"></i>
-                    Switch to \${displayDenomination === 'SAT' ? poolCurrency : 'BTC'}
-                  </button>
-                \` : ''}
 
                 <div class="progress-ring-container">
                   <svg class="progress-ring-svg" viewBox="0 0 170 170">
                     <defs>
                       <linearGradient id="progressGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stop-color="var(--primary_color)" />
-                        <stop offset="100%" stop-color="var(--tertiary_color)" />
+                        <stop offset="0%" stop-color="var(--color-brand)" />
+                        <stop offset="100%" stop-color="var(--color-brand)" />
                       </linearGradient>
                     </defs>
                     <circle class="progress-ring-bg" cx="85" cy="85" r="75" />
@@ -1523,37 +1753,72 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                 </div>
 
 
-                 \${btcPrice && btcPrice > 0 && isClosed ? \`
-                  <button class="denomination-toggle-btn" onclick="toggleDenomination()" id="denomToggleBtn">
-                    <i data-lucide="refresh-cw" style="width:14px;height:14px;"></i>
-                    Switch to \${displayDenomination === 'SAT' ? poolCurrency : 'BTC'}
+                \${!isClosed ? \`
+                  <button class="btn-primary" onclick="showStep('method')">
+                    Contribute
                   </button>
                 \` : ''}
 
-                \${!isClosed ? \`
-                  <button class="btn-primary" onclick="startContribute('bitcoin')">
-                    Pay with Bitcoin
+                <!-- Past contributions panel (mirrors the tips swap-history panel) -->
+                <div class="pool-history-dropdown" id="pool-history-overlay" onclick="event.stopPropagation()">
+                  <div class="pool-history-header">
+                    <span class="pool-history-title">Past swaps</span>
+                    <button type="button" class="pool-history-close" aria-label="Close" onclick="hidePoolHistory(event)">
+                      <i data-lucide="x"></i>
+                    </button>
+                  </div>
+                  <div class="pool-history-list" id="pool-history-list"></div>
+                </div>
+              </div>
+
+              <!-- STEP: Payment method chooser -->
+              <div id="step-method" class="step flow-screen">
+                <h2 class="qr-screen-title" style="margin-bottom:0.5rem;">How would you like to pay?</h2>
+                <div class="payment-options">
+                  <button class="payment-option-btn" onclick="startContribute('bitcoin')">
+                    <span class="payment-option-icon-wrap payment-option-icon-wrap--bitcoin">
+                      <img src="/src/assets/images/bitcoinIcon.png" alt="Bitcoin" />
+                    </span>
+                    <span class="payment-option-text">
+                      <span class="payment-option-label">Bitcoin</span>
+                      <span class="payment-option-sub">Via Lightning</span>
+                    </span>
                   </button>
-                  <button class="btn-secondary" onclick="startContribute('stablecoin')">
-                    Pay with Stablecoins
+                  <button class="payment-option-btn" onclick="startContribute('stablecoin')">
+                    <span class="payment-option-icon-wrap payment-option-icon-wrap--stable">
+                      <img src="/src/assets/images/dollarIcon.png" alt="Stablecoins" />
+                    </span>
+                    <span class="payment-option-text">
+                      <span class="payment-option-label">Stablecoins</span>
+                      <span class="payment-option-sub">USDC or USDT</span>
+                    </span>
                   </button>
-                \` : ''}
+                  <button class="payment-option-btn" onclick="startContribute('cashapp')">
+                    <span class="payment-option-icon-wrap payment-option-icon-wrap--cashapp">
+                      <img src="/src/assets/images/cashapp-logo.svg" alt="Cash App" />
+                    </span>
+                    <span class="payment-option-text">
+                      <span class="payment-option-label">Cash App</span>
+                      <span class="payment-option-sub">Pay instantly</span>
+                    </span>
+                  </button>
+                </div>
+                <button class="action-button secondary" onclick="showStep('info')">
+                Back
+                </button>
               </div>
 
               <!-- STEP: Amount Selection -->
               <div id="step-amount" class="step">
-                <button class="btn-back" onclick="showStep('info')">
-                  <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
-                </button>
                 <div id="amountStepBody"></div>
+                 <button class="action-button secondary last" onclick="showStep('method')">
+                Back
+                </button>
               </div>
 
               <!-- STEP: Name Input -->
               <div id="step-name" class="step">
-                <button class="btn-back" onclick="showStep('amount')">
-                  <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
-                </button>
-                <h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.5rem;">Add your name</h2>
+                <h2 style="font-size:1.25rem;font-weight:500;margin-bottom:0.5rem;">Add your name</h2>
                 <p style="font-size:0.9rem;color:#888;margin-bottom:0.25rem;">Optional. This will be visible to the pool creator.</p>
 
                 <div class="name-input-section">
@@ -1563,12 +1828,16 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
                 <div id="invoiceErrorContainer"></div>
 
-                <!-- Bitcoin actions -->
-                <div id="nameButtonsBitcoin">
+                <!-- Bitcoin action -->
+                <div id="nameButtonsBitcoin" style="display:none;">
                   <button class="btn-primary" onclick="generateInvoice()" id="generateInvoiceBtn">
                     Generate Invoice
                   </button>
-                  <button class="btn-secondary" onclick="generateCashAppInvoice()" id="generateCashAppInvoiceBtn">
+                </div>
+
+                <!-- Cash App action -->
+                <div id="nameButtonsCashapp" style="display:none;">
+                  <button class="btn-primary" onclick="generateCashAppInvoice()" id="generateCashAppInvoiceBtn">
                     <span class="btn-content">
                       <img src="/src/assets/images/cashapp-logo.svg" alt="" aria-hidden="true" />
                       <span>Pay with Cash App</span>
@@ -1582,14 +1851,27 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                     Continue
                   </button>
                 </div>
+
+                <button class="action-button secondary last" onclick="showStep('amount')">
+                 Back
+                </button>
+              </div>
+
+              <!-- STEP: Creating invoice loader (Bitcoin / Cash App) -->
+              <div id="step-creatingInvoice" class="step flow-screen">
+                <div class="creating-content">
+                  <div class="creating-spinner"></div>
+                  <p class="creating-status" id="creatingInvoiceStatus">Creating invoice…</p>
+                  <p class="creating-error" id="creatingInvoiceError" style="display:none;"></p>
+                  <button class="btn-secondary" id="creatingInvoiceBackBtn" style="display:none;" onclick="showStep('name')">
+                    Go back
+                  </button>
+                </div>
               </div>
 
               <!-- STEP: Stablecoin network/currency selection -->
               <div id="step-stableNetwork" class="step">
-                <button class="btn-back" onclick="showStep('name')">
-                  <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
-                </button>
-                <h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.25rem;">Pay with stablecoin</h2>
+                <h2 style="font-size:1.25rem;font-weight:500;margin-bottom:0.25rem;">Pay with stablecoin</h2>
                 <p style="font-size:0.9rem;color:#888;margin-bottom:1rem;">Choose a token and the chain you'll send from.</p>
 
                 <p class="section-label">Token</p>
@@ -1604,16 +1886,16 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                 <div id="stableQuoteErrorContainer"></div>
 
                 <button class="btn-primary" id="generateStableBtn" onclick="goToRefundStep()">
-                  Generate Invoice
+                  Continue
+                </button>
+                <button class="action-button secondary last" onclick="showStep('name')">
+                  Back
                 </button>
               </div>
 
               <!-- STEP: Stablecoin refund address (optional) -->
               <div id="step-stableRefund" class="step">
-                <button class="btn-back" onclick="showStep('stableNetwork')">
-                  <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
-                </button>
-                <h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.25rem;">Refund address</h2>
+                <h2 style="font-size:1.25rem;font-weight:500;margin-bottom:0.25rem;">Refund address</h2>
                 <p style="font-size:0.9rem;color:#888;margin-bottom:1rem;">
                   Optional. Where should we send your funds if the swap fails? Leave blank to skip.
                 </p>
@@ -1625,23 +1907,41 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                   No refund address set — if the swap fails, funds cannot be returned automatically.
                 </div>
                 <button class="btn-primary" id="refundContinueBtn" onclick="submitRefundAndQuote()">
-                  Continue
+                  Generate invoice
                 </button>
-                <button class="btn-secondary" id="refundSkipBtn" onclick="skipRefundAndQuote()">
-                  Skip
+                <button class="action-button secondary last" onclick="showStep('stableNetwork')">
+                  Back
                 </button>
               </div>
 
-              <!-- STEP: Stablecoin deposit / scan to pay -->
-              <div id="step-stablePayment" class="step">
-                <button class="btn-back" onclick="cancelStablePayment()">
-                  <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
-                </button>
-                <h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.5rem;">Scan to Pay</h2>
-                <p class="pool-meta" id="stableNetworkLabel" style="margin-bottom:0.25rem;"></p>
-                <div class="invoice-amount-display" id="stableAmountLabel"></div>
+              <!-- STEP: Creating swap loader (stablecoin) -->
+              <div id="step-creatingSwap" class="step flow-screen">
+                <div class="creating-content">
+                  <div class="creating-spinner"></div>
+                  <p class="creating-status" id="creatingSwapStatus">Creating swap…</p>
+                  <p class="creating-error" id="creatingSwapError" style="display:none;"></p>
+                  <button class="btn-secondary" id="creatingSwapBackBtn" style="display:none;" onclick="showStep('stableRefund')">
+                    Go back
+                  </button>
+                </div>
+              </div>
 
-                <div class="qr-code-container" id="qrStableContainer"></div>
+              <!-- STEP: Stablecoin deposit / scan to pay -->
+              <div id="step-stablePayment" class="step flow-screen">
+                <p class="qr-screen-title" id="stableNetworkLabel"></p>
+                <p class="qr-amount" id="stableAmountLabel"></p>
+
+                <div class="qr-wrapper clickable" onclick="copyDepositAddress()">
+                  <div id="qrStableContainer"></div>
+                  <span class="qr-tap-hint"><i data-lucide="copy"></i> Tap to copy</span>
+                </div>
+
+                <div class="qr-copy-row">
+                  <span class="qr-copy-text" id="stableAddressText"></span>
+                  <button class="qr-clipboard-btn" id="copyDepositBtn" onclick="copyDepositAddress()" aria-label="Copy address">
+                    <i data-lucide="copy"></i>
+                  </button>
+                </div>
 
                 <div class="waiting-text" id="stableWaitingText">
                   <span class="waiting-dot"></span>
@@ -1650,49 +1950,46 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                   <span id="stableWaitingLabel" style="margin-left:0.25rem;">Waiting for payment</span>
                 </div>
 
-                <div id="stableManualTx" style="display:none;margin-top:0.75rem;">
+                <div id="stableManualTx" style="display:none;width:100%;">
                   <p style="font-size:0.85rem;color:#888;margin-bottom:0.5rem;">
                     After sending, paste your transaction hash to confirm:
                   </p>
-                  <input id="stableTxHashInput" class="name-input" type="text"
+                  <input style="margin-bottom:1rem;" id="stableTxHashInput" class="name-input" type="text"
                     autocomplete="off" spellcheck="false" placeholder="Transaction hash" />
                   <div id="stableTxHashError"></div>
-                  <button class="btn-primary" id="stableTxHashSubmitBtn"
-                    onclick="onSwapDeposit((document.getElementById('stableTxHashInput')||{}).value, null)">
+                  <button class="btn-primary" id="stableTxHashSubmitBtn" onclick="submitTronDeposit()">
                     Confirm payment
                   </button>
                 </div>
 
                 <div id="stableSubmitError" class="expired-notice" style="display:none;"></div>
 
-                <div onclick="copyDepositAddress()" class="address-box" id="stableAddressText"></div>
-
                 <div class="expired-notice" id="stableExpiredNotice" style="display:none;">
                   This quote has expired. Generate a new one to contribute.
                 </div>
 
-                <button class="copy-invoice-btn" onclick="copyDepositAddress()" id="copyDepositBtn">
-                  Copy Invoice
-                </button>
-
-                <button class="btn-secondary" id="openWalletBtn" style="display:none;" onclick="openWallet()">
-                  Open in Wallet
-                </button>
-
-                <button class="btn-primary" id="regenerateStableBtn" style="display:none;" onclick="regenerateStableQuote()">
-                  Generate New Invoice
+                <div class="qr-actions">
+                  <button class="btn-primary" id="stablePrimaryBtn" style="display:none;" onclick="openWallet()">
+                    Open in Wallet
+                  </button>
+                  <button class="btn-primary" id="regenerateStableBtn" style="display:none;" onclick="regenerateStableQuote()">
+                    Generate New Invoice
+                  </button>
+                </div>
+                <button class="action-button secondary" onclick="cancelStablePayment()">
+                  Cancel
                 </button>
               </div>
 
               <!-- STEP: QR / Payment -->
-              <div id="step-payment" class="step">
-                <button class="btn-back" onclick="cancelPayment()">
-                  <i data-lucide="arrow-left" style="width:16px;height:16px;"></i> Back
-                </button>
-                <h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.5rem;">Scan to Pay</h2>
-                <div class="invoice-amount-display" id="paymentAmountDisplay"></div>
+              <div id="step-payment" class="step flow-screen">
+                <p class="qr-screen-title">Send Bitcoin via Lightning</p>
+                <p class="qr-amount" id="paymentAmountDisplay"></p>
 
-                <div class="qr-code-container" id="qrCodeContainer"></div>
+                <div class="qr-wrapper clickable" onclick="copyInvoice()">
+                  <div id="qrCodeContainer"></div>
+                  <span class="qr-tap-hint"><i data-lucide="copy"></i> Tap to copy</span>
+                </div>
 
                 <div class="waiting-text">
                   <span class="waiting-dot"></span>
@@ -1705,12 +2002,16 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                   This invoice has expired. Generate a new one to contribute.
                 </div>
 
-                <button class="copy-invoice-btn" onclick="copyInvoice()" id="copyInvoiceBtn">
-                  Copy Invoice
-                </button>
-
-                <button class="btn-primary" id="regenerateInvoiceBtn" style="display:none;" onclick="regenerateInvoice()">
-                  Generate New Invoice
+                <div class="qr-actions">
+                  <button class="btn-primary" onclick="copyInvoice()" id="copyInvoiceBtn">
+                    Copy Invoice
+                  </button>
+                  <button class="btn-primary" id="regenerateInvoiceBtn" style="display:none;" onclick="regenerateInvoice()">
+                    Generate New Invoice
+                  </button>
+                </div>
+                <button class="action-button secondary" onclick="cancelPayment()">
+                  Cancel
                 </button>
               </div>
 
@@ -1725,6 +2026,9 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                   Back to Pool
                 </button>
               </div>
+
+              <!-- Step progress dots (shared across input steps) -->
+              <div class="pool-stepper" id="pool-stepper"></div>
             </div>
           \`;
 
@@ -1808,8 +2112,10 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         selectedUsdAmount = 0;
         renderAmountStep();
         const btcBtns = document.getElementById('nameButtonsBitcoin');
+        const cashBtns = document.getElementById('nameButtonsCashapp');
         const stableBtns = document.getElementById('nameButtonsStablecoin');
         if (btcBtns) btcBtns.style.display = (mode === 'bitcoin') ? 'block' : 'none';
+        if (cashBtns) cashBtns.style.display = (mode === 'cashapp') ? 'block' : 'none';
         if (stableBtns) stableBtns.style.display = (mode === 'stablecoin') ? 'block' : 'none';
         showStep('amount');
         lucide.createIcons();
@@ -1844,7 +2150,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         }
 
         body.innerHTML =
-          '<h2 style="font-size:1.4rem;font-weight:500;margin-bottom:0.5rem;">Choose an amount</h2>' +
+          '<h2 style="font-size:1.25rem;font-weight:500;margin-bottom:0.5rem;">Choose an amount</h2>' +
           '<p style="font-size:0.9rem;color:#888;margin-bottom:1rem;">' + desc + '</p>' +
           '<div class="amount-grid">' + grid +
           '<button class="amount-option custom-btn" onclick="toggleCustomAmount()">...</button></div>' +
@@ -1877,7 +2183,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       // ── Stablecoin network / currency selection ───────────────────────
       function goToStableNetwork() {
         if (selectedUsdAmount < MIN_STABLECOIN_USD) {
-          alert('Minimum stablecoin amount is $' + MIN_STABLECOIN_USD);
+          showAlert('Minimum stablecoin amount is $' + MIN_STABLECOIN_USD);
           return;
         }
         selectCurrency('USDC');
@@ -1988,21 +2294,122 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         generatePoolStablecoinQuote();
       }
 
-      function skipRefundAndQuote() {
-        refundAddress = '';
-        const warn = document.getElementById('refundSkipWarning');
-        if (warn) warn.style.display = 'block';
-        // Generate immediately; the warning is informational.
-        generatePoolStablecoinQuote();
+
+      // Loader helpers for the dedicated "creating swap" screen.
+      function resetCreatingSwapUI() {
+        const status = document.getElementById('creatingSwapStatus');
+        const err = document.getElementById('creatingSwapError');
+        const back = document.getElementById('creatingSwapBackBtn');
+        if (status) { status.style.display = ''; status.textContent = 'Creating swap…'; }
+        if (err) { err.style.display = 'none'; err.textContent = ''; }
+        if (back) back.style.display = 'none';
       }
+
+      function showCreatingSwapError(msg) {
+        const status = document.getElementById('creatingSwapStatus');
+        const err = document.getElementById('creatingSwapError');
+        const back = document.getElementById('creatingSwapBackBtn');
+        if (status) status.style.display = 'none';
+        if (err) { err.style.display = 'block'; err.textContent = msg; }
+        if (back) back.style.display = 'block';
+      }
+
+      // ── Past contributions (localStorage; mirrors the tips swap history) ──
+      const POOL_HISTORY_KEY = 'blitz_pool_swap_history';
+
+      function getPoolHistory() {
+        const raw = localStorage.getItem(POOL_HISTORY_KEY);
+        if (!raw) return [];
+        try { return JSON.parse(raw); } catch (e) { return []; }
+      }
+
+      function savePoolContribution(entry) {
+        const history = getPoolHistory();
+        history.unshift(entry);
+        localStorage.setItem(POOL_HISTORY_KEY, JSON.stringify(history.slice(0, 50)));
+      }
+
+      function showPoolHistory(e) {
+        if (e) e.stopPropagation();
+        renderPoolHistory();
+        const overlay = document.getElementById('pool-history-overlay');
+        if (overlay) overlay.classList.add('active');
+      }
+
+      function hidePoolHistory(e) {
+        if (e) e.stopPropagation();
+        const overlay = document.getElementById('pool-history-overlay');
+        if (overlay) overlay.classList.remove('active');
+      }
+
+      function renderPoolHistory() {
+        const listEl = document.getElementById('pool-history-list');
+        if (!listEl) return;
+        const history = getPoolHistory();
+        const filteredHistory = history.filter(p => p.poolId === poolId) 
+        if (!filteredHistory.length) {
+          listEl.innerHTML = '<p style="opacity:0.5;font-size:0.85rem;">No swaps yet.</p>';
+          return;
+        }
+        listEl.innerHTML = filteredHistory.map(function (entry) {
+          const time = new Date(entry.timestamp).toLocaleString();
+          const chain = (entry.network || '').toLowerCase();
+          const currency = (entry.currency || '').toLowerCase();
+          const iconName = chain === 'bsc' ? 'bnb' : chain;
+          const chainImage = chain === 'polygon'
+            ? '/src/assets/images/chain-' + iconName + '.png'
+            : '/src/assets/images/chain-' + iconName + '.svg';
+          const tokenImage = currency === 'usdc'
+            ? '/src/assets/images/usdc.svg'
+            : '/src/assets/images/usdt.svg';
+          const amountLabel = (entry.usdAmount != null && entry.usdAmount !== '' ? '$' + entry.usdAmount : '')
+            + (entry.currency ? ' · ' + entry.currency : '')
+            + (entry.network ? ' on ' + entry.network : '');
+          return \`
+            <div class="pool-history-item">
+              <div class="swap-quote">
+                <div class="chain-icon-wrapper">
+                  <img src="\${chainImage}" class="chain-icon" />
+                  <img src="\${tokenImage}" class="token-overlay" />
+                </div>
+                <div class="quote-middle">
+                  <div class="quote-id">\${entry.quoteId || ''}</div>
+                  <div class="quote-time">\${time}</div>
+                </div>
+                <button class="copy-btn" data-qid="\${entry.quoteId || ''}">Copy</button>
+              </div>
+            </div>
+          \`;
+        }).join('');
+
+        listEl.querySelectorAll('.copy-btn').forEach(function (btn) {
+          btn.addEventListener('click', async function () {
+            let ok = true;
+            try { await navigator.clipboard.writeText(btn.dataset.qid); } catch (err) { ok = false; }
+            clearTimeout(btn._copyTimer);
+            btn.classList.toggle('copied', ok);
+            btn.textContent = ok ? 'Copied!' : 'Failed';
+            btn._copyTimer = setTimeout(function () {
+              btn.classList.remove('copied');
+              btn.textContent = 'Copy';
+            }, 1500);
+          });
+        });
+      }
+
+      // Outside-click dismiss (attached once). Safe when the panel is absent.
+      document.addEventListener('click', function () {
+        const overlay = document.getElementById('pool-history-overlay');
+        if (overlay) overlay.classList.remove('active');
+      });
 
       async function generatePoolStablecoinQuote() {
         if (!selectedNetwork) { showStableQuoteError('Please select a network.'); return; }
         const name = document.getElementById('contributorNameInput')?.value?.trim() || '';
-        const btn = document.getElementById('generateStableBtn');
-        const errEl = document.getElementById('stableQuoteErrorContainer');
-        if (errEl) errEl.innerHTML = '';
-        if (btn) { btn.disabled = true; btn.textContent = 'Generating...'; }
+
+        showStep('creatingSwap');
+        lucide.createIcons();
+        resetCreatingSwapUI();
 
         const { data, error } = await createStablecoinQuote({
           usdAmount: selectedUsdAmount,
@@ -2012,24 +2419,47 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           refundAddress: refundAddress,
         });
 
-        if (btn) { btn.disabled = false; btn.textContent = 'Generate Invoice'; }
-
-        if (!data) { showStableQuoteError(error || 'Failed to generate invoice.'); return; }
+        if (!data) { showCreatingSwapError(error || 'Failed to generate invoice. Please try again.'); return; }
 
         depositAddress = data.depositAddress;
-        amountInRaw = data.amountIn;
+        amountInRaw = BigInt(String(data.amountIn));
         currentQuoteId = data.quoteId;
+        currentAttemptId = data.attemptId || null;
+
+        // Persist this contribution locally (mirrors the tips page — saved at
+        // quote-creation time). Powers the "Past contributions" panel on the
+        // pool homepage.
+        savePoolContribution({
+          poolId: poolId,
+          poolTitle: (poolData && poolData.poolTitle) || '',
+          quoteId: currentQuoteId,
+          network: selectedNetwork,
+          currency: selectedCurrency,
+          usdAmount: selectedUsdAmount,
+          timestamp: Date.now(),
+        });
+
         const meta = NETWORK_MAP[selectedNetwork] || {};
         currentChainId = meta.chainId || null;
         currentTokenAddress = currentChainId ? (meta[selectedCurrency.toLowerCase()] || null) : null;
 
+        // Reset FlashNet order/submit state for this attempt.
+        txHashSubmitted = false;
+        depositDetected = false;
+        currentOrderId = null;
+        currentReadToken = null;
+
         renderStablePayment();
         showStep('stablePayment');
         lucide.createIcons();
-        startStableDepositDetection();
-      }
 
-      let stableDetectTimer = null;
+        // Tron is the only chain FlashNet doesn't auto-detect — wait for the
+        // manual proof-of-payment submit. Every other chain polls immediately
+        // (phase 1 by quoteId detects the deposit + captures the orderId).
+        if (selectedNetwork !== 'tron') {
+          startStablePolling();
+        }
+      }
 
       // Single source of truth for the lone loading message on the deposit
       // screen. Pass null to hide the loading line entirely.
@@ -2040,58 +2470,35 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         if (waiting) waiting.style.display = (message == null) ? 'none' : 'flex';
       }
 
-      function startStableDepositDetection() {
-        txHashSubmitted = false;
-        stopStableWatchers();
-        const manualEl = document.getElementById('stableManualTx');
-        const submitErr = document.getElementById('stableSubmitError');
-        if (submitErr) { submitErr.style.display = 'none'; submitErr.textContent = ''; }
-
-        if (currentChainId && currentTokenAddress) {
-          // EVM: auto-detect the deposit, with manual paste as a fallback.
-          setStableStatus('Monitoring for your transaction…');
-          if (manualEl) manualEl.style.display = 'block';
-          try {
-            swapWatcher = PaylinkSwap.watchForTransfer({
-              depositAddress: depositAddress,
-              tokenAddress: currentTokenAddress,
-              chainId: currentChainId,
-              onFound: function (h, f) { onSwapDeposit(h, f); },
-            });
-            balanceWatcher = PaylinkSwap.pollForBalance({
-              tokenAddress: currentTokenAddress,
-              depositAddress: depositAddress,
-              chainId: currentChainId,
-              expectedAmount: BigInt(amountInRaw),
-              onFound: function (h, f) { onSwapDeposit(h, f); },
-            });
-          } catch (e) {
-            // viem/bigint init failed — fall back to manual entry only.
-            setStableStatus('Auto-detection unavailable. Paste your tx hash after sending.');
-          }
-        } else {
-          // Non-EVM (Solana, Tron): no watcher available, manual entry only.
-          setStableStatus('Auto-detection unavailable for this network. Paste your tx hash after sending.');
-          if (manualEl) manualEl.style.display = 'block';
+      // Friendly copy for the FlashNet order lifecycle (mirrors paylink/tips).
+      function statusLabel(status) {
+        switch (status) {
+          case 'processing':
+          case 'confirming':
+            return 'Confirming your payment…';
+          case 'bridging':
+          case 'swapping':
+          case 'awaiting_approval':
+            return 'Swapping to Bitcoin…';
+          case 'delivering':
+            return 'Delivering the contribution…';
+          case 'refunding':
+            return 'Refunding your payment…';
+          default:
+            return 'Processing swap…';
         }
-
-        // Bound the detection phase to the quote's validity window. Without a
-        // submitted deposit there is no status poll running, so this timer is
-        // what stops the watchers (and their RPC polling) if the user never pays.
-        stableDetectTimer = setTimeout(onStableDetectTimeout, STABLE_POLL_MS * MAX_STABLE_POLLS);
       }
 
-      function onStableDetectTimeout() {
-        stableDetectTimer = null;
-        if (txHashSubmitted) return; // a deposit was already submitted; polling owns the flow
-        stopStableWatchers();
-        showStableExpiredUI();
-      }
-
-      function stopStableWatchers() {
-        if (stableDetectTimer) { clearTimeout(stableDetectTimer); stableDetectTimer = null; }
-        if (swapWatcher) { try { swapWatcher.stop(); } catch (e) {} swapWatcher = null; }
-        if (balanceWatcher) { try { balanceWatcher.stop(); } catch (e) {} balanceWatcher = null; }
+      // Once FlashNet reports the deposit, flip to the dedicated spinner screen
+      // (the same one used for "Creating swap…") and drive its status text.
+      function showConfirmingView(text) {
+        resetCreatingSwapUI();
+        const status = document.getElementById('creatingSwapStatus');
+        const back = document.getElementById('creatingSwapBackBtn');
+        if (status) { status.style.display = ''; status.textContent = text || 'Confirming your payment…'; }
+        if (back) back.style.display = 'none';
+        showStep('creatingSwap');
+        lucide.createIcons();
       }
 
       function renderStablePayment() {
@@ -2119,8 +2526,31 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
           }
         }
 
-        const openBtn = document.getElementById('openWalletBtn');
-        if (openBtn) openBtn.style.display = buildEip681Uri() ? 'block' : 'none';
+        setStableStatus('Waiting for payment');
+
+        // Primary action button — mobile: Open in Wallet (EIP-681 deep link);
+        // desktop + EVM: Connect and Pay (window.ethereum); non-EVM desktop: hidden.
+        const primaryBtn = document.getElementById('stablePrimaryBtn');
+        if (primaryBtn) {
+          if (isMobileDevice()) {
+            primaryBtn.textContent = 'Open in Wallet';
+            primaryBtn.style.display = buildEip681Uri() ? 'block' : 'none';
+            primaryBtn.onclick = openWallet;
+          } else {
+            const hasEVMSupport = !!(currentTokenAddress && currentChainId);
+            primaryBtn.textContent = 'Connect and Pay';
+            primaryBtn.style.display = hasEVMSupport ? 'block' : 'none';
+            primaryBtn.onclick = connectAndPay;
+          }
+        }
+
+        // Manual proof-of-payment entry is Tron-only (FlashNet can't auto-detect it).
+        const manualEl = document.getElementById('stableManualTx');
+        if (manualEl) manualEl.style.display = (selectedNetwork === 'tron') ? 'block' : 'none';
+        const tronInput = document.getElementById('stableTxHashInput');
+        if (tronInput) tronInput.value = '';
+        const tronErr = document.getElementById('stableTxHashError');
+        if (tronErr) tronErr.innerHTML = '';
       }
 
       function buildEip681Uri() {
@@ -2133,15 +2563,43 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         if (uri) window.location.href = uri;
       }
 
+      // Desktop browser wallet (MetaMask, etc.): connect, switch chain, and fire
+      // the ERC-20 transfer. FlashNet auto-detects the deposit; the running
+      // status poll picks it up — nothing to submit here.
+      async function connectAndPay() {
+        if (!window.ethereum || !currentTokenAddress || !depositAddress || !currentChainId || !amountInRaw) return;
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x' + currentChainId.toString(16) }],
+          });
+          const addrPadded = depositAddress.replace('0x', '').toLowerCase().padStart(64, '0');
+          const amtPadded = amountInRaw.toString(16).padStart(64, '0');
+          const data = '0xa9059cbb' + addrPadded + amtPadded;
+          await window.ethereum.request({
+            method: 'eth_sendTransaction',
+            params: [{ from: accounts[0], to: currentTokenAddress, data: data }],
+          });
+        } catch (err) {
+          showAlert('Wallet error: ' + (err.message || 'Request rejected.'));
+        }
+      }
+
       function copyDepositAddress() {
         if (!depositAddress) return;
         navigator.clipboard.writeText(depositAddress);
-        const btn = document.getElementById('copyDepositBtn');
-        if (btn) {
-          const original = btn.textContent;
-          btn.textContent = 'Copied!';
-          setTimeout(function () { btn.textContent = original; }, 2000);
-        }
+        showAlert('Copied!');
+      }
+
+      function copyStableQuoteId() {
+        if (!currentQuoteId) return;
+        navigator.clipboard.writeText(currentQuoteId);
+        showAlert('Copied!');
+      }
+
+      function isMobileDevice() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
       }
 
       function showStableQuoteError(msg) {
@@ -2152,50 +2610,26 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       // ── Deposit submission — obtain the order's read token from FlashNet ──
       const FLASHNET_SUBMIT_URL = 'https://orchestration.flashnet.xyz/v1/orchestration/submit';
 
-      async function onSwapDeposit(txHash, sourceAddress) {
-        if (txHashSubmitted) return;
-        const raw = (txHash || '').trim();
-        const isEVM = /^0x[0-9a-fA-F]{64}$/.test(raw);
-        const isNonEVM = !currentChainId && raw.length > 10;
-        if (!isEVM && !isNonEVM) {
-          const errEl = document.getElementById('stableTxHashError');
-          if (errEl) errEl.innerHTML = '<p class="error-text">Invalid transaction hash format.</p>';
-          return;
-        }
-        txHashSubmitted = true;
-        stopStableWatchers();
-
-        const manualEl = document.getElementById('stableManualTx');
-        const copyBtn = document.getElementById('copyDepositBtn');
-        const openBtn = document.getElementById('openWalletBtn');
-        // Confirming: one loading message, and the deposit address is no longer
-        // actionable, so hide the copy / open-in-wallet buttons.
-        setStableStatus('Confirming your payment…');
-        if (manualEl) manualEl.style.display = 'none';
-        if (copyBtn) copyBtn.style.display = 'none';
-        if (openBtn) openBtn.style.display = 'none';
-
-        const ok = await submitStableDeposit(raw, sourceAddress);
-        if (!ok) {
-          txHashSubmitted = false;
-          // Back to waiting: re-open manual entry, restore the address actions,
-          // and re-arm the expiry bound so the screen can't sit indefinitely.
-          setStableStatus('Waiting for payment');
-          if (manualEl) manualEl.style.display = 'block';
-          if (copyBtn) copyBtn.style.display = '';
-          if (openBtn) openBtn.style.display = buildEip681Uri() ? 'block' : 'none';
-          if (stableDetectTimer) clearTimeout(stableDetectTimer);
-          stableDetectTimer = setTimeout(onStableDetectTimeout, STABLE_POLL_MS * MAX_STABLE_POLLS);
-          showStableSubmitError(raw);
-          return;
-        }
-        startStablePolling();
+      function showTronError(message) {
+        const errEl = document.getElementById('stableTxHashError');
+        if (errEl) errEl.innerHTML = '<p class="error-text">' + escapeHtml(message) + '</p>';
       }
 
-      async function submitStableDeposit(txHash, sourceAddress) {
+      // Tron only — FlashNet can't auto-detect Tron deposits, so the payer pastes
+      // the tx hash and we submit it to obtain the order id + read token.
+      async function submitTronDeposit() {
+        const input = document.getElementById('stableTxHashInput');
+        const txHash = (input ? input.value : '').trim();
+        if (txHash.length < 10) {
+          showTronError('Enter a valid transaction hash.');
+          return;
+        }
+        if (txHashSubmitted) return;
+        txHashSubmitted = true;
+
+        showConfirmingView('Confirming your payment…');
+
         try {
-          const body = { quoteId: currentQuoteId, txHash: txHash };
-          if (sourceAddress) body.sourceAddress = sourceAddress;
           const res = await fetch(FLASHNET_SUBMIT_URL, {
             method: 'POST',
             headers: {
@@ -2203,28 +2637,24 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
               'Authorization': 'Bearer ' + FLASHNET_PUBLIC_KEY,
               'X-Idempotency-Key': 'pool-quote:' + currentQuoteId,
             },
-            body: JSON.stringify(body),
+            body: JSON.stringify({ quoteId: currentQuoteId, txHash: txHash }),
+            signal: AbortSignal.timeout(8000),
           });
-          if (!res.ok) return false;
+          if (!res.ok) throw new Error('submit-failed');
           const json = await res.json();
-          currentOrderId = json.orderId || (json.order && json.order.orderId) || null;
+          currentOrderId = json.orderId || (json.order && (json.order.orderId || json.order.id)) || null;
           currentReadToken = json.readToken || (json.order && json.order.readToken) || null;
-          // Both are required: status polling needs the read token bound to the order.
-          return !!(currentOrderId && currentReadToken);
-        } catch (e) {
-          return false;
+          if (!currentOrderId) throw new Error('no-order-id');
+          depositDetected = true;
+          startStablePolling();
+        } catch (err) {
+          // Return to the (still-intact) pay screen WITHOUT re-rendering, so the
+          // payer's pasted tx hash is preserved for another attempt.
+          txHashSubmitted = false;
+          showStep('stablePayment');
+          lucide.createIcons();
+          showTronError('Submission failed. Check the hash and try again.');
         }
-      }
-
-      function showStableSubmitError(txHash) {
-        const el = document.getElementById('stableSubmitError');
-        if (el) {
-          el.style.display = 'block';
-          el.textContent = 'We could not confirm this payment automatically. Tx: ' + txHash +
-            ' — Quote: ' + (currentQuoteId || '') + '. Please contact support or generate a new invoice.';
-        }
-        const regen = document.getElementById('regenerateStableBtn');
-        if (regen) regen.style.display = 'block';
       }
 
       // ── Stablecoin payment polling — direct to FlashNet, no backend ───
@@ -2242,24 +2672,25 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       function stopStablePolling() {
         stablePaymentActive = false;
         if (stablePollTimer) { clearTimeout(stablePollTimer); stablePollTimer = null; }
-        stopStableWatchers();
       }
 
-      // Read order status with the public client key. FlashNet requires the
-      // short-lived readToken (issued by submit) bound to this order.
+      // Read order status with the public client key. Phase 1 (no orderId yet):
+      // query by quoteId to detect the deposit + capture the auto-created orderId.
+      // Phase 2: query by orderId (with the readToken if we have one). Returns the
+      // full response so the poller can read order.id and order.status.
       async function fetchFlashnetStatus() {
-        if (!currentOrderId || !currentReadToken) return null;
-        const url = FLASHNET_STATUS_URL + '?id=' + encodeURIComponent(currentOrderId);
+        const param = currentOrderId
+          ? 'id=' + encodeURIComponent(currentOrderId)
+          : 'quoteId=' + encodeURIComponent(currentQuoteId);
+        const headers = { 'Authorization': 'Bearer ' + FLASHNET_PUBLIC_KEY };
+        if (currentReadToken) headers['X-Read-Token'] = currentReadToken;
         try {
-          const res = await fetch(url, {
-            headers: {
-              'Authorization': 'Bearer ' + FLASHNET_PUBLIC_KEY,
-              'X-Read-Token': currentReadToken,
-            },
+          const res = await fetch(FLASHNET_STATUS_URL + '?' + param, {
+            headers: headers,
+            signal: AbortSignal.timeout(8000),
           });
           if (!res.ok) return null;
-          const json = await res.json();
-          return (json && json.order && json.order.status) || (json && json.status) || null;
+          return await res.json();
         } catch (e) {
           return null;
         }
@@ -2268,27 +2699,84 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       async function pollStableStatus() {
         stablePollTimer = null;
         if (!stablePaymentActive) return;
-        if (!document.hidden && currentOrderId) {
-          const status = await fetchFlashnetStatus();
-          if (!stablePaymentActive) return;
-          if (status && FLASHNET_DONE_STATUSES.has(status)) {
-            stopStablePolling();
-            showContributionSuccess(fiatToSats(selectedUsdAmount) || 0);
-            return;
-          }
-          if (status && FLASHNET_FAILED_STATUSES.has(status)) {
-            stopStablePolling();
-            showStableExpiredUI();
-            return;
-          }
+        if (!document.hidden) {
+          try {
+            const json = await fetchFlashnetStatus();
+            if (!stablePaymentActive) return;
+            const order = json && json.order;
+            if (order && order.id) {
+              currentOrderId = order.id;
+              if (!depositDetected) {
+                depositDetected = true;
+                showConfirmingView(statusLabel(order.status));
+              } else if (order.status) {
+                const s = document.getElementById('creatingSwapStatus');
+                if (s) s.textContent = statusLabel(order.status);
+              }
+              if (order.status && FLASHNET_DONE_STATUSES.has(order.status)) { onSwapCompleted(); return; }
+              if (order.status && FLASHNET_FAILED_STATUSES.has(order.status)) { onSwapFailed(); return; }
+            }
+          } catch (e) { /* transient — keep polling */ }
         }
         stablePollCount++;
         if (stablePollCount >= MAX_STABLE_POLLS) {
           stopStablePolling();
-          showStableExpiredUI();
+          if (depositDetected) {
+            onSwapFailed('The swap timed out. If you were charged, contact support with Quote ID: ' + (currentQuoteId || '') + '.');
+          } else {
+            showStableExpiredUI();
+          }
           return;
         }
         stablePollTimer = setTimeout(pollStableStatus, STABLE_POLL_MS);
+      }
+
+      async function onSwapCompleted() {
+        stopStablePolling();
+        recordPoolContribution(); // fire-and-retry; records the contribution in the Blitz backend
+        showContributionSuccess(fiatToSats(selectedUsdAmount) || 0);
+      }
+
+      function onSwapFailed(message) {
+        stopStablePolling();
+        const msg = message || ('The swap could not be completed. If you were charged, contact support with Quote ID: ' + (currentQuoteId || '') + '.');
+        if (depositDetected) {
+          // We're on the confirming (creatingSwap) spinner screen — surface the
+          // error there with the "Go back" action to start a new quote.
+          showCreatingSwapError(msg);
+        } else {
+          showStableExpiredUI();
+        }
+      }
+
+      // Records the stablecoin contribution against this pool after a FlashNet
+      // completion. Bounded retry (mirrors paylink's markPaid) so a slow backend
+      // still records it; the success screen isn't blocked on it.
+      // TODO(backend contract): confirm which identifier GCF /checkPoolPayment
+      // expects to record a stablecoin (FlashNet) contribution — quoteId, orderId,
+      // attemptId — or whether the backend records it via a FlashNet webhook. The
+      // Lightning path calls /checkPoolPayment with { invoiceId }; this sends the
+      // stablecoin identifiers plus checkSwap:true.
+      async function recordPoolContribution() {
+        for (let attempt = 0; attempt < 5; attempt++) {
+          try {
+            const res = await fetch('/checkPoolPayment', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                poolId: poolId,
+                quoteId: currentQuoteId,
+                orderId: currentOrderId,
+                attemptId: currentAttemptId,
+                checkSwap: true,
+              }),
+              signal: AbortSignal.timeout(8000),
+            });
+            const json = await res.json().catch(function () { return null; });
+            if (res.ok && json && (json.paid || json.recorded || json.status === 'SUCCESS')) return;
+          } catch (e) { /* network error — retry */ }
+          await new Promise(function (r) { setTimeout(r, 3000); });
+        }
       }
 
       function showStableExpiredUI() {
@@ -2297,13 +2785,13 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         const regen = document.getElementById('regenerateStableBtn');
         const waiting = document.getElementById('stableWaitingText');
         const copyBtn = document.getElementById('copyDepositBtn');
-        const openBtn = document.getElementById('openWalletBtn');
+        const primaryBtn = document.getElementById('stablePrimaryBtn');
         const qr = document.getElementById('qrStableContainer');
         if (notice) notice.style.display = 'block';
         if (regen) regen.style.display = 'block';
         if (waiting) waiting.style.display = 'none';
         if (copyBtn) copyBtn.style.display = 'none';
-        if (openBtn) openBtn.style.display = 'none';
+        if (primaryBtn) primaryBtn.style.display = 'none';
         if (qr) qr.style.opacity = '0.25';
         const manualEl = document.getElementById('stableManualTx');
         if (manualEl) manualEl.style.display = 'none';
@@ -2326,8 +2814,8 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       function regenerateStableQuote() {
         stopStablePolling();
-        stopStableWatchers();
         txHashSubmitted = false;
+        depositDetected = false;
         currentOrderId = null;
         currentReadToken = null;
         resetStablePaymentUI();
@@ -2337,8 +2825,8 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       function cancelStablePayment() {
         stopStablePolling();
-        stopStableWatchers();
         txHashSubmitted = false;
+        depositDetected = false;
         currentOrderId = null;
         currentReadToken = null;
         showStep('stableNetwork');
@@ -2347,102 +2835,89 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
 
       let currentInvoice = '';
       let currentInvoiceId = '';
-      const CASH_APP_BUTTON_HTML = '<span class="btn-content"><img src="/src/assets/images/cashapp-logo.svg" alt="" aria-hidden="true" /><span>Pay with Cash App</span></span>';
-      const CASH_APP_LOADING_HTML = '<span class="btn-content"><span>Opening Cash App</span><span class="loading-dots" aria-hidden="true"><span></span><span></span><span></span></span></span>';
 
       function buildCashAppLightningUrl(invoice) {
         return \`https://cash.app/launch/lightning/\${encodeURIComponent(invoice)}\`;
       }
 
-      async function generateInvoice() {
-        const name = document.getElementById('contributorNameInput')?.value?.trim() || '';
-        const btn = document.getElementById('generateInvoiceBtn');
-        const cashAppBtn = document.getElementById('generateCashAppInvoiceBtn');
-        const errorContainer = document.getElementById('invoiceErrorContainer');
-        
-        btn.disabled = true;
-        btn.textContent = 'Generating...';
-        if (cashAppBtn) cashAppBtn.disabled = true;
-        errorContainer.innerHTML = '';
+      // Loader helpers for the dedicated "creating invoice" screen (Bitcoin / Cash App).
+      function resetCreatingInvoiceUI(message) {
+        const status = document.getElementById('creatingInvoiceStatus');
+        const err = document.getElementById('creatingInvoiceError');
+        const back = document.getElementById('creatingInvoiceBackBtn');
+        if (status) { status.style.display = ''; status.textContent = message || 'Creating invoice…'; }
+        if (err) { err.style.display = 'none'; err.textContent = ''; }
+        if (back) back.style.display = 'none';
+      }
 
-        const { data, error } = await createInvoice(selectedAmountSats, name);
+      function showCreatingInvoiceError(msg) {
+        const status = document.getElementById('creatingInvoiceStatus');
+        const err = document.getElementById('creatingInvoiceError');
+        const back = document.getElementById('creatingInvoiceBackBtn');
+        if (status) status.style.display = 'none';
+        if (err) { err.style.display = 'block'; err.textContent = msg; }
+        if (back) back.style.display = 'block';
+      }
 
-        if (!data) {
-          btn.disabled = false;
-          btn.textContent = 'Retry Invoice Generation';
-          if (cashAppBtn) cashAppBtn.disabled = false;
-          errorContainer.innerHTML = '<p class="error-text">Failed to generate invoice. Please try again.</p>';
-          return;
-        }
-
-        currentInvoice = data.invoice.encodedInvoice;
-        const displayInvoice = "lightning:" + currentInvoice
-        currentInvoiceId = data.id;
-
-        // Update name step amount display
+      // Build the Lightning payment screen (QR + polling). Shared by the
+      // Bitcoin and Cash App paths.
+      function showLightningPaymentScreen() {
         showStep('payment');
         lucide.createIcons();
         resetPaymentStepUI();
-
         document.getElementById('paymentAmountDisplay').textContent = formatAmount(selectedAmountSats, displayDenomination);
-
-        // Render QR code
         const qrContainer = document.getElementById('qrCodeContainer');
         qrContainer.innerHTML = '';
         new QRCode(qrContainer, {
-          text: displayInvoice,
+          text: 'lightning:' + currentInvoice,
           width: 220,
           height: 220,
           colorDark: '#000000',
           colorLight: '#ffffff',
           correctLevel: QRCode.CorrectLevel.M,
         });
-
-        // Start polling
         startPaymentPolling();
-
-        btn.disabled = false;
-        btn.textContent = 'Generate Invoice';
-        if (cashAppBtn) cashAppBtn.disabled = false;
       }
 
-      async function generateCashAppInvoice() {
+      async function generateInvoice() {
         const name = document.getElementById('contributorNameInput')?.value?.trim() || '';
-        const btn = document.getElementById('generateInvoiceBtn');
-        const cashAppBtn = document.getElementById('generateCashAppInvoiceBtn');
-        const errorContainer = document.getElementById('invoiceErrorContainer');
 
-        if (btn) btn.disabled = true;
-        if (cashAppBtn) {
-          cashAppBtn.disabled = true;
-          cashAppBtn.innerHTML = CASH_APP_LOADING_HTML;
-        }
-        if (errorContainer) errorContainer.innerHTML = '';
+        showStep('creatingInvoice');
+        lucide.createIcons();
+        resetCreatingInvoiceUI('Creating invoice…');
 
         const { data } = await createInvoice(selectedAmountSats, name);
 
         if (!data) {
-          if (btn) btn.disabled = false;
-          if (cashAppBtn) {
-            cashAppBtn.disabled = false;
-            cashAppBtn.innerHTML = CASH_APP_BUTTON_HTML;
-          }
-          if (errorContainer) {
-            errorContainer.innerHTML = '<p class="error-text">Failed to generate invoice. Please try again.</p>';
-          }
+          showCreatingInvoiceError('Failed to generate invoice. Please try again.');
           return;
         }
 
         currentInvoice = data.invoice.encodedInvoice;
         currentInvoiceId = data.id;
-        startPaymentPolling();
-        window.location.href = buildCashAppLightningUrl(currentInvoice);
+        showLightningPaymentScreen();
+      }
 
-        if (btn) btn.disabled = false;
-        if (cashAppBtn) {
-          cashAppBtn.disabled = false;
-          cashAppBtn.innerHTML = CASH_APP_BUTTON_HTML;
+      async function generateCashAppInvoice() {
+        const name = document.getElementById('contributorNameInput')?.value?.trim() || '';
+
+        showStep('creatingInvoice');
+        lucide.createIcons();
+        resetCreatingInvoiceUI('Opening Cash App…');
+
+        const { data } = await createInvoice(selectedAmountSats, name);
+
+        if (!data) {
+          showCreatingInvoiceError('Failed to generate invoice. Please try again.');
+          return;
         }
+
+        currentInvoice = data.invoice.encodedInvoice;
+        currentInvoiceId = data.id;
+        // Land on the Lightning payment screen so returning from Cash App shows a
+        // live QR + waiting state, then hand off to the Cash App app.
+        showLightningPaymentScreen();
+        window.location.href = buildCashAppLightningUrl(currentInvoice);
       }
 
       // ── Payment detection ──────────────────────────────────────────────
@@ -2693,25 +3168,10 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         renderPoolInfo(poolData);
       }
 
-      function copyPoolLink() {
-        const link = \`https://blitzwalletapp.com/pools/\${poolId}\`;
-        navigator.clipboard.writeText(link);
-        const btn = document.getElementById('copyLinkBtn');
-        if (btn) {
-          const original = btn.textContent;
-          btn.textContent = 'Link Copied!';
-          setTimeout(() => { btn.textContent = original; }, 2000);
-        }
-      }
-
       function copyInvoice() {
+        if (!currentInvoice) return;
         navigator.clipboard.writeText(currentInvoice);
-        const btn = document.getElementById('copyInvoiceBtn');
-        if (btn) {
-          const original = btn.textContent;
-          btn.textContent = 'Copied!';
-          setTimeout(() => { btn.textContent = original; }, 2000);
-        }
+        showAlert('Copied!');
       }
 
       function escapeHtml(str) {
@@ -2720,16 +3180,6 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         div.appendChild(document.createTextNode(str));
         return div.innerHTML;
       }
-
-      // Update the name step amount display when entering that step
-      const origShowStep = showStep;
-      showStep = function(stepName) {
-        origShowStep(stepName);
-        if (stepName === 'name') {
-          const amountEl = document.querySelector('#step-name strong');
-          if (amountEl) amountEl.textContent = formatSats(selectedAmountSats) + ' SAT';
-        }
-      };
 
       // Handle visibility change to pause/resume polling
       document.addEventListener('visibilitychange', () => {
@@ -2755,7 +3205,6 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       document.addEventListener('DOMContentLoaded', async () => {
         const livePool = await fetchPoolData();
         let initialData = livePool.data;
-        console.log(initialData,!initialData)
         if (!initialData && !livePool.notFound) {
           // Cached preview HTML can be stale; use embedded data only when the
           // fresh page-load fetch failed or timed out.
@@ -2768,6 +3217,14 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
     </script>
   </head>
   <body>
+    <!-- Alert overlay: replaces native alert() -->
+    <div id="alert-overlay" class="overlay-backdrop">
+      <div class="overlay-card">
+        <p class="overlay-title">Notice</p>
+        <p id="alert-message" class="overlay-body"></p>
+        <button class="btn-primary" onclick="closeAlert()">OK</button>
+      </div>
+    </div>
     <nav>
       <div class="nav-inner">
         <a href="/">
@@ -2821,7 +3278,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         <div id="app"> 
      
           <div class="loading-container">
-            <div class="loading-spinner"></div>
+            <div class="spinner"></div>
             <p>Loading pool...</p>
           </div>
         </div>

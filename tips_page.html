@@ -60,13 +60,13 @@
     />
 
     <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
     <link rel="stylesheet" href="/pages/tips/tips.css" />
     <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
     <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
     <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="/public/paylink-swap.js"></script>
 
     <script src="/src/js/navbar.js" defer></script>
     <script src="/pages/tips/tips.js" defer></script>
@@ -104,7 +104,26 @@
       <div class="tips-container">
         <!-- Input Screen -->
         <div class="input-screen" id="input-screen">
-          <h1 class="page-title">Send Payment</h1>
+          <div class="input-actions">
+            <button
+              type="button"
+              class="input-action-btn"
+              id="currency-button"
+              aria-label="Switch currency"
+              title="Switch currency"
+            >
+              <i data-lucide="circle-dollar-sign"></i>
+            </button>
+            <button
+              type="button"
+              class="input-action-btn"
+              aria-label="Past swaps"
+              title="Past swaps"
+              onclick="showSwapHistory(event)"
+            >
+              <i data-lucide="menu"></i>
+            </button>
+          </div>
 
           <div class="profile-section">
             <div class="avatar-toggle" id="avatar-toggle">
@@ -133,18 +152,19 @@
           </div>
 
           <button class="tip-button" id="tip-button">Continue</button>
-          <button class="currency-button" id="currency-button">
-            Switch Currency
-          </button>
-          <button
-            style="margin-top: 0.8rem"
-            class="currency-button"
-            onclick="showSwapHistory()"
-          >
-            View past swaps
-          </button>
 
           <div class="currency-dropdown" id="currency-dropdown">
+            <div class="currency-dropdown-header">
+              <span class="currency-dropdown-title">Select currency</span>
+              <button
+                type="button"
+                class="currency-dropdown-close"
+                id="currency-dropdown-close"
+                aria-label="Close"
+              >
+                <i data-lucide="x"></i>
+              </button>
+            </div>
             <input
               type="text"
               class="currency-search"
@@ -152,6 +172,22 @@
               placeholder="Search currency..."
             />
             <div class="currency-list" id="currency-list"></div>
+          </div>
+
+          <!-- historical swaps (mirrors the currency dropdown) -->
+          <div class="swap-history-dropdown" id="tip-swap-history-overlay">
+            <div class="currency-dropdown-header">
+              <span class="currency-dropdown-title">Past swaps</span>
+              <button
+                type="button"
+                class="currency-dropdown-close"
+                id="swap-history-close"
+                aria-label="Close"
+              >
+                <i data-lucide="x"></i>
+              </button>
+            </div>
+            <div class="swap-history-list" id="tip-swap-history-list"></div>
           </div>
         </div>
 
@@ -311,18 +347,32 @@
               <i size="18" data-lucide="copy"></i>
             </button>
           </div>
-          <div class="qr-info-section">
-            <div class="qr-info-row">
-              <span class="qr-info-label">Quote ID:</span>
-              <span class="qr-info-value" id="stable-quote-id-value"></span>
-              <button
-                class="qr-clipboard-btn"
-                id="copy-quote-id-btn"
-                aria-label="Copy quote ID"
-              >
-                <i size="18" data-lucide="copy"></i>
-              </button>
-            </div>
+          <div
+            class="stable-tron-submit"
+            id="stable-tron-submit"
+            style="display: none"
+          >
+            <p class="screen-subtitle">
+              Paste your Tron transaction hash to confirm your payment.
+            </p>
+            <input
+              type="text"
+              class="refund-input"
+              id="stable-tron-txhash"
+              placeholder="Transaction hash"
+            />
+            <p
+              class="creating-error"
+              id="stable-tron-error"
+              style="display: none"
+            ></p>
+            <button
+              class="action-button primary"
+              style="margin-bottom: 0"
+              onclick="submitTronDeposit()"
+            >
+              Submit payment
+            </button>
           </div>
           <div class="qr-actions">
             <button class="action-button primary" id="stable-primary-btn">
@@ -341,8 +391,23 @@
         <!-- Processing Screen -->
         <div class="tips-screen" id="stable-processing-screen">
           <div class="creating-content">
-            <div class="creating-spinner"></div>
-            <p class="creating-status">Processing swap…</p>
+            <div class="creating-spinner" id="stable-processing-spinner"></div>
+            <p class="creating-status" id="stable-processing-status">
+              Waiting for payment…
+            </p>
+            <p
+              class="creating-error"
+              id="stable-processing-error"
+              style="display: none"
+            ></p>
+            <button
+              class="action-button primary"
+              id="stable-processing-restart-btn"
+              style="display: none; margin-bottom: 0"
+              onclick="resetToInputScreen()"
+            >
+              Start over
+            </button>
           </div>
         </div>
 
@@ -381,40 +446,13 @@
           </div>
         </div>
 
-        <!-- historical swaps -->
-        <div
-          id="tip-swap-history-overlay"
-          style="display: none"
-          class="swap-history-overlay"
-          onclick="hideSwapHistory()"
-        >
-          <div class="swap-history-modal" onclick="event.stopPropagation()">
-            <div class="swap-history-header">
-              <h3>Past Swaps</h3>
-              <button onclick="hideSwapHistory()">✕</button>
-            </div>
-            <div id="tip-swap-history-list"></div>
-          </div>
-        </div>
-
         <!-- Invoice Screen -->
         <div class="tips-screen" id="invoice-screen">
           <p class="qr-screen-title">Send Bitcoin Via Lightning</p>
           <p class="qr-amount" id="invoice-amount"></p>
-          <p class="verify-text" id="verify-text">Checking payment status...</p>
           <div class="qr-wrapper clickable" id="invoice-qr-wrapper">
             <div id="invoice-qr-code"></div>
             <span class="qr-tap-hint">Tap to copy</span>
-          </div>
-          <div class="qr-copy-row">
-            <span class="qr-copy-text" id="invoice-address-text"></span>
-            <button
-              class="qr-clipboard-btn"
-              id="copy-invoice-addr-btn"
-              aria-label="Copy invoice"
-            >
-              <i data-lucide="copy"></i>
-            </button>
           </div>
           <div class="qr-actions">
             <button class="action-button primary" id="invoice-primary-btn">

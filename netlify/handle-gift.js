@@ -1,4 +1,5 @@
 import { signedRequestHeaders, PROXY_ORIGIN } from "./lib/sign-request.js";
+import { designCss } from "./lib/design-css.js";
 
 async function fetchGiftData(giftId, baseUrl) {
   try {
@@ -163,16 +164,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
     <style>
-      :root {
-        --title_font: "Poppins", "Noto Sans", sans-serif;
-        --description_font: "Poppins", "Noto Sans", sans-serif;
-        --primary_color: #0375f6;
-        --secondary_color: #21374f;
-        --tertiary_color: #009bf0;
-        --lm-background: #f2f2f2;
-        --lm-backgroundOffset: #e3e3e3;
-        --lm-text: #262626;
-      }
+      ${designCss}
 
       * {
         margin: 0;
@@ -223,7 +215,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
       }
 
       .nav-download-btn {
-        background: linear-gradient(135deg, var(--primary_color) 0%, var(--tertiary_color) 100%);
+        background: var(--primary_color);
         color: white;
         padding: 0.6rem 1.2rem;
         border-radius: 50px;
@@ -257,7 +249,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
       .gift-icon {
         width: 80px;
         height: 80px;
-        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+        background: var(--primary_color);
         border-radius: 50%;
         display: flex;
         align-items: center;
@@ -273,14 +265,14 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
 
       .gift-title {
         font-size: 2rem;
-        font-weight: 600;
+        font-weight: 500;
         margin-bottom: 1.5rem;
         color: var(--lm-text);
       }
 
       .gift-amount {
         font-size: 3rem;
-        font-weight: 600;
+        font-weight: 500;
         color: var(--primary_color);
         margin: 1.5rem 0;
       }
@@ -320,13 +312,13 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
       }
 
       .claim-button {
-        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+        background: var(--primary_color);
         color: white;
         padding: 1rem 2rem;
         border: none;
         border-radius: 12px;
         font-size: 1.1rem;
-        font-weight: 600;
+        font-weight: 500;
         cursor: pointer;
         transition: all 0.3s ease;
         width: 100%;
@@ -347,7 +339,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         border: 1px solid var(--lm-backgroundOffset);
         border-radius: 12px;
         font-size: 1rem;
-        font-weight: 600;
+        font-weight: 500;
         cursor: pointer;
         transition: all 0.3s ease;
         width: 100%;
@@ -537,36 +529,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
       }
 
-      .error-message {
-        padding: 2rem;
-        border-radius: 12px;
-        background: #fef2f2;
-        border: 1px solid #fecaca;
-      }
-      
-      .error-message h2 {
-        color: #991b1b;
-        margin-bottom: 1rem;
-      }
-
-      .error-message p {
-        color: #991b1b;
-        margin-top: 0.5rem;
-      }
-
-      .loading-spinner {
-        display: inline-block;
-        width: 50px;
-        height: 50px;
-        border: 5px solid var(--lm-backgroundOffset);
-        border-radius: 50%;
-        border-top-color: var(--primary_color);
-        animation: spin 1s ease-in-out infinite;
-      }
-
-      @keyframes spin {
-        to { transform: rotate(360deg); }
-      }
+      /* .error-box, .spinner and @keyframes spin come from the shared design CSS. */
 
       .loading-container {
         display: flex;
@@ -660,13 +623,13 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         flex-shrink: 0;
         width: 32px;
         height: 32px;
-        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+        background: var(--primary_color);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         color: white;
-        font-weight: 700;
+        font-weight: 500;
         font-size: 0.9rem;
       }
 
@@ -678,7 +641,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
       }
 
       .step-title {
-        font-weight: 600;
+        font-weight: 500;
         font-size: 1rem;
         color: var(--lm-text);
       }
@@ -702,7 +665,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         padding: 0.75rem 1.25rem;
         border-radius: 12px;
         font-size: 0.95rem;
-        font-weight: 600;
+        font-weight: 500;
         cursor: pointer;
         font-family: var(--description_font);
         border: none;
@@ -710,7 +673,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
       }
 
       .step-btn.primary {
-        background: linear-gradient(135deg, var(--primary_color), var(--tertiary_color));
+        background: var(--primary_color);
         color: white;
         box-shadow: 0 4px 15px rgba(3, 117, 246, 0.3);
       }
@@ -756,7 +719,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
           if (loadError) {
             container.innerHTML = \`
               <div class="content-container fade-in">
-                <div class="error-message">
+                <div class="error-box">
                   <h2>Error Loading Gift</h2>
                   <p>\${loadError}</p>
                 </div>
@@ -768,7 +731,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
           if (!giftData) {
             container.innerHTML = \`
               <div class="content-container fade-in">
-                <div class="error-message">
+                <div class="error-box">
                   <h2>Gift Not Found</h2>
                   <p>This gift doesn't exist or has already been claimed.</p>
                 </div>
@@ -866,7 +829,8 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         }
       }
 
-     // ── initial render ─────────────────────────────────────────────────
+
+      // ── initial render ─────────────────────────────────────────────────
       async function fetchCurrentGiftData() {
         try {
           if (GIFT_DATA) {
@@ -970,7 +934,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
       <div class="gift-card">
         <div id="app">
           <div class="loading-container">
-            <div class="loading-spinner"></div>
+            <div class="spinner"></div>
             <p>Loading your gift...</p>
           </div>
         </div>

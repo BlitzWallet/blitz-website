@@ -40,11 +40,11 @@ nav .nav-container {
   justify-content: space-between;
   align-items: center;
   pointer-events: auto;
-  border: 1px solid rgba(18, 17, 17, 0.08);
-  border-radius: 999px;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-pill);
   background: rgba(246, 244, 239, 0.7);
   backdrop-filter: blur(16px);
-  box-shadow: 0 12px 34px rgba(18, 17, 17, 0.08);
+  box-shadow: var(--shadow-nav);
   transition:
     background 0.3s ease,
     box-shadow 0.3s ease;
@@ -62,7 +62,7 @@ nav .nav-links {
 }
 
 nav .nav-links a {
-  color: rgba(18, 17, 17, 0.68);
+  color: var(--color-ink-70);
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
@@ -70,17 +70,17 @@ nav .nav-links a {
 }
 
 nav .nav-links a:not(:last-child):hover {
-  color: #121111;
+  color: var(--color-ink);
 }
 
 nav .nav-links a::after {
   display: none;
 }
 nav .nav-links .nav-download-btn {
-  background: var(--primary_color);
+  background: var(--color-brand);
   color: white;
   padding: 0.75rem 1.15rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   font-weight: 600;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -109,7 +109,7 @@ nav .mobile-menu span {
   left: 0;
   width: 100%;
   height: 3px;
-  background: #000;
+  background: var(--color-ink);
   border-radius: 2px;
   transition:
     transform 0.3s ease,
@@ -137,9 +137,9 @@ nav .mobile-menu span:nth-child(3) {
 /* --------------------------------- */
 
 footer {
-  background: #f6f4ef;
+  background: var(--color-surface-warm);
   padding: 4rem 5% 2rem;
-  border-top: 1px solid rgba(18, 17, 17, 0.08);
+  border-top: 1px solid var(--color-hairline);
 }
 
 .footer-container {
@@ -164,7 +164,7 @@ footer {
 }
 
 .footer-brand p {
-  color: rgba(18, 17, 17, 0.6);
+  color: var(--color-ink-60);
   line-height: 1.7;
 }
 
@@ -183,14 +183,14 @@ footer {
 }
 
 .footer-links a {
-  color: var(--lm-text);
+  color: var(--color-ink);
   text-decoration: none;
   opacity: 0.62;
   transition: all 0.3s ease;
 }
 
 .footer-links a:hover {
-  color: #0375f6;
+  color: var(--color-brand);
   opacity: 1;
   padding-left: 5px;
 }
@@ -198,8 +198,8 @@ footer {
 .footer-bottom {
   text-align: center;
   padding-top: 2rem;
-  border-top: 1px solid rgba(18, 17, 17, 0.1);
-  color: rgba(18, 17, 17, 0.58);
+  border-top: 1px solid var(--color-hairline);
+  color: var(--color-ink-60);
 }
 
 /* Responsive Design */
@@ -224,11 +224,11 @@ footer {
     top: calc(100% + 12px);
     left: 16px;
     right: 16px;
-    background: var(--lm-background);
+    background: var(--color-surface-warm);
     flex-direction: column;
     padding: 2rem;
-    border: 1px solid rgba(18, 17, 17, 0.08);
-    border-radius: 8px;
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-card);
     box-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
   }
 

@@ -1,0 +1,56 @@
+/* Full-bleed brand-green field, emulating the reference layout.
+         --color-404 is a deep tone of --color-green used only for the
+         decorative numeral on this page. */
+body {
+  --color-404: var(--color-brand);
+  min-height: 100dvh;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.notfound {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1.25rem;
+  padding: 8rem var(--space-gutter) var(--space-gutter);
+}
+
+.notfound svg {
+  display: block;
+  width: min(88vw, 640px);
+  height: auto;
+}
+.notfound svg text {
+  fill: var(--color-404);
+  font-family: var(--font-sans);
+  font-weight: 700;
+}
+
+.notfound h1 {
+  margin: 0;
+  font-size: var(--fs-lead);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-ink);
+}
+
+.notfound .btn-primary {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 680px) {
+  .notfound {
+    padding-top: 6.5rem;
+    gap: 1rem;
+  }
+  .notfound h1 {
+    letter-spacing: 0.12em;
+  }
+}
