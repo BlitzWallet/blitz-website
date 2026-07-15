@@ -622,11 +622,23 @@ async function renderAvatar(profile) {
   if (hasProfileImage && storageBaseUrl) {
     const img = document.createElement("img");
     img.alt = username;
-    img.onload = () => {
-      primaryEl.textContent = "";
-      primaryEl.appendChild(img);
-    };
-    img.src = storageBaseUrl;
+    await new Promise((resolve) => {
+      let settled = false;
+      const done = () => {
+        if (!settled) {
+          settled = true;
+          resolve();
+        }
+      };
+      img.onload = () => {
+        primaryEl.textContent = "";
+        primaryEl.appendChild(img);
+        done();
+      };
+      img.onerror = done;
+      setTimeout(done, 3000);
+      img.src = storageBaseUrl;
+    });
   }
 }
 
