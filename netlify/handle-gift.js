@@ -829,39 +829,8 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         }
       }
 
-
-      // ── initial render ─────────────────────────────────────────────────
-      async function fetchCurrentGiftData() {
-        try {
-          if (GIFT_DATA) {
-             return { data: GIFT_DATA, notFound: false };
-          }
-          const res = await fetch("/getBitcoinGiftDetails", {
-            method: "POST",
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ giftUUID: giftId }),
-            signal: AbortSignal.timeout(6000),
-          });
-
-          if (!res.ok) return { data: null, notFound: false };
-
-          const json = await res.json();
-
-         
-          if (json?.status !== "SUCCESS") {
-            console.error("[OG gift] Unexpected status:", json?.status);
-            return null;
-          }
-
-          return  { data: json?.data ?? null, notFound: false };
-        } catch (err) {
-          return { data: null, notFound: false };
-        }
-      }
-
-      document.addEventListener('DOMContentLoaded', async () => {
-        const giftData = await fetchCurrentGiftData();
-        renderGiftCard(giftData.data, giftData.data ? null : 'Gift not found');
+      document.addEventListener('DOMContentLoaded', () => {
+        renderGiftCard(GIFT_DATA, GIFT_DATA ? null : 'Gift not found');
       });
 
       document.addEventListener('visibilitychange', () => {

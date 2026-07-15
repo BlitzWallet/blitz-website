@@ -10,6 +10,7 @@ async function fetchFreshPoolData(poolId, baseUrl) {
       signal: AbortSignal.timeout(6000),
     });
 
+    console.log(signedRequestHeaders(), PROXY_ORIGIN);
     if (!res.ok) {
       console.error("[OG pool] Cloud Function returned", res.status);
       return null;
