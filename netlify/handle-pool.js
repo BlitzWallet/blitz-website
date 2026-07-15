@@ -1543,6 +1543,10 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       }
 
       async function fetchPoolData() {
+        if (POOL_DATA) {
+          applyPoolData(POOL_DATA);
+          return { data: POOL_DATA, error: null, notFound: false };
+        }
         try {
           const response = await fetch('/getPoolData', {
             method: 'POST',
