@@ -527,11 +527,9 @@ let resizeTimeout = null;
 // FlashNet orchestration — swap processing is driven directly off FlashNet's
 // status endpoint (no EVM RPC balance polling). Deposits to auto-detected chains
 // create an order automatically; Tron requires a manual proof-of-payment submit.
-const FLASHNET_STATUS_URL =
-  "https://orchestration.flashnet.xyz/v1/orchestration/status";
-const FLASHNET_SUBMIT_URL =
-  "https://orchestration.flashnet.xyz/v1/orchestration/submit";
-const FLASHNET_PUBLIC_KEY = "fnp_wqALq1d5oxzFDoZiCyKbSMUKzAEJwrG5DANOGCwHTaE";
+// Proxied through the VPS so the Flashnet key stays server-side (see
+// blitz-vps-proxy handlers/handleFlashnet.js). Netlify signs the request.
+const FLASHNET_PROXY_URL = "/handleFLashnetRequset";
 const STABLE_POLL_MS = 6000;
 const MAX_STABLE_POLLS = 100; // ~10 min
 const FLASHNET_DONE_STATUSES = new Set(["completed"]);
@@ -1220,14 +1218,15 @@ async function submitTronDeposit() {
   setProcessingStatus("Confirming your payment…");
 
   try {
-    const res = await fetch(FLASHNET_SUBMIT_URL, {
+    const res = await fetch(FLASHNET_PROXY_URL, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + FLASHNET_PUBLIC_KEY,
-        "X-Idempotency-Key": "tips-quote:" + currentQuoteId,
-      },
-      body: JSON.stringify({ quoteId: currentQuoteId, txHash }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        action: "submit",
+        quoteId: currentQuoteId,
+        txHash,
+        idempotencyKey: "tips-quote:" + currentQuoteId,
+      }),
       signal: AbortSignal.timeout(8000),
     });
     if (!res.ok) throw new Error("submit-failed");
@@ -1348,14 +1347,15 @@ function stopStablePolling() {
 async function fetchFlashnetStatus() {
   // Phase 1: no orderId yet → query by quoteId to detect the deposit + capture
   // the auto-created orderId. Phase 2: orderId known → query by orderId.
-  const param = currentOrderId
-    ? "id=" + encodeURIComponent(currentOrderId)
-    : "quoteId=" + encodeURIComponent(currentQuoteId);
-  const headers = { Authorization: "Bearer " + FLASHNET_PUBLIC_KEY };
+  const body = { action: "status" };
+  if (currentOrderId) body.orderId = currentOrderId;
+  else body.quoteId = currentQuoteId;
   // Tron's submit issues a readToken bound to the order; send it when present.
-  if (currentReadToken) headers["X-Read-Token"] = currentReadToken;
-  const res = await fetch(FLASHNET_STATUS_URL + "?" + param, {
-    headers,
+  if (currentReadToken) body.readToken = currentReadToken;
+  const res = await fetch(FLASHNET_PROXY_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
     signal: AbortSignal.timeout(8000),
   });
   if (!res.ok) return null;

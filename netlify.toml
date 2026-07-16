@@ -182,6 +182,14 @@ X-Content-Type-Options = "nosniff"
   headers = {X-From = "Netlify"}
   signed = "API_SIGNATURE_TOKEN"
 
+[[redirects]]
+  from = "/handleFLashnetRequset"
+  to = "https://proxy.blitz-wallet.com/handleFLashnetRequset"
+  status = 200
+  force = true
+  headers = {X-From = "Netlify"}
+  signed = "API_SIGNATURE_TOKEN"
+
 # Gifts redirect
 
 [[redirects]]

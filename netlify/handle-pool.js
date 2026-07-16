@@ -1481,8 +1481,8 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       let paymentMode = 'bitcoin';
       let selectedUsdAmount = 0;
 
-      const FLASHNET_STATUS_URL = 'https://orchestration.flashnet.xyz/v1/orchestration/status';
-      const FLASHNET_PUBLIC_KEY = 'fnp_wqALq1d5oxzFDoZiCyKbSMUKzAEJwrG5DANOGCwHTaE';
+      // Proxied through the VPS so the Flashnet key stays server-side.
+      const FLASHNET_PROXY_URL = '/handleFLashnetRequset';
       const STABLE_POLL_MS = 6000;
       const MAX_STABLE_POLLS = 100; // ~10 min
       const FLASHNET_DONE_STATUSES = new Set(['completed']);
@@ -2608,7 +2608,6 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       }
 
       // ── Deposit submission — obtain the order's read token from FlashNet ──
-      const FLASHNET_SUBMIT_URL = 'https://orchestration.flashnet.xyz/v1/orchestration/submit';
 
       function showTronError(message) {
         const errEl = document.getElementById('stableTxHashError');
@@ -2630,14 +2629,15 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         showConfirmingView('Confirming your payment…');
 
         try {
-          const res = await fetch(FLASHNET_SUBMIT_URL, {
+          const res = await fetch(FLASHNET_PROXY_URL, {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + FLASHNET_PUBLIC_KEY,
-              'X-Idempotency-Key': 'pool-quote:' + currentQuoteId,
-            },
-            body: JSON.stringify({ quoteId: currentQuoteId, txHash: txHash }),
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              action: 'submit',
+              quoteId: currentQuoteId,
+              txHash: txHash,
+              idempotencyKey: 'pool-quote:' + currentQuoteId,
+            }),
             signal: AbortSignal.timeout(8000),
           });
           if (!res.ok) throw new Error('submit-failed');
@@ -2679,14 +2679,15 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       // Phase 2: query by orderId (with the readToken if we have one). Returns the
       // full response so the poller can read order.id and order.status.
       async function fetchFlashnetStatus() {
-        const param = currentOrderId
-          ? 'id=' + encodeURIComponent(currentOrderId)
-          : 'quoteId=' + encodeURIComponent(currentQuoteId);
-        const headers = { 'Authorization': 'Bearer ' + FLASHNET_PUBLIC_KEY };
-        if (currentReadToken) headers['X-Read-Token'] = currentReadToken;
+        const body = { action: 'status' };
+        if (currentOrderId) body.orderId = currentOrderId;
+        else body.quoteId = currentQuoteId;
+        if (currentReadToken) body.readToken = currentReadToken;
         try {
-          const res = await fetch(FLASHNET_STATUS_URL + '?' + param, {
-            headers: headers,
+          const res = await fetch(FLASHNET_PROXY_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(body),
             signal: AbortSignal.timeout(8000),
           });
           if (!res.ok) return null;
