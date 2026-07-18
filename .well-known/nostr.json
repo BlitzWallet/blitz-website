@@ -190,7 +190,8 @@
     "dademurphy": "10021f8f5dd8f699e933387997947b87d156eb7a5466287dcdd716dd43c70c40",
     "poronominare": "110c605a5fe9838de16f5d2548c997100b8039a04d292a4fbdccab86ff6d281e",
     "hablemosdebitcoin": "784615589d8466f3bbbeab1ba10234948d0b50e310a5be47e85b41b5f56d6295",
-    "nwc": "6876b3364c7eb87b2bdda7748a4aa2d637b0808a40303e36cb4f6da1ff802204"
+    "nwc15052000": "6876b3364c7eb87b2bdda7748a4aa2d637b0808a40303e36cb4f6da1ff802204",
+    "kic": "16afe0531a7cd932b9a7c6cdceb9b6c19a43b364af4cce7eb6064de2f9bf18d0"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
@@ -1738,6 +1739,14 @@
       "wss://relay.primal.net"
     ],
     "6876b3364c7eb87b2bdda7748a4aa2d637b0808a40303e36cb4f6da1ff802204": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "16afe0531a7cd932b9a7c6cdceb9b6c19a43b364af4cce7eb6064de2f9bf18d0": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
