@@ -3,6 +3,15 @@
     "(prefers-reduced-motion: reduce)",
   ).matches;
 
+  // Tap-to-start demo overlay: until tapped it covers the iframe, so the
+  // page scrolls over the phone instead of the iframe trapping the gesture.
+  const demoOverlay = document.querySelector(".demo-overlay");
+  if (demoOverlay) {
+    demoOverlay.addEventListener("click", () => {
+      demoOverlay.classList.add("is-dismissed");
+    });
+  }
+
   // Hero rotating word ("Money without <borders / banks / ...>")
   const heroRotate = document.querySelector(".hero-rotate");
   if (heroRotate) {
@@ -95,8 +104,22 @@
       const rect = phoneScroll.getBoundingClientRect();
       const travelDistance = Math.max(rect.height - window.innerHeight, 1);
       const progress = clamp(-rect.top / travelDistance, 0, 1);
+
+      // Shrink the phone at the end of the scroll so the whole device fits
+      // the viewport height. The phone is bottom-anchored (transform-origin:
+      // bottom center), so subtracting a margin for the fixed navbar + gap
+      // keeps the top clear on any screen height. offsetHeight ignores
+      // transform:scale, so it's a stable base; recomputes on scroll AND
+      // resize (handles orientation changes).
+      const shell = phoneScroll.querySelector(".scroll-phone-shell");
+      const phoneHeight = shell ? shell.offsetHeight : window.innerHeight;
+      const FIT_MARGIN = 170; // navbar height + breathing room top & bottom
       const startScale = 1;
-      const endScale = 0.9;
+      const endScale = clamp(
+        (window.innerHeight - FIT_MARGIN) / phoneHeight,
+        0.45,
+        0.95,
+      );
       const scale = startScale + (endScale - startScale) * progress;
 
       phoneScroll.style.setProperty("--phone-scale", scale.toFixed(3));

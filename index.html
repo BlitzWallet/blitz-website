@@ -237,10 +237,28 @@
           <div class="hero-phone-stage" aria-label="Blitz Wallet app preview">
             <div class="scroll-phone-shell">
               <span class="phone-speaker" aria-hidden="true"></span>
-              <img
-                src="./src/assets/images/homescreen.png"
-                alt="Blitz Wallet Global Payments App Interface"
-              />
+              <iframe
+                class="hero-demo-frame"
+                src="/pages/webDemo/index.html"
+                title="Blitz Wallet interactive app preview"
+                loading="lazy"
+                scrolling="no"
+              ></iframe>
+              <button
+                type="button"
+                class="demo-overlay"
+                aria-label="Start interactive demo"
+              >
+                <div class="demo-content-container">
+                  <i class="demo-icon" data-lucide="info"></i>
+
+                  <h2 class="demo-title">Try Blitz Wallet</h2>
+
+                  <p class="demo-subtitle">
+                    Eplore the app and discover its features before installing.
+                  </p>
+                </div>
+              </button>
               <div class="phone-glare" aria-hidden="true"></div>
               <span class="phone-home-indicator" aria-hidden="true"></span>
             </div>

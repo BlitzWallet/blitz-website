@@ -59,7 +59,7 @@ X-Content-Type-Options = "nosniff"
 [[headers]]
   for = "/*"
   [headers.values]
-    Content-Security-Policy = "frame-ancestors 'none';"
+    Content-Security-Policy = "frame-ancestors 'self';"
     X-Frame-Options = "DENY"
     # Pin HTTPS so a first-hit downgrade / SSL-strip can't reach a wallet page.
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
