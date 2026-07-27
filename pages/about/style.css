@@ -401,6 +401,7 @@
 .btn-primary {
   color: var(--color-ink);
   background: #fff;
+  border-radius: 999px;
 }
 
 /* Responsive */
