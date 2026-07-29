@@ -38,3 +38,4 @@ blitzwallet-V0.0.2.apk
 netlify/createJWT.js
 netlify/lib/blitz-api-auth.js
 .claude/launch.json
+**/.DS_Store
