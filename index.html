@@ -87,8 +87,6 @@
       defer
     ></script>
     <script src="/src/components/downloadModal/index.js" defer></script>
-    <script src="./pages/home/expandContent.js" defer></script>
-    <script src="./pages/home/slideshow.js" defer></script>
     <script src="./pages/home/homeAnimations.js" defer></script>
     <script src="/src/js/font-loader.js" defer></script>
     <script type="application/ld+json">
@@ -239,10 +237,36 @@
           <div class="hero-phone-stage" aria-label="Blitz Wallet app preview">
             <div class="scroll-phone-shell">
               <span class="phone-speaker" aria-hidden="true"></span>
+              <iframe
+                class="hero-demo-frame"
+                data-src="/pages/webDemo/index.html"
+                title="Blitz Wallet interactive app preview"
+                scrolling="no"
+              ></iframe>
               <img
-                src="./src/assets/images/homescreen.png"
-                alt="Blitz Wallet Global Payments App Interface"
+                class="demo-poster"
+                src="/src/assets/images/homescreen.png"
+                alt="Blitz Wallet home screen"
+                aria-hidden="true"
               />
+              <div class="demo-loader" aria-hidden="true">
+                <div class="spinner"></div>
+              </div>
+              <button
+                type="button"
+                class="demo-overlay"
+                aria-label="Start interactive demo"
+              >
+                <div class="demo-content-container">
+                  <i class="demo-icon" data-lucide="info"></i>
+
+                  <h2 class="demo-title">Try Blitz Wallet</h2>
+
+                  <p class="demo-subtitle">
+                    Eplore the app and discover its features before installing.
+                  </p>
+                </div>
+              </button>
               <div class="phone-glare" aria-hidden="true"></div>
               <span class="phone-home-indicator" aria-hidden="true"></span>
             </div>
@@ -287,6 +311,9 @@
             <span class="orbit-node gift-node"><i data-lucide="gift"></i></span>
             <span class="orbit-node avatar-node">BK</span>
             <span class="orbit-node avatar-node avatar-node-green">SA</span>
+            <span class="gift-tag"
+              ><i data-lucide="check"></i>$10.00 gift claimed</span
+            >
           </div>
           <div class="feature-copy">
             <h3>Blitz Gifts</h3>
@@ -303,6 +330,10 @@
               <div class="pool-topline">
                 <span>Trip pool</span>
                 <strong>78%</strong>
+              </div>
+              <div class="pool-amount">
+                <strong>$780.00</strong>
+                <span>of $1,000 goal</span>
               </div>
               <div class="pool-bar"><span></span></div>
               <div class="pool-avatars">
@@ -384,11 +415,18 @@
         <article class="feature-card fade-in">
           <div class="feature-visual feature-speed" aria-hidden="true">
             <div class="speed-pill">settled</div>
+            <span class="speed-dot"></span>
             <svg
               viewBox="0 0 360 140"
               preserveAspectRatio="none"
               focusable="false"
             >
+              <defs>
+                <linearGradient id="speedFill" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#0375f6" stop-opacity="0.24" />
+                  <stop offset="1" stop-color="#0375f6" stop-opacity="0.02" />
+                </linearGradient>
+              </defs>
               <path
                 class="speed-area"
                 d="M4 132C31 84 54 91 78 82C104 72 112 38 137 52C162 66 163 112 188 103C213 94 220 45 244 50C270 56 280 104 303 94C326 84 331 57 356 42V132H4Z"
@@ -446,185 +484,70 @@
 
     <!-- Products Section -->
     <section class="products" id="products">
-      <div class="products-header">
+      <div class="products-header fade-in">
         <span class="section-label">Our Products</span>
         <h2>A Complete Global Payments Suite</h2>
-        <p>
-          One mission at the center, four products in orbit. Tap a product to
-          see how Blitz moves money like the internet.
-        </p>
+        <p>Four products, one mission: money that moves like the internet.</p>
       </div>
 
-      <div class="orbital fade-in" data-orbital>
-        <div
-          class="orbital-stage"
-          data-orbital-stage
-          role="group"
-          aria-label="Blitz products orbiting the Blitz logo"
-        >
-          <div
-            class="orbital-ring orbital-ring--outer"
-            aria-hidden="true"
-          ></div>
+      <div class="product-grid">
+        <article class="product-card fade-in">
+          <div class="product-icon"><i data-lucide="smartphone"></i></div>
+          <span class="product-tag">iOS &amp; Android</span>
+          <h3>Mobile App</h3>
+          <p>
+            Pay contacts for free, gift Bitcoin or stablecoins, pool money with
+            groups, and manage your funds with complete control.
+          </p>
+          <a href="#" class="product-cta download-btn">
+            Download the app <i data-lucide="arrow-right"></i>
+          </a>
+        </article>
 
-          <div class="orbital-line" data-orbital-line aria-hidden="true"></div>
+        <article class="product-card fade-in">
+          <div class="product-icon"><i data-lucide="globe"></i></div>
+          <span class="product-tag">Browser wallet</span>
+          <h3>Web Wallet</h3>
+          <p>
+            Access the same powerful global payments experience from any
+            browser, with no app install required.
+          </p>
+          <a href="https://wallet.blitzwalletapp.com" class="product-cta">
+            Try the Web Wallet <i data-lucide="arrow-right"></i>
+          </a>
+        </article>
 
-          <div class="orbital-core" aria-hidden="true">
-            <span class="orbital-core-badge">
-              <img src="/favicon.png" alt="Blitz Wallet logo" />
-            </span>
-          </div>
+        <article class="product-card fade-in">
+          <div class="product-icon"><i data-lucide="store"></i></div>
+          <span class="product-tag">For merchants</span>
+          <h3>Point of Sale</h3>
+          <p>
+            Accept Bitcoin and stablecoin payments at any business, track tips,
+            and settle instantly.
+          </p>
+          <a href="https://pay.blitzwalletapp.com" class="product-cta">
+            Get started <i data-lucide="arrow-right"></i>
+          </a>
+        </article>
 
-          <button
-            class="orbital-node"
-            type="button"
-            data-orbital-node
-            data-index="0"
-            aria-label="Mobile App"
-          >
-            <span class="orbital-node-dot"
-              ><i data-lucide="smartphone"></i
-            ></span>
-            <span class="orbital-node-label">Mobile App</span>
-          </button>
-
-          <button
-            class="orbital-node"
-            type="button"
-            data-orbital-node
-            data-index="1"
-            aria-label="Web Wallet"
-          >
-            <span class="orbital-node-dot"><i data-lucide="globe"></i></span>
-            <span class="orbital-node-label">Web Wallet</span>
-          </button>
-
-          <button
-            class="orbital-node"
-            type="button"
-            data-orbital-node
-            data-index="2"
-            aria-label="Point of Sale"
-          >
-            <span class="orbital-node-dot"><i data-lucide="store"></i></span>
-            <span class="orbital-node-label">Point of Sale</span>
-          </button>
-
-          <button
-            class="orbital-node"
-            type="button"
-            data-orbital-node
-            data-index="3"
-            aria-label="Recovery Platform"
-          >
-            <span class="orbital-node-dot"
-              ><i data-lucide="life-buoy"></i
-            ></span>
-            <span class="orbital-node-label">Recovery</span>
-          </button>
-        </div>
-
-        <p class="orbital-hint" data-orbital-hint>
-          <i data-lucide="hand-pointer"></i> Tap a product to explore
-        </p>
-
-        <div class="orbital-detail" data-orbital-detail aria-live="polite">
-          <article class="orbital-card" data-detail="0">
-            <!-- <div class="orbital-card-media">
-              <img
-                src="./src/assets/images/blitzHomepage.webp"
-                alt="Blitz mobile wallet home screen"
-                loading="lazy"
-              />
-            </div> -->
-            <div class="orbital-card-body">
-              <span class="orbital-card-tag">iOS &amp; Android</span>
-              <h3>Mobile App</h3>
-              <p>
-                Pay contacts for free, gift Bitcoin or stablecoins, pool money
-                with groups, and manage your funds with complete control.
-              </p>
-              <a href="#" class="orbital-card-cta download-btn">
-                Download App <i data-lucide="arrow-right"></i>
-              </a>
-            </div>
-          </article>
-
-          <article class="orbital-card" data-detail="1">
-            <!-- <div class="orbital-card-media">
-              <img
-                src="./src/assets/images/blitzTransactions.webp"
-                alt="Blitz transaction history"
-                loading="lazy"
-              />
-            </div> -->
-            <div class="orbital-card-body">
-              <span class="orbital-card-tag">Browser wallet</span>
-              <h3>Web Wallet</h3>
-              <p>
-                Access the same powerful global payments experience from any
-                browser, with no app install required.
-              </p>
-              <a
-                href="https://wallet.blitzwalletapp.com"
-                class="orbital-card-cta"
-              >
-                Try Web Wallet <i data-lucide="arrow-right"></i>
-              </a>
-            </div>
-          </article>
-
-          <article class="orbital-card" data-detail="2">
-            <!-- <div class="orbital-card-media">
-              <img
-                src="./src/assets/images/posPage.webp"
-                alt="Blitz point of sale screen"
-                loading="lazy"
-              />
-            </div> -->
-            <div class="orbital-card-body">
-              <span class="orbital-card-tag">For merchants</span>
-              <h3>Point of Sale</h3>
-              <p>
-                Accept Bitcoin and stablecoin payments at any business, track
-                tips, and settle instantly.
-              </p>
-              <a href="https://pay.blitzwalletapp.com" class="orbital-card-cta">
-                Get Started <i data-lucide="arrow-right"></i>
-              </a>
-            </div>
-          </article>
-
-          <article class="orbital-card" data-detail="3">
-            <!-- <div class="orbital-card-media">
-              <img
-                src="./src/assets/images/blitzContactPage.webp"
-                alt="Blitz contacts screen"
-                loading="lazy"
-              />
-            </div> -->
-            <div class="orbital-card-body">
-              <span class="orbital-card-tag">Open-source backup</span>
-              <h3>Recovery Platform</h3>
-              <p>
-                Restore your wallet independently through an open-source
-                recovery path that does not depend on Blitz.
-              </p>
-              <a
-                href="https://recover.blitzwalletapp.com"
-                class="orbital-card-cta"
-              >
-                Launch platform <i data-lucide="arrow-right"></i>
-              </a>
-            </div>
-          </article>
-        </div>
+        <article class="product-card fade-in">
+          <div class="product-icon"><i data-lucide="life-buoy"></i></div>
+          <span class="product-tag">Open-source backup</span>
+          <h3>Recovery Platform</h3>
+          <p>
+            Restore your wallet independently through an open-source recovery
+            path that does not depend on Blitz.
+          </p>
+          <a href="https://recover.blitzwalletapp.com" class="product-cta">
+            Launch platform <i data-lucide="arrow-right"></i>
+          </a>
+        </article>
       </div>
     </section>
 
     <!-- CTA Section -->
     <section class="cta-section">
-      <div class="cta-content">
+      <div class="cta-card fade-in">
         <h2>Ready to Send Money Without Borders?</h2>
         <p>
           Join thousands using Blitz to pay anyone, anywhere, instantly and for

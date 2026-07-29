@@ -395,25 +395,9 @@
 }
 
 .btn-primary {
-  min-height: 48px;
-  padding: 0.9rem 1.75rem;
-  border-radius: 8px;
-  font-weight: 500;
-  font-size: 0.98rem;
-  cursor: pointer;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border: 1px solid transparent;
-  background: #fff;
   color: var(--color-ink);
-  transition:
-    transform 260ms ease,
-    background 260ms ease,
-    color 260ms ease,
-    box-shadow 260ms ease;
+  background: #fff;
+  border-radius: 999px;
 }
 
 .btn-primary:hover {

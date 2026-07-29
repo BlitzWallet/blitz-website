@@ -3,7 +3,34 @@
     "(prefers-reduced-motion: reduce)",
   ).matches;
 
-  // Hero rotating word ("Money that moves <globally / instantly / ...>")
+  // Tap-to-start demo overlay: until tapped it covers the iframe, so the
+  // page scrolls over the phone instead of the iframe trapping the gesture.
+  const demoOverlay = document.querySelector(".demo-overlay");
+  if (demoOverlay) {
+    demoOverlay.addEventListener("click", () => {
+      // Defer the ~1MB demo iframe until the user opts in: show a spinner while
+      // it loads, then fade the iframe in. Crawlers never click, so they skip it.
+      const frame = document.querySelector(".hero-demo-frame");
+      const loader = document.querySelector(".demo-loader");
+      const poster = document.querySelector(".demo-poster");
+      if (frame && !frame.src && frame.dataset.src) {
+        if (loader) loader.classList.add("is-loading");
+        frame.addEventListener(
+          "load",
+          () => {
+            frame.classList.add("is-loaded");
+            if (loader) loader.classList.remove("is-loading");
+          },
+          { once: true },
+        );
+        frame.src = frame.dataset.src;
+      }
+      demoOverlay.classList.add("is-dismissed");
+      poster.classList.add("is-dismissed");
+    });
+  }
+
+  // Hero rotating word ("Money without <borders / banks / ...>")
   const heroRotate = document.querySelector(".hero-rotate");
   if (heroRotate) {
     const words = Array.from(heroRotate.querySelectorAll(".hero-rotate-word"));
@@ -36,11 +63,7 @@
     }
   }
 
-  const staggerGroups = [
-    ".features-grid",
-    ".steps-container",
-    ".dashboard-grid",
-  ];
+  const staggerGroups = [".features-grid", ".product-grid"];
 
   staggerGroups.forEach((selector) => {
     document.querySelectorAll(`${selector} .fade-in`).forEach((element, i) => {
@@ -85,150 +108,6 @@
     .querySelectorAll(".fade-in, .reveal-words")
     .forEach((element) => observer.observe(element));
 
-  // Orbital products: nodes orbit the Blitz logo; tapping one pauses the
-  // rotation, pulls that node to the top, and reveals its detail card.
-  const orbital = document.querySelector("[data-orbital]");
-  if (orbital) {
-    const stage = orbital.querySelector("[data-orbital-stage]");
-    const nodes = Array.from(orbital.querySelectorAll("[data-orbital-node]"));
-    const cards = Array.from(orbital.querySelectorAll("[data-detail]"));
-    const line = orbital.querySelector("[data-orbital-line]");
-    const total = nodes.length;
-
-    if (stage && total) {
-      const baseAngles = nodes.map((_, i) => (i / total) * 360);
-      const ROTATION_SPEED = 7; // degrees per second
-      let rotation = 0;
-      let target = null; // tween destination when a node is focused
-      let autoRotate = !reducedMotion;
-      let activeIndex = null;
-      let radius = 0;
-      let running = false;
-      let last = 0;
-
-      function measure() {
-        radius = stage.clientWidth / 2 - nodes[0].offsetWidth / 2 + 25;
-      }
-
-      function place() {
-        nodes.forEach((node, i) => {
-          const deg = baseAngles[i] + rotation - 90;
-          const rad = (deg * Math.PI) / 180;
-          const x = Math.cos(rad) * radius;
-          const y = Math.sin(rad) * radius;
-          node.style.transform = `translate(-50%, -50%) translate(${x.toFixed(
-            1,
-          )}px, ${y.toFixed(1)}px)`;
-          // front (lower) nodes sit above the rest
-          node.style.zIndex = String(
-            10 + Math.round(((y / radius + 1) / 2) * 10),
-          );
-        });
-
-        if (line && activeIndex !== null) {
-          const deg = baseAngles[activeIndex] + rotation - 90;
-          line.style.width = `${radius}px`;
-          line.style.transform = `translate(0, -50%) rotate(${deg}deg)`;
-        }
-      }
-
-      function frame(now) {
-        const dt = Math.min((now - last) / 1000, 0.05);
-        last = now;
-        let busy = false;
-
-        if (autoRotate) {
-          rotation = (rotation + ROTATION_SPEED * dt) % 360;
-          busy = true;
-        } else if (target !== null) {
-          let diff = ((target - rotation + 540) % 360) - 180;
-          if (Math.abs(diff) < 0.2) {
-            rotation = target;
-            target = null;
-          } else {
-            rotation += diff * Math.min(dt * 6, 1);
-            busy = true;
-          }
-        }
-
-        place();
-        if (busy) {
-          requestAnimationFrame(frame);
-        } else {
-          running = false;
-        }
-      }
-
-      function ensureRunning() {
-        if (running) return;
-        running = true;
-        last = performance.now();
-        requestAnimationFrame(frame);
-      }
-
-      function showCard(index) {
-        cards.forEach((card) =>
-          card.classList.toggle(
-            "is-active",
-            Number(card.dataset.detail) === index,
-          ),
-        );
-      }
-
-      function selectNode(index) {
-        if (activeIndex === index) {
-          deselect();
-          return;
-        }
-        activeIndex = index;
-        autoRotate = false;
-        if (!reducedMotion) target = -baseAngles[index];
-        nodes.forEach((node, i) =>
-          node.classList.toggle("is-active", i === index),
-        );
-        orbital.classList.add("has-selection");
-        showCard(index);
-        ensureRunning();
-        place();
-      }
-
-      function deselect() {
-        console.log("desected", activeIndex);
-        if (activeIndex === null) return;
-        activeIndex = null;
-        target = null;
-        autoRotate = !reducedMotion;
-        nodes.forEach((node) => node.classList.remove("is-active"));
-        cards.forEach((card) =>
-          card.classList.toggle(
-            "is-active",
-            Number(card.dataset.detail) === activeIndex,
-          ),
-        );
-        orbital.classList.remove("has-selection");
-        ensureRunning();
-      }
-
-      nodes.forEach((node, i) => {
-        node.addEventListener("click", () => selectNode(i));
-      });
-
-      // Clicking empty stage space (or the core) resumes the orbit.
-      stage.addEventListener("click", (event) => {
-        if (event.target === stage) deselect();
-      });
-
-      measure();
-      place();
-      window.addEventListener("resize", () => {
-        measure();
-        place();
-      });
-
-      if (autoRotate) ensureRunning();
-    }
-  }
-
   if (reducedMotion) return;
 
   const phoneScroll = document.querySelector("[data-phone-scroll]");
@@ -243,8 +122,22 @@
       const rect = phoneScroll.getBoundingClientRect();
       const travelDistance = Math.max(rect.height - window.innerHeight, 1);
       const progress = clamp(-rect.top / travelDistance, 0, 1);
+
+      // Shrink the phone at the end of the scroll so the whole device fits
+      // the viewport height. The phone is bottom-anchored (transform-origin:
+      // bottom center), so subtracting a margin for the fixed navbar + gap
+      // keeps the top clear on any screen height. offsetHeight ignores
+      // transform:scale, so it's a stable base; recomputes on scroll AND
+      // resize (handles orientation changes).
+      const shell = phoneScroll.querySelector(".scroll-phone-shell");
+      const phoneHeight = shell ? shell.offsetHeight : window.innerHeight;
+      const FIT_MARGIN = 170; // navbar height + breathing room top & bottom
       const startScale = 1;
-      const endScale = 0.9;
+      const endScale = clamp(
+        (window.innerHeight - FIT_MARGIN) / phoneHeight,
+        0.75,
+        0.95,
+      );
       const scale = startScale + (endScale - startScale) * progress;
 
       phoneScroll.style.setProperty("--phone-scale", scale.toFixed(3));
