@@ -112,6 +112,12 @@ export async function handler(event, context) {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
+      // Serve the pool HTML shell from Netlify's durable cache so repeat hits
+      // (link unfurls, monitors, revisits) don't re-invoke this function. Live
+      // amount + closed status come from the client's /getPoolData fetch below,
+      // so a long TTL is safe. Deploys auto-invalidate the cache.
+      "Netlify-CDN-Cache-Control":
+        "public, durable, max-age=3600, stale-while-revalidate=86400",
     },
     body: html,
   };
@@ -1541,10 +1547,10 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       }
 
       async function fetchPoolData() {
-        if (POOL_DATA) {
-          applyPoolData(POOL_DATA);
-          return { data: POOL_DATA, error: null, notFound: false };
-        }
+        // Always fetch fresh pool data so a cached HTML shell still shows the
+        // live amount + closed status. /getPoolData is a proxy route (does not
+        // count as a function invocation). Inlined POOL_DATA is the fallback,
+        // applied by the init flow when this fetch fails/times out.
         try {
           const response = await fetch('/getPoolData', {
             method: 'POST',

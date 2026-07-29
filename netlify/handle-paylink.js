@@ -109,6 +109,8 @@ export async function handler(event, context) {
     statusCode: 200,
     headers: {
       "Content-Type": "text/html",
+      "Netlify-CDN-Cache-Control":
+        "public, durable, max-age=3600, stale-while-revalidate=86400",
     },
     body: html,
   };
