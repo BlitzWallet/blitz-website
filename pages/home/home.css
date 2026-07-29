@@ -247,6 +247,49 @@
   border: 0;
   border-radius: 34px;
   background: #ebebeb;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.demo-poster {
+  position: absolute;
+  inset: 0.65rem;
+  z-index: 0;
+  width: calc(100% - 1.3rem);
+  height: calc(100% - 1.3rem);
+  border-radius: 34px;
+  object-fit: cover;
+  object-position: top center;
+  pointer-events: none;
+}
+
+.demo-poster.is-dismissed {
+  display: none;
+}
+
+.hero-demo-frame.is-loaded {
+  opacity: 1;
+}
+
+/* Spinner shown over the phone screen while the demo iframe loads */
+.demo-loader {
+  position: absolute;
+  inset: 0.65rem;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  border-radius: 34px;
+  background: #ebebeb;
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.3s ease,
+    visibility 0.3s ease;
+}
+
+.demo-loader.is-loading {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* Tap-to-start overlay covering the demo iframe */
@@ -1261,6 +1304,11 @@
 
   .hero-scroll-container {
     padding: 8rem 1rem 4rem;
+  }
+  .hero-demo-frame,
+  .demo-poster,
+  .phone-glare {
+    border-radius: 28px;
   }
 
   .hero-content span {

@@ -8,7 +8,25 @@
   const demoOverlay = document.querySelector(".demo-overlay");
   if (demoOverlay) {
     demoOverlay.addEventListener("click", () => {
+      // Defer the ~1MB demo iframe until the user opts in: show a spinner while
+      // it loads, then fade the iframe in. Crawlers never click, so they skip it.
+      const frame = document.querySelector(".hero-demo-frame");
+      const loader = document.querySelector(".demo-loader");
+      const poster = document.querySelector(".demo-poster");
+      if (frame && !frame.src && frame.dataset.src) {
+        if (loader) loader.classList.add("is-loading");
+        frame.addEventListener(
+          "load",
+          () => {
+            frame.classList.add("is-loaded");
+            if (loader) loader.classList.remove("is-loading");
+          },
+          { once: true },
+        );
+        frame.src = frame.dataset.src;
+      }
       demoOverlay.classList.add("is-dismissed");
+      poster.classList.add("is-dismissed");
     });
   }
 
@@ -117,7 +135,7 @@
       const startScale = 1;
       const endScale = clamp(
         (window.innerHeight - FIT_MARGIN) / phoneHeight,
-        0.45,
+        0.75,
         0.95,
       );
       const scale = startScale + (endScale - startScale) * progress;
