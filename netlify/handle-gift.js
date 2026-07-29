@@ -835,9 +835,6 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
       // ── initial render ─────────────────────────────────────────────────
       async function fetchCurrentGiftData() {
         try {
-          if (GIFT_DATA) {
-             return { data: GIFT_DATA, notFound: false };
-          }
           const res = await fetch("/getBitcoinGiftDetails", {
             method: "POST",
             headers: { 'Content-Type': 'application/json' },

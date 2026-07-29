@@ -1983,9 +1983,6 @@ function generateHTML({
       // ── initial render ─────────────────────────────────────────────────
       async function fetchCurrentPaylinkData() {
         try {
-          if (currentPaylinkData) {
-             return { data: currentPaylinkData, notFound: false };
-          }
           const res = await fetch('/getPaylinkData', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
