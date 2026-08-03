@@ -94,7 +94,9 @@
   <body>
     <nav>
       <div class="nav-container">
-        <a href="/" class="logo"><img src="/favicon.png" alt="Blitz Wallet logo" /></a>
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
         <ul class="nav-links">
           <li><a href="/#products">Products</a></li>
           <li><a href="/#features">Features</a></li>
@@ -117,7 +119,7 @@
       <div class="contentSection">
         <h2>1. Introduction and Data Controller</h2>
         <p class="mb_p">
-          <strong>Last Updated: February 26, 2026</strong>
+          <strong>Last Updated: August 3, 2026</strong>
         </p>
         <p class="mb_p">
           This Privacy Policy explains how Blitz Wallet handles data in both the
@@ -126,7 +128,7 @@
           clear whether it applies to the App, the Website, or both.
         </p>
         <p class="mb_p">
-          <strong>Data Controller:</strong> Blitz Wallet LLC, 230 W Maple Road,
+          <strong>Data Controller:</strong> Blitz Wallet Inc, 230 W Maple Road,
           Troy, MI 48084, United States.<br />
           <strong>Privacy Contact:</strong>
           <a href="mailto:support@blitzwalletapp.com"
@@ -134,7 +136,7 @@
           >
         </p>
         <p>
-          Blitz Wallet LLC is the data controller responsible for personal
+          Blitz Wallet Inc is the data controller responsible for personal
           information collected through the App and Website as described in this
           Privacy Policy. The App is provided as a free service and is intended
           for use as is.
@@ -181,6 +183,36 @@
             use cookies.
           </li>
         </ul>
+
+        <h3>Where Your Data Is Stored</h3>
+        <p class="mb_p">
+          Data described in this section is stored in Google Firebase (Cloud
+          Firestore), hosted in the United States. Firebase is operated by
+          Google LLC as a sub-processor on our behalf. To be transparent about
+          what this means for you, the data we store falls into two categories:
+        </p>
+        <ul class="mb_p">
+          <li>
+            <strong>Encrypted with your key (Blitz cannot read):</strong> saved
+            contacts, Blitz Store purchases (gift cards, VPN configurations,
+            messages), POS payments, Child linking, and Blitz Contact Payments
+            are encrypted on your device with your private key before being
+            stored. Blitz cannot read this data.
+          </li>
+          <li>
+            <strong>Public (any authenticated Blitz user can read):</strong>
+            your public contact profile — bio, name, Spark address, Spark
+            identity public key, username, UUID,Blitz Gift details, and
+            Point-of-Sale store metadata, and any profile image — is stored
+            unencrypted so that other users can look you up and pay you. Do not
+            put sensitive information in these fields.
+          </li>
+        </ul>
+        <p class="mb_p">
+          Because Blitz Wallet is non-custodial, none of the data above includes
+          your seed phrase or private keys, which never leave your device (see
+          Section 7).
+        </p>
 
         <h3>Information You Store in the App</h3>
         <p class="mb_p">
@@ -250,7 +282,7 @@
             can disable Crashlytics at any time in the App settings.
           </li>
           <li>
-            <strong>Paymeent Pools:</strong> Any payment pool created will be
+            <strong>Payment Pools:</strong> Any payment pool created will be
             stored in Blitz's database. This included closedAt, contributor
             count, created at, creator name, creator UUID, current pool amount,
             pool derive index, pool goal amount, pools identity pubkey, last
@@ -261,8 +293,15 @@
             <strong>Blitz Gifts:</strong> Any gifts you create are stored in
             Blitz's database. This includes the gift amount, created by, created
             time, denomination, description, amount, expiry time, gift number,
-            gift identity pubkey, last updated, sat display, sttae, and gift
+            gift identity pubkey, last updated, sat display, state, and gift
             uuid.
+          </li>
+          <li>
+            <strong>Accounts indexs:</strong> To enable recovery of subaccounts
+            created in the app, we store each subaccount's derivation index.
+            During wallet recovery, these indexes allow the app to restore your
+            subaccounts without storing or transmitting any private account
+            information.
           </li>
         </ul>
 
@@ -289,6 +328,14 @@
             deleted from the database and saved locally on your device. This
             temporary storage is necessary to include payment descriptions.
           </li>
+          <li>
+            <strong>Linked account pairing:</strong> To facilitate the ECDH key
+            exchange for linked accounts, temporary session data is stored in
+            Firebase. This data is deleted when the linking session is completed
+            by the users. If the session is not completed or the data is not
+            manually removed, it is automatically deleted within 24 hours of the
+            session being created.
+          </li>
         </ul>
 
         <h3>Blockchain and On-Chain Data</h3>
@@ -299,7 +346,7 @@
           blockchain, the Spark Network, and other networks you use. This data
           is immutable — it cannot be deleted or modified by Blitz Wallet or
           anyone else, including in response to deletion requests under
-          applicable privacy law (see Section 8).
+          applicable privacy law (see Section 10).
         </p>
         <p>
           Public blockchain data may be analyzed by third-party blockchain
@@ -391,14 +438,35 @@
             >)
           </li>
           <li>
-            <strong>Flashnet (Flashnets Markets, Inc.)</strong> – Required for
-            handling swaps between Bitcoin and USDB and for the USDB Savings
-            Feature yield operations. Flashnet is a Republic of Panama
-            corporation; data may be processed outside the US and EU. Flashnet
-            may collect blockchain transaction metadata, wallet identifiers, and
-            usage analytics in connection with swaps and savings operations
-            executed through our App. Flashnet is an independent data controller
-            responsible for its own compliance obligations. (
+            <strong>Circle Internet Financial</strong> – Issuer of the USDC
+            stablecoin available through the App. Circle is an independent
+            issuer with its own privacy practices governing the issuance and
+            management of USDC. (
+            <a
+              href="https://www.circle.com/legal/privacy-policy"
+              target="_blank"
+              >Privacy Policy</a
+            >)
+          </li>
+          <li>
+            <strong>Tether</strong> – Issuer of the USDT stablecoin available
+            through the App. Tether is an independent issuer with its own
+            privacy practices governing the issuance and management of USDT. (
+            <a href="https://tether.to/en/legal" target="_blank"
+              >Privacy Policy</a
+            >)
+          </li>
+          <li>
+            <strong>Flashnet (Flashnets Markets, Inc.)</strong> (
+            <a href="https://www.flashnet.xyz/" target="_blank">flashnet.xyz</a
+            >) – Required for handling swaps between Bitcoin and supported
+            stablecoins (USDB, USDC, and USDT) and for the Savings Feature yield
+            operations. Flashnet is a Republic of Panama corporation; data may
+            be processed outside the US and EU. Flashnet may collect blockchain
+            transaction metadata, wallet identifiers, and usage analytics in
+            connection with swaps and savings operations executed through our
+            App. Flashnet is an independent data controller responsible for its
+            own compliance obligations. (
             <a href="https://www.flashnet.xyz/privacy-policy" target="_blank"
               >Privacy Policy</a
             >)
@@ -437,8 +505,8 @@
             >)
           </li>
           <li>
-            <strong>The Bitcoin Company</strong> – To purchase gift cards. (
-            <a href="https://thebitcoincompany.com/privacy.html" target="_blank"
+            <strong>Bitrefill</strong> – To purchase gift cards. (
+            <a href="https://www.bitrefill.com/privacy/" target="_blank"
               >Privacy Policy</a
             >)
           </li>
@@ -524,8 +592,12 @@
             (typically minutes to hours).
           </li>
           <li>
-            <strong>Blitz Contact Payments and POS Payments:</strong>
-            Automatically deleted after 7 days.
+            <strong>Blitz Contact Payments:</strong> Automatically deleted after
+            7 days.
+          </li>
+          <li>
+            <strong>Point-of-Sale Payments:</strong> Automatically deleted after
+            30 days.
           </li>
           <li>
             <strong>Blockchain and on-chain data:</strong> Permanently public.
@@ -548,6 +620,13 @@
           securing and backing up your seed phrase offline.
         </p>
         <p class="mb_p">
+          Blitz never controls or has access to your funds. Wallet creation
+          happens locally on your device and does not create an account with us;
+          we cannot move, freeze, or recover your funds. Blitz Wallet provides
+          software that lets you interact directly with public networks, it does
+          not custody your assets or transmit funds on your behalf.
+        </p>
+        <p class="mb_p">
           Because your seed phrase is stored on a device connected to the
           internet, Blitz is considered a <strong>hot wallet</strong> and cannot
           be guaranteed to be 100% secure.
@@ -555,16 +634,16 @@
 
         <h3>On-Chain Data Is Permanent and Public</h3>
         <p class="mb_p">
-          Transactions made through the Bitcoin, or Spark networks are
-          permanently and publicly recorded on their respective blockchains.
-          This means:
+          Transactions made through the Bitcoin, Liquid, Rootstock, or Spark
+          networks are permanently and publicly recorded on their respective
+          blockchains. This means:
         </p>
         <ul class="mb_p">
           <li>
             <strong>Immutability:</strong> On-chain transaction data cannot be
             deleted, modified, or removed by Blitz Wallet or anyone else — ever.
             This is a technical limitation that applies even in response to
-            legally valid deletion requests under GDPR or CCPA. See Section 8
+            legally valid deletion requests under GDPR or CCPA. See Section 10
             for how this affects your privacy rights.
           </li>
           <li>
@@ -799,7 +878,7 @@
         <p>
           To submit a CCPA request, contact us at
           <a href="mailto:support@blitzwalletapp.com"
-            >blake@blitzwalletapp.com</a
+            >support@blitzwalletapp.com</a
           >
           or via our <a href="/pages/contact/">contact page</a>.
         </p>
@@ -866,7 +945,7 @@
       <div class="contentSection">
         <h2>12. International Data Transfers</h2>
         <p class="mb_p">
-          Blitz Wallet LLC is based in the United States. If you are located
+          Blitz Wallet Inc is based in the United States. If you are located
           outside the United States, your personal information may be
           transferred to and processed in the United States, where data
           protection laws may differ from those in your jurisdiction.
@@ -911,7 +990,7 @@
             <a href="/pages/contact/">blitzwalletapp.com/pages/contact/</a>
           </li>
           <li>
-            <strong>Mail:</strong> Blitz Wallet LLC, 230 W Maple Road, Troy, MI
+            <strong>Mail:</strong> Blitz Wallet Inc, 230 W Maple Road, Troy, MI
             48084, United States
           </li>
         </ul>
@@ -955,7 +1034,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+        <p>&copy; 2026 Blitz Wallet Inc. All rights reserved.</p>
       </div>
     </footer>
 

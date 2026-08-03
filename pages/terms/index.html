@@ -88,7 +88,9 @@
   <body>
     <nav>
       <div class="nav-container">
-        <a href="/" class="logo"><img src="/favicon.png" alt="Blitz Wallet logo" /></a>
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
         <ul class="nav-links">
           <li><a href="/#products">Products</a></li>
           <li><a href="/#features">Features</a></li>
@@ -108,13 +110,56 @@
     <section class="policyContent">
       <h1 class="header">Terms of Usage</h1>
 
-      <p class="lastUpdatedDate">Last Updated: <time>Feb 26, 2026</time></p>
+      <p class="lastUpdatedDate">Last Updated: <time>Aug 3, 2026</time></p>
+
+      <div class="contentSection">
+        <h2>Key Risks — Please Read First</h2>
+        <p class="mb_p">
+          Blitz Wallet is self-custodial, non-custodial software. Before you use
+          it, understand the following. These points are summarized here and
+          explained in full in the sections below.
+        </p>
+        <ul class="mb_p">
+          <li>
+            <strong>Only you control your funds.</strong> Blitz Wallet cannot
+            move, freeze, recover, or access your funds, and cannot restore a
+            lost recovery phrase. If you lose your recovery phrase, your funds
+            are gone permanently.
+          </li>
+          <li>
+            <strong>Blitz is a "hot wallet."</strong> Your recovery phrase is
+            stored on your device. If your device is lost, stolen, or infected
+            with malware, your funds can be taken and Blitz cannot stop it (see
+            Section 8).
+          </li>
+          <li>
+            <strong>Your seed is briefly transmitted in-memory</strong> to a
+            sandboxed component to run the wallet (see Section 12).
+          </li>
+          <li>
+            <strong>On-chain data is permanent and public</strong> and cannot be
+            deleted by anyone.
+          </li>
+          <li>
+            <strong>The Spark network is in beta;</strong> stablecoins may lose
+            their peg; swaps carry slippage and failure risk.
+          </li>
+          <li>
+            <strong>Store purchases are non-refundable</strong> and third-party
+            services are used entirely at your own risk.
+          </li>
+          <li>
+            <strong>Blitz is not a bank, custodian, or exchange.</strong>
+            It is software that lets you use public networks directly.
+          </li>
+        </ul>
+      </div>
 
       <div id="intro_accept" class="contentSection">
         <h2>1. Introduction and Acceptance</h2>
         <p class="mb_p">
           These Terms of Use ("Terms") constitute a legally binding agreement
-          between you ("you," "your," or "User") and Blitz Wallet LLC ("Blitz
+          between you ("you," "your," or "User") and Blitz Wallet Inc ("Blitz
           Wallet," "we," "us," or "our"), governing your access to and use of
           the Blitz Wallet application (the "App").
         </p>
@@ -141,8 +186,9 @@
             available at https://brale.xyz/legal/terms.
           </li>
           <li>
-            "Digital Assets" means Bitcoin, Spark tokens, and any other
-            cryptocurrency or digital tokens supported by the App.
+            "Digital Assets" means Bitcoin, Spark tokens, Supported Stablecoins
+            (USDB, USDC, USDT), and any other cryptocurrency or digital tokens
+            supported by the App.
           </li>
           <li>
             "Flashnet" or "Flashnet Services" means the third-party
@@ -173,13 +219,26 @@
             Spark Network.
           </li>
           <li>
-            "USDB Swap" means the conversion between Bitcoin (BTC) and USDB
-            facilitated through the Flashnet Protocol on the Spark Network.
+            "Supported Stablecoins" means the USD-backed stablecoins accessible
+            through the App, currently USDB (issued by Brale, Inc.), USDC
+            (issued by Circle), and USDT (issued by Tether). Each stablecoin is
+            issued and managed by an independent third party subject to its own
+            terms and risks.
+          </li>
+          <li>
+            "Stablecoin Swap" means the conversion between Bitcoin (BTC) and a
+            Supported Stablecoin, or between Supported Stablecoins, facilitated
+            through the Flashnet Protocol on the Spark Network.
           </li>
           <li>
             "Wallet Credentials" means your private keys, recovery phrases, PIN
             codes, passwords, and other authentication information required to
             access your wallet.
+          </li>
+          <li>
+            "Processing System" means the secure processing architecture Blitz
+            Wallet uses to handle wallet and payment operations, as described in
+            Section 12.
           </li>
           <li>
             "WebView Component" means the sandboxed JavaScript execution
@@ -203,11 +262,11 @@
           <li>
             Hold USDB stablecoin and earn yield through the Savings Feature
           </li>
-          <li>Swap between BTC and USDB through the Flashnet Protocol</li>
           <li>
-            Make in-app purchases for certain services Send and receive digital
-            gift cards through third-party providers
+            Swap between BTC and supported stablecoins (USDB, USDC, USDT), or
+            between supported stablecoins, through the Flashnet Protocol
           </li>
+          <li>Make in-app purchases for certain services</li>
           <li>
             Send and receive digital gift cards through third-party providers
           </li>
@@ -248,15 +307,41 @@
       </div>
       <div id="self_custodial_resp" class="contentSection">
         <h2>5. Self-Custodial Wallet and User Responsibilities</h2>
+        <p class="mb_p">
+          Blitz Wallet is non-custodial software. Blitz Wallet Inc does not
+          hold, custody, control, or have access to your funds, private keys, or
+          recovery phrase at any time, and cannot move, freeze, seize, or
+          recover your funds.
+        </p>
+        <p class="mb_p">
+          Creating a wallet does not create an account with Blitz Wallet.
+          Wallets are generated locally on your device from a seed phrase that
+          only you control. No approval, registration, or identity verification
+          by Blitz Wallet is required or possible.
+        </p>
+        <p class="mb_p">
+          Blitz Wallet does not transmit money or digital assets on your behalf,
+          does not act as an intermediary or counterparty to your transactions,
+          and does not operate the Bitcoin, Lightning, Spark, Liquid, or other
+          public networks. The App is software that enables you to interact
+          directly with these public, permissionless networks and with
+          independent third-party service providers. All transactions are
+          initiated, authorized, and broadcast solely by you.
+        </p>
+        <p class="mb_p">
+          <strong
+            >Blitz Wallet is not a bank, custodian, exchange, or broker and does
+            not provide any of those services.</strong
+          >
+        </p>
         <h3>5.1 Self-Custodial Nature</h3>
         <p class="mb_p">The App is self-custodial, meaning:</p>
         <ul>
           <li>
             You retain exclusive control of your Wallet Credentials and Digital
+            Assets
           </li>
-          <li>
-            Assets Blitz Wallet does not have access to your Wallet Credentials
-          </li>
+          <li>Blitz Wallet does not have access to your Wallet Credentials</li>
           <li>
             Blitz Wallet cannot recover lost Wallet Credentials or restore
             access to your funds
@@ -304,6 +389,31 @@
           By using this App, you acknowledge and accept full responsibility for
           this risk.
         </p>
+        <h3>5.4 Recovering Your Funds Without Blitz</h3>
+        <p class="mb_p">
+          Because your funds are controlled solely by your recovery phrase, they
+          do not depend on Blitz Wallet, the Blitz app, or Blitz servers
+          continuing to exist. Your recovery phrase can be imported into other
+          compatible wallets to access and move your funds independently of
+          Blitz Wallet. Blitz Wallet is open-source software (Apache 2.0), so
+          the client can be independently reviewed and built.
+        </p>
+        <h3>5.5 If Blitz Wallet Becomes Unavailable</h3>
+        <p class="mb_p">
+          If Blitz Wallet ever discontinues the App or its services, your funds
+          remain yours and under your control, provided you have securely backed
+          up your recovery phrase. To retain access, back up your recovery
+          phrase and, if needed, restore it in another compatible wallet. For
+          funds held on the Spark network, you may perform a unilateral exit to
+          recover funds without relying on Blitz or Spark operators (see
+          <a
+            href="https://docs.spark.money/wallet/developer-guide/unilateral-exit"
+            target="_blank"
+            >Spark's unilateral exit guide</a
+          >). Blitz servers provide optional conveniences such as profile sync,
+          notifications, and store purchases; they are never required to control
+          or recover your Bitcoin.
+        </p>
       </div>
 
       <div class="contentSection">
@@ -313,6 +423,10 @@
         <ul>
           <li>Bitcoin (BTC)</li>
           <li>Spark tokens</li>
+          <li>
+            USDB, USDC, and USDT (USD-backed stablecoins, each issued by an
+            independent third party)
+          </li>
         </ul>
         <h3>6.2 Unsupported Assets</h3>
         <p class="mb_p">
@@ -362,7 +476,6 @@
             (d) No FDIC/SIPC Coverage. USDB and any associated yield are not
             insured by the FDIC, SIPC, or any government agency.
           </li>
-          +
           <li>
             (e) Stablecoin Risks. USDB is designed to maintain parity with the
             US Dollar, but you acknowledge that stablecoins may lose their peg,
@@ -383,20 +496,21 @@
             jurisdiction.
           </li>
         </ul>
-        <h3>6.5 USDB and Bitcoin Swap Services</h3>
+        <h3>6.5 Bitcoin and Stablecoin Swap Services</h3>
         <p class="mb_p">
-          The App may enable you to swap between Bitcoin (BTC) and USDB through
-          the Flashnet Protocol, operated by Flashnets Markets, Inc.
+          The App may enable you to swap between Bitcoin (BTC) and supported
+          stablecoins (USDB, USDC, and USDT), or between supported stablecoins,
+          through the Flashnet Protocol, operated by Flashnets Markets, Inc.
           ("Flashnet"). By using the swap functionality, you acknowledge and
           agree that:
         </p>
         <ul>
           <li>
-            (a) Facilitated by Flashnet. All USDB ↔ BTC swaps are executed
-            through the Flashnet Protocol on the Spark Network. Blitz Wallet
-            does not operate or control the swap mechanism and is not a
-            counterparty to any swap transaction. Your use of the swap
-            functionality is subject to Flashnet's Terms of Service at
+            (a) Facilitated by Flashnet. All swaps are executed through the
+            Flashnet Protocol on the Spark Network. Blitz Wallet does not
+            operate or control the swap mechanism and is not a counterparty to
+            any swap transaction. Your use of the swap functionality is subject
+            to Flashnet's Terms of Service at
             https://www.flashnet.xyz/terms-of-service.
           </li>
           <li>
@@ -417,8 +531,8 @@
             (d) Transaction Finality. Completed swaps are irreversible. Once a
             swap transaction is submitted to the Spark Network, Blitz Wallet
             cannot cancel, reverse, or modify it. You are solely responsible for
-            verifying all swap details — including amounts, direction (BTC to
-            USDB or USDB to BTC), and destination — before confirming.
+            verifying all swap details — including amounts, direction, the
+            specific assets involved, and destination — before confirming.
           </li>
           <li>
             (e) Fees. Swaps may be subject to fees charged by Flashnet, the
@@ -440,10 +554,11 @@
             fund recovery in the event of a protocol-level failure.
           </li>
           <li>
-            (h) Tax Responsibility. Swapping between BTC and USDB may constitute
-            a taxable event in your jurisdiction. You are solely responsible for
-            determining and fulfilling any applicable tax obligations arising
-            from swap transactions.
+            (h) Tax Responsibility. Swapping between BTC and a stablecoin, or
+            between stablecoins, may constitute a taxable event in your
+            jurisdiction. You are solely responsible for determining and
+            fulfilling any applicable tax obligations arising from swap
+            transactions.
           </li>
         </ul>
       </div>
@@ -499,13 +614,16 @@
           <li>Transaction fees may fluctuate significantly</li>
           <li>You may lose some or all of your investment</li>
           <li>
-            USDB and savings yield are not guaranteed; stablecoin de-pegging or
-            issuer failure may result in partial or total loss of value.
+            Supported stablecoins (USDB, USDC, USDT) and any savings yield are
+            not guaranteed. Each stablecoin has a separate third-party issuer;
+            de-pegging, loss of liquidity, or issuer failure may result in
+            partial or total loss of value.
           </li>
           <li>
-            Swap transactions between BTC and USDB may execute at rates
-            materially different from quoted prices; slippage, fees, and failed
-            transactions may result in loss of value.
+            Swap transactions between BTC and a stablecoin, or between
+            stablecoins, may execute at rates materially different from quoted
+            prices; slippage, fees, and failed transactions may result in loss
+            of value.
           </li>
         </ul>
         <p class="mb_p">Technical Risks:</p>
@@ -577,10 +695,10 @@
           be subject to delays, errors, or failures outside Blitz Wallet’s
           control. You understand and accept these risks, including potential
           loss of funds and network-level risks associated with blockchain
-          operations. This includes USDB ↔ BTC swaps facilitated through the
-          Flashnet Protocol, which are subject to Flashnet's terms, smart
-          contract risk, liquidity risk, and Spark Network settlement conditions
-          beyond Blitz Wallet's control.
+          operations. This includes BTC ↔ stablecoin (USDB, USDC, USDT) swaps
+          facilitated through the Flashnet Protocol, which are subject to
+          Flashnet's terms, smart contract risk, liquidity risk, and Spark
+          Network settlement conditions beyond Blitz Wallet's control.
         </p>
         <h3>8.4 No Investment Advice</h3>
         <p class="mb_p">
@@ -621,19 +739,59 @@
           <li>The App is free from viruses or harmful components</li>
           <li>Results obtained from the App will be accurate or reliable</li>
         </ul>
+        <h3>8.6 Hot Wallet and Device-Compromise Risk</h3>
+        <p class="mb_p">
+          Blitz Wallet is a "hot wallet": your recovery phrase (seed) is stored
+          on your mobile device using the device's secure storage (iOS Keychain
+          / Android Keystore via expo-secure-store).
+        </p>
+        <p class="mb_p">
+          App-level authentication (PIN or biometric) is
+          <strong>optional</strong>, and once the App is open it does not
+          require additional authentication to send funds or to display your
+          recovery phrase. As a result, any person or software with access to
+          your unlocked device may be able to view your recovery phrase and
+          irreversibly transfer your funds, including through:
+        </p>
+        <ul>
+          <li>Theft, loss, or unauthorized physical access to your device</li>
+          <li>Malware, spyware, or remote compromise of your device</li>
+          <li>
+            Inspection of device memory (the seed is held in the App's memory
+            while running)
+          </li>
+          <li>A device backup that contains your seed (see below)</li>
+        </ul>
+        <p class="mb_p">
+          <strong>Device backups:</strong> On Android, the seed is stored
+          on-device only and is never included in any backup. On iOS, current
+          versions of the App exclude the seed from iCloud backups; however, if
+          your device backups were configured before this change, an existing
+          iCloud backup may still contain your seed. If you may be affected,
+          consider moving your funds to a newly generated wallet.
+        </p>
+        <p class="mb_p">
+          Blitz Wallet cannot detect, prevent, reverse, or recover from any such
+          compromise.
+          <strong
+            >We strongly recommend enabling PIN or biometric protection, keeping
+            your device secure and updated, and using a dedicated cold-storage
+            or hardware wallet for large or long-term holdings.</strong
+          >
+        </p>
       </div>
 
       <div class="contentSection">
         <h2>9. Third-Party Services and Integrations</h2>
         <h3>9.1 Third-Party Services</h3>
         <p class="mb_p">
-          The App may integrate with third-party providers such to facilitate
-          certain functionality. Blitz Wallet does not control the performance,
-          security, availability, or data practices of these services. Your
-          access and use of such third-party functionality is also subject to
-          the terms and privacy policies of those providers. Blitz Wallet
-          disclaims liability for losses, errors, or interruptions caused by
-          third-party services:
+          The App may integrate with third-party providers such as those below
+          to facilitate certain functionality. Blitz Wallet does not control the
+          performance, security, availability, or data practices of these
+          services. Your access and use of such third-party functionality is
+          also subject to the terms and privacy policies of those providers.
+          Blitz Wallet disclaims liability for losses, errors, or interruptions
+          caused by third-party services:
         </p>
         <ul>
           <li>Lightning Network nodes and channels</li>
@@ -694,8 +852,8 @@
         <ul>
           <li>Credits for third-party chat applications</li>
           <li>VPN configuration files</li>
-          <li>Annonomous sms sending</li>
-          <li>Receving SMS codes</li>
+          <li>Anonymous SMS sending</li>
+          <li>Receiving SMS codes</li>
           <li>Gift Cards</li>
           <li>Other digital services or features</li>
         </ul>
@@ -966,8 +1124,8 @@
       </div>
 
       <div class="contentSection">
-        <h2>15. Sanctions, Geographic Restrictions, and AML Compliance</h2>
-        <h3>15.1 Compliance with Laws</h3>
+        <h2>14. Sanctions, Geographic Restrictions, and AML Compliance</h2>
+        <h3>14.1 Compliance with Laws</h3>
         <p class="mb_p">You agree to:</p>
         <ul>
           <li>
@@ -982,7 +1140,7 @@
             Obtain any licenses or registrations required in your jurisdiction
           </li>
         </ul>
-        <h3>15.2 Prohibited Activities</h3>
+        <h3>14.2 Prohibited Activities</h3>
         <p class="mb_p">You agree NOT to:</p>
         <ul>
           <li>
@@ -1003,7 +1161,7 @@
           </li>
         </ul>
 
-        <h3>15.3 Prohibited Jurisdictions</h3>
+        <h3>14.3 Prohibited Jurisdictions</h3>
         <p class="mb_p">
           The App is not available to residents, nationals, or agents of
           countries or regions subject to comprehensive sanctions by the United
@@ -1016,7 +1174,7 @@
           Restricted Territory.
         </p>
 
-        <h3>15.4 Sanctions Compliance</h3>
+        <h3>14.4 Sanctions Compliance</h3>
         <p class="mb_p">You represent and warrant that you are not:</p>
         <ul>
           <li>
@@ -1033,14 +1191,14 @@
           </li>
         </ul>
 
-        <h3>15.5 Prohibited Jurisdictions</h3>
+        <h3>14.5 AML Compliance</h3>
         <p class="mb_p">
           You agree to use the App only for lawful purposes and in compliance
           with all applicable anti-money laundering (AML), counter-terrorism
           financing (CTF), and know-your-customer (KYC) laws and regulations.
         </p>
 
-        <h3>15. Consequences of Violations</h3>
+        <h3>14.6 Consequences of Violations</h3>
         <p class="mb_p">Violations of these obligations may result in:</p>
         <ul>
           <li>Immediate termination of your access to the App</li>
@@ -1050,7 +1208,7 @@
       </div>
 
       <div class="contentSection">
-        <h2>16. Indemnification</h2>
+        <h2>15. Indemnification</h2>
         <p class="mb_p">
           You agree to indemnify, defend, and hold harmless Blitz Wallet, its
           affiliates, officers, directors, employees, agents, licensors, and
@@ -1073,8 +1231,8 @@
       </div>
 
       <div class="contentSection">
-        <h2>17. Limitation of Liability</h2>
-        <h3><strong>17.1 Types of Damages Excluded</strong></h3>
+        <h2>16. Limitation of Liability</h2>
+        <h3><strong>16.1 Types of Damages Excluded</strong></h3>
         <p class="mb_p">
           <strong
             >TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, BLITZ WALLET,
@@ -1096,8 +1254,8 @@
           <li>Device damage or malfunction</li>
           <li>Data breaches or unauthorized access</li>
           <li>System failures or downtime</li>
-          <li>Losses from Stablecoi de-pegging</li>
-          <li>Yeild rate changes</li>
+          <li>Losses from stablecoin de-pegging</li>
+          <li>Yield rate changes</li>
           <li>Brale/Flashnet service failures</li>
           <li>Any other intangible losses</li>
         </ul>
@@ -1105,7 +1263,7 @@
           Even if Blitz Wallet has been advised of the possibility of such
           damages.
         </p>
-        <h3>17.2 Specific Excluded Liabilities</h3>
+        <h3>16.2 Specific Excluded Liabilities</h3>
         <p class="mb_p">
           Blitz Wallet is not liable for losses resulting from:
         </p>
@@ -1139,7 +1297,7 @@
           </ul>
           <li>Any other events beyond our reasonable control</li>
         </ul>
-        <h3>17.3 Maximum Liability Cap</h3>
+        <h3>16.3 Maximum Liability Cap</h3>
         <p class="mb_p">
           <strong
             >IN NO EVENT SHALL BLITZ WALLET'S TOTAL AGGREGATE LIABILITY TO YOU
@@ -1156,13 +1314,13 @@
         <p class="mb_p">
           <strong>(B) ONE HUNDRED DOLLARS ($100 USD) </strong>
         </p>
-        <h3>17.4 Jurisdictional Limitations</h3>
+        <h3>16.4 Jurisdictional Limitations</h3>
         <p class="mb_p">
           Some jurisdictions do not allow the exclusion or limitation of certain
           warranties or liabilities. In such jurisdictions, our liability will
           be limited to the maximum extent permitted by law.
         </p>
-        <h3>17.5 Assumption of Risk and Release</h3>
+        <h3>16.5 Assumption of Risk and Release</h3>
         <p class="mb_p">
           By using the App, you knowingly and voluntarily assume all risks
           associated with:
@@ -1189,14 +1347,14 @@
       </div>
 
       <div class="contentSection">
-        <h2>18. Dispute Resolution and Governing Law</h2>
-        <h3>18.1 Governing Law</h3>
+        <h2>17. Dispute Resolution and Governing Law</h2>
+        <h3>17.1 Governing Law</h3>
         <p class="mb_p">
           These Terms shall be governed by and construed in accordance with the
           laws of the State of Michigan and applicable federal laws of the
           United States, without regard to conflict of law principles.
         </p>
-        <h3>18.2 Agreement to Arbitrate</h3>
+        <h3>17.2 Agreement to Arbitrate</h3>
         <p class="mb_p">
           <strong>
             PLEASE READ THIS SECTION CAREFULLY. IT AFFECTS YOUR LEGAL RIGHTS,
@@ -1208,10 +1366,10 @@
           arising out of or relating to these Terms, the App, or your use of the
           App (collectively, "Disputes") shall be resolved through binding
           individual arbitration rather than in court, except as specified in
-          Section 18.7.
+          Section 17.7.
         </p>
 
-        <h3>18.3 Informal Dispute Resolution Requirement</h3>
+        <h3>17.3 Informal Dispute Resolution Requirement</h3>
         <p class="mb_p">
           Before initiating arbitration, you agree to first contact us to
           attempt to resolve the Dispute informally.
@@ -1240,7 +1398,7 @@
             and must be completed before arbitration can begin.</strong
           >
         </p>
-        <h3>18.4 Arbitration Rules and Procedures</h3>
+        <h3>17.4 Arbitration Rules and Procedures</h3>
         <p class="mb_p">
           If informal resolution fails, the Dispute shall be resolved by binding
           arbitration administered by the American Arbitration Association (AAA)
@@ -1267,7 +1425,7 @@
             provision
           </li>
         </ul>
-        <h3>18.5 Arbitration Costs</h3>
+        <h3>17.5 Arbitration Costs</h3>
         <ul>
           <li>
             AAA Rules govern payment of filing, administration, and arbitrator
@@ -1278,7 +1436,7 @@
             arbitrator
           </li>
         </ul>
-        <h3>18.6 Class Action Waiver</h3>
+        <h3>17.6 Class Action Waiver</h3>
         <p class="mb_p">
           <strong
             >YOU AND BLITZ WALLET AGREE THAT DISPUTES MUST BE BROUGHT ON AN
@@ -1302,7 +1460,7 @@
             relief warranted by that party's individual claim
           </li>
         </ul>
-        <h3>18.7 Exceptions to Arbitration</h3>
+        <h3>17.7 Exceptions to Arbitration</h3>
         <p class="mb_p">
           The following Disputes are not subject to arbitration and may be
           brought in court:
@@ -1321,7 +1479,7 @@
             security or integrity of the App
           </li>
         </ul>
-        <h3>18.8 Opt-Out Right</h3>
+        <h3>17.8 Opt-Out Right</h3>
         <p class="mb_p">
           <strong
             >You have the right to opt out of this arbitration
@@ -1350,15 +1508,15 @@
             later date
           </li>
         </ul>
-        <h3>18.9 Jurisdiction and Venue (If Arbitration Does Not Apply)</h3>
+        <h3>17.9 Jurisdiction and Venue (If Arbitration Does Not Apply)</h3>
         <p class="mb_p">
           If the arbitration agreement is invalid, unenforceable, waived, or
           does not apply to a particular Dispute, or if you validly opt out, you
           agree that any judicial proceeding shall be brought exclusively in the
-          state or federal courts located in Okland county Michigan, and you
+          state or federal courts located in Oakland County, Michigan, and you
           consent to the personal jurisdiction of these courts.
         </p>
-        <h3>18.10 Jury Trial Waiver</h3>
+        <h3>17.10 Jury Trial Waiver</h3>
         <p class="mb_p">
           <strong
             >TO THE MAXIMUM EXTENT PERMITTED BY LAW, YOU AND BLITZ WALLET WAIVE
@@ -1366,7 +1524,7 @@
             in court.</strong
           >
         </p>
-        <h3>18.11 Time Limitation for Claims</h3>
+        <h3>17.11 Time Limitation for Claims</h3>
         <p class="mb_p">
           You agree that any claim or cause of action arising out of or related
           to these Terms or the App must be filed within SIX (6) MONTHS after
@@ -1376,37 +1534,37 @@
           This six-month period begins when you knew or reasonably should have
           known of the facts giving rise to the claim.
         </p>
-        <h3>18.12 Severability of Dispute Resolution Terms</h3>
+        <h3>17.12 Severability of Dispute Resolution Terms</h3>
         <p class="mb_p">
-          If any portion of this Section 18 is found to be invalid or
+          If any portion of this Section 17 is found to be invalid or
           unenforceable, the remainder shall continue in full effect, except:
         </p>
         <ul>
           <li>
-            If the Class Action Waiver (Section 18.6) is found unenforceable,
-            the entire arbitration agreement (Sections 18.2-18.6) becomes void
+            If the Class Action Waiver (Section 17.6) is found unenforceable,
+            the entire arbitration agreement (Sections 17.2-17.6) becomes void
           </li>
           <li>
             If the arbitration agreement is found invalid, the Jury Trial Waiver
             and Time Limitation provisions remain enforceable
           </li>
         </ul>
-        <h3>18.13 Changes to Arbitration Terms</h3>
+        <h3>17.13 Changes to Arbitration Terms</h3>
         <p class="mb_p">
-          Notwithstanding Section 19 (Modifications to Terms), if Blitz Wallet
+          Notwithstanding Section 18 (Modifications to Terms), if Blitz Wallet
           makes any material changes to this arbitration agreement (other than a
           change to the contact information), you may reject the change by
-          sending written notice within 30 days of the change to 230 W Mable
-          Road Troy, MI 48084. Your rejection means you will arbitrate under the
-          version of the arbitration agreement that existed when you first
+          sending written notice within 30 days of the change to 230 W Maple
+          Road, Troy, MI 48084. Your rejection means you will arbitrate under
+          the version of the arbitration agreement that existed when you first
           accepted these Terms (or, if applicable, the version you most recently
           accepted).
         </p>
       </div>
 
       <div class="contentSection">
-        <h2>19. Modifications to Terms</h2>
-        <h3>19.1 Right to Modify</h3>
+        <h2>18. Modifications to Terms</h2>
+        <h3>18.1 Right to Modify</h3>
         <p class="mb_p">
           Blitz Wallet reserves the right to modify, amend, or update these
           Terms at any time in our sole discretion. When we make changes, we
@@ -1416,7 +1574,7 @@
           <li>Post the updated Terms on our website and/or within the App</li>
           <li>Update the "Last Updated" date at the top of these Terms</li>
         </ul>
-        <h3>19.2 Your Acceptance of Changes</h3>
+        <h3>18.2 Your Acceptance of Changes</h3>
         <p class="mb_p">
           <strong>
             Your continued use of the App after changes are posted constitutes
@@ -1432,7 +1590,7 @@
           </li>
           <li>Uninstall the App from your device</li>
         </ul>
-        <h3>19.3 Checking for Updates</h3>
+        <h3>18.3 Checking for Updates</h3>
         <p>
           You are responsible for regularly reviewing these Terms. We recommend
           checking our website periodically for update.
@@ -1440,8 +1598,8 @@
       </div>
 
       <div class="contentSection">
-        <h2>20. Termination</h2>
-        <h3>20.1 Termination by You</h3>
+        <h2>19. Termination</h2>
+        <h3>19.1 Termination by You</h3>
         <p class="mb_p">You may stop using the App at any time by:</p>
         <ul>
           <li>Uninstalling the App from your device</li>
@@ -1461,7 +1619,7 @@
             permanent loss of funds
           </li>
         </ul>
-        <h3>20.2 Termination by Us</h3>
+        <h3>19.2 Termination by Us</h3>
         <p class="mb_p">
           We reserve the right to suspend or terminate your access to the App at
           any time, with or without notice, for any reason, including:
@@ -1473,7 +1631,7 @@
           <li>Court orders or legal requirements</li>
           <li>Discontinuation of the App or certain features</li>
         </ul>
-        <h3>20.3 Effect of Termination</h3>
+        <h3>19.3 Effect of Termination</h3>
         <p class="mb_p">Upon termination:</p>
         <ul>
           <li>Your license to use the App immediately ends</li>
@@ -1494,46 +1652,46 @@
       </div>
 
       <div class="contentSection">
-        <h2>21. General Provisions</h2>
-        <h3>21.1 Entire Agreement</h3>
+        <h2>20. General Provisions</h2>
+        <h3>20.1 Entire Agreement</h3>
         <p class="mb_p">
           These Terms, together with our Privacy Policy, constitute the entire
           agreement between you and Blitz Wallet regarding the App and supersede
           all prior agreements, understandings, and communications.
         </p>
-        <h3>21.2 Severability</h3>
+        <h3>20.2 Severability</h3>
         <p class="mb_p">
           If any provision of these Terms is found to be invalid, illegal, or
           unenforceable, the remaining provisions shall continue in full force
           and effect. The invalid provision shall be modified to the minimum
           extent necessary to make it valid and enforceable.
         </p>
-        <h3>21.3 Waiver</h3>
+        <h3>20.3 Waiver</h3>
         <p class="mb_p">
           Our failure to enforce any right or provision of these Terms does not
           constitute a waiver of that right or provision. Any waiver must be in
           writing and signed by an authorized representative of Blitz Wallet.
         </p>
-        <h3>21.4 Assignment</h3>
+        <h3>20.4 Assignment</h3>
         <p class="mb_p">
           You may not assign, transfer, or delegate these Terms or your rights
           and obligations without our prior written consent. We may assign these
           Terms without restriction. Any attempted assignment in violation of
           this section is void.
         </p>
-        <h3>21.5 No Partnership</h3>
+        <h3>20.5 No Partnership</h3>
         <p class="mb_p">
           Nothing in these Terms creates a partnership, joint venture, agency,
           or employment relationship between you and Blitz Wallet.
         </p>
-        <h3>21.6 Force Majeure</h3>
+        <h3>20.6 Force Majeure</h3>
         <p class="mb_p">
           Blitz Wallet is not liable for any failure or delay in performance due
           to circumstances beyond our reasonable control, including acts of God,
           natural disasters, war, terrorism, labor disputes, government actions,
           or internet/network failures.
         </p>
-        <h3>21.7 Export Controls</h3>
+        <h3>20.7 Export Controls</h3>
         <p class="mb_p">
           You agree to comply with all applicable export and import laws and
           regulations. You represent that you are not located in, and will not
@@ -1541,447 +1699,35 @@
           "terrorist supporting" country, and that you are not on any U.S.
           government list of prohibited or restricted parties.
         </p>
-        <h3>21.8 Notices</h3>
+        <h3>20.8 Notices</h3>
         <p class="mb_p">
           Notices to you may be made via posting on our website. Notices to us
-          should be sent to the contact information provided in Section 22.
+          should be sent to the contact information provided in Section 21.
         </p>
-        <h3>21.9 Language</h3>
+        <h3>20.9 Language</h3>
         <p class="mb_p">
           These Terms are prepared in English, and the English version shall
           prevail in the event of any conflict with translations.
         </p>
       </div>
       <div class="contentSection">
-        <h2>22. Contact Information</h2>
+        <h2>21. Contact Information</h2>
         <p class="mb_p">
           If you have any questions, concerns, or complaints about these Terms
           or the App, please contact us:
         </p>
         <p class="mb_p">
-          <strong>Blitz Wallet LLC</strong>
+          <strong>Blitz Wallet Inc</strong>
         </p>
-        <p class="mb_p">Email: blake@blitzwalletapp.com</p>
+        <p class="mb_p">Email: support@blitzwalletapp.com</p>
         <p class="mb_p">Website Contact Form</p>
         <p class="mb_p">Mailing Address: 230 W Maple Road Troy, MI 48084</p>
         <p class="mb_p">
           For security reports or vulnerability disclosures, please use:
-          blake@blitzwalletapp.com
+          security@blitzwalletapp.com
         </p>
         <p>We aim to respond to all inquiries within 7-14 business days</p>
       </div>
-
-      <!-- <div class="contentSection">
-          <h2>Self-Custodial Nature of the App</h2>
-          <p class="mb_p">
-            The App is self-custodial. Users retain exclusive control of, and
-            sole responsibility for, their private keys, recovery phrases, PIN
-            codes, and other wallet credentials (collectively, “Wallet
-            Credentials”). Blitz Wallet does not have access to, nor does it
-            store, manage, or recover Wallet Credentials on behalf of Users.
-          </p>
-          <p class="mb_p">
-            <strong>User Responsibility:</strong> Users are solely responsible
-            for safeguarding their Wallet Credentials. Loss, theft, or
-            compromise of Wallet Credentials will result in the permanent and
-            unrecoverable loss of digital assets.
-          </p>
-          <p class="mb_p">
-            <strong>Device Security:</strong> Users must maintain appropriate
-            security of their devices, including operating systems,
-            authentication methods, and software environments. Blitz Wallet is
-            not responsible for unauthorized access to the App arising from
-            inadequate device security.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>Risk Acknowledgment</h2>
-          <p class="mb_p">
-            Users acknowledge and accept all risks associated with the use of
-            the App, including but not limited to:
-          </p>
-          <p class="mb_p bld_p">
-            Permanent loss of access to funds due to loss of Wallet Credentials.
-          </p>
-          <p class="mb_p bld_p">
-            Cybersecurity risks, including but not limited to hacking, malware,
-            or unauthorized access.
-          </p>
-          <p class="mb_p bld_p">
-            Market risks arising from the volatility of Bitcoin and other
-            supported digital assets.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>No Liability for Losses</h2>
-          <p>
-            TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, BLITZ WALLET
-            SHALL NOT BE LIABLE FOR ANY DAMAGES OR LOSSES RESULTING FROM USER
-            ERROR, DEVICE COMPROMISE, LOSS OF CREDENTIALS, OR ANY OTHER USE OF
-            OR RELIANCE UPON THE APP:
-          </p>
-          <ul>
-            <li class="bld_p">
-              Errors or omissions by the User, including loss of Wallet
-              Credentials.
-            </li>
-            <li class="bld_p">
-              Transactions directed to incorrect or unintended addresses.
-            </li>
-            <li class="bld_p">
-              Unauthorized access to the App or Wallet Credentials.
-            </li>
-            <li class="bld_p">
-              Software malfunctions, bugs, or failures within the App.
-            </li>
-            <li class="bld_p">Any other use of or reliance upon the App.</li>
-          </ul>
-        </div>
-
-        <div class="contentSection">
-          <h2>Spark Network Beta Disclaimer</h2>
-          <p class="mb_p">
-            Blitz Wallet relies on the Spark network, which remains in beta
-            testing. The Spark network may contain defects, errors, or other
-            issues that could impact transactions, security, or reliability.
-          </p>
-          <p class="mb_p">
-            By using Blitz Wallet, Users acknowledge and agree that use of the
-            Spark network is entirely at their own risk. Blitz Wallet disclaims
-            all liability for any loss, damage, or other consequences arising
-            from the Spark network during its beta phase. Users are strongly
-            advised to exercise caution and avoid relying on the Spark network
-            for critical or high-value transactions.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>Disclaimer of Warranties</h2>
-          <p>
-            THE APP IS PROVIDED STRICTLY ON AN “AS IS” AND “AS AVAILABLE” BASIS
-            WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT
-            LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
-            PURPOSE, TITLE, NON-INFRINGEMENT, SECURITY, OR PERFORMANCE. Blitz
-            Wallet makes no representation or warranty that the App will be
-            uninterrupted, error-free, or secure.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>Limitation of Liability</h2>
-          <p>
-            TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL BLITZ
-            WALLET, ITS AFFILIATES, DEVELOPERS, OFFICERS, DIRECTORS,
-            CONTRIBUTORS, OR LICENSORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-            INCIDENTAL, CONSEQUENTIAL, SPECIAL, EXEMPLARY, OR PUNITIVE DAMAGES,
-            INCLUDING WITHOUT LIMITATION LOSS OF FUNDS, PROFITS, DATA BREACHS,
-            SYSTEM FAILURES OR GOODWILL, EVEN IF BLITZ WALLET HAS BEEN ADVISED
-            OF THE POSSIBILITY OF SUCH DAMAGES.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>User Obligations</h2>
-          <p>By using the App, Users agree to:</p>
-          <ul>
-            <li class="bld_p">
-              Comply with all applicable laws and regulations in their
-              jurisdiction.
-            </li>
-            <li class="bld_p">
-              Implement reasonable measures to secure their devices and Wallet
-              Credentials.
-            </li>
-            <li class="bld_p">
-              Acknowledge and accept the risks associated with the use of
-              self-custodial wallets.
-            </li>
-          </ul>
-        </div>
-
-        <div class="contentSection">
-          <h2>Third-Party Services</h2>
-          <p class="mb_p">
-            The App may provide access to or integrate with third-party
-            services, applications, or websites (“Third-Party Services”). Blitz
-            Wallet does not control, endorse, or assume responsibility for such
-            services. Users acknowledge and agree that:
-          </p>
-          <p class="mb_p bld_p">
-            Third-Party Services are operated independently and subject to their
-            own terms, conditions, and privacy policies.
-          </p>
-          <p class="mb_p bld_p">
-            Use of Third-Party Services is entirely at the User’s own risk.
-          </p>
-          <p class="mb_p bld_p">
-            Blitz Wallet disclaims all liability for losses, damages, or
-            disputes arising from Third-Party Services.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>Store Data and Non-Refundable Purchases</h2>
-          <p class="mb_p">
-            Certain store purchases, such as credits for third-party services
-            (e.g., chat applications) or configuration files for VPN access, and
-            previous sent and received SMS messages are encripted and then
-            stored in Blitz Wallet’s database to improve user expirence. Users
-            acknowledge and agree that:
-          </p>
-          <p class="mb_p bld_p">
-            Credits, balances, or configuration files stored in Blitz Wallet’s
-            systems are not guaranteed to be recoverable in the event of data
-            corruption, loss, system failure, or security incident.
-          </p>
-          <p class="mb_p bld_p">
-            All store purchases are strictly <strong>non-refundable</strong>,
-            regardless of whether the purchased credits, balances, or
-            configuration files are lost, deleted, corrupted, or otherwise
-            unavailable.
-          </p>
-          <p class="mb_p bld_p">
-            Blitz Wallet is not liable for any damages, losses, or disputes
-            arising from lost credits, lost configuration files, expired items,
-            or interruptions to third-party services.
-          </p>
-          <p class="mb_p bld_p">
-            Users are solely responsible for utilizing purchased services
-            promptly and securely. Blitz Wallet does not guarantee long-term
-            storage or availability of credits, configuration files, or other
-            store-related data.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>Gift Card Feature Disclaimer</h2>
-          <p class="mb_p">
-            The App may permit Users to send or receive digital gift cards. Such
-            gift cards are issued and fulfilled by third-party providers. Blitz
-            Wallet acts solely as a reseller and does not issue, warrant, or
-            guarantee the validity of gift cards.
-          </p>
-          <p class="mb_p">
-            Blitz Wallet may temporarily handle or display gift card claim codes
-            in the course of facilitating transfers between Users. While
-            reasonable measures are employed to secure such codes, Users
-            acknowledge that, in the event of a compromise of Blitz Wallet’s
-            reseller accounts or related systems, gift card codes could be
-            exposed to unauthorized parties. By using this feature, Users
-            expressly accept this risk.
-          </p>
-          <p class="mb_p">
-            Blitz Wallet shall not be liable for any losses, disputes, or
-            damages related to gift card claim codes, including without
-            limitation losses resulting from unauthorized redemption,
-            third-party breaches, or User error in transmission.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>
-            Secure Processing System; WebView Wallet Initialization; Assumption
-            of Risk
-          </h2>
-          <h3>System Overview</h3>
-          <p class="mb_p">
-            Blitz Wallet utilizes a proprietary secure processing architecture
-            (the “Processing System”) for handling wallet and payment
-            operations. This Processing System operates through a self-contained
-            JavaScript bundle executed within a sandboxed WebView environment
-            (“WebView Component”) to perform computationally intensive wallet
-            tasks without impacting the application’s performance.
-          </p>
-          <p class="mb_p">
-            To initialize a user’s wallet, the Blitz Wallet application must—on
-            a one-time basis per wallet session—transmit the user’s
-            cryptographic seed (the “Seed”), securely stored within the device’s
-            operating system keychain or secure storage, into the WebView
-            Component. The Seed is required to enable wallet generation,
-            authentication, and transaction signing functionality.
-          </p>
-          <h3>Security Architecture and Safeguards</h3>
-          <p class="mb_p">
-            Blitz Wallet employs technical and organizational measures designed
-            to mitigate unauthorized access or manipulation of the Processing
-            System, including, without limitation:
-          </p>
-          <ul>
-            <li>
-              Cryptographic verification of the WebView bundle hash prior to
-              execution to ensure file integrity.
-            </li>
-            <li>
-              Session-specific keypair generation and per-session random nonces
-              for mutual authentication and message encryption.
-            </li>
-            <li>
-              Encrypted message passing between the native application and
-              WebView Component utilizing ephemeral keys unique to each session.
-            </li>
-            <li>
-              Replay and duplication protection through sequential event
-              identifiers and timestamps.
-            </li>
-            <li>
-              Restrictive Content Security Policy (CSP) applied to all WebView
-              content to mitigate script injection and cross-site scripting
-              vectors.
-            </li>
-            <li>
-              Execution of the WebView Component in an isolated, incognito
-              context with debugging, file system access, caching, and
-              third-party network requests disabled.
-            </li>
-          </ul>
-          <p class="mb_p">
-            These measures materially reduce the attack surface; however, the
-            user acknowledges that no software or hardware system is entirely
-            immune to compromise, interception, or unauthorized access.
-          </p>
-          <h3>Acknowledgment of Inherent Risks</h3>
-          <p class="mb_p">
-            BY INSTALLING, ACCESSING, OR USING BLITZ WALLET, YOU EXPRESSLY
-            ACKNOWLEDGE AND AGREE THAT YOU ASSUME ALL RISKS ASSOCIATED WITH THE
-            USE OF THE APP, INCLUDING THE RISK OF TOTAL LOSS OF YOUR DIGITAL
-            ASSETS:
-          </p>
-          <ul>
-            <li>
-              You understand that the operation of the Processing System
-              requires the controlled, one-time in-memory transfer of your Seed
-              to the WebView Component.
-            </li>
-            <li>
-              You understand and accept that despite all reasonable precautions,
-              there remains a residual and unavoidable risk that your Seed,
-              wallet data, or transaction information could be compromised due
-              to factors including, but not limited to, device-level compromise,
-              operating system vulnerabilities, malicious software, or other
-              external threats beyond the control of Blitz Wallet.
-            </li>
-            <li>
-              You are solely responsible for maintaining the physical and
-              digital security of your device, including but not limited to
-              enabling system security updates, passcodes, and encryption, and
-              for preventing unauthorized access by third parties.
-            </li>
-            <li>
-              You acknowledge that Blitz Wallet cannot recover your Seed or
-              restore access to your wallet if your Seed is lost, corrupted, or
-              compromised.
-            </li>
-          </ul>
-          <h3>Disclaimer of Warranties</h3>
-          <p class="mb_p">
-            THE PROCESSING SYSTEM, INCLUDING ALL ASSOCIATED SECURITY AND
-            COMMUNICATION FEATURES, IS PROVIDED “AS IS” AND “AS AVAILABLE,”
-            WITHOUT WARRANTY OF ANY KIND, WHETHER EXPRESS, IMPLIED, OR
-            STATUTORY, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
-            MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE,
-            NON-INFRINGEMENT, SECURITY, OR PERFORMANCE. BLITZ WALLET MAKES NO
-            REPRESENTATION OR WARRANTY THAT THE OPERATION OF THE PROCESSING
-            SYSTEM OR WEBVIEW COMPONENT WILL BE ERROR-FREE, UNINTERRUPTED,
-            SECURE, OR IMMUNE FROM UNAUTHORIZED ACCESS OR COMPROMISE.
-          </p>
-          <h3>Limitation of Liability</h3>
-          <p class="mb_p">
-            TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
-            BLITZ WALLET, ITS DEVELOPERS, OFFICERS, DIRECTORS, AFFILIATES,
-            CONTRACTORS, OR LICENSORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL,
-            SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, INCLUDING,
-            WITHOUT LIMITATION, LOSS OF DATA, LOSS OF FUNDS, LOSS OF PROFITS,
-            LOSS OF GOODWILL, DEVICE DAMAGE, OR OTHER INTANGIBLE LOSSES, ARISING
-            OUT OF OR RELATING TO:
-          </p>
-          <ul>
-            <li>
-              ANY UNAUTHORIZED ACCESS TO, USE OF, OR ALTERATION OF YOUR WALLET
-              OR SEED;
-            </li>
-            <li>
-              ANY COMPROMISE OR FAILURE OF THE PROCESSING SYSTEM, WEBVIEW
-              COMPONENT, OR RELATED SECURITY MECHANISMS;
-            </li>
-            <li>
-              ANY LOSS OR THEFT RESULTING FROM YOUR DEVICE BEING COMPROMISED OR
-              UNSECURED; OR
-            </li>
-            <li>
-              ANY OTHER EVENT BEYOND THE REASONABLE CONTROL OF BLITZ WALLET.
-            </li>
-          </ul>
-          <p class="mb_p">
-            IN NO EVENT SHALL BLITZ WALLET’S TOTAL AGGREGATE LIABILITY TO YOU
-            FOR ALL CLAIMS ARISING UNDER OR RELATED TO THESE TERMS EXCEED THE
-            GREATER OF (A) THE AMOUNT PAID BY YOU FOR THE APPLICATION.
-          </p>
-          <h3>Assumption of Risk and Release</h3>
-          <p class="mb_p">
-            By using Blitz Wallet, you hereby knowingly and voluntarily assume
-            all risks associated with the transfer, storage, and handling of
-            your Seed and wallet data within the Processing System. You further
-            release and discharge Blitz Wallet and its affiliates from any and
-            all claims, demands, liabilities, losses, damages, or causes of
-            action, whether known or unknown, arising out of or relating to any
-            compromise or loss of your Seed or wallet data resulting from or
-            associated with your use of Blitz Wallet.
-          </p>
-          <p class="mb_p">
-            If you do not accept these terms or the risks described herein, you
-            must immediately cease use of the application and uninstall Blitz
-            Wallet from your device.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>Indemnification</h2>
-          <p>
-            YOU AGREE TO INDEMNIFY, DEFEND, AND HOLD HARMLESS BLITZ WALLET, ITS
-            AFFILIATES, DEVELOPERS, AND CONTRIBUTORS FROM AND AGAINST ANY AND
-            ALL CLAIMS, LOSSES, LIABILITIES, DAMAGES, OR EXPENSES (INCLUDING
-            ATTORNEYS’ FEES) ARISING OUT OF YOUR USE OF THE APP OR BREACH OF
-            THESE TERMS.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>Open Source Nature</h2>
-          <p>
-            The App is provided as open-source software. Users may inspect,
-            modify, or distribute the code in accordance with the applicable
-            open-source license. Notwithstanding, any use of the App, modified
-            or otherwise, remains subject to these Terms.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>Governing Law and Compliance</h2>
-          <p class="mb_p">
-            These Terms shall be governed by and construed in accordance with
-            the laws of the United States, without regard to conflict of law
-            principles. Any disputes arising out of or relating to these Terms
-            or the use of the App shall be subject to the exclusive jurisdiction
-            of the courts of the United States.
-          </p>
-          <p class="mb_p">
-            Users are solely responsible for ensuring compliance with all
-            applicable laws, regulations, and restrictions in their
-            jurisdiction. Blitz Wallet makes no representation or warranty
-            regarding the legality of the App in any specific jurisdiction.
-          </p>
-        </div>
-
-        <div class="contentSection">
-          <h2>Contact</h2>
-          <p>
-            Any questions or concerns regarding these Terms should be directed
-            to Blitz Wallet via the contact form available on the official
-            website.
-          </p>
-        </div> -->
     </section>
 
     <footer>
@@ -2021,7 +1767,7 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+        <p>&copy; 2026 Blitz Wallet Inc. All rights reserved.</p>
       </div>
     </footer>
 
