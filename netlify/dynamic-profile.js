@@ -81,19 +81,19 @@ export async function handler(event, context) {
     <style>
     body {
       width: 100dvw;
-      min-height: 100dvh;
+      min-height: calc(100dvh - 40px);
       background-color: var(--lm-background);
       display: flex;
       flex-direction: column;
+      padding: 0 20px;
       }
       .container {
       width: 90%;
       max-width: 1800px;
       height: fit-content;
-      min-height: 100dvh;
       display: flex;
       flex-direction: column;
-      margin: 0 auto;
+      margin: auto auto;
       }
 
       .wordmarkContainer {
@@ -181,13 +181,18 @@ export async function handler(event, context) {
 /* .loading-screen, .loading-screen-content, .loading-copy, .spinner and its
    keyframes come from the shared components.css (linked above). Only the
    error-screen wrapper below is page-specific. */
-
+.loading-screen{
+    display: none;
+    min-height:unset;
+    margin: auto;
+}
 .error-screen {
+  display: none;
   width: 100%;
-  min-height: 100dvh;
   display: grid;
   place-items: center;
   padding: 2rem;
+  margin: auto;
 }
 
 .error-screen[hidden] {
@@ -422,12 +427,17 @@ export async function handler(event, context) {
       const errorScreenEl = document.getElementById("errorScreen");
 
       function setScreenState(state) {
-        const isLoading = state === "loading";
-        const isError = state === "error";
-        loadingScreenEl.hidden = !isLoading;
-        loadedScreenEl.hidden = isLoading || isError;
-        errorScreenEl.hidden = !isError;
-        loadingScreenEl.setAttribute("aria-busy", isLoading ? "true" : "false");
+        loadingScreenEl.style.display = 'none';
+        loadedScreenEl.style.display = 'none';
+        errorScreenEl.style.display = 'none';
+        if (state === 'loading'){
+         loadingScreenEl.style.display = 'block';
+        }else if(state === 'loaded'){
+        loadedScreenEl.style.display = 'block';
+        }else{
+           errorScreenEl.style.display = 'block';
+          
+         }
       }
 
       async function renderAvatar(profile) {
@@ -493,6 +503,11 @@ export async function handler(event, context) {
     </script>
   </head>
   <body>
+    <div class="wordmarkContainer">
+      <a href="/">
+        <img src="/public/wordmark.png" alt="blitz wallet wordmark logo to take you back to the homepage" />
+      </a>
+    </div>
   <section class="loading-screen" id="loadingScreen" aria-live="polite" aria-busy="true">
     <div class="loading-screen-content">
       <div class="spinner" aria-hidden="true"></div>
@@ -505,11 +520,6 @@ export async function handler(event, context) {
     </div>
   </section>
   <section class="container" id="loadedScreen" hidden>
-    <div class="wordmarkContainer">
-      <a href="/">
-        <img src="/public/wordmark.png" alt="blitz wallet wordmark logo to take you back to the homepage" />
-      </a>
-    </div>
     <div class="contentContainer">
      <div class="profile-section">
         <div class="avatar-toggle" id="avatar-toggle">
