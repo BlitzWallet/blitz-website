@@ -76,14 +76,14 @@
     <link rel="stylesheet" href="/src/assets/styles/index.css" />
     <link rel="stylesheet" href="/src/assets/styles/components.css" />
     <link rel="stylesheet" href="/pages/child/child.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
 
-    <!-- Lucide Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Scripts -->
+    <script src="/src/js/font-loader.js" defer></script>
 
     <!-- QR Code Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
-    <script src="/pages/child/child.js"></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
   </head>
   <body>
     <nav>
@@ -151,8 +151,8 @@
             </div>
             <h1 class="gift-title">You've been invited!</h1>
             <p class="gift-description">
-              Someone set up a Bitcoin wallet for you with Blitz Wallet. Follow
-              the steps below to open it on your phone.
+              Someone created a shared Bitcoin wallet for you with Blitz Wallet.
+              Follow the steps below to join.
             </p>
 
             <hr class="steps-divider" />
@@ -161,9 +161,9 @@
                 <div class="step-number">1</div>
                 <div class="step-content">
                   <div class="step-title">Download Blitz Wallet</div>
-                  <div class="step-description">
+                  <p class="step-description">
                     Get the free app from the App Store or Google Play.
-                  </div>
+                  </p>
                   <div class="step-actions">
                     <button class="step-btn primary download-btn">
                       Download Blitz Wallet
@@ -174,32 +174,28 @@
               <div class="step">
                 <div class="step-number">2</div>
                 <div class="step-content">
-                  <div class="step-title">Open your invite</div>
-                  <div class="step-description">
-                    Already installed? Tap below to open your invite in Blitz.
-                  </div>
-                  <div class="step-actions">
-                    <button class="step-btn primary" onclick="openInApp()">
-                      Open in Blitz Wallet
-                    </button>
-                    <button
-                      class="step-btn secondary copy-button"
-                      onclick="copyInvite()"
-                    >
-                      Copy Invite Link
-                    </button>
-                  </div>
+                  <div class="step-title">Join shared wallet</div>
+                  <p class="step-description">
+                    Tap "Join shared wallet" on the welcome screen.
+                  </p>
                 </div>
               </div>
               <div class="step">
                 <div class="step-number">3</div>
                 <div class="step-content">
-                  <div class="step-title">Enter your setup key</div>
-                  <div class="step-description">
-                    Ask the person who invited you for the setup key they
-                    shared, then enter it in Blitz Wallet to finish creating
-                    your account.
-                  </div>
+                  <div class="step-title">Enter code</div>
+                  <p class="step-description">
+                    Get the pairing code from the person who invited you.
+                  </p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                  <div class="step-title">Pair wallet</div>
+                  <p class="step-description">
+                    Follow the steps to join the wallet.
+                  </p>
                 </div>
               </div>
             </div>
@@ -215,6 +211,10 @@
         const modalClose = document.getElementById("modalClose");
         const modalTabs = document.querySelectorAll(".modal-tab");
         let qrcode = null;
+        const IOS_STORE_URL =
+          "https://apps.apple.com/us/app/blitz-wallet/id6476810582";
+        const ANDROID_STORE_URL =
+          "https://play.google.com/store/apps/details?id=com.blitzwallet";
 
         function initQRCode(url) {
           const qrElement = document.getElementById("qr-code");
@@ -256,6 +256,15 @@
           return /iPhone|iPad|iPod/i.test(navigator.userAgent);
         }
 
+        // Auto-redirect mobile visitors straight to their app store. The
+        // instructions below stay visible as a backup if the redirect is
+        // blocked, or on desktop where there is no store to open.
+        if (isAndroidDevice()) {
+          window.location.replace(ANDROID_STORE_URL);
+        } else if (isIOSDevice()) {
+          window.location.replace(IOS_STORE_URL);
+        }
+
         modalTabs.forEach(function (tab) {
           tab.addEventListener("click", function () {
             modalTabs.forEach(function (t) {
@@ -285,8 +294,6 @@
             }
           }
         });
-
-        lucide.createIcons();
       })();
     </script>
   </body>

@@ -47,17 +47,23 @@ nav img {
 
 .gift-container {
   width: 100%;
+  min-height: calc(100dvh - 120px);
   max-width: 600px;
   margin: 90px auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .gift-card {
+  width: 95%;
   background: white;
   border-radius: 24px;
   padding: 3rem 2.5rem;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
   border: 1px solid var(--lm-backgroundOffset);
   text-align: center;
+  margin: 0 auto;
 }
 
 .gift-icon {
@@ -80,7 +86,7 @@ nav img {
 .gift-title {
   font-size: 2rem;
   font-weight: 600;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
   color: var(--lm-text);
 }
 
@@ -92,10 +98,12 @@ nav img {
 }
 
 .gift-description {
-  font-size: 1.1rem;
+  justify-self: center;
+  font-size: 0.9rem;
   margin-bottom: 2rem;
-  opacity: 0.9;
-  line-height: 1.6;
+  opacity: 0.7;
+  line-height: 1.4;
+  max-width: 400px;
 }
 
 .info-grid {
