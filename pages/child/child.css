@@ -5,7 +5,6 @@ nav {
   left: 0;
   width: 100%;
   z-index: 1000;
-  background: var(--lm-background);
   border-bottom: 1px solid var(--lm-backgroundOffset);
   display: flex;
   justify-content: center;
