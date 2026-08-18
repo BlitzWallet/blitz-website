@@ -89,7 +89,7 @@ X-Content-Type-Options = "nosniff"
 
 # Child account invite landing page (static)
 [[redirects]]
-  from = "/child/*"
+  from = "/managed/*"
   to = "/pages/child/child.html"
   status = 200
 
