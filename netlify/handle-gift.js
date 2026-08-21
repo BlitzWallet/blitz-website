@@ -265,6 +265,28 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         color: white;
       }
 
+      .claimed-icon {
+        width: 80px;
+        height: 80px;
+        background: var(--primary_color);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 2rem;
+      }
+
+      .claimed-icon svg {
+        width: 45px;
+        height: 45px;
+        color: white;
+      }
+
+      .claimed-cta {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
+
       .gift-title {
         font-size: 2rem;
         font-weight: 500;
@@ -711,34 +733,31 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         if (loadingContainer) loadingContainer.textContent = message;
       }
 
-      function renderGiftCard(giftData, loadError) {
+      function renderGiftCard(giftData) {
         const container = document.getElementById('app');
         const loadingContainer = document.querySelector('.loading-container');
         
         if (loadingContainer) loadingContainer.classList.add('fade-out');
 
         setTimeout(() => {
-          if (loadError) {
-            container.innerHTML = \`
-              <div class="content-container fade-in">
-                <div class="error-box">
-                  <h2>Error Loading Gift</h2>
-                  <p>\${loadError}</p>
-                </div>
-              </div>
-            \`;
-            return;
-          }
-
           if (!giftData) {
             container.innerHTML = \`
-              <div class="content-container fade-in">
-                <div class="error-box">
-                  <h2>Gift Not Found</h2>
-                  <p>This gift doesn't exist or has already been claimed.</p>
+              <div class="content-container">
+                <div class="claimed-icon">
+                  <i data-lucide="circle-check"></i>
                 </div>
+                <h1 class="gift-title">Gift Already Claimed</h1>
+                <p class="gift-description">
+                  This gift has already been claimed. Send a gift of your own with Blitz Wallet.
+                </p>
+                <button class="step-btn primary download-btn claimed-cta">Get Blitz Wallet</button>
               </div>
             \`;
+            lucide.createIcons();
+
+            setTimeout(() => {
+              container.querySelector('.content-container').classList.add('fade-in');
+            }, 50);
             return;
           }
 
@@ -849,7 +868,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
          
           if (json?.status !== "SUCCESS") {
             console.error("[OG gift] Unexpected status:", json?.status);
-            return null;
+            return { data: null, notFound: false };
           }
 
           return  { data: json?.data ?? null, notFound: false };
@@ -860,7 +879,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
 
       document.addEventListener('DOMContentLoaded', async () => {
         const giftData = await fetchCurrentGiftData();
-        renderGiftCard(giftData.data, giftData.data ? null : 'Gift not found');
+        renderGiftCard(giftData.data);
       });
 
       document.addEventListener('visibilitychange', () => {
