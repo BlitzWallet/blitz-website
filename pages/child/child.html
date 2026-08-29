@@ -297,6 +297,13 @@
         });
       }
       document.addEventListener("DOMContentLoaded", renderDownloadRedirect);
+
+      // On back-navigation the page is restored from bfcache in whatever
+      // half-rendered state the mobile redirect abandoned it in (lucide icons
+      // never swapped in). Re-run icon rendering so the page looks complete.
+      window.addEventListener("pageshow", function (e) {
+        if (e.persisted && window.lucide) lucide.createIcons();
+      });
     </script>
   </body>
 </html>
