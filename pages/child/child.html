@@ -206,7 +206,7 @@
     </div>
 
     <script>
-      (function () {
+      function renderDownloadRedirect() {
         const modalContainer = document.getElementById("modalContainer");
         const modalBackdrop = document.getElementById("modalBackdrop");
         const modalClose = document.getElementById("modalClose");
@@ -295,7 +295,8 @@
             }
           }
         });
-      })();
+      }
+      document.addEventListener("DOMContentLoaded", renderDownloadRedirect);
     </script>
   </body>
 </html>
