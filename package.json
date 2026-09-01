@@ -5,7 +5,7 @@
   "main": "index.mjs",
   "scripts": {
     "dev": "tsc -w & nodemon .",
-    "build": "node scripts/build-paylink-swap.mjs",
+    "build": "node scripts/build-paylink-swap.mjs && node scripts/generate-sitemap.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Blake Kaufman",
