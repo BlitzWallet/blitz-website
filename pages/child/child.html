@@ -17,10 +17,10 @@
     <link rel="apple-touch-icon" href="/public/favicon/favicon.ico" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
 
-    <title>You've been invited to set up a Blitz Wallet</title>
+    <title>Someone set up a Blitz Wallet just for you</title>
     <meta
       name="description"
-      content="Someone set up a Bitcoin wallet for you. Open it in Blitz Wallet to finish setup."
+      content="Someone you trust set up a Bitcoin wallet just for you, with your own balance to spend, send, and receive. Download Blitz and connect with them to finish setup."
     />
 
     <!-- Open Graph -->
@@ -35,11 +35,11 @@
     <meta property="og:url" content="https://blitzwalletapp.com/child" />
     <meta
       property="og:title"
-      content="You've been invited to set up a Blitz Wallet"
+      content="Someone set up a Blitz Wallet just for you"
     />
     <meta
       property="og:description"
-      content="Someone set up a Bitcoin wallet for you. Open it in Blitz Wallet to finish setup."
+      content="Someone you trust set up a Bitcoin wallet just for you, with your own balance to spend, send, and receive. Download Blitz and connect with them to finish setup."
     />
 
     <!-- Twitter -->
@@ -51,11 +51,11 @@
     <meta property="twitter:url" content="https://blitzwalletapp.com/child" />
     <meta
       property="twitter:title"
-      content="You've been invited to set up a Blitz Wallet"
+      content="Someone set up a Blitz Wallet just for you"
     />
     <meta
       property="twitter:description"
-      content="Someone set up a Bitcoin wallet for you. Open it in Blitz Wallet to finish setup."
+      content="Someone you trust set up a Bitcoin wallet just for you, with your own balance to spend, send, and receive. Download Blitz and connect with them to finish setup."
     />
 
     <meta name="robots" content="noindex,nofollow" />
@@ -65,245 +65,117 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Noto+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="/src/assets/styles/index.css" />
-    <link rel="stylesheet" href="/src/assets/styles/components.css" />
     <link rel="stylesheet" href="/pages/child/child.css" />
-    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
-
-    <!-- Scripts -->
-    <script src="/src/js/font-loader.js" defer></script>
-
-    <!-- QR Code Library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="/src/components/downloadModal/index.js" defer></script>
   </head>
   <body>
-    <nav>
-      <div class="nav-inner">
+    <div class="page">
+      <header class="header">
         <a href="/">
-          <img src="/public/favicon/favicon.svg" alt="Blitz Wallet" />
+          <img
+            class="header__logo"
+            src="/public/favicon/favicon.svg"
+            alt="Blitz Wallet"
+          />
         </a>
-        <a href="#" class="nav-download-btn download-btn">Download</a>
-      </div>
-    </nav>
+      </header>
 
-    <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="modal-container" id="modalContainer">
-      <div class="download-modal">
-        <button class="modal-close" id="modalClose">
-          <i data-lucide="x"></i>
-        </button>
-        <div class="modal-header">
-          <h2>Download Blitz Wallet</h2>
-          <p>Choose your platform to get started</p>
-        </div>
-        <div class="modal-tabs">
-          <button class="modal-tab active" data-platform="ios">
-            <i data-lucide="apple"></i>
-            <span>iOS</span>
-          </button>
-          <button class="modal-tab" data-platform="android">
-            <i data-lucide="smartphone"></i>
-            <span>Android</span>
-          </button>
-        </div>
-        <div class="modal-content">
-          <div class="qr-wrapper">
-            <div id="qr-code"></div>
-          </div>
-          <p class="modal-instructions">Scan with your mobile device</p>
-          <div class="store-badges">
-            <a
-              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
-              class="store-badge"
-              target="_blank"
-            >
-              <i data-lucide="apple"></i>
-              <span>App Store</span>
-            </a>
-            <a
-              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
-              class="store-badge"
-              target="_blank"
-            >
-              <i data-lucide="play"></i>
-              <span>Play Store</span>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gift-container">
-      <div class="gift-card">
-        <div id="app">
-          <div class="content-container">
-            <div class="gift-icon">
-              <i data-lucide="users"></i>
-            </div>
-            <h1 class="gift-title">You've been invited!</h1>
-            <p class="gift-description">
-              Someone created a shared Bitcoin wallet for you with Blitz Wallet.
-              Follow the steps below to join.
+      <main class="main">
+        <div class="layout">
+          <div class="intro">
+            <!-- <span class="intro__badge">You've been invited</span> -->
+            <h1 class="intro__title">Someone set up a wallet just for you.</h1>
+            <p class="intro__lead">
+              It's a Bitcoin wallet you share with someone you trust. Your own
+              money to spend, with them looking out for you.
             </p>
 
-            <hr class="steps-divider" />
-            <div class="steps-section">
+            <div class="explainer">
+              <div class="explainer__title">So what's a shared wallet?</div>
+              <p class="explainer__text">
+                You get your own balance to spend, send, and receive. The person
+                who invited you can top it up, keep an eye out for you, and
+                bring the wallet back if your phone ever goes missing.
+              </p>
+            </div>
+
+            <div class="store-buttons">
+              <a
+                href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+                target="_blank"
+                class="store-btn store-btn--ios"
+              >
+                <img
+                  class="store-btn__icon"
+                  src="/src/assets/images/apple.svg"
+                  alt=""
+                />
+                <span>App Store</span>
+              </a>
+              <a
+                href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+                target="_blank"
+                class="store-btn store-btn--android"
+              >
+                <img
+                  class="store-btn__icon"
+                  src="/src/assets/images/google-play.svg"
+                  alt=""
+                />
+                <span>Google Play</span>
+              </a>
+            </div>
+            <p class="fine-print">Free, and no account or email needed.</p>
+          </div>
+
+          <div class="steps">
+            <div class="steps__heading">Getting started</div>
+            <div class="steps__list">
               <div class="step">
-                <div class="step-number">1</div>
-                <div class="step-content">
-                  <div class="step-title">Download Blitz Wallet</div>
-                  <p class="step-description">
-                    Get the free app from the App Store or Google Play.
+                <span class="step__number">01</span>
+                <div class="step__body">
+                  <div class="step__title">Download Blitz Wallet</div>
+                  <p class="step__text">
+                    Grab the free app from the App Store or Google Play.
                   </p>
-                  <div class="step-actions">
-                    <button class="step-btn primary download-btn">
-                      Download Blitz Wallet
-                    </button>
-                  </div>
                 </div>
               </div>
               <div class="step">
-                <div class="step-number">2</div>
-                <div class="step-content">
-                  <div class="step-title">Join managed wallet</div>
-                  <p class="step-description">
-                    Tap "Join managed wallet" on the "Set up your wallet" page.
+                <span class="step__number">02</span>
+                <div class="step__body">
+                  <div class="step__title">Tap “Join managed wallet”</div>
+                  <p class="step__text">
+                    You'll spot it on the “Set up your wallet” screen.
                   </p>
                 </div>
               </div>
               <div class="step">
-                <div class="step-number">3</div>
-                <div class="step-content">
-                  <div class="step-title">Scan or enter username</div>
-                  <p class="step-description">
-                    Get the pairing code or QR code from the person who invited
-                    you.
+                <span class="step__number">03</span>
+                <div class="step__body">
+                  <div class="step__title">Scan their code</div>
+                  <p class="step__text">
+                    Ask the person who invited you to show their QR code, or
+                    just type in their username.
                   </p>
                 </div>
               </div>
               <div class="step">
-                <div class="step-number">4</div>
-                <div class="step-content">
-                  <div class="step-title">Pair wallet</div>
-                  <p class="step-description">
-                    Follow the steps to join the wallet.
+                <span class="step__number">04</span>
+                <div class="step__body">
+                  <div class="step__title">Confirm and you're in</div>
+                  <p class="step__text">
+                    They tap approve on their phone, and your wallet is ready.
+                    Welcome.
                   </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
-
-    <script>
-      function renderDownloadRedirect() {
-        const modalContainer = document.getElementById("modalContainer");
-        const modalBackdrop = document.getElementById("modalBackdrop");
-        const modalClose = document.getElementById("modalClose");
-        const modalTabs = document.querySelectorAll(".modal-tab");
-        let qrcode = null;
-        const IOS_STORE_URL =
-          "https://apps.apple.com/us/app/blitz-wallet/id6476810582";
-        const ANDROID_STORE_URL =
-          "https://play.google.com/store/apps/details?id=com.blitzwallet";
-
-        function initQRCode(url) {
-          const qrElement = document.getElementById("qr-code");
-          qrElement.innerHTML = "";
-          qrcode = new QRCode(qrElement, {
-            text: url,
-            width: 200,
-            height: 200,
-            colorDark: "#000000",
-            colorLight: "#ffffff",
-            correctLevel: QRCode.CorrectLevel.H,
-          });
-        }
-
-        function showModal() {
-          modalContainer.classList.add("active");
-          modalBackdrop.classList.add("active");
-          document.body.style.overflow = "hidden";
-          if (!qrcode) initQRCode(IOS_STORE_URL);
-        }
-
-        function hideModal() {
-          modalContainer.classList.remove("active");
-          modalBackdrop.classList.remove("active");
-          document.body.style.overflow = "";
-        }
-
-        function isMobileDevice() {
-          return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-            navigator.userAgent,
-          );
-        }
-
-        function isAndroidDevice() {
-          return /Android/i.test(navigator.userAgent);
-        }
-
-        function isIOSDevice() {
-          return /iPhone|iPad|iPod/i.test(navigator.userAgent);
-        }
-
-        // Auto-redirect mobile visitors straight to their app store. The
-        // instructions below stay visible as a backup if the redirect is
-        // blocked, or on desktop where there is no store to open.
-        if (isAndroidDevice()) {
-          window.location.replace(ANDROID_STORE_URL);
-        } else if (isIOSDevice()) {
-          window.location.replace(IOS_STORE_URL);
-        }
-
-        modalTabs.forEach(function (tab) {
-          tab.addEventListener("click", function () {
-            modalTabs.forEach(function (t) {
-              t.classList.remove("active");
-            });
-            tab.classList.add("active");
-            var platform = tab.dataset.platform;
-            var url = platform === "ios" ? IOS_STORE_URL : ANDROID_STORE_URL;
-            initQRCode(url);
-          });
-        });
-
-        modalClose.addEventListener("click", hideModal);
-        modalBackdrop.addEventListener("click", hideModal);
-
-        document.addEventListener("click", function (e) {
-          if (e.target.closest(".download-btn")) {
-            e.preventDefault();
-            if (isMobileDevice()) {
-              if (isAndroidDevice()) {
-                window.location.href = ANDROID_STORE_URL;
-              } else if (isIOSDevice()) {
-                window.location.href = IOS_STORE_URL;
-              }
-            } else {
-              showModal();
-            }
-          }
-        });
-      }
-      document.addEventListener("DOMContentLoaded", renderDownloadRedirect);
-
-      // On back-navigation the page is restored from bfcache in whatever
-      // half-rendered state the mobile redirect abandoned it in (lucide icons
-      // never swapped in). Re-run icon rendering so the page looks complete.
-      window.addEventListener("pageshow", function (e) {
-        if (e.persisted && window.lucide) lucide.createIcons();
-      });
-    </script>
   </body>
 </html>
