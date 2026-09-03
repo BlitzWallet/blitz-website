@@ -109,9 +109,9 @@ export const postList = [
   },
   {
     type: "Learn", // Can be "Release", "Learn", or "Podcast"
-    title: "How to create a Bitcoin Wallet",
+    title: "Walkthrough: Creating My First Wallet in Blitz",
     description:
-      "Lean how you can start sending and receiving Bitcoin instantly.",
+      "A first-person walkthrough of creating a wallet in Blitz. New to Bitcoin? Start with the beginner guide first.",
     htmlPageLink: "/pages/blog/how-to-create-a-bitcoin-wallet",
     searchName: "how-to-create-a-bitcoin-wallet",
     readingLengthEST: 3, //In minutes

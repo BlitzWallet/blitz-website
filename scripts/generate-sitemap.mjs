@@ -108,6 +108,21 @@ const staticPages = [
     file: "learn/how-to-receive-bitcoin/index.html",
     priority: "0.90",
   },
+  {
+    loc: "/learn/best-bitcoin-wallet-for-beginners/",
+    file: "learn/best-bitcoin-wallet-for-beginners/index.html",
+    priority: "0.90",
+  },
+  {
+    loc: "/learn/send-bitcoin-to-friends/",
+    file: "learn/send-bitcoin-to-friends/index.html",
+    priority: "0.90",
+  },
+  {
+    loc: "/learn/what-is-seed-phrase/",
+    file: "learn/what-is-seed-phrase/index.html",
+    priority: "0.90",
+  },
 ];
 
 const blogPages = postList.map((p) => {

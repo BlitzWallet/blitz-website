@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="canonical"
+      href="https://blitzwalletapp.com/learn/what-is-seed-phrase/"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>What Are 12 Words? Seed Phrase for Beginners</title>
+    <meta
+      name="description"
+      content="Those 12 words are your Bitcoin backup. Learn what a seed phrase is, how to store it, and how to recover your Blitz Wallet if you lose your phone."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/learn/what-is-seed-phrase/"
+    />
+    <meta
+      property="og:title"
+      content="What Are 12 Words? Seed Phrase for Beginners"
+    />
+    <meta
+      property="og:description"
+      content="Your 12 words are the only backup that matters. What they are, where to keep them, and how recovery works."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="What Are 12 Words? Seed Phrase for Beginners"
+    />
+    <meta
+      property="twitter:description"
+      content="Plain English guide to seed phrases, storage, and recovery."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "What Are 12 Words? Seed Phrase for Beginners",
+        "description": "Plain English guide to seed phrases: what 12 words are, how to store them, and how to recover a Blitz Wallet after losing a phone.",
+        "url": "https://blitzwalletapp.com/learn/what-is-seed-phrase/",
+        "datePublished": "2026-09-03",
+        "dateModified": "2026-09-03",
+        "author": { "@type": "Organization", "name": "Blitz Wallet" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Blitz Wallet",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://blitzwalletapp.com/public/BlitzFull.png"
+          }
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Back Up and Recover 12 Words",
+        "description": "Write down your 12-word seed phrase, store it safely, and use it to recover your Blitz Wallet on a new phone.",
+        "totalTime": "PT5M",
+        "tool": [
+          { "@type": "HowToTool", "name": "Pen and paper" },
+          {
+            "@type": "HowToTool",
+            "name": "Blitz Wallet app (iOS, Android or web)"
+          }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Write the 12 words on paper",
+            "text": "When Blitz shows your 12 words, copy them by hand in exact order, numbered 1 to 12. Use pen and paper, not a screenshot.",
+            "url": "https://blitzwalletapp.com/learn/what-is-seed-phrase/#step-1"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Check every word twice",
+            "text": "Read the paper back against the screen. One wrong word can block recovery. Fix mistakes now while the screen is still open.",
+            "url": "https://blitzwalletapp.com/learn/what-is-seed-phrase/#step-2"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Store the paper somewhere safe",
+            "text": "Keep it offline in a dry, private place only you can reach, like a locked drawer or safe. Never store it in photos, notes apps, email, or cloud drives.",
+            "url": "https://blitzwalletapp.com/learn/what-is-seed-phrase/#step-3"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Recover on a new phone if yours is lost",
+            "text": "Install Blitz on the new phone, choose Restore, and type the 12 words in order. Your balance and history return. You can also use the open-source recovery tool.",
+            "url": "https://blitzwalletapp.com/learn/what-is-seed-phrase/#step-4"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Learn",
+            "item": "https://blitzwalletapp.com/learn/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "What Is a Seed Phrase",
+            "item": "https://blitzwalletapp.com/learn/what-is-seed-phrase/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a seed phrase in simple terms?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It is a list of 12 ordinary words that acts as the master key to your Bitcoin. Anyone with those words in the right order can open your wallet on any phone. That is why you write them on paper and never share them."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens if I lose my phone but kept my 12 words?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nothing is lost. Install Blitz on a new phone, choose Restore, and type the 12 words in order. Your balance returns. Your money lives on Bitcoin, not on the old phone."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens if I lose my 12 words?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You lose access to the money. No one can reset it for you, not even Blitz. There is no support ticket that brings it back. Guard those words like cash."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I screenshot my seed phrase or save it online?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Screenshots sync to cloud backups and photo apps where hackers look first. Write the words on paper with a pen and keep the paper offline in a private, dry place."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Will Blitz ever ask for my 12 words?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Never. Blitz support will never ask for them. Any person, site, or message asking for your words is a scam. Only type them into the official Blitz restore screen or the open-source recovery tool."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How is this different from a bank password?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A bank can reset your password because the bank holds your money. With self-custody, you hold the money, so there is nothing to reset. The 12 words replace both the password and the bank."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/learn/" class="active">Learn</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>What are <span>12 words?</span></h1>
+          <p class="lead">
+            When you make a Blitz wallet, you get 12 ordinary words. Those words
+            are your money's only backup. Here is what they mean in plain
+            English.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn-primary download-btn"
+              >Get Blitz and save yours <i data-lucide="arrow-right"></i
+            ></a>
+            <a href="/pages/self-custody/" class="btn-secondary"
+              >What self-custody means</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Plain English</span>
+            <h2 id="what-is-a-seed-phrase">What is a seed phrase?</h2>
+            <p>
+              A seed phrase is a master key written as words. Blitz gives you 12
+              of them. Together they can rebuild your wallet on any phone.
+            </p>
+          </div>
+          <div class="card-grid cols-3">
+            <article class="card">
+              <div class="icon"><i data-lucide="key-round"></i></div>
+              <h3>It is your key, not your password</h3>
+              <p>
+                A password can be reset by a company. These words cannot. They
+                create your keys right on your phone. Blitz never sees them.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="smartphone"></i></div>
+              <h3>Your money is not on your phone</h3>
+              <p>
+                Your Bitcoin lives in the network. Your phone just holds the
+                key. Lose the phone and the money still sits there, waiting for
+                your words.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="copy"></i></div>
+              <h3>Same words, same wallet</h3>
+              <p>
+                Type the same 12 words in order on any phone and the same wallet
+                opens. That is how recovery works. It is also why sharing them
+                gives everything away.
+              </p>
+            </article>
+          </div>
+          <div class="security-warning">
+            <div class="security-warning-icon">
+              <i data-lucide="triangle-alert"></i>
+            </div>
+            <div>
+              <h3>Never share your 12 words</h3>
+              <p>
+                Blitz support will never ask for them. No giveaway, helper, or
+                website needs them. Anyone who asks is trying to steal your
+                money.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Do this once</span>
+            <h2>Back up your words in 4 steps</h2>
+            <p>Do it the day you create your wallet. It takes five minutes.</p>
+          </div>
+          <div class="steps receive-steps" aria-label="How to back up 12 words">
+            <div class="step" id="step-1">
+              <h3>Write them on paper</h3>
+              <p class="step-summary">
+                Copy all 12 words by hand in exact order. Number them 1 to 12.
+                Use pen and paper. No screenshots. No typing into notes apps.
+              </p>
+            </div>
+            <div class="step" id="step-2">
+              <h3>Check every word twice</h3>
+              <p class="step-summary">
+                Read the paper back against the screen. One wrong word can lock
+                you out. Fix mistakes now while the screen is still open.
+              </p>
+            </div>
+            <div class="step" id="step-3">
+              <h3>Store the paper offline</h3>
+              <p class="step-summary">
+                Keep it somewhere dry and private that only you can reach. A
+                locked drawer or safe works. Never in photos, email, or cloud
+                drives.
+              </p>
+            </div>
+            <div class="step step-wide" id="step-4">
+              <h3>Lose your phone? Restore with the words</h3>
+              <p class="step-summary">
+                Install Blitz on the new phone. Choose Restore. Type the 12
+                words in order. Your balance and history come back. You can also
+                recover with the open-source
+                <a
+                  href="https://recover.blitzwalletapp.com"
+                  target="_blank"
+                  rel="noopener"
+                  >recovery tool</a
+                >
+                if Blitz is ever gone.
+              </p>
+            </div>
+            <div class="step step-wide step-dark" style="grid-column: span 3">
+              <h3>Lose the words? You lose the money</h3>
+              <p class="step-summary">
+                Say it plainly. No words means no recovery. No support ticket
+                fixes it. This is the price of owning your money outright, and
+                the paper backup is how you pay it safely.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Right and wrong</span>
+            <h2>Store it right</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th>Habit</th>
+                  <th>Verdict</th>
+                  <th>Why</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Pen and paper in a safe place</td>
+                  <td class="check">Do this</td>
+                  <td>Offline. Hackers cannot reach paper.</td>
+                </tr>
+                <tr>
+                  <td>Second copy with someone you trust</td>
+                  <td class="check">Smart for large amounts</td>
+                  <td>Fire or flood will not take both copies.</td>
+                </tr>
+                <tr>
+                  <td>Screenshot or phone photos</td>
+                  <td>Never</td>
+                  <td>Photos sync to the cloud where thieves look first.</td>
+                </tr>
+                <tr>
+                  <td>Notes app, email, or cloud drive</td>
+                  <td>Never</td>
+                  <td>One hacked account gives away everything.</td>
+                </tr>
+                <tr>
+                  <td>Typing words into any website</td>
+                  <td>Never</td>
+                  <td>
+                    Only the Blitz app restore screen or the official recovery
+                    tool ever need them.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Reading words aloud on a call</td>
+                  <td>Never</td>
+                  <td>Support will never ask. Scammers always do.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>Questions beginners ask</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>What is a seed phrase in simple terms?</h3>
+              <p>
+                Twelve ordinary words that act as the master key to your
+                Bitcoin. Whoever has them in order can open your wallet.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What if I lose my phone?</h3>
+              <p>
+                Install Blitz on a new phone, choose Restore, type the 12 words.
+                Your balance returns.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What if I lose the 12 words?</h3>
+              <p>
+                You lose access. No one can reset them, not even Blitz. Guard
+                them like cash.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can I screenshot them?</h3>
+              <p>
+                No. Screenshots sync to cloud backups where hackers look. Paper
+                and pen only.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Will Blitz ever ask for my words?</h3>
+              <p>
+                Never. Any message asking for them is a scam. Learn
+                <a href="/pages/self-custody/">what self-custody means</a> so
+                the rule makes sense.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>How is this different from a bank password?</h3>
+              <p>
+                A bank holds your money and can reset your login. With
+                self-custody you hold the money, so the words replace both the
+                password and the bank.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Make your backup today</h2>
+            <p>
+              Create your wallet. Write 12 words. Then you truly own your
+              Bitcoin.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a
+                href="/pages/download/#free-bitcoin-wallet-download"
+                class="btn-primary"
+                >Create your wallet <i data-lucide="arrow-right"></i
+              ></a>
+              <a href="/pages/self-custody/" class="btn-secondary"
+                >What self-custody means</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="canonical"
+      href="https://blitzwalletapp.com/learn/send-bitcoin-to-friends/"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>How to Send Bitcoin to Friends (No Address Needed)</title>
+    <meta
+      name="description"
+      content="Send Bitcoin to friends by name, link, or QR. No long addresses. Learn contacts, gifts, pools, and payment links in Blitz Wallet."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/learn/send-bitcoin-to-friends/"
+    />
+    <meta
+      property="og:title"
+      content="How to Send Bitcoin to Friends (No Address Needed)"
+    />
+    <meta
+      property="og:description"
+      content="Pay contacts by name for free. Send gift links. Collect with pools. No long addresses, no stress."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="How to Send Bitcoin to Friends (No Address Needed)"
+    />
+    <meta
+      property="twitter:description"
+      content="Contacts, gifts, pools, and payment links. Send Bitcoin like a text."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "How to Send Bitcoin to Friends (No Address Needed)",
+        "description": "Send Bitcoin to friends by contact name, gift link, pool, or payment link in Blitz Wallet. No long addresses needed.",
+        "url": "https://blitzwalletapp.com/learn/send-bitcoin-to-friends/",
+        "datePublished": "2026-09-03",
+        "dateModified": "2026-09-03",
+        "author": { "@type": "Organization", "name": "Blitz Wallet" },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Blitz Wallet",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://blitzwalletapp.com/public/BlitzFull.png"
+          }
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Send Bitcoin to Friends in Blitz Wallet",
+        "description": "Pay a Blitz contact by name, send a gift link, or collect with a pool. No Bitcoin address needed.",
+        "totalTime": "PT2M",
+        "estimatedCost": {
+          "@type": "MonetaryAmount",
+          "currency": "USD",
+          "value": "0"
+        },
+        "tool": [
+          {
+            "@type": "HowToTool",
+            "name": "Blitz Wallet app (iOS, Android or web)"
+          }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Add your friend as a contact",
+            "text": "Open Blitz, go to Contacts, and add your friend by their Blitz username or Lightning Address. You only do this once.",
+            "url": "https://blitzwalletapp.com/learn/send-bitcoin-to-friends/#step-1"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Pick their name and enter an amount",
+            "text": "Tap Send, choose your friend's name, enter the amount in dollars or sats, and check the screen. Blitz-to-Blitz contact payments carry no Blitz fee.",
+            "url": "https://blitzwalletapp.com/learn/send-bitcoin-to-friends/#step-2"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Confirm and it arrives in seconds",
+            "text": "Swipe or tap to confirm. Your friend gets a notification and the money lands in seconds, even across borders.",
+            "url": "https://blitzwalletapp.com/learn/send-bitcoin-to-friends/#step-3"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "No Blitz yet? Send a gift link instead",
+            "text": "Create a gift, set an amount and expiry, and share the link. Your friend creates a Blitz wallet from the link and claims it. Reclaim it yourself if it expires unclaimed.",
+            "url": "https://blitzwalletapp.com/learn/send-bitcoin-to-friends/#step-4"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Learn",
+            "item": "https://blitzwalletapp.com/learn/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "How to Send Bitcoin to Friends",
+            "item": "https://blitzwalletapp.com/learn/send-bitcoin-to-friends/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can I send Bitcoin to a friend who has no wallet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Send a Blitz gift link. Your friend taps it, creates a free Blitz wallet, and claims the money. Set an amount and expiry when you create it, and reclaim it if they never claim."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do I need my friend's Bitcoin address?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. If they use Blitz, save them as a contact and pay by name. If they use another wallet, ask for their Lightning Address (like name@wallet.com) or scan their QR code."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does it cost to send Bitcoin to friends?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Blitz-to-Blitz contact payments carry no Blitz fee. Lightning and Spark payments cost a tiny network fee, usually under a cent. On-chain sends cost a miner fee that changes with network traffic. Blitz shows every fee before you confirm."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How fast does my friend get the money?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Contact, Lightning, and Spark payments land in seconds, even across borders. On-chain payments take 10 to 60 minutes to confirm on the Bitcoin network."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I collect money from a group of friends?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Create a Blitz pool, set a goal, and share one link. Everyone contributes from any compatible wallet. You watch progress live and withdraw to your wallet when ready."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What if I send Bitcoin to the wrong person?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bitcoin payments cannot be reversed. Always check the name, amount, and currency before you confirm. For new contacts, send a small test first. Gift links are safer: you can reclaim them if unclaimed."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/learn/" class="active">Learn</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>Send Bitcoin to friends <span>with no address</span></h1>
+          <p class="lead">
+            Pick a name. Enter an amount. Done. No long codes. No copy paste
+            mistakes. It lands in seconds.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn-primary download-btn"
+              >Get Blitz to send <i data-lucide="arrow-right"></i
+            ></a>
+            <a href="/pages/gifts/" class="btn-secondary">Send a gift link</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Pick your way</span>
+            <h2>Four ways to pay someone</h2>
+            <p>Same wallet. Same money. Just choose what fits the moment.</p>
+          </div>
+          <div class="table-wrap">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Use it when</th>
+                  <th>Cost</th>
+                  <th>Speed</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Contact payment</strong><br /><small
+                      >Pay by name</small
+                    >
+                  </td>
+                  <td>Your friend uses Blitz. Best for repeats.</td>
+                  <td class="check">No Blitz fee</td>
+                  <td class="check">Seconds</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Gift link</strong><br /><small
+                      >Shareable link</small
+                    >
+                  </td>
+                  <td>Your friend has no wallet yet. Birthdays too.</td>
+                  <td class="check">No Blitz fee to create</td>
+                  <td class="check">Claims in seconds</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Pool link</strong><br /><small
+                      >Group collection</small
+                    >
+                  </td>
+                  <td>Many people chip in. Trips, gifts, causes.</td>
+                  <td class="check">No Blitz fee to create</td>
+                  <td class="check">Live as it arrives</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>QR or address</strong><br /><small
+                      >Any wallet</small
+                    >
+                  </td>
+                  <td>Your friend uses another Bitcoin wallet.</td>
+                  <td>Tiny network fee</td>
+                  <td class="check">Seconds on Lightning</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Step by step</span>
+            <h2>Pay a friend in 4 steps</h2>
+            <p>No technical skill needed. Just follow the taps.</p>
+          </div>
+          <div
+            class="steps receive-steps"
+            aria-label="How to send Bitcoin to friends"
+          >
+            <div class="step" id="step-1">
+              <h3>Add your friend once</h3>
+              <p class="step-summary">
+                Go to Contacts in Blitz. Add your friend by Blitz username or
+                Lightning Address. Done once, pay forever.
+              </p>
+            </div>
+            <div class="step" id="step-2">
+              <h3>Pick a name and amount</h3>
+              <p class="step-summary">
+                Tap Send. Choose their name. Enter dollars or sats. Check the
+                screen. Blitz to Blitz carries no Blitz fee.
+              </p>
+            </div>
+            <div class="step" id="step-3">
+              <h3>Confirm and it lands in seconds</h3>
+              <p class="step-summary">
+                Swipe to confirm. Your friend gets a ping. Money arrives in
+                seconds, across the street or across the world.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Real examples</span>
+            <h2>When to use which</h2>
+          </div>
+          <div class="beginner-examples">
+            <article class="card">
+              <div class="icon"><i data-lucide="users"></i></div>
+              <h3>Split dinner</h3>
+              <p>
+                Both use Blitz. One person pays the bill. The rest send their
+                share by contact name. Free. Settled before you leave the table.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="gift"></i></div>
+              <h3>Birthday sats</h3>
+              <p>
+                Your cousin has no wallet. Send a gift link with 10 dollars in
+                Bitcoin. They claim it in minutes. You reclaim it if they never
+                do.
+              </p>
+            </article>
+
+            <article class="card">
+              <div class="icon"><i data-lucide="globe"></i></div>
+              <h3>Family abroad</h3>
+              <p>
+                Send money home without wire fees or waiting days. Contact
+                payments cross borders like a text. Your family keeps it as
+                dollars or Bitcoin, their choice.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="qr-code"></i></div>
+              <h3>Friend on another wallet</h3>
+              <p>
+                They send you a QR or Lightning Address from Phoenix, Cash App,
+                or any compatible wallet. You scan and pay. It still lands in
+                seconds.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>Common questions</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>Can I send Bitcoin to a friend with no wallet?</h3>
+              <p>
+                Yes. Send a gift link. They tap it, make a free Blitz wallet,
+                and claim the money.
+                <a href="/pages/gifts/">How gifts work</a>.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Do I need my friend's Bitcoin address?</h3>
+              <p>
+                No. Save them as a contact and pay by name. For other wallets,
+                use their Lightning Address or QR code instead.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What does it cost?</h3>
+              <p>
+                Blitz to Blitz contact payments carry no Blitz fee. Lightning
+                cost a tiny network fee. On-chain costs a miner fee that moves
+                with traffic. You see it before you confirm.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>How fast is it?</h3>
+              <p>
+                Contact, Lightning, and Spark payments land in seconds. On-chain
+                takes 30+ minutes to confirm.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What if I pay the wrong person?</h3>
+              <p>
+                Bitcoin payments cannot be undone. Check the name and amount
+                first. Send a small test for new contacts.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Pay your first friend today</h2>
+            <p>
+              Create your wallet. Add one contact. Send one dollar. See how fast
+              it lands.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a
+                href="/pages/download/#free-bitcoin-wallet-download"
+                class="btn-primary"
+                >Create your wallet <i data-lucide="arrow-right"></i
+              ></a>
+              <a href="/pages/self-custody/" class="btn-secondary"
+                >What self-custody means</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>
