@@ -68,7 +68,7 @@ export const designCss = /* css */ `
   .btn-secondary {
     min-height: 48px;
     padding: 0.9rem 1.25rem;
-    border-radius: var(--radius-card);
+    border-radius: var(--radius-pill);
     display: inline-flex;
     align-items: center;
     justify-content: center;

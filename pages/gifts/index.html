@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://blitzwalletapp.com/pages/gifts/" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>Bitcoin Gifts: Send BTC to Anyone with a Link | Blitz Wallet</title>
+    <meta
+      name="description"
+      content="Send Bitcoin or USDB gifts with a shareable link. Set an amount and expiry, have the recipient claim in Blitz, and reclaim funds if it expires."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blitzwalletapp.com/pages/gifts/" />
+    <meta
+      property="og:title"
+      content="Bitcoin Gifts: Send BTC to Anyone with a Link"
+    />
+    <meta
+      property="og:description"
+      content="Create a gift link in seconds. The recipient claims in Blitz, and you can reclaim funds after expiry."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="Bitcoin Gifts: Send BTC to Anyone with a Link"
+    />
+    <meta
+      property="twitter:description"
+      content="Send Bitcoin gifts through a link."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Bitcoin Gifts: Send BTC to Anyone with a Link",
+        "description": "How Blitz Gifts work: create link, share, recipient claims.",
+        "url": "https://blitzwalletapp.com/pages/gifts/"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Bitcoin Gifts",
+            "item": "https://blitzwalletapp.com/pages/gifts/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Who can claim a gift?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Anyone with a Blitz wallet can claim it. A new recipient can open the link, create a wallet in Blitz, and then tap Claim."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What if it expires?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "After expiry, tap Reclaim in Blitz to return the funds to your wallet. Reclaiming is an action you take; the funds do not return automatically."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I send dollars?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Choose USD as the denomination when you create the gift. It sends as USDB."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are gifts free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "There is no extra Blitz gift fee. Standard send fees apply; they are tiny for Spark or Lightning and variable for on-chain payments."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are there gift limits or denominations?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The app shows the available amount, denomination, quantity, and expiry options when you create a gift. Review those settings before confirming because the gift link represents the selected BTC or USD denomination."
+            }
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to send a Bitcoin gift link",
+        "description": "Create a BTC or USD gift, share its link, and reclaim it if it expires unclaimed.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Choose the gift settings",
+            "text": "Set the amount, choose BTC or USD, select quantity and duration, and add a description."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Share the claim link",
+            "text": "Send the gift link by chat, text, or email."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Claim or reclaim",
+            "text": "The recipient opens the link in Blitz and claims it. After expiry, tap Reclaim to return unclaimed funds to your wallet."
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>Send <span>Bitcoin gifts</span> with a link</h1>
+          <p class="lead">
+            Create a gift in seconds and share the link in any chat.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn-primary download-btn"
+              >Create a gift <i data-lucide="gift"></i
+            ></a>
+            <a href="/features/" class="btn-secondary">How else can I send?</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">How it works</span>
+            <h2>Create gifts in seconds, claim with Blitz</h2>
+            <p>
+              Make one or many gifts at once. The person who gets the link needs
+              a Blitz wallet to claim it. If they are new, they can create one
+              from the link. If the gift expires, you can reclaim it in the app.
+            </p>
+          </div>
+          <div
+            class="steps receive-steps receive-steps"
+            aria-label="How to send a gift in Blitz"
+          >
+            <div class="step">
+              <h3>Choose the gift</h3>
+              <p>
+                Choose the amount and <strong>USD or BTC</strong> denomination,
+                set the quantity and duration, and add a short description.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Share the link</h3>
+              <p>
+                Blitz creates a claim link such as
+                <code>blitzwalletapp.com/gift/abc…</code>. Send it by WhatsApp,
+                SMS, or email.
+              </p>
+            </div>
+            <div class="step">
+              <h3>They claim, or you reclaim</h3>
+              <p>
+                The recipient opens the link in Blitz and claims the gift. If it
+                expires first, tap Reclaim to return the funds to your wallet.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Before you send</span>
+            <h2>Set the rules while you create the link</h2>
+            <p>
+              A gift is a specific amount with a specific expiry. Confirm the
+              denomination and duration before you share it, and remember that
+              the recipient must claim in Blitz.
+            </p>
+          </div>
+          <div class="card-grid cols-2">
+            <article class="card">
+              <h3>BTC or USD denomination</h3>
+              <p>
+                Choose BTC when you want the recipient to receive Bitcoin, or
+                USD when you want the gift to use USDB. The selected
+                denomination is part of the gift setup.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Expiry is not automatic reclaim</h3>
+              <p>
+                When the gift expires, it becomes eligible for reclaim. Open
+                Blitz and tap Reclaim to return the funds to your wallet.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Why gifts</span>
+            <h2>The easiest on-ramp for friends & family</h2>
+          </div>
+          <div class="card-grid cols-3">
+            <article class="card">
+              <div class="icon"><i data-lucide="sliders-horizontal"></i></div>
+              <h3>Full control when you create</h3>
+              <p>
+                Set amount, denomination (USD or BTC), quantity, duration, and
+                description. Blitz handles the rest.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="timer"></i></div>
+              <h3>Reclaim if unclaimed</h3>
+              <p>
+                If the gift expires, reclaim it. Funds come back to your wallet
+                so nothing is lost.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="layers"></i></div>
+              <h3>Bulk gifts</h3>
+              <p>
+                Create many gifts at once with the same settings. Great for
+                referrals, events, or team rewards.
+              </p>
+            </article>
+          </div>
+          <div class="card space-top">
+            <h3>Great for:</h3>
+            <p>
+              Use Gifts for birthdays, creator tips, staff bonuses, and sending
+              money to friends who are new to Bitcoin.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Compare</span>
+            <h2>Gifts vs other ways to send</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Needs recipient wallet?</th>
+                  <th>Can reclaim?</th>
+                  <th>Best for</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Blitz Gift link</td>
+                  <td class="check">Yes, or create one from the link</td>
+                  <td class="check">Yes, after expiry</td>
+                  <td>Introducing someone new</td>
+                </tr>
+                <tr>
+                  <td>Contact payment</td>
+                  <td>Recipient must be a contact</td>
+                  <td class="dash">Not applicable</td>
+                  <td>Friends already on Blitz</td>
+                </tr>
+                <tr>
+                  <td>Lightning invoice</td>
+                  <td>Yes, they create it</td>
+                  <td class="dash">No</td>
+                  <td>A one-time payment to a Lightning user</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>Quick answers</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>Who can claim a gift?</h3>
+              <p>
+                Anyone with a Blitz wallet can claim it. A new recipient can
+                open the link, create a wallet in Blitz, and then tap Claim.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What if it expires?</h3>
+              <p>
+                After expiry, tap Reclaim in Blitz to return the funds to your
+                wallet. Reclaiming is an action you take; the funds do not
+                return automatically.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can I send dollars?</h3>
+              <p>
+                Yes. Choose USD as the denomination when you create the gift. It
+                sends as USDB.
+                <a href="/pages/stablecoins/">Learn about USDB</a> or
+                <a href="/pages/dollar-goals/">Dollar Goals</a>.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Are gifts free?</h3>
+              <p>
+                No extra Blitz gift fee. Standard send fees apply (tiny for
+                <a
+                  href="https://docs.spark.money"
+                  target="_blank"
+                  rel="noopener"
+                  >Spark</a
+                >/Lightning, variable for on-chain).
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Are there gift limits or denominations?</h3>
+              <p>
+                The app shows the available amount, denomination, quantity, and
+                expiry options when you create a gift. Review those settings
+                before confirming because the gift link represents the selected
+                BTC or USD denomination.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Send your first gift</h2>
+            <p>
+              Pick a BTC or USDB amount, add a note, set an expiry, and share
+              the link. The recipient claims in Blitz.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a href="#" class="btn-primary download-btn"
+                >Open Blitz & create gift <i data-lucide="gift"></i
+              ></a>
+              <a href="/pages/pools/" class="btn-secondary"
+                >Or collect as a group →</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

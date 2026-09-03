@@ -7,6 +7,12 @@ mobileMenu.addEventListener("click", () => {
   const spans = mobileMenu.querySelectorAll("span");
   const isActive = navLinks.classList.contains("active");
 
+  mobileMenu.setAttribute("aria-expanded", String(isActive));
+  mobileMenu.setAttribute(
+    "aria-label",
+    isActive ? "Close navigation menu" : "Open navigation menu",
+  );
+
   spans[0].style.transform = isActive ? "translateY(9px) rotate(45deg)" : "";
 
   spans[1].style.opacity = isActive ? "0" : "1";

@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="canonical"
+      href="https://blitzwalletapp.com/pages/spend-and-replace/"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>
+      Spend and Replace: Auto-Buy Back Bitcoin When You Spend | Blitz
+    </title>
+    <meta
+      name="description"
+      content="Spend Bitcoin and automatically buy it back from your USDB balance. Blitz skips swaps under $1, uses your full available dollar balance when needed, and lets you turn it off anytime."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/pages/spend-and-replace/"
+    />
+    <meta
+      property="og:title"
+      content="Spend and Replace: Auto-Buy Back Bitcoin When You Spend"
+    />
+    <meta
+      property="og:description"
+      content="When you spend Bitcoin, Blitz uses dollars from your USDB balance to buy it back."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="Spend and Replace: Keep Your BTC Balance"
+    />
+    <meta
+      property="twitter:description"
+      content="Spend BTC, replace from dollars automatically."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Spend and Replace: Auto-Buy Back Bitcoin When You Spend",
+        "description": "How Spend and Replace works.",
+        "url": "https://blitzwalletapp.com/pages/spend-and-replace/"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Spend and Replace",
+            "item": "https://blitzwalletapp.com/pages/spend-and-replace/"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Spend in BTC, <span>replace from dollars</span></h1>
+        <p class="lead">
+          When you spend Bitcoin, Blitz takes the same amount from your
+          <a href="/pages/stablecoins/">USDB</a> balance, and buys back Bitcoin
+          for you.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn-primary download-btn"
+            >Turn on Spend and Replace <i data-lucide="repeat-2"></i
+          ></a>
+          <a href="/pages/dollar-goals/" class="btn-secondary">Dollar Goals</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">How it works</span>
+          <h2>What happens after you pay</h2>
+        </div>
+        <div class="card-grid cols-3">
+          <div class="card">
+            <div class="icon"><i data-lucide="arrow-up-right"></i></div>
+            <h3>You spend Bitcoin</h3>
+            <p>
+              Send to a contact, a gift, on-chain, Stablecoins or a QR code.
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon"><i data-lucide="refresh-cw"></i></div>
+            <h3>Blitz buys back Bitcoin</h3>
+            <p>
+              Blitz takes the same dollar amount from your USDB balance and
+              swaps it for Bitcoin.
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon"><i data-lucide="info"></i></div>
+            <h3>If your dollar balance is low</h3>
+            <p>
+              If you have less in dollars than you spent, Blitz uses your full
+              dollar balance instead. If the amount is under $1, Blitz skips the
+              swap.
+            </p>
+          </div>
+        </div>
+        <div class="table-wrap space-top">
+          <table class="compare">
+            <thead>
+              <tr>
+                <th>Spent</th>
+                <th>Dollar balance</th>
+                <th>What happens</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>$5 in BTC</td>
+                <td>$20</td>
+                <td class="check">Swaps $5 for BTC</td>
+              </tr>
+              <tr>
+                <td>$20 in BTC</td>
+                <td>$10</td>
+                <td class="check">Swaps your full $10 for BTC</td>
+              </tr>
+              <tr>
+                <td>$0.50 in BTC</td>
+                <td>$20</td>
+                <td class="dash">No swap. Under $1</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="space-top">
+          <strong>Tax note:</strong> Selling or swapping BTC may be a taxable
+          event in some countries, including the United States. Keep your
+          transaction records and ask a qualified local tax professional how the
+          rule applies to you.
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">Why use it</span>
+          <h2>Spend without lowering your Bitcoin balance</h2>
+        </div>
+        <div class="card-grid cols-2">
+          <div class="card">
+            <h3>Keep your Bitcoin amount</h3>
+            <p>
+              Spend when you need to. Blitz refills the same amount from dollars
+              so your Bitcoin balance stays steady.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Turn it on once</h3>
+            <p>
+              You do not need to do anything for each payment. Turn it off
+              whenever you want.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="section-inner">
+        <div class="cta-band">
+          <h2>Try it with your next payment</h2>
+          <p>
+            Turn on Spend and Replace and send $5 in Bitcoin. Blitz will use
+            dollars to buy back the same amount.
+          </p>
+          <div class="hero-actions actions-centered">
+            <a href="#" class="btn-primary download-btn"
+              >Open Blitz <i data-lucide="arrow-right"></i
+            ></a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

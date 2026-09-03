@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://blitzwalletapp.com/pages/faq/" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>Blitz Wallet FAQ: Straight Answers to Common Questions</title>
+    <meta
+      name="description"
+      content="Answers to common Blitz Wallet questions about self-custody, fees, Spark and Lightning, USDB, gifts, pools, payment links, recovery, and support."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blitzwalletapp.com/pages/faq/" />
+    <meta
+      property="og:title"
+      content="Blitz Wallet FAQ: Straight Answers to Common Questions"
+    />
+    <meta
+      property="og:description"
+      content="Self-custody, fees, Spark & Lightning, USDB, gifts, pools, paylinks and more."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="Blitz Wallet FAQ: Straight Answers to Common Questions"
+    />
+    <meta
+      property="twitter:description"
+      content="Common Blitz questions, answered in plain English."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Blitz Wallet?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Blitz Wallet is a self-custodial global payments app for iOS, Android and web. Pay contacts for free, send Gifts, collect Pools, create Paylinks, swap BTC and USDB, and accept payments as a merchant."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is Blitz self-custodial?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. You hold 12 words that generate your keys on device. Blitz and Spark cannot move funds without you."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is it free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The app is free. Blitz-to-Blitz contact payments have no Blitz fee. Spark/Lightning fees are tiny and shown before you send. Swaps have a small fee via Flashnet. There is no monthly fee."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is USDB?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "USDB is a USD-pegged stablecoin on Spark, issued by Brale, backed 1:1 by Treasuries and cash equivalents. Hold 10 or more USDB to earn up to 6% back, paid daily in BTC. Program terms can change, so check the app. Stablecoins carry issuer and platform risk."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I get paid while offline?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes for Spark/Lightning-supported payments. Nothing to keep online."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What if I lose my phone?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Restore with your 12 words in Blitz or the open-source recovery tool. Funds return. Lose the words and you lose access to the funds."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are Blitz fees for gifts versus Pools?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "There is no extra Blitz fee to create a gift or Pool. The underlying Lightning, Spark, on-chain, or stablecoin network fee still applies and is shown before confirmation."
+            }
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "FAQ",
+            "item": "https://blitzwalletapp.com/pages/faq/"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>Frequently asked <span>questions</span></h1>
+          <p class="lead">
+            Quick, honest answers. If you do not see yours,
+            <a href="/pages/contact/">contact us</a>. We will help.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn-primary download-btn"
+              >Try Blitz now <i data-lucide="arrow-right"></i
+            ></a>
+            <a href="/features/" class="btn-secondary">See features</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">The basics</span>
+            <h2>Start here</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>What is Blitz Wallet?</h3>
+              <p>
+                Blitz is a self-custodial wallet for everyday payments on mobile
+                and web. Pay contacts, send gifts, collect money with Pools,
+                create payment links, swap to USDB, or accept payments as a
+                merchant.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Is Blitz self-custodial?</h3>
+              <p>
+                Yes. Your 12-word backup generates your keys on your device.
+                Neither Blitz nor Spark can move your funds. Back up the words
+                on paper. See
+                <a href="/pages/self-custody/">how self-custody works</a>.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Is it free?</h3>
+              <p>
+                The app is free. However some supported payment types have a
+                small fee associated with thenm.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Which devices work?</h3>
+              <p>
+                iOS (App Store), Android (Play Store + Zapstore), and any
+                browser via
+                <a href="https://wallet.blitzwalletapp.com"
+                  >wallet.blitzwalletapp.com</a
+                >. Same wallet logic everywhere.
+                <a href="/pages/download/">Download options</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Payments</span>
+            <h2>How paying works</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>What is Spark & Lightning?</h3>
+              <p>
+                Lightning is Bitcoin’s instant Layer 2.
+                <a
+                  href="https://docs.spark.money"
+                  target="_blank"
+                  rel="noopener"
+                  >Spark</a
+                >
+                is a newer Bitcoin Layer 2 by Lightspark using statechains +
+                FROST signatures that makes Lightning easy: no channel
+                management, offline receive, under-a-second settlement.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can I pay any Lightning QR?</h3>
+              <p>
+                Yes. One scanner handles BOLT11, LNURL, Lightning addresses,
+                on-chain invoices, and Spark invoices. You can also receive at
+                <code>you@blitzwalletapp.com</code>.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What are Gifts, Pools and Paylinks?</h3>
+              <p>
+                <a href="/pages/gifts/">Gifts</a> = send via a shareable link
+                that the recipient claims in Blitz.
+                <a href="/pages/pools/">Pools</a> = collect as a group with one
+                shared link. Paylinks = payment links that anyone can pay from
+                any compatible Lightning wallet or with USDT/USDC. The product
+                adds no extra gift or Pool fee, but the underlying payment or
+                network fee still applies.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Do I need the recipient’s invoice?</h3>
+              <p>
+                Not for Blitz contacts. Pick a name and send. For other people,
+                use their Lightning address or scan their QR code or invoice.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can I get paid while offline?</h3>
+              <p>Yes nothing stops you from receiving your money.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Money & stablecoins</span>
+            <h2>Bitcoin & dollars, same wallet</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>What is USDB?</h3>
+              <p>
+                USDB is a dollar-pegged stablecoin on Spark issued by
+                <a href="https://brale.xyz" target="_blank" rel="noopener"
+                  >Brale</a
+                >, backed 1:1 by Treasury bills and cash equivalents. Hold 10 or
+                more USDB to earn up to 6% back, paid daily in BTC. Program
+                terms can change, so check the app. Stablecoins carry issuer and
+                platform risk. <a href="/pages/stablecoins/">USDB details</a>.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can I use USDT & USDC?</h3>
+              <p>
+                Yes. Receive USDC or USDT via accumulation addresses on 9
+                supported networks: Arbitrum, Base, BNB Chain, Ethereum,
+                Optimism, Plasma, Polygon, Solana, and Tron. Blitz can
+                auto-convert to BTC or USDB. Swap inside Blitz via Flashnet.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Why dollars on Bitcoin?</h3>
+              <p>
+                Some people have a hard time with Bitcoin's short-term
+                volatility. Dollars can make everyday spending more stable. Hold
+                USDB for spending and Bitcoin for savings, then swap between
+                them in seconds.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Is there a fee to hold dollars?</h3>
+              <p>
+                No holding fee. Small swap fees apply. Hold 10 or more USDB to
+                earn up to 6% back, paid daily in BTC. Program terms can change,
+                so check the app. Stablecoins carry issuer and platform risk.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Security & recovery</span>
+            <h2>Keep control</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>What if I lose my phone?</h3>
+              <p>
+                Restore with your 12 words in Blitz or the open-source
+                <a href="https://recover.blitzwalletapp.com">recovery tool</a>.
+                Funds return. Lose the words = lose the funds.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Is Blitz open-source?</h3>
+              <p>
+                Yes. Apache 2.0 at
+                <a
+                  href="https://github.com/BlitzWallet/BlitzWallet"
+                  target="_blank"
+                  rel="noopener"
+                  >GitHub</a
+                >.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Do merchants pay more?</h3>
+              <p>
+                No monthly fee for Point of Sale. Same low fees as personal
+                payments. <a href="/pages/point-of-sale/">POS details</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Still have a question?</h2>
+            <p>
+              Tell us whether you are paying someone, running a business, or
+              learning. We will point you to the right guide.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a href="/pages/contact/" class="btn-primary"
+                >Contact us <i data-lucide="arrow-right"></i
+              ></a>
+              <a href="#" class="btn-secondary download-btn">Download Blitz</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

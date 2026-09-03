@@ -60,7 +60,7 @@ copy steps down the ramp (`-70` → `-60` → `-45`).
 | `--space-section` | `clamp(5rem,9vw,8rem)` | Section vertical padding |
 | `--space-gutter` | `2rem` (→ `1rem` under 680px) | Horizontal gutter |
 | `--container-max` | `1120px` | Content max-width |
-| `--radius-card` / `--radius-pill` | `8px` / `999px` | Cards & buttons / pills & badges |
+| `--radius-card` / `--radius-pill` | `8px` / `999px` | Cards & panels / buttons, pills & badges |
 | `--shadow-card` / `--shadow-nav` / `--shadow-btn` | (see file) | Cards / nav / buttons |
 | `--ease-micro` | `260ms ease` | Buttons, hovers, micro-interactions |
 | `--ease-spring` | `cubic-bezier(0.22,1.18,0.36,1)` | Signature moments (word rotate, etc.) |
@@ -79,7 +79,8 @@ updated code.
 ```
 
 Solid Blitz-blue primary with a `translateY(-2px)` lift on hover; brand-outline
-secondary for light surfaces. Do **not** rebuild buttons per page and do **not** use a
+secondary for light surfaces. All buttons use the pill radius shared by the Home and
+About references. Do **not** rebuild buttons per page and do **not** use a
 blue→green gradient (that variant is retired). The home hero ships its own over-dark
 `.btn-secondary` for placement on dark elements — that's the only sanctioned override.
 

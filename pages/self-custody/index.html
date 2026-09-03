@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="canonical"
+      href="https://blitzwalletapp.com/pages/self-custody/"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>
+      What Is a Self-Custody Bitcoin Wallet? Your Keys, Your Backup | Blitz
+    </title>
+    <meta
+      name="description"
+      content="Learn what a self-custody Bitcoin wallet means. Hold your keys, protect a 12-word backup, and recover your Blitz wallet with open-source tools."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/pages/self-custody/"
+    />
+    <meta
+      property="og:title"
+      content="What Is a Self-Custody Bitcoin Wallet? Your Keys, Your Backup"
+    />
+    <meta
+      property="og:description"
+      content="Self-custody made simple: 12 words, your keys, your Bitcoin. No bank can freeze it."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="What Is a Self-Custody Bitcoin Wallet? Your Keys, Your Backup"
+    />
+    <meta
+      property="twitter:description"
+      content="Self-custody made simple: 12 words, your keys, your Bitcoin."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Self-Custody Wallet: Your Keys, Your Money",
+        "description": "What self-custody means, how 12-word backups work, and how Blitz keeps you in control.",
+        "url": "https://blitzwalletapp.com/pages/self-custody/",
+        "author": { "@type": "Organization", "name": "Blitz Wallet" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to back up a self-custody Bitcoin wallet",
+        "description": "Back up a Blitz wallet with a 12-word BIP39 seed phrase.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Write the backup",
+            "text": "Copy the 12 words in order by hand."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Store it safely",
+            "text": "Keep the backup offline in a dry, secure place and never share it."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Test recovery",
+            "text": "Restore on another device, verify access, then remove the test copy."
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Self-Custody",
+            "item": "https://blitzwalletapp.com/pages/self-custody/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can Blitz help if I lose my backup?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. That is the point of self-custody. If Blitz could recover without the backup, it could also move your money without you. Keep the 12 words safe."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is self-custody harder to use?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Save your 12 words once. After that, Blitz works like any other payments app. You can pay contacts, send gifts, and use pools the same way."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What about large amounts?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Many people keep daily spending in Blitz and larger savings on a hardware wallet. Blitz still uses BIP39, so you can manage levels of backup as you grow."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>What <span>self-custody</span> means</h1>
+          <p class="lead">
+            A self-custody Bitcoin wallet means you hold the keys. Not a bank,
+            not an exchange, not Blitz. Your 12-word seed phrase is the backup
+            that lets you recover the wallet.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn-primary download-btn"
+              >Create self-custodial wallet <i data-lucide="arrow-right"></i
+            ></a>
+            <a href="https://recover.blitzwalletapp.com" class="btn-secondary"
+              >See recovery tool</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">The basics</span>
+            <h2>What self-custody means</h2>
+            <p>
+              Think of a safe you own. Only your key opens it. Blitz helps you
+              use it, but cannot open it for you.
+            </p>
+          </div>
+          <div class="card-grid cols-3">
+            <article class="card">
+              <div class="icon"><i data-lucide="key"></i></div>
+              <h3>You hold the keys</h3>
+              <p>
+                Your wallet is made from 12 random words on your device. Whoever
+                has those words controls the funds. Blitz and
+                <a
+                  href="https://docs.spark.money"
+                  target="_blank"
+                  rel="noopener"
+                  >Spark</a
+                >
+                cannot move them.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="lock"></i></div>
+              <h3>No freeze, no reverse</h3>
+              <p>
+                With custodial apps, a company can freeze or reverse a payment.
+                With self-custody, only you can send. Like cash in your pocket.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="refresh-cw"></i></div>
+              <h3>Recover anywhere</h3>
+              <p>
+                Enter the 12-word backup in Blitz or the open-source
+                <a
+                  href="https://github.com/BlitzWallet/spark-recover"
+                  target="_blank"
+                  rel="noopener"
+                  >spark-recover</a
+                >
+                tool. Your funds reappear. If you lose the backup, you lose the
+                funds.
+              </p>
+            </article>
+          </div>
+          <aside
+            class="security-warning"
+            role="note"
+            aria-label="Seed phrase security warning"
+          >
+            <div class="security-warning-icon" aria-hidden="true">
+              <i data-lucide="shield-alert"></i>
+            </div>
+            <div>
+              <h3>Never share your seed phrase</h3>
+              <p>
+                Only enter your 12 words when you are intentionally restoring
+                your wallet inside the official Blitz app or a trusted,
+                compatile wallet. Never type them into a website, form, chat, or
+                send them to anyone. Anyone who gets your seed phrase can take
+                your money.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Custodial vs self-custodial</span>
+            <h2>How they compare</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th>Question</th>
+                  <th>Custodial (exchange/bank)</th>
+                  <th>Blitz (self-custodial)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Who holds the keys?</td>
+                  <td>Company</td>
+                  <td class="check">You, with 12 words</td>
+                </tr>
+                <tr>
+                  <td>Can they freeze your account?</td>
+                  <td>Yes</td>
+                  <td class="check">No, only you can send</td>
+                </tr>
+                <tr>
+                  <td>If company closes?</td>
+                  <td>Wait for withdrawal</td>
+                  <td class="check">
+                    Restore on another Spark compatible wallet or our
+                    open-source tool
+                  </td>
+                </tr>
+                <tr>
+                  <td>If you lose backup?</td>
+                  <td>Reset password</td>
+                  <td>Funds are lost, so back up carefully</td>
+                </tr>
+                <tr>
+                  <td>Privacy</td>
+                  <td>Account and ID on file</td>
+                  <td class="check">No ID needed to create a wallet</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">How to do it right</span>
+            <h2>How to back up your wallet</h2>
+          </div>
+          <div class="steps receive-steps">
+            <div class="step">
+              <h3>Write it on paper</h3>
+              <p>
+                Copy the 12 words in order by hand and double check them. Keep
+                the backup in a secure place.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Never share or screenshot</h3>
+              <p>
+                Anyone with the words can take the funds. Do not email, save to
+                the cloud, or share them. Blitz will never ask for them.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Test your recovery</h3>
+              <p>
+                After backing up, try restoring on another device, then wipe it.
+                If it works once, it will work when you need it.
+              </p>
+            </div>
+          </div>
+          <div class="card-grid space-top">
+            <div class="card">
+              <h3>Add a PIN & biometrics</h3>
+              <p>
+                Blitz lets you lock the app with PIN, Face ID or fingerprint.
+                Your wallet secret stays encrypted on device.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>Common questions</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>Can Blitz help if I lose my backup?</h3>
+              <p>
+                No. That is the point of self-custody. If Blitz could recover
+                without the backup, it could also move your money without you.
+                Keep the 12 words safe.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Is self-custody harder to use?</h3>
+              <p>
+                No. Save your 12 words once. After that, Blitz works like any
+                other payments app. You can pay contacts, send gifts, and use
+                pools the same way.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What about large amounts?</h3>
+              <p>
+                Blitz is considered a "hot wallet". This means while your keys
+                are yours, it's meant to be a daily spending wallet insted of a
+                savings wallet.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Create your wallet</h2>
+            <p>Make a wallet and save your 12 words.</p>
+            <div class="hero-actions actions-centered">
+              <a href="#" class="btn-primary download-btn"
+                >Create wallet <i data-lucide="arrow-right"></i
+              ></a>
+              <a href="/pages/faq/" class="btn-secondary"
+                >Is Blitz Wallet safe?</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

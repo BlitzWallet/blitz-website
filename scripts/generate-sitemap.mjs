@@ -26,13 +26,88 @@ function gitLastmod(relPath, fallback) {
   }
 }
 
-// Static, indexable pages. Add a feature/learn page here when it ships.
+// Static, indexable pages. Keep this list aligned with canonical URLs.
 const staticPages = [
   { loc: "/", file: "index.html", priority: "1.00" },
   { loc: "/pages/about/", file: "pages/about/index.html", priority: "0.80" },
   { loc: "/pages/blog/", file: "pages/blog/index.html", priority: "0.80" },
-  { loc: "/pages/contact/", file: "pages/contact/index.html", priority: "0.70" },
+  {
+    loc: "/pages/contact/",
+    file: "pages/contact/index.html",
+    priority: "0.70",
+  },
   { loc: "/pages/brand/", file: "pages/brand/index.html", priority: "0.60" },
+  {
+    loc: "/pages/bitcoin-wallet/",
+    file: "pages/bitcoin-wallet/index.html",
+    priority: "0.80",
+  },
+  {
+    loc: "/pages/self-custody/",
+    file: "pages/self-custody/index.html",
+    priority: "0.80",
+  },
+  {
+    loc: "/pages/stablecoins/",
+    file: "pages/stablecoins/index.html",
+    priority: "0.80",
+  },
+  { loc: "/pages/gifts/", file: "pages/gifts/index.html", priority: "0.70" },
+  { loc: "/pages/pools/", file: "pages/pools/index.html", priority: "0.70" },
+  {
+    loc: "/pages/point-of-sale/",
+    file: "pages/point-of-sale/index.html",
+    priority: "0.80",
+  },
+  {
+    loc: "/pages/accounts/",
+    file: "pages/accounts/index.html",
+    priority: "0.60",
+  },
+  {
+    loc: "/pages/dollar-goals/",
+    file: "pages/dollar-goals/index.html",
+    priority: "0.60",
+  },
+  {
+    loc: "/pages/accumulation-addresses/",
+    file: "pages/accumulation-addresses/index.html",
+    priority: "0.70",
+  },
+  {
+    loc: "/pages/analytics/",
+    file: "pages/analytics/index.html",
+    priority: "0.60",
+  },
+  { loc: "/pages/nostr/", file: "pages/nostr/index.html", priority: "0.60" },
+  {
+    loc: "/pages/lightning-address/",
+    file: "pages/lightning-address/index.html",
+    priority: "0.60",
+  },
+  {
+    loc: "/pages/spend-and-replace/",
+    file: "pages/spend-and-replace/index.html",
+    priority: "0.40",
+  },
+  {
+    loc: "/pages/download/",
+    file: "pages/download/index.html",
+    priority: "0.90",
+  },
+  { loc: "/pages/faq/", file: "pages/faq/index.html", priority: "0.70" },
+  { loc: "/features/", file: "pages/features/index.html", priority: "0.70" },
+  {
+    loc: "/pages/lightning-address/",
+    file: "pages/lightning-address/index.html",
+    priority: "0.80",
+  },
+  { loc: "/learn/", file: "learn/index.html", priority: "0.80" },
+  {
+    loc: "/learn/how-to-receive-bitcoin/",
+    file: "learn/how-to-receive-bitcoin/index.html",
+    priority: "0.90",
+  },
 ];
 
 const blogPages = postList.map((p) => {

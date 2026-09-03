@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://blitzwalletapp.com/pages/nostr/" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>Nostr Wallet in Blitz: NIP-05 and Nostr Wallet Connect</title>
+    <meta
+      name="description"
+      content="Use Nostr with your Blitz wallet. Create a NIP-05 identity and scoped Nostr Wallet Connect permissions, budgets, and sub-accounts for safer payments."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blitzwalletapp.com/pages/nostr/" />
+    <meta
+      property="og:title"
+      content="Nostr Wallet in Blitz: NIP-05 and Nostr Wallet Connect"
+    />
+    <meta
+      property="og:description"
+      content="Custom NIP-05 plus NWC with permissions and budgets — each NWC its own sub-account."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="Nostr — NIP-05 & Nostr Wallet Connect"
+    />
+    <meta
+      property="twitter:description"
+      content="Nostr Wallet Connect, made safe and simple."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Nostr Wallet in Blitz: NIP-05 and Nostr Wallet Connect",
+        "description": "Nostr features in Blitz Wallet.",
+        "url": "https://blitzwalletapp.com/pages/nostr/"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to connect a Nostr app to Blitz Wallet",
+        "description": "Create a scoped Nostr Wallet Connect connection with a separate sub-account.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Create your Nostr identity",
+            "text": "Create a customizable NIP-05 address in Blitz."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Connect an app",
+            "text": "Create a Nostr Wallet Connect connection and name it so you know which app is connected."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Set limits",
+            "text": "Choose permissions and a spending budget, then revoke the connection whenever you want."
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Nostr",
+            "item": "https://blitzwalletapp.com/pages/nostr/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is a NIP-05 address?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A NIP-05 address is a readable identifier such as you@blitzwalletapp.com that helps Nostr clients verify your identity."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is Nostr Wallet Connect?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Nostr Wallet Connect lets a Nostr app request wallet actions through a named connection. In Blitz, you choose permissions and a spending budget for each connection."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can a Nostr app spend all my funds?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "A connected app can only use the permissions and budget you grant it. Review the connection name and limits, and revoke the connection when you no longer need it."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens if I delete a Nostr connection?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The connection can be deleted or revoked from Blitz. Its separate sub-account remains governed by your wallet backup and account controls."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Nostr wallet <span>in Blitz</span></h1>
+        <p class="lead">
+          Nostr is an open social network. Blitz lets you use it with your
+          wallet: create a readable NIP-05 identity, connect apps with Nostr
+          Wallet Connect, and set permissions and spending limits.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn-primary download-btn"
+            >Set up Nostr <i data-lucide="zap"></i
+          ></a>
+          <a href="/pages/accounts/" class="btn-secondary">How accounts work</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">What you get</span>
+          <h2>Your Nostr identity and wallet link</h2>
+        </div>
+        <div class="card-grid cols-2">
+          <article class="card">
+            <div class="icon"><i data-lucide="at-sign"></i></div>
+            <h3>Customizable NIP-05 addresses</h3>
+            <p>
+              Create human-readable NIP-05 like
+              <code>you@blitzwalletapp.com</code> for Nostr. It proves your
+              identity across Nostr clients.
+            </p>
+          </article>
+          <article class="card">
+            <div class="icon"><i data-lucide="plug"></i></div>
+            <h3>Nostr Wallet Connect (NWC)</h3>
+            <p>
+              Connect Nostr apps to your Blitz wallet. Customize connection
+              name, permissions, and budget limits per connection.
+            </p>
+          </article>
+        </div>
+        <div class="card space-top-sm">
+          <div class="icon"><i data-lucide="layers"></i></div>
+          <h3>NWC is its own personal sub-account</h3>
+          <p>
+            Your NWC wallet as a separate personal sub-account, derived from
+            your main 12-word backup so it’s recoverable, and it gets its own
+            LNURL address you can receive as USD or BTC.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">Stay safe</span>
+          <h2>Permissions and budgets you control</h2>
+        </div>
+        <div class="card-grid cols-3">
+          <div class="card">
+            <h3>Name each connection</h3>
+            <p>“My Nostr client” vs “Zapper” .</p>
+          </div>
+          <div class="card">
+            <h3>Set permissions</h3>
+            <p>Choose what the app can do: pay, read balance, etc.</p>
+          </div>
+          <div class="card">
+            <h3>Limit the budget</h3>
+            <p>Cap how much an app can spend. Revoke anytime.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">Set it up carefully</span>
+          <h2>Connect a Nostr app in three steps</h2>
+          <p>
+            Keep the social identity separate from the spending authority. Name
+            every connection so you know what you approved.
+          </p>
+        </div>
+        <div
+          class="steps receive-steps receive-steps"
+          aria-label="How to connect a Nostr app in Blitz"
+        >
+          <div class="step">
+            <h3>Create your NIP-05</h3>
+            <p>
+              Choose a readable identity in Blitz, then use it in compatible
+              Nostr clients. Your Lightning address can be the payment
+              destination.
+            </p>
+          </div>
+          <div class="step">
+            <h3>Create a named NWC</h3>
+            <p>
+              Start a Nostr Wallet Connect connection for one app and label it
+              clearly, such as “Nostr client” or “Zapper.”
+            </p>
+          </div>
+          <div class="step">
+            <h3>Set a budget and review</h3>
+            <p>
+              Grant only the permissions you need, set a spending budget, and
+              revoke the connection if the app or use case changes.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2>Nostr wallet questions</h2>
+        </div>
+        <div class="faq-list">
+          <div class="faq">
+            <h3>What is a NIP-05 address?</h3>
+            <p>
+              A NIP-05 address is a readable identifier such as
+              <code>you@blitzwalletapp.com</code> that helps Nostr clients
+              verify your identity.
+            </p>
+          </div>
+          <div class="faq">
+            <h3>What is Nostr Wallet Connect?</h3>
+            <p>
+              Nostr Wallet Connect lets a app request wallet actions through a
+              named connection. In Blitz, you choose permissions and a spending
+              budget for each connection.
+            </p>
+          </div>
+          <div class="faq">
+            <h3>Can a Nostr app spend all my funds?</h3>
+            <p>
+              A connected app can only use the permissions and budget you grant
+              it. It can also only spend what is in your NWC sub-account never
+              your main wallet. Review the connection name and limits, and
+              revoke the connection when you no longer need it.
+            </p>
+          </div>
+          <div class="faq">
+            <h3>What happens if I delete a Nostr connection?</h3>
+            <p>
+              The service that uses that connection string will no longer work
+              and you will have to link a new connection string.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="section-inner">
+        <div class="cta-band">
+          <h2>Connect Nostr, keep control</h2>
+          <p>Create a NIP-05 and a scoped NWC connection with limits.</p>
+          <div class="hero-actions actions-centered">
+            <a href="#" class="btn-primary download-btn"
+              >Open Blitz <i data-lucide="arrow-right"></i
+            ></a>
+            <a href="/pages/lightning-address/" class="btn-secondary"
+              >Lightning Address →</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

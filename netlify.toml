@@ -31,6 +31,37 @@
   status = 200
   force = true
 
+# Canonical short paths for the Learn and Features hubs.
+[[redirects]]
+  from = "/pages/learn/"
+  to = "/learn/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pages/learn/*"
+  to = "/learn/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pages/features/"
+  to = "/features/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pages/features/*"
+  to = "/features/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/features/"
+  to = "/pages/features/"
+  status = 200
+  force = true
+
 [[headers]]
   for = "/.well-known/assetlinks.json"
   [headers.values]

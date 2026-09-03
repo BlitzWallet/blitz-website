@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="canonical"
+      href="https://blitzwalletapp.com/pages/bitcoin-wallet/"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>
+      Bitcoin Wallet - Self-Custodial, Global and Simple | Blitz Wallet
+    </title>
+    <meta
+      name="description"
+      content="A simple self-custodial Bitcoin wallet for beginners. Create in seconds, send globally, and keep control with a 12-word backup."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/pages/bitcoin-wallet/"
+    />
+    <meta
+      property="og:title"
+      content="Bitcoin Wallet - Self-Custodial, Global and Simple"
+    />
+    <meta
+      property="og:description"
+      content="A simple self-custodial Bitcoin wallet. Create in seconds, pay anyone, hold dollars with USDB."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="Bitcoin Wallet - Self-Custodial, Global and Simple"
+    />
+    <meta
+      property="twitter:description"
+      content="A simple self-custodial Bitcoin wallet. Create in seconds, pay anyone."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Blitz Wallet Bitcoin Wallet",
+        "applicationCategory": "FinanceApplication",
+        "operatingSystem": "iOS, Android, Web",
+        "url": "https://blitzwalletapp.com/pages/bitcoin-wallet/",
+        "description": "Self-custodial Bitcoin wallet for everyday global payments.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Bitcoin Wallet",
+            "item": "https://blitzwalletapp.com/pages/bitcoin-wallet/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is Blitz really self-custodial?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Your 12-word backup generates your keys on your device. Neither Blitz nor Spark can move your funds. There is no reset if you lose the backup, so protect it carefully."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What fees will I pay?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Blitz-to-Blitz contact payments are free of Blitz fees. Spark and Lightning payments are tiny, swaps via Flashnet have a small service fee, and on-chain fees vary with network conditions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Blitz work with other Lightning wallets?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Your Lightning address, BOLT11 invoices, LNURL, Spark, on-chain, and pay links can interoperate with compatible wallets."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does the 12-word backup support?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Blitz uses a 12-word BIP39 backup to restore the wallet on a new device or through the open-source recovery tool. Keep the words offline and never share them."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens if I send Bitcoin to the wrong address?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Bitcoin payments usually cannot be reversed. Check the recipient, asset, amount, and fee before you confirm. If you are unsure, send a small test payment first."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Does Blitz support on-chain Bitcoin?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Blitz can show on-chain Bitcoin send and receive options where available. Miner fees and confirmation times vary with network conditions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I import an existing wallet backup?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Use only Blitz's official recovery flow if it supports your existing wallet. BIP39 compatibility does not guarantee identical address derivation, so confirm support before moving funds and never enter your words into a website."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>A <span>Bitcoin wallet</span> that feels like a payments app</h1>
+          <p class="lead">
+            Blitz handles the Bitcoin details so you can worry about what
+            matters most.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn-primary download-btn"
+              >Create your wallet <i data-lucide="arrow-right"></i
+            ></a>
+            <a href="/features/" class="btn-secondary">See all features</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Why Blitz</span>
+            <h2>Bitcoin without the hard parts</h2>
+            <p>
+              Most wallets make you learn addresses, invoices, and channel
+              liquidity. Blitz makes it familiar: contacts, links, gifts.
+            </p>
+          </div>
+          <div class="card-grid cols-3">
+            <article class="card">
+              <div class="icon"><i data-lucide="zap"></i></div>
+              <h3>Fast & cheap</h3>
+              <p>
+                Powered by
+                <a
+                  href="https://docs.spark.money"
+                  target="_blank"
+                  rel="noopener"
+                  >Spark</a
+                >, a Bitcoin Layer 2. Payments usually settle in seconds.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="shield-check"></i></div>
+              <h3>Your keys, your money</h3>
+              <p>12 words back up your wallet. Blitz never holds your funds.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="globe"></i></div>
+              <h3>Works everywhere</h3>
+              <p>Pay a somone across the street or across an ocean.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Get started</span>
+            <h2>Create a wallet in three steps</h2>
+            <p>
+              It takes less than a minute. No ID, no bank account, no email.
+            </p>
+          </div>
+          <div class="steps receive-steps">
+            <div class="step">
+              <h3>Download</h3>
+              <p>
+                Get Blitz on iOS, Android, or open the
+                <a href="https://wallet.blitzwalletapp.com">web wallet</a> in
+                your browser. No app store needed for web.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Save 12 words</h3>
+              <p>
+                Write the 12 words and keep them somewhere safe. If you lose
+                them, no one can recover them, not even Blitz.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Add funds & pay</h3>
+              <p>
+                Receive Bitcoin via Lightning, Spark, on-chain, or swap from
+                USDT/USDC.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">What you can do</span>
+            <h2>One balance, many ways to use it</h2>
+          </div>
+          <div class="card-grid cols-2">
+            <article class="card">
+              <h3>Pay contacts for free</h3>
+              <p>
+                Save a friend as a contact and pay by name. No QR needed. Free
+                between Blitz users.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Receive even while offline</h3>
+              <p>
+                Spark lets people pay you when your phone is off. No node to
+                keep online.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Swap to dollars instantly</h3>
+              <p>Convert BTC ↔ USDB in seconds. Keep spending power steady.</p>
+            </article>
+            <article class="card">
+              <h3>Send gifts and pools</h3>
+              <p>
+                Share a Bitcoin gift link or collect money for a group goal. See
+                <a href="/pages/gifts/">gifts</a> and
+                <a href="/pages/pools/">payment pools</a>.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Compare</span>
+            <h2>Blitz vs. other wallets</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Blitz Wallet</th>
+                  <th>Typical Bitcoin wallet</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Pay by contact name</td>
+                  <td class="check">Yes, built in</td>
+                  <td class="dash">Usually not</td>
+                </tr>
+                <tr>
+                  <td>Requset by contact name</td>
+                  <td class="check">Yes, built in</td>
+                  <td class="dash">Usually not</td>
+                </tr>
+                <tr>
+                  <td>Offline receive</td>
+                  <td class="check">Yes</td>
+                  <td class="dash">Often needs to be online</td>
+                </tr>
+                <tr>
+                  <td>Stablecoin on same balance</td>
+                  <td class="check">USDB, USDT, USDC</td>
+                  <td class="dash">BTC only</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>Quick answers</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>Is Blitz really self-custodial?</h3>
+              <p>
+                Yes. Your 12-word backup generates your keys on your device.
+                Neither Blitz nor Spark can move your funds. There is no reset
+                if you lose the backup, so protect it carefully. See
+                <a href="/pages/self-custody/">what self-custody means</a>.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Does Blitz work with other Lightning wallets?</h3>
+              <p>
+                Yes. Your Lightning address, BOLT11 invoices, LNURL, Spark,
+                on-chain, and pay links all interoperate.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What does the 12-word backup support?</h3>
+              <p>
+                Blitz uses a 12-word BIP39 backup to restore your wallet on a
+                new device or in another compatible app. Keep the words offline
+                and never share them.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What happens if I send Bitcoin to the wrong address?</h3>
+              <p>
+                Bitcoin payments cannot be reversed. Check the recipient, asset,
+                amount, and fee before you confirm. If you are unsure, send a
+                small test payment first.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Does Blitz support on-chain Bitcoin?</h3>
+              <p>
+                Yes. Blitz can show on-chain Bitcoin send and receive options
+                where available. Miner fees and confirmation times vary with
+                network conditions.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can I import an existing wallet backup?</h3>
+              <p>
+                Since Blitz is a Layer 2 Bitcoin wallet built on Spark, only
+                other Spark backups can be restored in Blitz Wallet.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Make your first Bitcoin payment simple</h2>
+            <p>
+              Download Blitz, save your 12-word backup, and send a gift link to
+              a friend. If they are new to Blitz, they can create a wallet from
+              the link before claiming.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a href="#" class="btn-primary download-btn"
+                >Download Blitz <i data-lucide="arrow-right"></i
+              ></a>
+              <a href="/learn/how-to-receive-bitcoin/" class="btn-secondary"
+                >How to receive Bitcoin</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

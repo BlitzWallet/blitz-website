@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://blitzwalletapp.com/pages/pools/" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>Payment Pools: Collect Money as a Group | Blitz Wallet</title>
+    <meta
+      name="description"
+      content="Blitz Pools let you collect money from a group with one link. Create a goal, share the link, and track contributions live. Works globally on Lightning."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blitzwalletapp.com/pages/pools/" />
+    <meta
+      property="og:title"
+      content="Payment Pools: Collect Money as a Group"
+    />
+    <meta
+      property="og:description"
+      content="One link to collect for trips, gifts, or causes. Track contributions live."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="Payment Pools: Collect Money as a Group"
+    />
+    <meta
+      property="twitter:description"
+      content="One link to collect for trips, gifts, or causes."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Payment Pools: Collect Money as a Group",
+        "description": "How Blitz Pools work: create pool, share link, track progress.",
+        "url": "https://blitzwalletapp.com/pages/pools/"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to create a Blitz payment pool",
+        "description": "Create a goal, share one link, and track group contributions in Blitz.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Create the pool",
+            "text": "Set a goal amount and description in Blitz."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Share the link",
+            "text": "Send the pool link to the people who should contribute."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Track and close",
+            "text": "Review contributions and progress. The pool creator closes the collection and moves the funds to their wallet."
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Can people pay without Blitz?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Contributors can use the pool page with a compatible Lightning wallet or supported USDT/USDC flow. They do not need a Blitz account to contribute."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Who can close a payment pool?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The pool creator decides when the collection is done, closes the pool, and moves the funds to their wallet. Contributors cannot close it through the pool."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can contributors get a refund through the pool?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "The pool does not provide a contributor refund or close flow. Contributors should agree on the purpose and refund arrangements with the pool creator before paying."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What does it cost?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "There is no extra Blitz pool fee. Each contribution pays its normal Lightning, Spark, swap, or other network fee, shown before confirmation."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I pool in dollars?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Set the goal in sats or dollar value and hold in USDB to keep it stable."
+            }
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Payment Pools",
+            "item": "https://blitzwalletapp.com/pages/pools/"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>Collect money <span>without chasing</span> people</h1>
+          <p class="lead">
+            Create a payment pool for a trip, gift, or cause and share one link.
+            Anyone can contribute.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn-primary download-btn"
+              >Create a Pool <i data-lucide="users"></i
+            ></a>
+            <a href="/pages/gifts/" class="btn-secondary"
+              >Send a gift instead</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">How it works</span>
+            <h2>Create a pool in three steps</h2>
+          </div>
+          <div class="steps receive-steps">
+            <div class="step">
+              <h3>Create the pool</h3>
+              <p>
+                Set a goal amount and add a description. Blitz makes a web link
+                such as <code>blitzwalletapp.com/pools/…</code>.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Share the web link</h3>
+              <p>
+                Anyone can contribute with Bitcoin or Stablecoins. No
+                spreadsheet to manage and no need to follow up on payments.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Track and close</h3>
+              <p>
+                See each contributor, the amounts sent, and how close you are to
+                the goal. Close the pool and move the funds to your wallet.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Why pools</span>
+            <h2>Group collection without the extra work</h2>
+          </div>
+          <div class="card-grid cols-3">
+            <article class="card">
+              <div class="icon"><i data-lucide="link"></i></div>
+              <h3>One link for everyone</h3>
+              <p>No app required to contribute. Open the link and pay.</p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="bar-chart-3"></i></div>
+              <h3>Live progress</h3>
+              <p>
+                See $780 of $1,000 raised and who contributed. Progress updates
+                as payments arrive.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="globe"></i></div>
+              <h3>Global by default</h3>
+              <p>
+                Friends abroad can pay with USDT, USDC, or Lightning in the same
+                link.
+              </p>
+            </article>
+          </div>
+          <div class="card space-top">
+            <h3>Made for shared plans</h3>
+            <p>
+              Use it for a group trip, team gift, club dues, charity drive, or
+              shared deposit.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Compare</span>
+            <h2>Pools vs other ways to split</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Setup</th>
+                  <th>Payers need account?</th>
+                  <th>Tracking</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Blitz Pool</td>
+                  <td class="check">One link</td>
+                  <td class="check">No, any Lightning wallet, USDT, or USDC</td>
+                  <td class="check">Live in the link</td>
+                </tr>
+                <tr>
+                  <td>Splitwise request</td>
+                  <td>Track balances per person</td>
+                  <td>Everyone uses the service to settle</td>
+                  <td>Manual follow-up</td>
+                </tr>
+                <tr>
+                  <td>GoFundMe-style fundraiser</td>
+                  <td>Campaign setup</td>
+                  <td>Platform account and payout setup</td>
+                  <td>Campaign dashboard</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>Quick answers</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>Can people pay without Blitz?</h3>
+              <p>
+                Yes. The pool page accepts Lightning invoices plus USDT/USDC via
+                integrated flows. No Blitz account needed to contribute.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Who can close a payment pool?</h3>
+              <p>
+                The pool creator decides when the collection is done, closes the
+                pool, and moves the funds to their wallet. Contributors cannot
+                close it through the pool.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can contributors get a refund through the pool?</h3>
+              <p>
+                The pool does not provide a contributor refund or close flow.
+                Contributors should agree on the purpose and refund arrangements
+                with the pool creator before paying.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What does it cost?</h3>
+              <p>
+                No extra Blitz pool fee. Each contribution pays its normal tiny
+                Lightning or swap fee.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Start your first pool</h2>
+            <p>
+              Pick a name and goal, share the link in chat, and track
+              contributions as they come in. It takes about 30 seconds to set
+              up.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a href="#" class="btn-primary download-btn"
+                >Create Pool in Blitz <i data-lucide="users"></i
+              ></a>
+              <a href="/pages/stablecoins/" class="btn-secondary"
+                >Hold goal in USDB →</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

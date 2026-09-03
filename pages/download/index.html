@@ -1,0 +1,436 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://blitzwalletapp.com/pages/download/" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>Download Blitz Wallet for iOS, Android and Web</title>
+    <meta
+      name="description"
+      content="Download Blitz Wallet for iOS, Android, or use the web wallet in your browser. Self-custodial, free to start, works globally."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/pages/download/"
+    />
+    <meta
+      property="og:title"
+      content="Download Blitz Wallet for iOS, Android and Web"
+    />
+    <meta
+      property="og:description"
+      content="Use Blitz on iOS, Android, or the web."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="Download Blitz Wallet for iOS, Android and Web"
+    />
+    <meta
+      property="twitter:description"
+      content="Use Blitz on iOS, Android, or the web."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Blitz Wallet",
+        "operatingSystem": "iOS, Android, Web",
+        "applicationCategory": "FinanceApplication",
+        "url": "https://blitzwalletapp.com/pages/download/",
+        "downloadUrl": [
+          "https://apps.apple.com/us/app/blitz-wallet/id6476810582",
+          "https://play.google.com/store/apps/details?id=com.blitzwallet",
+          "https://wallet.blitzwalletapp.com/"
+        ],
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Download",
+            "item": "https://blitzwalletapp.com/pages/download/"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>Download <span>Blitz Wallet</span></h1>
+          <p class="lead">
+            Get Blitz on iPhone, Android, or in your browser. Create a wallet,
+            write down your 12-word backup, and start sending and receiving.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn-primary download-btn"
+              >Download <i data-lucide="arrow-right"></i
+            ></a>
+            <a
+              href="https://wallet.blitzwalletapp.com"
+              class="btn-secondary"
+              target="_blank"
+              rel="noopener"
+              >Open Web Wallet</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Available on</span>
+            <h2>Use Blitz on iOS, Android, and web</h2>
+          </div>
+          <div
+            class="beginner-examples download-platforms"
+            aria-label="Blitz Wallet platforms"
+          >
+            <article class="card">
+              <div class="icon"><i data-lucide="apple"></i></div>
+              <h3>iPhone</h3>
+              <p>Use Blitz on iPhone with iOS 16 or later.</p>
+              <div class="space-top">
+                <a
+                  href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+                  class="btn-primary"
+                  target="_blank"
+                  rel="noopener"
+                  >App Store <i data-lucide="arrow-up-right"></i
+                ></a>
+              </div>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="smartphone"></i></div>
+              <h3>Android</h3>
+              <p>Download Blitz from Google Play or Zapstore for Android.</p>
+              <div class="space-top">
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+                  class="btn-primary"
+                  target="_blank"
+                  rel="noopener"
+                  >Play Store <i data-lucide="arrow-up-right"></i
+                ></a>
+              </div>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="globe"></i></div>
+              <h3>Web Wallet</h3>
+              <p>Open Blitz in any browser with no installation required.</p>
+              <div class="space-top">
+                <a
+                  href="https://wallet.blitzwalletapp.com"
+                  class="btn-primary"
+                  target="_blank"
+                  rel="noopener"
+                  >Open Web Wallet <i data-lucide="arrow-up-right"></i
+                ></a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">First 2 minutes</span>
+            <h2>Install → save 12 words → receive</h2>
+          </div>
+          <div
+            class="steps receive-steps"
+            aria-label="Your first two minutes with Blitz"
+          >
+            <div class="step">
+              <h3>Install Blitz</h3>
+              <p>Tap a store link above or open the web wallet.</p>
+            </div>
+            <div class="step">
+              <h3>Save your backup</h3>
+              <p>
+                Write your 12 words in order and keep them offline. You’ll need
+                them only if you lose your device.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Get your address</h3>
+              <p>Share an address with anyone who wants to pay you.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">What you get</span>
+            <h2>Everything from day one</h2>
+          </div>
+          <div class="card-grid cols-2">
+            <div class="card">
+              <h3>All payment types</h3>
+              <p>
+                Contacts, gifts, pools, paylinks, QR, Lightning address,
+                on-chain.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Bitcoin + dollars</h3>
+              <p>
+                Hold BTC and <a href="/pages/stablecoins/">USDB</a> from
+                <a href="https://brale.xyz" target="_blank" rel="noopener"
+                  >Brale</a
+                >
+                in one place. Swap instantly via Flashnet.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Works offline</h3>
+              <p>Receive payments while your phone is offline.</p>
+            </div>
+            <div class="card">
+              <h3>Private & controlled by you</h3>
+              <p>Self-custodial and open-source.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Ready in seconds</h2>
+            <p>
+              Tap your platform and make your first gift link. Friends don’t
+              need Blitz to claim it.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a
+                href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+                class="btn-primary"
+                target="_blank"
+                rel="noopener"
+                >iOS App Store</a
+              >
+              <a
+                href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+                class="btn-secondary"
+                target="_blank"
+                rel="noopener"
+                >Android Play Store</a
+              >
+            </div>
+            <p class="cta-note">
+              Or open
+              <a href="https://wallet.blitzwalletapp.com"
+                >wallet.blitzwalletapp.com</a
+              >
+              in your browser.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper">
+            <div
+              id="qr-code"
+              role="img"
+              aria-label="QR code linking to Blitz Wallet download options"
+            ></div>
+            <noscript
+              ><p>
+                <a
+                  href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+                  >Install Blitz on iOS</a
+                >
+                or
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+                  >install Blitz on Android</a
+                >.
+              </p></noscript
+            >
+          </div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

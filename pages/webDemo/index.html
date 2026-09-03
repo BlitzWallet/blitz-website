@@ -2092,7 +2092,7 @@ function depositQR(k,sc){
   return depositQRHalf(k);
 }
 function settingsScr(k){
-  var secs=[['Preferences',[['coins','Currency','USD'],['languages','Language','English'],['palette','Display Options',''],['clock','Fast Pay',''],['refresh-ccw','Spend and Replace',''],['bell','Notifications','']]],['Security',[['scan-face','Login Mode',''],['lock','Backup Wallet','']]],['Technical Settings',[['vector-square','Spark Info',''],['link','Nostr',''],['shield-check','Crash Reports',''],['send-to-back','Network Transfers',''],['database-backup','Wallet Data','']]],['',[['info','About',''],['receipt','Blitz Fee Details',''],['chart-area','Blitz Stats','']]],['',[['trash-2','Delete Wallet','']]]];
+  var secs=[['Preferences',[['coins','Currency','USD'],['languages','Language','English'],['palette','Display Options',''],['refresh-ccw','Spend and Replace',''],['bell','Notifications','']]],['Security',[['scan-face','Login Mode',''],['lock','Backup Wallet','']]],['Technical Settings',[['vector-square','Spark Info',''],['link','Nostr',''],['shield-check','Crash Reports',''],['send-to-back','Network Transfers',''],['database-backup','Wallet Data','']]],['',[['info','About',''],['receipt','Blitz Fee Details',''],['chart-area','Blitz Stats','']]],['',[['trash-2','Delete Wallet','']]]];
   var h=hdr(k,'Settings','')+'<div style="width:298px;margin:0 auto 40px">';
   secs.forEach(function(sec){
     h+=sec[0]?'<div style="font-size:12px;text-transform:uppercase;letter-spacing:.8px;color:'+k.txt+';opacity:.5;margin:18px 0 8px 4px">'+sec[0]+'</div>':'<div style="height:18px"></div>';

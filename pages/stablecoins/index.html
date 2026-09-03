@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="canonical"
+      href="https://blitzwalletapp.com/pages/stablecoins/"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>Stablecoin Wallet: USDB on Bitcoin, USDT and USDC | Blitz</title>
+    <meta
+      name="description"
+      content="Hold USDB on Bitcoin with Blitz through Spark, swap between BTC and USDB, and receive USDT or USDC from 9 other networks."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/pages/stablecoins/"
+    />
+    <meta
+      property="og:title"
+      content="Stablecoin Wallet: USDB on Bitcoin, USDT and USDC"
+    />
+    <meta
+      property="og:description"
+      content="USDB on Spark is backed 1:1. Blitz converts USDT and USDC from other networks automatically. Swap between BTC and dollars instantly."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="Stablecoin Wallet: USDB on Bitcoin, USDT and USDC"
+    />
+    <meta
+      property="twitter:description"
+      content="Hold dollars natively on Bitcoin. Fast and built for everyday use."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Stablecoin Wallet: USDB on Bitcoin, USDT and USDC",
+        "description": "USDB is backed 1:1 by Treasuries and runs on Spark. Blitz lets you swap with Flashnet and convert USDT and USDC from other networks automatically.",
+        "url": "https://blitzwalletapp.com/pages/stablecoins/"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Stablecoins",
+            "item": "https://blitzwalletapp.com/pages/stablecoins/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Is USDB safe to hold?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "USDB is designed to be backed by Treasuries and cash held by Brale. Check the latest reserve reports, audits, redemption terms, and platform risks before you decide if it fits your needs."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How long will rewards be available?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Keep at least 10 USDB to get up to 6 percent back, paid each day in BTC. Terms can change, so check the app for the current offer. Like all stablecoins, USDB carries issuer and platform risk."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What are the fees?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You pay a small Flashnet fee when you swap, which you see before you confirm. There is no fee to hold USDB."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>Dollars and <span>Bitcoin in one wallet</span></h1>
+          <p class="lead">
+            Keep your spending balance steady, and let Blitz receive USDT or
+            USDC from 9 networks and convert it to BTC or USDB for you.
+          </p>
+          <div class="hero-actions">
+            <a href="#" class="btn-primary download-btn"
+              >Hold USDB in Blitz <i data-lucide="repeat-2"></i
+            ></a>
+            <a
+              href="https://docs.spark.money"
+              class="btn-secondary"
+              target="_blank"
+              rel="noopener"
+              >Spark docs</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">What you get</span>
+            <h2>Hold Bitcoin and dollars together</h2>
+          </div>
+          <div class="card-grid cols-3">
+            <article class="card">
+              <div class="icon"><i data-lucide="banknote"></i></div>
+              <h3>USDB on Spark</h3>
+              <p>
+                Built directly on Bitcoin with
+                <a
+                  href="https://docs.spark.money"
+                  target="_blank"
+                  rel="noopener"
+                  >Spark</a
+                >. Each USDB is backed 1:1 by Treasury bills and cash. No bridge
+                needed and nothing to wrap.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="gift"></i></div>
+              <h3>Earn while you hold</h3>
+              <p>
+                Hold 10+ USDB and get up to 6 percent back, paid each day in
+                BTC. USDB involves issuer risk.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="repeat-2"></i></div>
+              <h3>Swap between BTC and USDB instantly</h3>
+              <p>
+                Swap inside Blitz in seconds. Keep savings in BTC and keep
+                spending money in dollars.
+              </p>
+            </article>
+          </div>
+          <div class="card-grid cols-2 space-top-sm">
+            <article class="card">
+              <h3>Receive from any supported network</h3>
+              <p>
+                Your accumulation addresses work with Arbitrum, Base, BNB Chain,
+                Ethereum, Optimism, Plasma, Polygon, Solana, and Tron. If
+                someone sends USDC or USDT there, Blitz converts it to BTC or
+                USDB for you.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Spend either balance</h3>
+              <p>
+                Pay contacts, send gifts, fund pools, use paylinks, or pay at
+                POS with your BTC or USDB. You do not need to switch wallets to
+                use a different balance.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Keep the stability without the limits</span>
+            <h2>Why keep dollars on Bitcoin</h2>
+          </div>
+          <div class="table-wrap">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Blitz with USDB</th>
+                  <th>Typical stablecoin wallet</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Rail</td>
+                  <td class="check">Native on Bitcoin with Spark</td>
+                  <td>Runs on Ethereum, Tron, or Solana</td>
+                </tr>
+                <tr>
+                  <td>Rewards for holding</td>
+                  <td class="check">
+                    Up to 6 percent back, paid daily in BTC when you hold 10+
+                    USDB
+                  </td>
+                  <td class="dash">Most do not offer rewards</td>
+                </tr>
+                <tr>
+                  <td>Auto-convert from 9 networks</td>
+                  <td class="check">Available</td>
+                  <td class="dash">Not available</td>
+                </tr>
+                <tr>
+                  <td>Spend easily</td>
+                  <td class="check">One balance for both</td>
+                  <td>Separate balance for each network</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="space-top">
+            <strong>Do your own check before you hold USDB:</strong> Read the
+            current details on issuer, reserves, redemption, and rewards in the
+            app and on
+            <a href="https://brale.xyz" target="_blank" rel="noopener"
+              >Brale’s site</a
+            >. Every stablecoin carries issuer and platform risk.
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">How to start</span>
+            <h2>Three ways to get USDB</h2>
+          </div>
+          <div class="steps receive-steps">
+            <div class="step">
+              <h3>Swap BTC to USDB</h3>
+              <p>
+                Open Swap in Blitz, enter how much you want to change, review
+                the rate, and confirm. Your new balance shows in dollars.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Get paid on Lightning</h3>
+              <p>
+                Share your Lightning address. In settings you can have incoming
+                payments convert to USDB automatically if you want to keep the
+                value steady.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Receive USDT or USDC from other networks</h3>
+              <p>
+                Copy an accumulation address for the network you want to use.
+                When someone sends USDC or USDT there, Blitz converts it to USDB
+                or BTC.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>Common questions</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>Is USDB safe to hold?</h3>
+              <p>
+                USDB is designed to be backed by Treasuries and cash held by
+                Brale. Check the latest reserve reports, audits, and redemption
+                terms before you decide if it fits your needs.
+                <a
+                  href="https://usdb.flashnet.xyz"
+                  target="_blank"
+                  rel="noopener"
+                  >Read the USDB details</a
+                >.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>How long will rewards be available?</h3>
+              <p>
+                Keep at least 10 USDB to get up to 6 percent back, paid each day
+                in BTC. Terms can change, so check the app for the current
+                offer. Like all stablecoins, USDB carries issuer and platform
+                risk.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What are the fees?</h3>
+              <p>
+                You pay a small fee when you swap, which you see before you
+                confirm. There is no fee just to hold USDB.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Hold dollars and Bitcoin in one place</h2>
+            <p>
+              Keep dollars for daily spending and BTC for saving. Swap between
+              them instantly in one wallet.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a href="#" class="btn-primary download-btn"
+                >Download and get USDB <i data-lucide="arrow-right"></i
+              ></a>
+              <a href="/pages/dollar-goals/" class="btn-secondary"
+                >See Dollar Goals</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

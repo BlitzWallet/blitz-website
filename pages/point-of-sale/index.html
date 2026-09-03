@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="canonical"
+      href="https://blitzwalletapp.com/pages/point-of-sale/"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>Bitcoin Point of Sale: Accept Bitcoin and Stablecoins | Blitz</title>
+    <meta
+      name="description"
+      content="Blitz Point of Sale helps businesses accept Bitcoin and stablecoin payments with no hardware, fast Lightning and Spark settlement, sales tracking, and tips."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/pages/point-of-sale/"
+    />
+    <meta
+      property="og:title"
+      content="Bitcoin Point of Sale: Accept Bitcoin and Stablecoins"
+    />
+    <meta
+      property="og:description"
+      content="No hardware. Instant Lightning & Spark settlement. Tips, sales history, payouts."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="Bitcoin Point of Sale: Accept Bitcoin and Stablecoins"
+    />
+    <meta
+      property="twitter:description"
+      content="Accept Bitcoin at any business. No hardware, instant settlement."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Blitz Point of Sale",
+        "applicationCategory": "FinanceApplication",
+        "url": "https://blitzwalletapp.com/pages/point-of-sale/",
+        "description": "Accept Bitcoin and stablecoin payments at any business.",
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Point of Sale",
+            "item": "https://blitzwalletapp.com/pages/point-of-sale/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Do I need new hardware?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Use your phone or desktop at pay.blitzwalletapp.com. Customers scan a QR and pay from any Lightning wallet or with USDT/USDC."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do payouts work?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Payments settle instantly to your Blitz wallet. Configure items, tips, and view sales history in-app."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do customers need Blitz to pay?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Customers can pay the QR code from any compatible Lightning wallet, or use supported USDT or USDC flows."
+            }
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to accept Bitcoin with Blitz Point of Sale",
+        "description": "Open Blitz POS, enter a sale, and show a QR code for payment.",
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Open POS",
+            "text": "Open pay.blitzwalletapp.com or the Blitz app and add your items or prices."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Enter the amount",
+            "text": "Type an amount or tap an item, choose whether to show a tip screen, and display the QR code."
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Get paid and track the sale",
+            "text": "The customer scans and pays. Confirm the payment and review sales, tips, and payout settings."
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>Accept <span>Bitcoin</span> at your counter or online</h1>
+          <p class="lead">
+            Blitz Point of Sale runs on your phone. Customers scan a QR to pay
+            and you get paid right away. Tips are tracked automatically.
+          </p>
+          <div class="hero-actions">
+            <a
+              href="https://pay.blitzwalletapp.com"
+              class="btn-primary"
+              target="_blank"
+              rel="noopener"
+              >Open POS <i data-lucide="arrow-right"></i
+            ></a>
+            <a href="#" class="btn-secondary download-btn">Get the app</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Why shops use Blitz</span>
+            <h2>Payments clear before you finish the sale</h2>
+          </div>
+          <div class="card-grid cols-3">
+            <article class="card">
+              <div class="icon"><i data-lucide="zap"></i></div>
+              <h3>Instant settlement</h3>
+              <p>
+                <a
+                  href="https://docs.spark.money"
+                  target="_blank"
+                  rel="noopener"
+                  >Lightning and Stablecoins</a
+                >
+                clear in under a minutes. You do not wait days for a bank to
+                post. You see confirmation right away.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="coins"></i></div>
+              <h3>Low fees, no terminal rental</h3>
+              <p>
+                No card machine. No 2 to 3 percent card fee. You pay small
+                Lightning or Swap fee.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="globe"></i></div>
+              <h3>Anyone can pay</h3>
+              <p>
+                One QR works for everyone. A tourist with USDT on Tron and a
+                local with a Lightning wallet can both pay it. Blitz accepts
+                BTC, USDB, USDT and USDC.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">How it works</span>
+            <h2>Three taps to your first sale</h2>
+          </div>
+          <div
+            class="steps receive-steps"
+            aria-label="How to make a sale with Blitz POS"
+          >
+            <div class="step">
+              <h3>Open POS</h3>
+              <p>
+                Go to
+                <a
+                  href="https://pay.blitzwalletapp.com"
+                  target="_blank"
+                  rel="noopener"
+                  >pay.blitzwalletapp.com</a
+                >
+                or open Blitz app. Add your items and prices once.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Enter amount</h3>
+              <p>
+                Type amount or tap an item. Choose to add a tip screen. Show the
+                QR to the customer.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Get paid & track</h3>
+              <p>
+                Customer scans and pays. You see “Payment received” instantly.
+                View sales, tips, and payout settings in one place.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Built for real shops</span>
+            <h2>Set up your store in minutes</h2>
+          </div>
+          <div class="card-grid cols-2">
+            <article class="card">
+              <h3>Customize your store</h3>
+              <p>
+                Add your logo, store name and display currency. The checkout
+                screen matches your brand.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Add products</h3>
+              <p>
+                Add products with a name and price. Tap to add them to a sale so
+                you do not have to type the amount each time.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Tips for staff</h3>
+              <p>
+                Collect tips with each sale and keep a clear record of what goes
+                to staff.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Use Anywhere</h3>
+              <p>
+                All you need is a device connectd to the internet and a browser.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Stories</span>
+            <h2>Who uses it</h2>
+          </div>
+          <div class="card-grid cols-3">
+            <div class="card">
+              <h3>Cafe and food truck</h3>
+              <p>
+                Tap menu items and show a QR. Take payment in Bitcoin or
+                Stablecoins. Tips are tallied for staff.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Market and pop-up</h3>
+              <p>
+                No power outlet or card reader needed. A phone is enough.
+                Tourists can pay with the wallets they already use.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Freelancer and online</h3>
+              <p>
+                Create a <a href="/features/">paylink</a> with a price and note
+                and share it in chat. Clients can pay from any Lightning wallet.
+                You get a notification when they do.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>POS questions</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>Do I need new hardware?</h3>
+              <p>
+                No. Use your phone or desktop at
+                <a
+                  href="https://pay.blitzwalletapp.com"
+                  target="_blank"
+                  rel="noopener"
+                  >pay.blitzwalletapp.com</a
+                >. Customers scan a QR and pay from any compatible Lightning
+                wallet or with USDT/USDC.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>How do payouts work?</h3>
+              <p>
+                Payments settle to your Blitz wallet. Configure items, tips, and
+                view sales history in the POS flow.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Do customers need Blitz to pay?</h3>
+              <p>
+                No. Customers can pay the QR code from any compatible Lightning
+                wallet, or use supported USDT or USDC flows.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Add a QR to your counter today</h2>
+            <p>
+              No application or paperwork. Just open POS and take your first
+              Bitcoin payment.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a
+                href="https://pay.blitzwalletapp.com"
+                class="btn-primary"
+                target="_blank"
+                rel="noopener"
+                >Launch POS <i data-lucide="arrow-right"></i
+              ></a>
+              <a href="/features/" class="btn-secondary">See features</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li>
+              <a href="/pages/point-of-sale/" class="active">Point of Sale</a>
+            </li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

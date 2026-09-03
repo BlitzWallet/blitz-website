@@ -514,22 +514,8 @@
   line-height: 1.6;
 }
 
-/* Blue icon chip, matches .product-icon in the Products section */
-.feature-icon {
-  width: 46px;
-  height: 46px;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: rgba(3, 117, 246, 0.1);
-  color: var(--color-brand);
-}
-
-.feature-icon svg {
-  width: 22px;
-  height: 22px;
-  stroke-width: 2;
-}
+/* Feature cards use the shared icon chip without an extra flex gap. */
+.feature-card .icon { margin-bottom: 0; }
 
 /* Metric card: big number lead */
 .feature-metric strong {
@@ -557,7 +543,7 @@
   border-color: transparent;
 }
 
-.feature-card-dark .feature-icon {
+.feature-card-dark .icon {
   background: var(--color-bg);
   color: var(--color-brand);
 }
@@ -636,21 +622,8 @@
   box-shadow: var(--shadow-card);
 }
 
-.product-icon {
-  width: 46px;
-  height: 46px;
+.product-card .icon {
   margin-bottom: 1.4rem;
-  display: grid;
-  place-items: center;
-  border-radius: 12px;
-  background: rgba(3, 117, 246, 0.1);
-  color: var(--color-brand);
-}
-
-.product-icon svg {
-  width: 22px;
-  height: 22px;
-  stroke-width: 2;
 }
 
 .product-tag {

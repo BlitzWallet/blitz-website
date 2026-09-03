@@ -1,0 +1,767 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="canonical"
+      href="https://blitzwalletapp.com/learn/how-to-receive-bitcoin/"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>
+      How to Receive Bitcoin in Blitz Wallet: 5 Ways (Lightning, Spark, On-Chain
+      & Stablecoins) - Beginner Guide
+    </title>
+    <meta
+      name="description"
+      content="New to Bitcoin? Learn how to receive Bitcoin in Blitz Wallet in 5 easy ways: Lightning Address (like email for Bitcoin), QR code invoice, regular on-chain address, or USDT/USDC on 9 networks that auto-convert to BTC or dollars. Keep it as Bitcoin or dollars and swap anytime."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/learn/how-to-receive-bitcoin/"
+    />
+    <meta
+      property="og:title"
+      content="How to Receive Bitcoin in Blitz Wallet: 5 Easy Ways to Get Paid (Beginner Guide)"
+    />
+    <meta
+      property="og:description"
+      content="New to Bitcoin? Get paid in Blitz with a Lightning Address (like email for Bitcoin), QR code, regular Bitcoin address, or USDT/USDC on 9 networks. Blitz converts it to Bitcoin or dollars, your choice."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="How to Receive Bitcoin in Blitz Wallet: 5 Easy Ways"
+    />
+    <meta
+      property="twitter:description"
+      content="Beginner guide: Lightning Address, QR invoice, on-chain Bitcoin, and USDT/USDC on 9 networks. Get paid and keep it as Bitcoin or dollars."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Learn",
+            "item": "https://blitzwalletapp.com/learn/how-to-receive-bitcoin/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 3,
+            "name": "How to Receive Bitcoin",
+            "item": "https://blitzwalletapp.com/learn/how-to-receive-bitcoin/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HowTo",
+        "name": "How to Receive Bitcoin in Blitz Wallet",
+        "description": "Beginner guide to receiving Bitcoin in Blitz Wallet. 5 easy ways to get paid: Lightning Address (like email for Bitcoin), Spark and Lightning QR invoice, regular on-chain Bitcoin address, and USDT or USDC on 9 networks that auto-convert to Bitcoin or dollars. Then swap between Bitcoin and dollars anytime.",
+        "totalTime": "PT3M",
+        "estimatedCost": {
+          "@type": "MonetaryAmount",
+          "currency": "USD",
+          "value": "0"
+        },
+        "tool": [
+          {
+            "@type": "HowToTool",
+            "name": "Blitz Wallet app (iOS, Android or web)"
+          }
+        ],
+        "supply": [
+          {
+            "@type": "HowToSupply",
+            "name": "Your Blitz Lightning Address or receive QR"
+          }
+        ],
+        "step": [
+          {
+            "@type": "HowToStep",
+            "position": 1,
+            "name": "Create your Blitz wallet",
+            "text": "Get Blitz for iOS, Android, or web at wallet.blitzwalletapp.com. Save your 12-word recovery phrase on paper — your only backup. Blitz never sees it.",
+            "url": "https://blitzwalletapp.com/learn/how-to-receive-bitcoin/#step-1"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 2,
+            "name": "Share your Lightning Address for instant Bitcoin payments",
+            "text": "Your Lightning Address is yourname@blitzwalletapp.com (your Blitz username). In Blitz: Receive → Lightning Address → Copy. Share in chat, bio, or invoice. Any Lightning wallet (Blitz, Phoenix, Strike, Cash App) can pay you instantly, even offline via Spark.",
+            "url": "https://blitzwalletapp.com/learn/how-to-receive-bitcoin/#step-2"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 3,
+            "name": "Or show a one-time Lightning or Spark QR code",
+            "text": "For an exact amount + note: Receive → Lightning / Spark → enter amount and note → Show QR. Sender scans to pay. Spark QRs work offline.",
+            "url": "https://blitzwalletapp.com/learn/how-to-receive-bitcoin/#step-3"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 4,
+            "name": "Or share your regular Bitcoin on-chain address",
+            "text": "For large amounts or exchange withdrawals: Receive → On-chain → copy bc1 address. Confirms in 10–60 minutes. Blitz shows progress. Fee varies with network traffic.",
+            "url": "https://blitzwalletapp.com/learn/how-to-receive-bitcoin/#step-4"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 5,
+            "name": "Or share a digital dollar address for USDT or USDC",
+            "text": "If sender only has USDT/USDC: create an accumulation address in Blitz, choose Convert to BTC or Keep as USDB, share it. Blitz supports Arbitrum, Base, BNB Chain, Ethereum, Optimism, Plasma, Polygon, Solana, and Tron and auto-converts on arrival.",
+            "url": "https://blitzwalletapp.com/learn/how-to-receive-bitcoin/#step-5"
+          },
+          {
+            "@type": "HowToStep",
+            "position": 6,
+            "name": "Keep it as dollars or Bitcoin and swap anytime",
+            "text": "View the same balance as BTC or USDB (digital dollars backed 1:1 by Treasuries via Brale). Tap Swap → pick direction → confirm rate and small fee. Spark swaps are instant.",
+            "url": "https://blitzwalletapp.com/learn/how-to-receive-bitcoin/#step-6"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "I shared my Lightning Address. Why has no payment arrived?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Common reasons: the sender's wallet does not support Lightning Addresses, the amount is too small or too large, or the address was copied with a typo. Try a one-time QR code for a small test amount and check your transaction list in Blitz. Spark payments arrive in under a second even if you are offline."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "My sender only has USDT on Tron. Can they still pay me?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. In Blitz create a Tron digital dollar accumulation address set to auto-convert to Bitcoin or dollars. They send USDT on Tron and it appears in Blitz as your chosen Bitcoin or dollar balance. The same works for USDT or USDC on Arbitrum, Base, BNB Chain, Ethereum, Optimism, Plasma, Polygon, and Solana."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What is the difference between Lightning, Spark, and on-chain?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Lightning and Spark are fast, cheap networks for everyday Bitcoin payments and arrive instantly, like a text message. On-chain is a regular Bitcoin transfer on the main Bitcoin network. It takes 10 to 60 minutes to confirm but is best for large amounts or moving money from an exchange."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Should I receive in Bitcoin (BTC) or dollars (USDB)?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Receive it how you want to keep it. Keep it as dollars (USDB) for stable spending or as Bitcoin for long-term savings. You can swap between dollars and Bitcoin in seconds inside Blitz. USDB is digital dollars on Bitcoin issued by Brale and backed 1:1 by US Treasuries."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are there fees to receive Bitcoin?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Blitz does not charge you to receive. The sender pays a small network fee. Lightning or Spark is usually less than one cent. On-chain fees vary with network traffic. For USDT or USDC there is a network fee plus a small swap fee. Blitz shows the fee before you confirm."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Is this safe? Who controls my money?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "You do. Blitz is self-custodial, so only your 12-word recovery phrase can move your money. Blitz never has access to your funds. Write your 12 words on paper and keep them safe. You can recover your wallet at recover.blitzwalletapp.com if you lose your phone."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>How to receive Bitcoin <span>in Blitz Wallet</span></h1>
+          <p class="lead">
+            New to Bitcoin? You can get paid in seconds. Blitz Wallet lets you
+            receive money 5 simple ways and keep it as
+            <strong>Bitcoin or dollars</strong>, whichever you prefer.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#" class="btn-primary download-btn"
+              >Get Blitz to receive <i data-lucide="arrow-right"></i
+            ></a>
+            <a href="/pages/download/" class="btn-secondary"
+              >Download options</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Overview for beginners</span>
+            <h2>Which way should you use? Pick what your sender has</h2>
+            <p>
+              You only need one wallet. Just share the address that matches how
+              the other person wants to pay. Blitz puts the money in your wallet
+              as <strong>Bitcoin (BTC)</strong> or
+              <strong>dollars (USDB)</strong>, your choice. USDB is digital
+              dollars, issued by Brale and backed 1:1 by US Treasuries.
+            </p>
+          </div>
+          <div class="table-wrap">
+            <table class="compare">
+              <thead>
+                <tr>
+                  <th>Method</th>
+                  <th>Use it when</th>
+                  <th>How fast</th>
+                  <th>Cost to you</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Lightning Address</strong><br />
+                    <code>you@blitzwalletapp.com</code><br />
+                    <small style="opacity: 0.75"
+                      >Like an email for Bitcoin</small
+                    >
+                  </td>
+                  <td>
+                    Best for everyday payments, tips, or putting in your bio.
+                    Sender has any Lightning wallet.
+                  </td>
+                  <td class="check">
+                    Instant<br /><small>under 10 second</small>
+                  </td>
+                  <td>Free<br /><small>sender pays tiny fee</small></td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Lightning QR code</strong><br />
+                    <small style="opacity: 0.75"
+                      >One-time invoice you create</small
+                    >
+                  </td>
+                  <td>
+                    You want to request an exact amount with a note. Works even
+                    if your phone is offline.
+                  </td>
+                  <td class="check">
+                    Instant<br /><small>under 10 second</small>
+                  </td>
+                  <td>Free<br /><small>tiny fee</small></td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Bitcoin on-chain address</strong><br />
+                    <small style="opacity: 0.75"
+                      >Regular Bitcoin address starting with bc1...</small
+                    >
+                  </td>
+                  <td>Large amounts, or when sending from an exchange.</td>
+                  <td>
+                    30+ min<br /><small>waits for network confirmation</small>
+                  </td>
+                  <td>
+                    Network fee varies<br /><small
+                      >depends on how busy Bitcoin is</small
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Digital dollar address</strong><br />
+                    <small style="opacity: 0.75"
+                      >Accumulation address for USDT/USDC</small
+                    >
+                  </td>
+                  <td>
+                    Sender only has USDT or USDC on another network like
+                    Ethereum, Solana, or Tron. You still get Bitcoin or dollars.
+                  </td>
+                  <td>
+                    A few minutes<br /><small>waits for that network</small>
+                  </td>
+                  <td>Network fee plus small swap fee</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Swap dollars and Bitcoin</strong><br />
+                    <small style="opacity: 0.75">After you receive</small>
+                  </td>
+                  <td>
+                    You got dollars but want Bitcoin for savings, or got Bitcoin
+                    but need dollars to spend.
+                  </td>
+                  <td class="check">Seconds</td>
+                  <td>
+                    Small swap fee<br /><small
+                      >you see it before confirming</small
+                    >
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Step-by-step for beginners</span>
+            <h2>How to receive Bitcoin in 6 easy steps</h2>
+            <p>No technical knowledge needed — just follow what to tap.</p>
+          </div>
+          <div
+            class="steps receive-steps"
+            aria-label="How to receive Bitcoin in Blitz Wallet"
+          >
+            <div class="step" id="step-1">
+              <h3>Create your Blitz wallet</h3>
+              <p class="step-summary">
+                Download Blitz for
+                <a
+                  href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+                  target="_blank"
+                  rel="noopener"
+                  >iOS</a
+                >,
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+                  target="_blank"
+                  rel="noopener"
+                  >Android</a
+                >, or
+                <a
+                  href="https://wallet.blitzwalletapp.com"
+                  target="_blank"
+                  rel="noopener"
+                  >Web</a
+                >. Write your <strong>12-word recovery phrase</strong> on paper
+                and store it safely. It is your only backup, and Blitz never
+                sees it.
+              </p>
+            </div>
+            <div class="step" id="step-2">
+              <h3>Share your Lightning Address</h3>
+              <p class="step-summary">
+                Share your
+                <a href="/pages/lightning-address/">Lightning address</a>
+                anywhere to receive instant payments from compatible Lightning
+                wallets.
+              </p>
+            </div>
+            <div class="step" id="step-3">
+              <h3>Request an exact amount with a QR</h3>
+              <p class="step-summary">
+                Create an invoice with an amount and an optional note, then show
+                the QR code. The sender scans it to pay instantly.
+              </p>
+            </div>
+            <div class="step step-wide" id="step-4">
+              <h3>Use a regular Bitcoin address</h3>
+              <p class="step-summary">
+                For exchange withdrawals or large transfers, use an on-chain
+                address. The address beginning with
+                <code>bc1...</code>. Payments usually confirm in 30+ minutes,
+                and the network fee varies with demand.
+              </p>
+            </div>
+            <div class="step step-wide" id="step-5">
+              <h3>Get paid in USDT / USDC</h3>
+              <p class="step-summary">
+                Create an
+                <a href="/pages/accumulation-addresses/">
+                  accumulation address
+                </a>
+                for USDT or USDC, and share it with the correct network. Blitz
+                supports Arbitrum, Base, BNB Chain, Ethereum, Optimism, Plasma,
+                Polygon, Solana, and Tron.
+              </p>
+            </div>
+            <div class="step step-dark" id="step-6">
+              <h3>Keep as dollars or Bitcoin</h3>
+              <p class="step-summary">
+                Move between <strong>BTC</strong> and <strong>USDB</strong> in
+                seconds whenever your spending or saving needs change.
+              </p>
+              <p class="step-link">
+                <a href="/pages/stablecoins/">Learn about USDB →</a>
+              </p>
+            </div>
+          </div>
+          <div class="card-grid cols-2 space-top">
+            <div class="card">
+              <div class="icon"><i data-lucide="shield-check"></i></div>
+              <h3>You control your money</h3>
+              <p>
+                Self-custody: only your 12-word phrase can move funds. Blitz
+                never has access.
+                <a href="/pages/self-custody/">How it works</a>.
+              </p>
+            </div>
+            <div class="card">
+              <div class="icon"><i data-lucide="wallet"></i></div>
+              <h3>One wallet, two views</h3>
+              <p>
+                View as <strong>BTC</strong> or <strong>USDB</strong> (digital
+                dollars, 1:1 Treasuries via Brale). Receive on any network.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Beginner examples</span>
+            <h2>Which option fits you? Real examples</h2>
+            <p>
+              All of these put money in the same Blitz wallet. You just pick the
+              simplest one for your sender.
+            </p>
+          </div>
+          <div class="beginner-examples">
+            <article class="card">
+              <div class="icon"><i data-lucide="at-sign"></i></div>
+              <h3>Lightning Address</h3>
+              <p>
+                Add <code>username@blitzwalletapp.com</code> to your bio,
+                invoices, or tip page so anyone with a Lightning wallet can
+                choose an amount and pay instantly. The address uses your Blitz
+                username and also powers
+                <code>blitzwalletapp.com/u/yourname</code>.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="zap"></i></div>
+              <h3>Spark or Lightning QR code</h3>
+              <p>
+                For an exact in-person request, choose
+                <em>create invoice</em>, enter the amount and a note, then show
+                the QR code. Shops can use Blitz
+                <a href="/pages/point-of-sale/">Point of Sale</a> to add a logo
+                and display prices in local currency.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="link"></i></div>
+              <h3>Regular Bitcoin address (on-chain)</h3>
+              <p>
+                Use this for an exchange withdrawal or a larger transfer. Copy
+                your address beginning with
+                <code>bc1...</code>, and follow its status in Blitz while the
+                network confirms it.
+              </p>
+            </article>
+            <article class="card example-wide">
+              <div class="icon"><i data-lucide="coins"></i></div>
+              <h3>Digital dollars: USDT and USDC</h3>
+              <p>
+                When the sender has USDT or USDC, create an accumulation address
+                for their network and choose whether to receive BTC or USDB.
+                Blitz supports Arbitrum, Base, BNB Chain, Ethereum, Optimism,
+                Plasma, Polygon, Solana, and Tron.
+              </p>
+            </article>
+            <article class="card example-wide">
+              <div class="icon"><i data-lucide="repeat-2"></i></div>
+              <h3>Swap between dollars and Bitcoin</h3>
+              <p>
+                Use our swap feature when you receive dollars but want to save
+                in Bitcoin, or receive Bitcoin but need stable spending money.
+                Choose a direction and review the displayed rate and fee before
+                confirming.
+              </p>
+            </article>
+            <article class="card example-dark">
+              <div class="icon"><i data-lucide="users"></i></div>
+              <h3>Blitz contact</h3>
+              <p>
+                When both people use Blitz, add the recipient as a contact,
+                choose their name, and send or requset without an address or QR
+                code. Contact payments, and they appear alongside every other
+                payment in the same wallet.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>Common questions</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>My sender only has USDT on Tron. Can they still pay me?</h3>
+              <p>
+                Yes. In Blitz create a
+                <strong>Tron digital dollar address</strong> (accumulation
+                address) and choose to
+                <strong>auto-convert to Bitcoin or keep as dollars</strong>.
+                Give that address to the sender. They send USDT on Tron, and it
+                shows up in Blitz as the Bitcoin or dollars you chose. The same
+                works for USDT or USDC on 8 other networks: Arbitrum, Base, BNB
+                Chain, Ethereum, Optimism, Plasma, Polygon, and Solana.
+                <a href="/pages/accumulation-addresses/"
+                  >Learn about accumulation addresses</a
+                >.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>
+                What is the difference between Lightning, Spark, and on-chain?
+              </h3>
+              <p>
+                <strong
+                  >Lightning and Spark are for fast, cheap payments.</strong
+                >
+                Think of them like sending a text. They are great for everyday
+                amounts and arrive instantly.
+                <strong>On-chain is a regular Bitcoin transfer</strong> on the
+                main Bitcoin network. Think of it like a bank wire. It takes 10
+                to 60 minutes to confirm but is good for large amounts or moving
+                money from an exchange.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Should I receive in Bitcoin (BTC) or dollars (USDB)?</h3>
+              <p>
+                <strong>Receive it how you want to keep it.</strong> If you are
+                worried about short term changes in price, keep it as dollars
+                (USDB). If you want long-term savings, keep it as Bitcoin. You
+                can also
+                <strong>swap between dollars and Bitcoin in seconds</strong>
+                inside Blitz at any time. Many people keep everyday spending in
+                USDB and savings in BTC.
+                <a href="/pages/stablecoins/">What is USDB?</a> USDB is digital
+                dollars on Bitcoin, issued by
+                <a href="https://brale.xyz" target="_blank" rel="noopener"
+                  >Brale</a
+                >
+                and backed 1:1 by US Treasuries. Like all stablecoins, it has
+                issuer risk.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Is this safe? Who controls my money?</h3>
+              <p>
+                <strong>You do.</strong> Blitz is self-custodial, which means
+                only your 12-word recovery phrase can move your money. Blitz
+                never has access to your funds. Keep those 12 words written on
+                paper and never share them. If you lose your phone, you can use
+                them to recover your wallet by downloading blitz again.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Ready to receive your first payment?</h2>
+            <p>
+              Create your Blitz Wallet, copy your Address, and share it with
+              anyone.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a href="#" class="btn-primary download-btn"
+                >Create wallet & receive <i data-lucide="arrow-right"></i
+              ></a>
+              <a href="/pages/lightning-address/" class="btn-secondary"
+                >Get a Lightning Address</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>

@@ -7,7 +7,7 @@
   </url>
   <url>
     <loc>https://blitzwalletapp.com/pages/about/</loc>
-    <lastmod>2026-07-29</lastmod>
+    <lastmod>2026-09-01</lastmod>
     <priority>0.80</priority>
   </url>
   <url>
@@ -24,6 +24,101 @@
     <loc>https://blitzwalletapp.com/pages/brand/</loc>
     <lastmod>2026-07-15</lastmod>
     <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/bitcoin-wallet/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/self-custody/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/stablecoins/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/gifts/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/pools/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/point-of-sale/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/accounts/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/dollar-goals/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/accumulation-addresses/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/analytics/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/nostr/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/lightning-address/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.60</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/spend-and-replace/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.40</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/download/</loc>
+    <lastmod>2025-09-29</lastmod>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/faq/</loc>
+    <lastmod>2025-03-21</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/features/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/lightning-address/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/learn/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/learn/how-to-receive-bitcoin/</loc>
+    <lastmod>2026-09-03</lastmod>
+    <priority>0.90</priority>
   </url>
   <url>
     <loc>https://blitzwalletapp.com/pages/blog/bitcoin-familiarity/</loc>

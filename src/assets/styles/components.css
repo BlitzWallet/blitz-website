@@ -13,7 +13,7 @@
 .btn-secondary {
   min-height: 48px;
   padding: 0.9rem 1.25rem;
-  border-radius: var(--radius-card);
+  border-radius: var(--radius-pill);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -53,6 +53,32 @@
 .btn-secondary:hover {
   transform: translateY(-2px);
   background: var(--color-surface-offset);
+}
+
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline: 3px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+/* --- Card icons ---------------------------------------------------------- */
+/* Canonical icon chip used by every content card across the site. */
+
+.icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  margin-bottom: 1rem;
+  border-radius: var(--radius-card);
+  background: color-mix(in srgb, var(--color-brand) 10%, transparent);
+  color: var(--color-brand);
+}
+
+.icon svg {
+  width: 22px;
+  height: 22px;
 }
 
 /* --- Spinner -------------------------------------------------------------- */

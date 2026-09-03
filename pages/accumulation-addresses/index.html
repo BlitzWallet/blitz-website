@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="canonical"
+      href="https://blitzwalletapp.com/pages/accumulation-addresses/"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>Receive USDT and USDC as Bitcoin or Dollars | Blitz Wallet</title>
+    <meta
+      name="description"
+      content="Create static addresses that auto-convert USDC and USDT into Bitcoin or USD. Supports Arbitrum, Base, BNB Chain, Ethereum, Optimism, Plasma, Polygon, Solana, Tron."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/pages/accumulation-addresses/"
+    />
+    <meta
+      property="og:title"
+      content="Receive USDT and USDC as Bitcoin or Dollars"
+    />
+    <meta
+      property="og:description"
+      content="Static EVM & other addresses that turn USDT/USDC into BTC or USD automatically."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:title"
+      content="Accumulation Addresses: Auto-Convert Stablecoins"
+    />
+    <meta
+      property="twitter:description"
+      content="Static addresses for stablecoins, auto-converted."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Accumulation Addresses: Auto-Convert Stablecoins",
+        "description": "Static addresses that auto-convert USDC/USDT to BTC or USD.",
+        "url": "https://blitzwalletapp.com/pages/accumulation-addresses/"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Accumulation Addresses",
+            "item": "https://blitzwalletapp.com/pages/accumulation-addresses/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is an accumulation address?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "It is a reusable address for receiving USDT or USDC on a supported network. Blitz routes the payment and converts it to BTC or USDB based on what you picked."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Which networks are supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Blitz supports Arbitrum, Base, BNB Chain, Ethereum, Optimism, Plasma, Polygon, Solana, and Tron. The sender must use the same network and token shown for your address."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are there fees?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Network and swap fees can apply. Blitz shows applicable fees before you confirm a swap or other payment."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What happens if a sender uses the wrong network?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Do not guess. A token sent on the wrong network may not arrive or may not be recoverable. Confirm the token, network, and address with the sender before they pay."
+            }
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="#" class="nav-download-btn download-btn">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <section class="hero">
+      <div class="hero-inner">
+        <h1>Receive USDT and USDC <span>as Bitcoin or dollars</span></h1>
+        <p class="lead">
+          Create one address you can reuse. If someone sends USDC or USDT on a
+          supported network, Blitz converts it to Bitcoin or
+          <a href="/pages/stablecoins/">USDB</a> automatically. You pick which
+          one.
+        </p>
+        <div class="hero-actions">
+          <a href="#" class="btn-primary download-btn"
+            >Create accumulation address <i data-lucide="wallet"></i
+          ></a>
+          <a href="/pages/stablecoins/" class="btn-secondary">About USDB</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">How it works</span>
+          <h2>Give them one address, get BTC or USD</h2>
+        </div>
+        <div class="card-grid cols-3">
+          <div class="card">
+            <div class="icon"><i data-lucide="map-pin"></i></div>
+            <h3>Create the address</h3>
+            <p>
+              Choose to auto-convert to <strong>Bitcoin or USD</strong>. Blitz
+              gives you a static address you can reuse.
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon"><i data-lucide="send"></i></div>
+            <h3>They send USDT or USDC</h3>
+            <p>
+              Share it with a client, exchange, or friend. They send on any
+              supported network.
+            </p>
+          </div>
+          <div class="card">
+            <div class="icon"><i data-lucide="repeat-2"></i></div>
+            <h3>Blitz converts automatically</h3>
+            <p>
+              Funds arrive as BTC or USD in your Blitz wallet. No manual swap,
+              no extra step.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">How to receive</span>
+          <h2>Turn a stablecoin payment into Bitcoin or dollars</h2>
+          <p>
+            Use this when someone already holds USDT or USDC and needs a simple
+            way to pay you. That could be a client, an exchange, or family.
+            Share one address, pick Bitcoin or dollars, and Blitz handles the
+            conversion.
+          </p>
+        </div>
+        <div
+          class="steps receive-steps"
+          aria-label="How to receive stablecoins in Blitz"
+        >
+          <div class="step">
+            <h3>Choose a token and network</h3>
+            <p>
+              Pick USDT or USDC and the network the sender will use. Reuse the
+              address whenever you need it, but make sure the network matches
+              every time.
+            </p>
+          </div>
+          <div class="step">
+            <h3>Share the payment details</h3>
+            <p>
+              Send the address along with the token and network. Ask the sender
+              to confirm they selected the right network before paying.
+            </p>
+          </div>
+          <div class="step">
+            <h3>Receive as BTC or USDB</h3>
+            <p>
+              Blitz processes the payment and adds your chosen balance to the
+              wallet. Timing depends on the network, so check the status in the
+              app.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">FAQ</span>
+          <h2>Accumulation address questions</h2>
+        </div>
+        <div class="faq-list">
+          <div class="faq">
+            <h3>What is an accumulation address?</h3>
+            <p>
+              It is a reusable address for receiving USDT or USDC on a supported
+              network. Blitz routes the payment and converts it to BTC or USDB
+              based on what you picked.
+            </p>
+          </div>
+          <div class="faq">
+            <h3>Which networks are supported?</h3>
+            <p>
+              Blitz supports Arbitrum, Base, BNB Chain, Ethereum, Optimism,
+              Plasma, Polygon, Solana, and Tron. The sender must use the same
+              network and token shown for your address.
+            </p>
+          </div>
+          <div class="faq">
+            <h3>What happens if a sender uses the wrong network?</h3>
+            <p>
+              Do not guess. A token sent on the wrong network may not arrive or
+              may not be recoverable. Confirm the token, network, and address
+              with the sender before they pay.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">Supported networks</span>
+          <h2>All your stablecoin networks in one place</h2>
+          <p>
+            We support the networks where people keep stablecoins. You can
+            receive USDT or USDC on any of them.
+          </p>
+        </div>
+        <div class="card-grid cols-3">
+          <div class="card">
+            <h3>EVM chains</h3>
+            <p>
+              Arbitrum, Base, BNB Chain, Ethereum, Optimism, Polygon, Plasma
+            </p>
+          </div>
+          <div class="card">
+            <h3>Other chains</h3>
+            <p>Solana and Tron (TRC20)</p>
+          </div>
+          <div class="card">
+            <h3>Two stablecoins</h3>
+            <p>
+              USDC and USDT. Pick conversion to BTC or USD when you create the
+              address.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section white">
+      <div class="section-inner">
+        <div class="section-head">
+          <span class="eyebrow">Use cases</span>
+          <h2>When to use it</h2>
+        </div>
+        <div class="card-grid cols-3">
+          <div class="card">
+            <h3>Freelancers</h3>
+            <p>
+              If a client pays in USDT on Tron, share your Tron address and
+              receive USD in Blitz.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Exchanges</h3>
+            <p>
+              Withdraw USDT or USDC from an exchange on Base or Arbitrum. It
+              arrives as BTC in your wallet.
+            </p>
+          </div>
+          <div class="card">
+            <h3>Family abroad</h3>
+            <p>
+              Family sends USDC on Polygon and you receive dollars you can spend
+              with Lightning.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section warm">
+      <div class="section-inner">
+        <div class="cta-band">
+          <h2>Make one address you can reuse</h2>
+          <p>
+            Create it once and share it anywhere. Every supported USDT or USDC
+            payment goes to your BTC or USDB balance.
+          </p>
+          <div class="hero-actions actions-centered">
+            <a href="#" class="btn-primary download-btn"
+              >Open Blitz <i data-lucide="arrow-right"></i
+            ></a>
+            <a href="/pages/dollar-goals/" class="btn-secondary"
+              >Save it as a Dollar Goal →</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Your Global Payments App</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-WNRJ7Y4RVE");
+    </script>
+  </body>
+</html>
