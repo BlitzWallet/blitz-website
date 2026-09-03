@@ -62,6 +62,10 @@ export const designCss = /* css */ `
     --description_font: var(--font-sans);
     --other_font: var(--font-sans);
   }
+  main {
+  width:100%;
+  
+  }
 
   /* --- Buttons (solid, matching the home hero) --- */
   .btn-primary,
