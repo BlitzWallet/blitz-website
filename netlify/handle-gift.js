@@ -948,6 +948,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
       </div>
     </div>
 
+    <main>
     <div class="gift-container">
       <div class="gift-card">
         <div id="app">
@@ -958,6 +959,7 @@ function generateHTML({ ogTitle, ogDescription, ogImage, giftId, giftData }) {
         </div>
       </div>
     </div>
+    </main>
 
     <script>
       (function() {

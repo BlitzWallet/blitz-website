@@ -967,6 +967,7 @@ function generateHTML({
       </div>
     </div>
 
+    <main>
     <div class="paylink-container">
       <div class="paylink-card">
 
@@ -1128,6 +1129,7 @@ function generateHTML({
 
       </div>
     </div>
+    </main>
 
     <script>
       const IOS_STORE_URL = 'https://apps.apple.com/us/app/blitz-wallet/id6476810582';

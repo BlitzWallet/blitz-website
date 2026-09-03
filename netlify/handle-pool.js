@@ -3280,6 +3280,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
       </div>
     </div>
 
+    <main>
     <div class="pool-container">
       <div class="pool-card">
         <div id="app"> 
@@ -3291,6 +3292,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
         </div>
       </div>
     </div>
+    </main>
 
     <!-- Download Modal JS -->
     <script>

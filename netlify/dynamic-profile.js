@@ -508,6 +508,7 @@ export async function handler(event, context) {
         <img src="/public/wordmark.png" alt="blitz wallet wordmark logo to take you back to the homepage" />
       </a>
     </div>
+  <main>
   <section class="loading-screen" id="loadingScreen" aria-live="polite" aria-busy="true">
     <div class="loading-screen-content">
       <div class="spinner" aria-hidden="true"></div>
@@ -588,6 +589,7 @@ export async function handler(event, context) {
     </div>
   </div>
   </section>
+  </main>
   </body>
 </html>`,
   };
