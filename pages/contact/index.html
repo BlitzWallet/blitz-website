@@ -32,6 +32,12 @@
       name="description"
       content="Contact Blitz Wallet for help with payments, the mobile app, web wallet, payment links, gifts, merchant tools, recovery, partnerships, or media requests."
     />
+    <link
+      rel="alternate"
+      type="text/markdown"
+      href="https://blitzwalletapp.com/llms.txt"
+      title="Blitz Wallet LLM guide"
+    />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -79,6 +85,7 @@
 
     <link rel="stylesheet" href="/pages/contact/style.css" />
     <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/webmcp-tools.js" defer></script>
     <script src="/src/js/font-loader.js" defer></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
@@ -88,12 +95,17 @@
   </head>
 
   <body>
-    <nav>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <nav aria-label="Primary">
       <div class="nav-container">
         <a href="/" class="logo"
-          ><img src="/favicon.png" alt="Blitz Wallet logo"
+          ><img
+            src="/favicon.png"
+            alt="Blitz Wallet logo"
+            width="35"
+            height="35"
         /></a>
-        <ul class="nav-links">
+        <ul class="nav-links" id="primary-navigation">
           <li><a href="/#products">Products</a></li>
           <li><a href="/#features">Features</a></li>
           <li><a href="/pages/about/" class="active">About</a></li>
@@ -102,14 +114,22 @@
             <a href="#" class="nav-download-btn download-btn">Download</a>
           </li>
         </ul>
-        <div class="mobile-menu" id="mobileMenu">
+        <div
+          class="mobile-menu"
+          id="mobileMenu"
+          role="button"
+          tabindex="0"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+        >
           <span></span>
           <span></span>
           <span></span>
         </div>
       </div>
     </nav>
-    <main>
+    <main id="main-content">
     <section class="contact-wrapper">
       <h1 id="pageDescription">Contact Us</h1>
       <div class="formContainer">
@@ -117,13 +137,21 @@
           <h2>Hi,</h2>
           <h2>Have a question in mind?</h2>
         </div>
-        <form action="/pages/success" name="contact" netlify>
+        <form
+          action="/pages/success"
+          name="contact"
+          netlify
+          toolname="contact_blitz_support"
+          tooldescription="Send a support or inquiry message to the Blitz Wallet team about payments, the mobile app, web wallet, gifts, pools, merchant tools, recovery, partnerships, or media requests."
+        >
           <label>
             Name (optional)
             <input
               type="text"
               name="sendersName"
               placeholder="Enter name here"
+              autocomplete="name"
+              toolparamdescription="The sender's name (optional)."
             />
           </label>
           <label>
@@ -133,6 +161,8 @@
               type="email"
               name="email"
               placeholder="Enter email here"
+              autocomplete="email"
+              toolparamdescription="The sender's email address so support can reply (required)."
             />
           </label>
           <label for="message"
@@ -142,10 +172,11 @@
               placeholder="Add message here"
               id="message"
               name="message"
+              toolparamdescription="The support question or inquiry message (required)."
             ></textarea>
           </label>
 
-          <button class="btn-primary">Submit</button>
+          <button type="submit" class="btn-primary">Submit</button>
         </form>
       </div>
     </section>
@@ -154,7 +185,12 @@
     <footer>
       <div class="footer-container">
         <div class="footer-brand">
-          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <img
+            src="/favicon.png"
+            alt="Blitz Wallet logo"
+            width="50"
+            height="50"
+          />
           <h3>Blitz Wallet</h3>
           <p>Your Global Payments App</p>
         </div>
@@ -194,10 +230,21 @@
 
     <!-- Download Modal -->
     <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="modal-container" id="modalContainer">
+    <div
+      class="modal-container"
+      id="modalContainer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Download Blitz Wallet"
+    >
       <div class="download-modal">
-        <button class="modal-close" id="modalClose">
-          <i data-lucide="x"></i>
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i aria-hidden="true" data-lucide="x"></i>
         </button>
 
         <div class="modal-header">
@@ -206,12 +253,22 @@
         </div>
 
         <div class="modal-tabs">
-          <button class="modal-tab active" data-platform="ios">
-            <i data-lucide="apple"></i>
+          <button
+            type="button"
+            class="modal-tab active"
+            data-platform="ios"
+            aria-pressed="true"
+          >
+            <i aria-hidden="true" data-lucide="apple"></i>
             <span>iOS</span>
           </button>
-          <button class="modal-tab" data-platform="android">
-            <i data-lucide="smartphone"></i>
+          <button
+            type="button"
+            class="modal-tab"
+            data-platform="android"
+            aria-pressed="false"
+          >
+            <i aria-hidden="true" data-lucide="smartphone"></i>
             <span>Android</span>
           </button>
         </div>
@@ -228,7 +285,7 @@
               class="store-badge"
               target="_blank"
             >
-              <i data-lucide="apple"></i>
+              <i aria-hidden="true" data-lucide="apple"></i>
               <span>App Store</span>
             </a>
             <a
@@ -236,7 +293,7 @@
               class="store-badge"
               target="_blank"
             >
-              <i data-lucide="play"></i>
+              <i aria-hidden="true" data-lucide="play"></i>
               <span>Play Store</span>
             </a>
           </div>

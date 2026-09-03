@@ -85,6 +85,7 @@
     <link rel="stylesheet" href="./pages/home/home.css" />
 
     <script src="./src/js/navbar.js" defer></script>
+    <script src="/src/js/webmcp-tools.js" defer></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
       defer
@@ -189,13 +190,18 @@
   </head>
 
   <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
     <!-- Navigation -->
-    <nav>
+    <nav aria-label="Primary">
       <div class="nav-container">
         <a href="/" class="logo"
-          ><img src="/favicon.png" alt="Blitz Wallet logo"
+          ><img
+            src="/favicon.png"
+            alt="Blitz Wallet logo"
+            width="35"
+            height="35"
         /></a>
-        <ul class="nav-links">
+        <ul class="nav-links" id="primary-navigation">
           <li><a href="#products">Products</a></li>
           <li><a href="#features">Features</a></li>
           <li><a href="/pages/about">About</a></li>
@@ -204,7 +210,15 @@
             <a href="#" class="nav-download-btn download-btn">Download</a>
           </li>
         </ul>
-        <div class="mobile-menu" id="mobileMenu">
+        <div
+          class="mobile-menu"
+          id="mobileMenu"
+          role="button"
+          tabindex="0"
+          aria-label="Open navigation menu"
+          aria-expanded="false"
+          aria-controls="primary-navigation"
+        >
           <span></span>
           <span></span>
           <span></span>
@@ -212,7 +226,7 @@
       </div>
     </nav>
 
-    <main>
+    <main id="main-content">
       <!-- Hero Section -->
       <section class="hero" data-phone-scroll>
       <div class="hero-scroll-container">
@@ -231,7 +245,7 @@
             </p>
             <div class="hero-actions">
               <a href="#" class="btn-primary download-btn hero-cta">
-                Download now <i data-lucide="arrow-right"></i>
+                Download now <i aria-hidden="true" data-lucide="arrow-right"></i>
               </a>
             </div>
           </div>
@@ -249,6 +263,9 @@
                 class="demo-poster"
                 src="/src/assets/images/homescreen.png"
                 alt="Blitz Wallet home screen"
+                width="330"
+                height="700"
+                fetchpriority="high"
                 aria-hidden="true"
               />
               <div class="demo-loader" aria-hidden="true">
@@ -260,7 +277,7 @@
                 aria-label="Start interactive demo"
               >
                 <div class="demo-content-container">
-                  <i class="demo-icon" data-lucide="info"></i>
+                  <i class="demo-icon" aria-hidden="true" data-lucide="info"></i>
 
                   <h2 class="demo-title">Try Blitz Wallet</h2>
 
@@ -302,7 +319,7 @@
         </article>
 
         <article class="feature-card fade-in">
-          <div class="icon"><i data-lucide="gift"></i></div>
+          <div class="icon"><i aria-hidden="true" data-lucide="gift"></i></div>
           <div class="feature-copy">
             <h3>Blitz Gifts</h3>
             <p>
@@ -313,7 +330,7 @@
         </article>
 
         <article class="feature-card fade-in">
-          <div class="icon"><i data-lucide="users"></i></div>
+          <div class="icon"><i aria-hidden="true" data-lucide="users"></i></div>
           <div class="feature-copy">
             <h3>Payment Pools</h3>
             <p>
@@ -324,7 +341,7 @@
         </article>
 
         <article class="feature-card feature-card-wide fade-in">
-          <div class="icon"><i data-lucide="link"></i></div>
+          <div class="icon"><i aria-hidden="true" data-lucide="link"></i></div>
           <div class="feature-copy">
             <h3>Payment Links</h3>
             <p>
@@ -336,7 +353,7 @@
         </article>
 
         <article class="feature-card feature-card-wide fade-in">
-          <div class="icon"><i data-lucide="repeat-2"></i></div>
+          <div class="icon"><i aria-hidden="true" data-lucide="repeat-2"></i></div>
           <div class="feature-copy">
             <h3>USDT &amp; USDC Stablecoin Swaps</h3>
             <p>
@@ -347,7 +364,7 @@
         </article>
 
         <article class="feature-card feature-card-dark fade-in">
-          <div class="icon"><i data-lucide="zap"></i></div>
+          <div class="icon"><i aria-hidden="true" data-lucide="zap"></i></div>
           <div class="feature-copy">
             <h3>Instant Global Settlement</h3>
             <p>
@@ -358,7 +375,7 @@
         </article>
 
         <article class="feature-card feature-card-split fade-in">
-          <div class="icon"><i data-lucide="shield-check"></i></div>
+          <div class="icon"><i aria-hidden="true" data-lucide="shield-check"></i></div>
           <div class="feature-copy">
             <h3>Your Money Stays Yours</h3>
             <p>
@@ -369,7 +386,7 @@
         </article>
 
         <article class="feature-card feature-card-split fade-in">
-          <div class="icon"><i data-lucide="moon"></i></div>
+          <div class="icon"><i aria-hidden="true" data-lucide="moon"></i></div>
           <div class="feature-copy">
             <h3>Receive Anytime, Offline</h3>
             <p>
@@ -398,7 +415,7 @@
 
       <div class="product-grid">
         <article class="product-card fade-in">
-          <div class="icon"><i data-lucide="smartphone"></i></div>
+          <div class="icon"><i aria-hidden="true" data-lucide="smartphone"></i></div>
           <span class="product-tag">iOS &amp; Android</span>
           <h3>Mobile App</h3>
           <p>
@@ -406,12 +423,12 @@
             groups, and manage your funds with complete control.
           </p>
           <a href="#" class="product-cta download-btn">
-            Download the app <i data-lucide="arrow-right"></i>
+            Download the app <i aria-hidden="true" data-lucide="arrow-right"></i>
           </a>
         </article>
 
         <article class="product-card fade-in">
-          <div class="icon"><i data-lucide="globe"></i></div>
+          <div class="icon"><i aria-hidden="true" data-lucide="globe"></i></div>
           <span class="product-tag">Browser wallet</span>
           <h3>Web Wallet</h3>
           <p>
@@ -419,12 +436,12 @@
             browser, with no app install required.
           </p>
           <a href="https://wallet.blitzwalletapp.com" class="product-cta">
-            Try the Web Wallet <i data-lucide="arrow-right"></i>
+            Try the Web Wallet <i aria-hidden="true" data-lucide="arrow-right"></i>
           </a>
         </article>
 
         <article class="product-card fade-in">
-          <div class="icon"><i data-lucide="store"></i></div>
+          <div class="icon"><i aria-hidden="true" data-lucide="store"></i></div>
           <span class="product-tag">For merchants</span>
           <h3>Point of Sale</h3>
           <p>
@@ -432,12 +449,12 @@
             and settle instantly.
           </p>
           <a href="https://pay.blitzwalletapp.com" class="product-cta">
-            Get started <i data-lucide="arrow-right"></i>
+            Get started <i aria-hidden="true" data-lucide="arrow-right"></i>
           </a>
         </article>
 
         <article class="product-card fade-in">
-          <div class="icon"><i data-lucide="life-buoy"></i></div>
+          <div class="icon"><i aria-hidden="true" data-lucide="life-buoy"></i></div>
           <span class="product-tag">Open-source backup</span>
           <h3>Recovery Platform</h3>
           <p>
@@ -445,7 +462,7 @@
             path that does not depend on Blitz.
           </p>
           <a href="https://recover.blitzwalletapp.com" class="product-cta">
-            Launch platform <i data-lucide="arrow-right"></i>
+            Launch platform <i aria-hidden="true" data-lucide="arrow-right"></i>
           </a>
         </article>
       </div>
@@ -460,7 +477,7 @@
           free
         </p>
         <a href="#" class="btn-primary download-btn hero-cta">
-          Download now <i data-lucide="arrow-right"></i>
+          Download now <i aria-hidden="true" data-lucide="arrow-right"></i>
         </a>
       </div>
     </section>
@@ -470,7 +487,12 @@
     <footer>
       <div class="footer-container">
         <div class="footer-brand">
-          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <img
+            src="/favicon.png"
+            alt="Blitz Wallet logo"
+            width="50"
+            height="50"
+          />
           <h3>Blitz Wallet</h3>
           <p>Your Global Payments App</p>
         </div>
@@ -515,10 +537,21 @@
 
     <!-- Download Modal -->
     <div class="modal-backdrop" id="modalBackdrop"></div>
-    <div class="modal-container" id="modalContainer">
+    <div
+      class="modal-container"
+      id="modalContainer"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Download Blitz Wallet"
+    >
       <div class="download-modal">
-        <button class="modal-close" id="modalClose">
-          <i data-lucide="x"></i>
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i aria-hidden="true" data-lucide="x"></i>
         </button>
 
         <div class="modal-header">
@@ -527,12 +560,22 @@
         </div>
 
         <div class="modal-tabs">
-          <button class="modal-tab active" data-platform="ios">
-            <i data-lucide="apple"></i>
+          <button
+            type="button"
+            class="modal-tab active"
+            data-platform="ios"
+            aria-pressed="true"
+          >
+            <i aria-hidden="true" data-lucide="apple"></i>
             <span>iOS</span>
           </button>
-          <button class="modal-tab" data-platform="android">
-            <i data-lucide="smartphone"></i>
+          <button
+            type="button"
+            class="modal-tab"
+            data-platform="android"
+            aria-pressed="false"
+          >
+            <i aria-hidden="true" data-lucide="smartphone"></i>
             <span>Android</span>
           </button>
         </div>
@@ -550,7 +593,7 @@
               id="iosLink"
               target="_blank"
             >
-              <i data-lucide="apple"></i>
+              <i aria-hidden="true" data-lucide="apple"></i>
               <span>App Store</span>
             </a>
             <a
@@ -559,7 +602,7 @@
               id="androidLink"
               target="_blank"
             >
-              <i data-lucide="play"></i>
+              <i aria-hidden="true" data-lucide="play"></i>
               <span>Play Store</span>
             </a>
           </div>

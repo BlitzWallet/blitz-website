@@ -35,7 +35,34 @@
     if (window.lucide) {
       lucide.createIcons();
     }
+    // Agentic browsing / a11y: lucide replaces <i data-lucide> with inline
+    // SVGs that would otherwise appear as unnamed elements in the
+    // accessibility tree. Mark decorative icons hidden (buttons/links on
+    // this site already carry text or aria-labels).
+    hideDecorativeIcons();
   };
+
+  // Icons may also be inlined by other scripts, so observe late additions.
+  if (typeof MutationObserver !== "undefined") {
+    const observer = new MutationObserver(hideDecorativeIcons);
+    observer.observe(document.documentElement, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
+  function hideDecorativeIcons() {
+    document
+      .querySelectorAll("i[data-lucide], svg.lucide")
+      .forEach(function (el) {
+        if (!el.hasAttribute("aria-hidden")) {
+          el.setAttribute("aria-hidden", "true");
+        }
+        if (!el.hasAttribute("focusable") && el.tagName.toLowerCase() === "svg") {
+          el.setAttribute("focusable", "false");
+        }
+      });
+  }
 
   // Append to head
   document.head.appendChild(preconnect1);

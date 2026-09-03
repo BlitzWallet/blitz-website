@@ -247,3 +247,51 @@
     animation-duration: 2s;
   }
 }
+
+/* --- Agentic browsing: skip link, layout stability, WebMCP focus --------- */
+
+/* Skip link (also injected by navbar.js on pages whose markup lacks one). */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100px;
+  z-index: 1000;
+  padding: 0.75rem 1.25rem;
+  border-radius: 999px;
+  background: var(--color-brand);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: top 0.15s ease;
+}
+
+.skip-link:focus-visible {
+  top: 1rem;
+  outline: 3px solid var(--color-brand);
+  outline-offset: 3px;
+}
+
+/* Layout stability: reserve space before stylesheets/images finish loading. */
+img {
+  max-width: 100%;
+}
+
+img[width][height] {
+  height: auto;
+}
+
+/* Div-based nav toggle keyboard focus */
+.mobile-menu:focus-visible {
+  outline: 3px solid var(--color-brand);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+
+/* WebMCP declarative tool activation indicator (Chrome default + brand). */
+form:tool-form-active {
+  outline: 2px dashed var(--color-brand);
+  outline-offset: 4px;
+  border-radius: 8px;
+}
