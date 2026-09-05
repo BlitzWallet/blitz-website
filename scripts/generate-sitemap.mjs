@@ -81,11 +81,6 @@ const staticPages = [
   },
   { loc: "/pages/nostr/", file: "pages/nostr/index.html", priority: "0.60" },
   {
-    loc: "/pages/lightning-address/",
-    file: "pages/lightning-address/index.html",
-    priority: "0.60",
-  },
-  {
     loc: "/pages/spend-and-replace/",
     file: "pages/spend-and-replace/index.html",
     priority: "0.40",

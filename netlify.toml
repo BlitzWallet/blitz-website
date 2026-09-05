@@ -5,6 +5,71 @@
 [functions]
   "*" = { timeout = 20 }
 
+# Keep all public aliases out of the duplicate-content set. The domains in
+# these rules are configured as aliases in Netlify; the primary domain remains
+# https://blitzwalletapp.com and is the only URL used in canonical tags.
+# Keep mobile association files on aliases as direct 200 responses: Apple does
+# not accept an AASA file served through a redirect.
+[[redirects]]
+  from = "https://blitz-wallet.com/.well-known/apple-app-site-association"
+  to = "/.well-known/apple-app-site-association"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://blitz-wallet.com/.well-known/assetlinks.json"
+  to = "/.well-known/assetlinks.json"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://blitzwallet.app/.well-known/apple-app-site-association"
+  to = "/.well-known/apple-app-site-association"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://blitzwallet.app/.well-known/assetlinks.json"
+  to = "/.well-known/assetlinks.json"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://www.blitzwallet.app/.well-known/apple-app-site-association"
+  to = "/.well-known/apple-app-site-association"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://www.blitzwallet.app/.well-known/assetlinks.json"
+  to = "/.well-known/assetlinks.json"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "https://blitz-wallet.com/*"
+  to = "https://blitzwalletapp.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://blitzwallet.app/*"
+  to = "https://blitzwalletapp.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.blitzwallet.app/*"
+  to = "https://blitzwalletapp.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://blitz-wallet.netlify.app/*"
+  to = "https://blitzwalletapp.com/:splat"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/health"
   [headers.values]

@@ -81,11 +81,6 @@
     <priority>0.60</priority>
   </url>
   <url>
-    <loc>https://blitzwalletapp.com/pages/lightning-address/</loc>
-    <lastmod>2026-09-03</lastmod>
-    <priority>0.60</priority>
-  </url>
-  <url>
     <loc>https://blitzwalletapp.com/pages/spend-and-replace/</loc>
     <lastmod>2026-09-03</lastmod>
     <priority>0.40</priority>
