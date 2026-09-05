@@ -278,9 +278,9 @@ img {
   max-width: 100%;
 }
 
-img[width][height] {
+/* img[width][height] {
   height: auto;
-}
+} */
 
 /* Div-based nav toggle keyboard focus */
 .mobile-menu:focus-visible {
