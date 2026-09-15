@@ -39,3 +39,6 @@ netlify/createJWT.js
 netlify/lib/blitz-api-auth.js
 .claude/launch.json
 **/.DS_Store
+
+# Netlify publish output
+dist/

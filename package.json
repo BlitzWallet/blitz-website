@@ -5,7 +5,7 @@
   "main": "index.mjs",
   "scripts": {
     "dev": "tsc -w & nodemon .",
-    "build": "node scripts/generate-sitemap.mjs",
+    "build": "node scripts/generate-sitemap.mjs && rm -rf dist && mkdir dist && cp -R index.html 404.html 200.html tips_page.html favicon.png robots.txt sitemap.xml llms.txt llms-full.txt BingSiteAuth.xml .well-known pages learn public src dist/ && rm -f dist/pages/blog/README.md",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Blake Kaufman",
