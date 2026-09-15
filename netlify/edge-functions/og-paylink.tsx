@@ -35,11 +35,23 @@ const IMAGE_CACHE_HEADERS = {
   "Access-Control-Allow-Origin": "*",
 };
 
-async function loadFonts(origin: string) {
+// Cache fonts per isolate so each OG render doesn't re-download the TTFs from
+// our own origin (that fetch is billed as site bandwidth).
+let fontsPromise: ReturnType<typeof fetchFonts> | undefined;
+function loadFonts(origin: string) {
+  fontsPromise ??= fetchFonts(origin).catch((err) => {
+    fontsPromise = undefined;
+    throw err;
+  });
+  return fontsPromise;
+}
+
+async function fetchFonts(origin: string) {
   return await Promise.all(
     FONTS.map(async ({ name, weight, style, filePath }) => {
       const url = `${origin}/fonts/${filePath}`;
       const res = await fetch(url);
+      if (!res.ok) throw new Error(`font fetch failed: ${url} ${res.status}`);
       const data = await res.arrayBuffer();
       return { name, weight, style, data };
     }),

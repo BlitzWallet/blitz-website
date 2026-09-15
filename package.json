@@ -5,30 +5,14 @@
   "main": "index.mjs",
   "scripts": {
     "dev": "tsc -w & nodemon .",
-    "build": "node scripts/build-paylink-swap.mjs && node scripts/generate-sitemap.mjs",
+    "build": "node scripts/generate-sitemap.mjs && rm -rf dist && mkdir dist && cp -R index.html 404.html 200.html tips_page.html favicon.png robots.txt sitemap.xml llms.txt llms-full.txt BingSiteAuth.xml .well-known pages learn public src dist/ && rm -f dist/pages/blog/README.md",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Blake Kaufman",
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@lendasat/lendaswap-sdk-pure": "^0.2.7",
-    "@netlify/blobs": "^8.0.1",
     "@netlify/edge-functions": "^3.0.4",
-    "Buffer": "^0.0.0",
-    "crypto": "^1.0.1",
-    "dotenv": "16.4.1",
-    "elliptic": "^6.5.4",
-    "esbuild": "^0.27.4",
-    "fs": "^0.0.1-security",
-    "googleapis": "^144.0.0",
-    "netlify-cli": "^17.33.3",
-    "netlify-lambda": "2.0.16",
-    "path": "^0.12.7",
-    "secp256k1": "^5.0.0",
-    "viem": "^2.47.5"
-  },
-  "devDependencies": {
-    "@types/react": "^19.2.14"
+    "dotenv": "16.4.1"
   }
 }
