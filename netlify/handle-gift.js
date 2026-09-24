@@ -85,7 +85,8 @@ export async function handler(event, context) {
     const denomination = giftData.denomination ?? "BTC";
     const amountLabel = formatGiftAmountLabel(giftData);
     ogTitle = `Claim your ${amountLabel} ${denomination === "BTC" ? "Bitcoin" : "Dollar"} Gift!`;
-    ogDescription = `You've received a ${amountLabel} Bitcoin gift. Claim it instantly on Blitz Wallet.`;
+    const giftType = denomination === "BTC" ? "Bitcoin" : "dollar";
+    ogDescription = `You've received a ${amountLabel} ${giftType} gift. Open the link in Blitz Wallet to claim it.`;
     ogImage = buildGiftOgImageUrl(baseUrl, giftId, giftData);
     console.log(ogImage);
   } else {

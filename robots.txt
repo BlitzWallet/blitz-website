@@ -1,10 +1,9 @@
 User-agent: *
 Allow: /
 
-# Block Netlify internals and dynamic claim/transactional routes from indexing
+# Block Netlify internals. Dynamic claim routes return noindex HTML so crawlers
+# can see the directive instead of being blocked here.
 Disallow: /.netlify/
-Disallow: /gift/
-Disallow: /pools/
 
 Sitemap: https://blitzwalletapp.com/sitemap.xml
 

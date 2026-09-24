@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://blitzwalletapp.com/pages/security/" />
+    <title>Blitz Wallet Security: Keys, Operators &amp; Recovery</title>
+    <meta
+      name="description"
+      content="How Blitz Wallet security works: you hold the 12-word seed, Spark operators co-sign payments, and Spark&#39;s unilateral exit is the fallback, with its current limits."
+    />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:type" content="article" />
+    <meta
+      property="og:url"
+      content="https://blitzwalletapp.com/pages/security/"
+    />
+    <meta
+      property="og:title"
+      content="Blitz Wallet Security: Keys, Operators &amp; Recovery"
+    />
+    <meta
+      property="og:description"
+      content="A plain-language explanation of Blitz Wallet keys, Spark operators, and recovery requirements."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:url"
+      content="https://blitzwalletapp.com/pages/security/"
+    />
+    <meta
+      name="twitter:title"
+      content="Blitz Wallet Security: Keys, Operators &amp; Recovery"
+    />
+    <meta
+      name="twitter:description"
+      content="A plain-language explanation of Blitz Wallet keys, Spark operators, and recovery requirements."
+    />
+    <meta
+      name="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": "How Blitz Wallet keys, operators, and recovery work",
+        "description": "How Blitz Wallet seed phrases, Spark operator co-signing, recovery, and Spark's unilateral exit work, including current limits.",
+        "datePublished": "2026-09-23",
+        "dateModified": "2026-09-24",
+        "mainEntityOfPage": "https://blitzwalletapp.com/pages/security/",
+        "author": { "@id": "https://blitzwalletapp.com/#organization" },
+        "publisher": { "@id": "https://blitzwalletapp.com/#organization" }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Security",
+            "item": "https://blitzwalletapp.com/pages/security/"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <nav aria-label="Primary">
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img
+            src="/favicon.png"
+            alt="Blitz Wallet logo"
+            width="35"
+            height="35"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/learn/">Learn</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a class="nav-download-btn" href="/pages/download/">Download</a>
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>How Blitz Wallet recovery work</h1>
+          <p class="lead">
+            How recovery works, what that means, and what happens if operators
+            go offline.
+          </p>
+          <div class="hero-actions">
+            <a href="/pages/faq/" class="btn-primary">Read common questions</a>
+            <a
+              href="https://github.com/BlitzWallet/BlitzWallet"
+              class="btn-secondary"
+              target="_blank"
+              rel="noopener"
+              >Review the app source</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">The trust model</span>
+            <h2>Three things to understand</h2>
+            <p>
+              Owning your keys, making everyday payments, and recovering funds
+              are related, but each works differently.
+            </p>
+          </div>
+          <div class="card-grid cols-3">
+            <article class="card">
+              <div class="icon">
+                <i data-lucide="key" aria-hidden="true"></i>
+              </div>
+              <h3>Your seed phrase</h3>
+              <p>
+                Your 12 words create the keys to your wallet, and Blitz
+                doesn&rsquo;t store them. Anyone who gets your 12 words can
+                control your wallet, so keep them private and offline.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon">
+                <i data-lucide="users" aria-hidden="true"></i>
+              </div>
+              <h3>Spark operators</h3>
+              <p>
+                Spark transfers are signed by you together with a group of Spark
+                operators.
+                <a
+                  href="https://docs.spark.money/spark/trust-model"
+                  target="_blank"
+                  rel="noopener"
+                  >Spark&rsquo;s trust model</a
+                >
+                assumes at least one operator behaves honestly during each
+                transfer. If operators go offline or refuse to sign, normal
+                Spark payments can be delayed or stop.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon">
+                <i data-lucide="life-buoy" aria-hidden="true"></i>
+              </div>
+              <h3>Unilateral exit</h3>
+              <p>
+                Spark includes a
+                <a
+                  href="https://docs.spark.money/wallet/developer-guide/unilateral-exit"
+                  target="_blank"
+                  rel="noopener"
+                  >unilateral exit</a
+                >: pre-signed Bitcoin transactions that let you withdraw to the
+                Bitcoin blockchain without operator permission. Today it&rsquo;s
+                a technical process that isn&rsquo;t built into the Blitz app.
+              </p>
+            </article>
+          </div>
+          <aside
+            class="security-warning"
+            role="note"
+            aria-label="Seed phrase warning"
+          >
+            <div class="security-warning-icon" aria-hidden="true">
+              <i data-lucide="shield-alert"></i>
+            </div>
+            <div>
+              <h3>Protect your 12 words</h3>
+              <p>
+                Blitz support will never ask for your seed phrase by email,
+                chat, or form. Before entering it into any recovery tool, check
+                that you&rsquo;re using the official open-source project linked
+                on this page.
+              </p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Recovery options</span>
+            <h2>What recovery looks like today</h2>
+          </div>
+          <div class="steps receive-steps">
+            <div class="step">
+              <h3>Lost your phone</h3>
+              <p>
+                Install Blitz on a new device and enter your 12 words. Your
+                wallet and its accounts come back. Like normal payments, this
+                works with Spark operators online.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Blitz app or servers unavailable</h3>
+              <p>
+                The open-source
+                <a
+                  href="https://github.com/BlitzWallet/spark-recover"
+                  target="_blank"
+                  rel="noopener"
+                  >spark-recover</a
+                >
+                tool lets you enter your seed, see your balance, and send funds
+                without the Blitz app. It still relies on Spark operators to
+                move funds.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Spark operators unavailable</h3>
+              <p>
+                The unilateral exit is the fallback. It currently means using
+                Spark&rsquo;s command-line tool, paying Bitcoin network fees
+                from on-chain Bitcoin you already hold, and waiting for
+                timelocks.
+              </p>
+            </div>
+          </div>
+          <div class="card-grid cols-1 space-top">
+            <article class="card">
+              <h3>Open source</h3>
+              <p>
+                The
+                <a
+                  href="https://github.com/BlitzWallet/BlitzWallet"
+                  target="_blank"
+                  rel="noopener"
+                  >Blitz app</a
+                >
+                and
+                <a
+                  href="https://github.com/BlitzWallet/spark-recover"
+                  target="_blank"
+                  rel="noopener"
+                  >recovery tool</a
+                >
+                are public on GitHub under the Apache 2.0 license, so anyone can
+                review how keys and payments are handled.
+              </p>
+            </article>
+          </div>
+          <div class="hero-actions actions-centered space-top">
+            <a
+              href="https://docs.spark.money"
+              class="btn-secondary"
+              target="_blank"
+              rel="noopener"
+              >Read Spark documentation</a
+            >
+            <a href="/pages/self-custody/" class="btn-secondary"
+              >Learn about self-custody</a
+            >
+            <a
+              href="https://github.com/BlitzWallet/BlitzWallet/blob/main/SECURITY.md"
+              class="btn-secondary"
+              target="_blank"
+              rel="noopener"
+              >Report a security issue</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Common questions</span>
+            <h2>Security and recovery</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>Does Blitz know my seed phrase?</h3>
+              <p>
+                No. Blitz doesn&rsquo;t store your 12 words. Keep your backup
+                private: anyone who has it can control your wallet.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can Spark operators stop a payment?</h3>
+              <p>
+                Yes. Operators co-sign Spark transfers, so if they go offline or
+                refuse to sign, normal Spark payments can be delayed or stop.
+                They don&rsquo;t hold your seed phrase.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What if Spark shuts down?</h3>
+              <p>
+                Spark&rsquo;s unilateral exit lets you withdraw to the Bitcoin
+                blockchain without operators. Today that means a command-line
+                process with on-chain fees and waiting periods, and small
+                balances aren&rsquo;t worth exiting.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Read before you choose</h2>
+            <p>
+              Protect your 12 words, understand how Spark works, and choose a
+              wallet that fits how much you plan to hold.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a href="/pages/download/" class="btn-primary"
+                >Download Blitz Wallet</a
+              ><a href="/pages/faq/" class="btn-secondary">Visit the FAQ</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Bitcoin &amp; Lightning wallet</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/pages/download/">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Wallet</h4>
+          <ul>
+            <li><a href="/pages/lightning-wallet/">Lightning Wallet</a></li>
+            <li><a href="/pages/spark-wallet/">Spark Wallet</a></li>
+            <li><a href="/pages/security/">Security &amp; Recovery</a></li>
+            <li>
+              <a
+                href="https://github.com/BlitzWallet/BlitzWallet"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="https://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

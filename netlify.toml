@@ -190,6 +190,19 @@ X-Content-Type-Options = "nosniff"
   to = "/pages/child/child.html"
   status = 200
 
+# Consolidate the older self-custody explainer into the current canonical guide.
+[[redirects]]
+  from = "/pages/blog/self-custodial-wallet"
+  to = "/pages/self-custody/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/pages/blog/self-custodial-wallet/"
+  to = "/pages/self-custody/"
+  status = 301
+  force = true
+
 # Favicon redirects
 [[redirects]]
   from = "/favicon.ico"

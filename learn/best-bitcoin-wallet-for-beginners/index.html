@@ -79,7 +79,7 @@
         "description": "Compare the best Bitcoin wallets for beginners: Blitz, Coinbase, Cash App, and Muun. Keys, fees, and ease of use in plain English.",
         "url": "https://blitzwalletapp.com/learn/best-bitcoin-wallet-for-beginners/",
         "datePublished": "2026-09-03",
-        "dateModified": "2026-09-03",
+        "dateModified": "2026-09-23",
         "author": { "@type": "Organization", "name": "Blitz Wallet" },
         "publisher": {
           "@type": "Organization",
@@ -127,7 +127,7 @@
             "name": "Is Blitz Wallet really free for beginners?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. The app is free to download and use. Blitz-to-Blitz contact payments carry no Blitz fee. Small network fees apply to Lightning, Spark, on-chain, and swap payments, and Blitz shows them before you confirm."
+              "text": "The app has no monthly charge. Blitz-to-Blitz contact payments have no Blitz transaction fee. Network or swap fees may apply on other routes; review the displayed fee before confirming."
             }
           },
           {
@@ -135,23 +135,23 @@
             "name": "Do I need an ID to start a Bitcoin wallet?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Not with Blitz or Muun. You download the app and save a backup. Coinbase and Cash App require identity verification before you can buy or send Bitcoin."
+              "text": "Blitz does not require government ID to create a wallet. Other providers may request identity information for specific Bitcoin services, depending on the service and region. Check their current requirements."
             }
           },
           {
             "@type": "Question",
-            "name": "Should I keep Bitcoin on Coinbase or move it to my own wallet?",
+            "name": "Should I keep Bitcoin on Coinbase?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Coinbase is convenient for buying. But Coinbase holds your keys, so your funds depend on their platform. Many people buy on an exchange and then move larger amounts to a self-custodial wallet like Blitz, where only their backup can move funds."
+              "text": "A Coinbase exchange account and Blitz use different custody models. Blitz users control a 12-word seed phrase, while Spark operators participate in ordinary transfers. Spark's unilateral exit isn't built into Blitz yet. Compare each service's current recovery information."
             }
           },
           {
             "@type": "Question",
-            "name": "Is Cash App or Blitz better for sending Bitcoin to friends?",
+            "name": "Is Cash App or Blitz better for friends?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Cash App is custodial, US-focused, and needs ID verification. Blitz is self-custodial, works worldwide, needs no ID, and contact payments between Blitz users carry no Blitz fee. Pick Blitz if you want to own your keys and pay friends in any country."
+              "text": "Cash App is custodial, US-focused, and needs ID verification. Blitz is self-custodial, works worldwide, needs no ID, and contact payments between Blitz users carry no Blitz fee. Pick Blitz if you want to own your money and pay friends in any country."
             }
           },
           {
@@ -159,7 +159,7 @@
             "name": "What is the difference between Blitz and Muun?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Both are self-custodial and free. Muun combines on-chain and Lightning in one balance but routes Lightning through on-chain swaps, so fees can spike when the network is busy. Blitz runs on Spark and Lightning with tiny fees, adds contacts, gifts, pools, and dollar balances, and backs up with a standard 12-word phrase."
+              "text": "Blitz uses Spark for supported wallet payments and also supports Lightning and on-chain Bitcoin. Users control a 12-word seed phrase, but Spark's unilateral exit isn't built into Blitz yet. Muun has a different payment and recovery model; review each wallet's current documentation and displayed fees before choosing."
             }
           },
           {
@@ -187,7 +187,9 @@
           <li><a href="/pages/about/">About</a></li>
           <li><a href="/pages/contact/">Contact</a></li>
           <li>
-            <a href="#" class="nav-download-btn download-btn">Download</a>
+            <a href="/pages/download/" class="nav-download-btn download-btn"
+              >Download</a
+            >
           </li>
         </ul>
         <button
@@ -211,14 +213,6 @@
             New to Bitcoin? You want three things. Your own keys. Low fees. And
             an app that feels familiar. Here is how the popular options compare.
           </p>
-          <div class="hero-actions">
-            <a href="#" class="btn-primary download-btn"
-              >Get Blitz free <i data-lucide="arrow-right"></i
-            ></a>
-            <a href="/pages/bitcoin-wallet/" class="btn-secondary"
-              >How to create a wallet</a
-            >
-          </div>
         </div>
       </section>
 
@@ -228,8 +222,8 @@
             <span class="eyebrow">What matters</span>
             <h2>Five questions to ask before you pick</h2>
             <p>
-              Every wallet claims to be simple. These five questions cut through
-              the marketing.
+              These questions help you compare the tradeoffs behind the
+              marketing.
             </p>
           </div>
           <div class="card-grid cols-3">
@@ -237,49 +231,51 @@
               <div class="icon"><i data-lucide="key-round"></i></div>
               <h3>Who holds the keys?</h3>
               <p>
-                If a company holds your keys, they control your money. If you
-                hold them, only you do. Beginners should know which one they are
-                getting.
+                If you hold the seed phrase, you control the wallet keys, but a
+                payment route may still depend on a service or operator.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="receipt"></i></div>
               <h3>What do you pay?</h3>
               <p>
-                Look at receive fees and send fees. Small percentages add up
-                fast on small amounts.
+                Compare the fees for the payment route you plan to use. Fixed
+                and percentage fees can affect small payments differently.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="id-card"></i></div>
               <h3>Do you need an ID?</h3>
               <p>
-                Exchanges and payment apps require identity checks. True wallets
-                do not. No ID means you can start right now.
+                Blitz does not require government ID to create a wallet. Other
+                providers may request identity information for specific Bitcoin
+                services, depending on the service and region. Check their
+                current requirements.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="globe"></i></div>
               <h3>Does it work worldwide?</h3>
               <p>
-                Some apps only work in one country. Bitcoin is global. Your
-                wallet should be too.
+                Bitcoin is an open network, but wallet services and payment
+                providers may set regional limits. Check the current terms for
+                each provider where you live.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="users"></i></div>
               <h3>Can you pay friends easily?</h3>
               <p>
-                Copying long addresses is where beginners make mistakes. Paying
-                by contact name is safer and faster.
+                A saved contact can help avoid copying a long address. Check the
+                recipient and amount before confirming any payment.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="life-buoy"></i></div>
               <h3>What if you lose your phone?</h3>
               <p>
-                A good wallet gives you a backup that restores everything. Ask
-                what the backup looks like before you add money.
+                Ask what a backup restores. Some wallet designs need more than a
+                seed phrase to move funds through every payment route.
               </p>
             </article>
           </div>
@@ -292,15 +288,20 @@
             <span class="eyebrow">Compare</span>
             <h2>Blitz vs Coinbase vs Cash App vs Muun</h2>
             <p>
-              The four names beginners hear most. One table. Checked against
-              each product's own docs in 2026.
+              These are four common options to compare. Use this as a starting
+              point: features, fees, regional availability, and recovery options
+              can change, so check each wallet's current documentation before
+              choosing.
             </p>
           </div>
+          <p class="section-note">
+            On a phone, scroll the table sideways to compare all four options.
+          </p>
           <div class="table-wrap">
             <table class="compare">
               <thead>
                 <tr>
-                  <th>Feature</th>
+                  <th>Question</th>
                   <th>Blitz Wallet</th>
                   <th>Coinbase (exchange)</th>
                   <th>Cash App</th>
@@ -309,69 +310,93 @@
               </thead>
               <tbody>
                 <tr>
-                  <td>Who holds the keys</td>
-                  <td class="check">You. Self-custodial</td>
-                  <td>Coinbase holds them</td>
-                  <td>Cash App holds them</td>
-                  <td class="check">You. Self-custodial</td>
+                  <td>Wallet model</td>
+                  <td>
+                    Users hold a 12-word seed. Spark operators participate in
+                    ordinary transfers; Spark&rsquo;s unilateral exit
+                    isn&rsquo;t built into Blitz yet.
+                  </td>
+                  <td>
+                    The Coinbase.com exchange account is custodial. Coinbase
+                    Wallet is a separate self-custody product.
+                  </td>
+                  <td>
+                    Cash App's Bitcoin account is a custodial service under its
+                    terms.
+                  </td>
+                  <td>
+                    Muun describes its wallet as self-custodial and uses a
+                    2-of-2 multisig design.
+                  </td>
                 </tr>
                 <tr>
-                  <td>Price of the app</td>
-                  <td class="check">Free</td>
-                  <td class="check">Free</td>
-                  <td class="check">Free</td>
-                  <td class="check">Free</td>
+                  <td>Payment routes</td>
+                  <td>
+                    Spark, Lightning, and on-chain Bitcoin; route availability
+                    can vary.
+                  </td>
+                  <td>
+                    Bitcoin services depend on the account and supported
+                    features.
+                  </td>
+                  <td>
+                    Bitcoin buying, sending, receiving, and withdrawals are
+                    subject to Cash App's terms.
+                  </td>
+                  <td>Bitcoin on-chain and Lightning.</td>
                 </tr>
                 <tr>
-                  <td>ID needed to start</td>
-                  <td class="check">No</td>
-                  <td>Yes</td>
-                  <td>Yes</td>
-                  <td class="check">No</td>
+                  <td>Backup and recovery</td>
+                  <td>
+                    A seed-based tool can restore keys. Spark&rsquo;s unilateral
+                    exit isn&rsquo;t built into Blitz yet.
+                  </td>
+                  <td>
+                    Account access uses Coinbase's account recovery process; it
+                    is not a user-held exchange key backup.
+                  </td>
+                  <td>
+                    Bitcoin account access and withdrawals use Cash App's
+                    account and verification flows.
+                  </td>
+                  <td>
+                    An Emergency Kit and Recovery Code support Muun's documented
+                    recovery process.
+                  </td>
                 </tr>
                 <tr>
-                  <td>Works worldwide</td>
-                  <td class="check">Yes</td>
-                  <td>Supported countries only</td>
-                  <td>US focused</td>
-                  <td class="check">Yes</td>
-                </tr>
-                <tr>
-                  <td>Pay friends by name</td>
-                  <td class="check">Yes, free Blitz to Blitz</td>
-                  <td class="dash">No</td>
-                  <td>$Cashtag for dollars, not Bitcoin</td>
-                  <td class="dash">No</td>
-                </tr>
-                <tr>
-                  <td>Fast cheap payments</td>
-                  <td class="check">Yes</td>
-                  <td class="check">Yes</td>
-                  <td class="check">Yes</td>
-                  <td>Yes, when the network is not busy</td>
-                </tr>
-                <tr>
-                  <td>Backup if phone is lost</td>
-                  <td class="check">Standard 12 words</td>
-                  <td>Account login, not your keys</td>
-                  <td>Account login, not your keys</td>
-                  <td>Recovery code + Emergency Kit</td>
-                </tr>
-                <tr>
-                  <td>Hold dollars too</td>
-                  <td class="check">Yes</td>
-                  <td class="check">Yes</td>
-                  <td class="check">Yes</td>
-                  <td class="dash">Bitcoin only</td>
+                  <td>Fees and availability</td>
+                  <td>
+                    Check the route and fee shown before confirming.
+                    Blitz-to-Blitz contact payments have no Blitz transaction
+                    fee.
+                  </td>
+                  <td colspan="3">
+                    Fees, identity checks, supported assets, and regional access
+                    depend on each provider's current service and terms. Check
+                    the provider directly before choosing.
+                  </td>
                 </tr>
               </tbody>
             </table>
           </div>
           <p class="section-note">
-            Coinbase also offers a separate self-custodial app called Coinbase
-            Wallet. The row above covers the main Coinbase exchange account most
-            beginners use. Fees change often. Always check the confirmation
-            screen before you pay.
+            Checked September 23, 2026. See each provider's current description:
+            <a
+              href="https://help.coinbase.com/en/coinbase/other-topics/legal-policies/what-does-coinbase-do-with-my-digital-assets"
+              target="_blank"
+              rel="noopener"
+              >Coinbase exchange vs. Coinbase Wallet</a
+            >,
+            <a
+              href="https://cash.app/legal/us/en-us/tos"
+              target="_blank"
+              rel="noopener"
+              >Cash App Bitcoin terms</a
+            >, and
+            <a href="https://muun.com/" target="_blank" rel="noopener"
+              >Muun's wallet and recovery overview</a
+            >. Terms, fees, identity checks, and available features can change.
           </p>
         </div>
       </section>
@@ -388,48 +413,53 @@
           <div class="beginner-examples">
             <article class="card">
               <div class="icon"><i data-lucide="zap"></i></div>
-              <h3>Pick Blitz to own your money</h3>
+              <h3>Pick Blitz for contacts and multiple payment routes</h3>
               <p>
-                You hold the keys from day one. Pay contacts by name. Receive
-                even while offline. Keep Bitcoin or dollars in one balance.
+                Blitz does not store your 12-word seed phrase. Use contacts,
+                Lightning, on-chain Bitcoin, Stablecoins, and supported offline
+                Spark receive flows. Read the
+                <a href="/pages/security/">security and recovery guide</a>.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="shopping-cart"></i></div>
               <h3>Pick Coinbase to buy first</h3>
               <p>
-                Coinbase is the easiest place for many Americans to buy Bitcoin
-                with a bank account. Then move larger amounts to your own wallet
-                so you hold the keys.
+                Coinbase offers buying services through an exchange account.
+                Exchange custody and wallet products can have different key
+                models. Review its current custody, fees, and withdrawal terms
+                before deciding where to hold Bitcoin.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="wallet"></i></div>
               <h3>Pick Cash App for dollars plus a little Bitcoin</h3>
               <p>
-                Cash App is great if you already live in it and want small,
-                occasional Bitcoin buys next to your dollars. It is custodial
-                and US focused, so it is not your own wallet.
+                Cash App combines dollar services and Bitcoin features for
+                eligible users. Check current availability, identity
+                requirements, fees, and custody terms in your region before
+                using it.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="git-compare"></i></div>
-              <h3>Blitz vs Muun, both self-custodial</h3>
+              <h3>Blitz and Muun use different payment models</h3>
               <p>
-                Muun is simple and open source. Its tradeoff is fees. Every
-                Lightning payment runs through an on-chain swap behind the
-                scenes, so small payments can cost a lot when the network is
-                busy. Blitz settles on Spark and Lightning for tiny fees, and
-                adds contacts, gifts, pools, and dollar balances.
+                Blitz uses Spark for supported wallet payments and also supports
+                Lightning and on-chain Bitcoin. Its users control a 12-word seed
+                phrase. Muun has a different payment and recovery model; compare
+                each wallet's current documentation and displayed fees. Read the
+                <a href="/pages/security/">Blitz recovery guide</a>.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="move-right"></i></div>
               <h3>Already own Bitcoin somewhere else?</h3>
               <p>
-                You can move it. Create your Blitz wallet, tap Receive, copy
-                your address, and send a small test amount first. Then move the
-                rest. Full steps are in
+                Select Receive in Blitz and choose the same payment type or
+                network that the sending wallet supports. Check the address,
+                amount, route, and fee, then consider a small test payment. Full
+                steps are in
                 <a href="/learn/how-to-receive-bitcoin/"
                   >how to receive Bitcoin</a
                 >.
@@ -439,9 +469,10 @@
               <div class="icon"><i data-lucide="shield-check"></i></div>
               <h3>The one rule for every wallet</h3>
               <p>
-                Whoever holds the backup controls the money. In Blitz that is
-                you and your 12 words. Write them on paper. Never share them.
-                Learn
+                A seed phrase derives wallet keys, but the wallet's architecture
+                determines what those keys authorize and how funds can be
+                recovered. Keep a protected backup and compare each provider's
+                recovery model. Learn
                 <a href="/learn/what-is-seed-phrase/">what 12 words mean</a> and
                 <a href="/pages/self-custody/">what self-custody means</a>.
               </p>
@@ -484,14 +515,16 @@
                   target="_blank"
                   rel="noopener"
                   >web wallet</a
-                >. Free. No ID.
+                >. There is no monthly app charge. Blitz does not require
+                government ID to create a wallet.
               </p>
             </div>
             <div class="step">
               <h3>Save your 12 words</h3>
               <p class="step-summary">
-                Write them on paper in order. Store them somewhere safe. They
-                are the only way back in if you lose your phone.
+                Write them on paper in order and store them safely. They can
+                restore wallet in supported flows, but do not guarantee funds
+                can move during an operator outage.
               </p>
             </div>
             <div class="step">
@@ -516,22 +549,26 @@
             <div class="faq">
               <h3>Is Blitz Wallet really free for beginners?</h3>
               <p>
-                Yes. The app is free. Some payments carry small network or swap
-                fees shown before you confirm.
+                The app has no monthly charge. Blitz-to-Blitz contact payments
+                have no Blitz transaction fee. Network or swap fees may apply on
+                other routes; review the displayed fee before confirming.
               </p>
             </div>
             <div class="faq">
               <h3>Do I need an ID to start a Bitcoin wallet?</h3>
               <p>
-                Not with Blitz or Muun. Download and save your backup. Coinbase
-                and Cash App need identity checks first.
+                Blitz does not require government ID to create a wallet. Other
+                providers may request identity information for specific Bitcoin
+                services, depending on the service and region. Check their
+                current requirements.
               </p>
             </div>
             <div class="faq">
               <h3>Should I keep Bitcoin on Coinbase?</h3>
               <p>
-                Coinbase is handy for buying. But they hold your keys. Move
-                larger amounts to a wallet you control, like Blitz.
+                A Coinbase exchange account and Blitz use different custody
+                models. Blitz users control a 12-word seed phrase. Compare each
+                service's current recovery information.
               </p>
             </div>
             <div class="faq">
@@ -544,9 +581,11 @@
             <div class="faq">
               <h3>What is the difference between Blitz and Muun?</h3>
               <p>
-                Both are self-custodial. Muun routes Lightning through on-chain
-                swaps, so fees can spike. Blitz uses Spark and Lightning for
-                tiny fees, plus contacts, gifts, pools, and dollars.
+                Blitz uses Spark for supported wallet payments and also supports
+                Lightning and on-chain Bitcoin. Muun has a different payment and
+                recovery model; compare each wallet's current documentation and
+                displayed fees. See the
+                <a href="/pages/security/">Blitz recovery guide</a>.
               </p>
             </div>
             <div class="faq">
@@ -568,8 +607,8 @@
           <div class="cta-band">
             <h2>Start with a wallet you own</h2>
             <p>
-              Download Blitz free. Save 12 words. Receive your first sats in
-              minutes.
+              Download Blitz, save your 12 words, and review the route and
+              recovery requirements before adding funds.
             </p>
             <div class="hero-actions actions-centered">
               <a
@@ -590,7 +629,7 @@
         <div class="footer-brand">
           <img src="/favicon.png" alt="Blitz Wallet logo" />
           <h3>Blitz Wallet</h3>
-          <p>Your Global Payments App</p>
+          <p>Bitcoin &amp; Lightning wallet</p>
         </div>
         <div class="footer-links">
           <h4>Products</h4>
@@ -600,6 +639,22 @@
             <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
             <li>
               <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Wallet</h4>
+          <ul>
+            <li><a href="/pages/lightning-wallet/">Lightning Wallet</a></li>
+            <li><a href="/pages/spark-wallet/">Spark Wallet</a></li>
+            <li><a href="/pages/security/">Security &amp; Recovery</a></li>
+            <li>
+              <a
+                href="https://github.com/BlitzWallet/BlitzWallet"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
             </li>
           </ul>
         </div>

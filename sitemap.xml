@@ -36,6 +36,21 @@
     <priority>0.80</priority>
   </url>
   <url>
+    <loc>https://blitzwalletapp.com/pages/security/</loc>
+    <lastmod>2026-09-24</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/lightning-wallet/</loc>
+    <lastmod>2026-09-24</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://blitzwalletapp.com/pages/spark-wallet/</loc>
+    <lastmod>2026-09-24</lastmod>
+    <priority>0.80</priority>
+  </url>
+  <url>
     <loc>https://blitzwalletapp.com/pages/stablecoins/</loc>
     <lastmod>2026-09-03</lastmod>
     <priority>0.80</priority>
@@ -161,11 +176,6 @@
     <priority>0.70</priority>
   </url>
   <url>
-    <loc>https://blitzwalletapp.com/pages/blog/what-is-spark/</loc>
-    <lastmod>2026-09-03</lastmod>
-    <priority>0.70</priority>
-  </url>
-  <url>
     <loc>https://blitzwalletapp.com/pages/blog/how-to-create-a-bitcoin-wallet/</loc>
     <lastmod>2026-09-03</lastmod>
     <priority>0.70</priority>
@@ -182,11 +192,6 @@
   </url>
   <url>
     <loc>https://blitzwalletapp.com/pages/blog/power-up/</loc>
-    <lastmod>2026-09-03</lastmod>
-    <priority>0.70</priority>
-  </url>
-  <url>
-    <loc>https://blitzwalletapp.com/pages/blog/self-custodial-wallet/</loc>
     <lastmod>2026-09-03</lastmod>
     <priority>0.70</priority>
   </url>

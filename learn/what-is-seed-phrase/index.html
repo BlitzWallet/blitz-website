@@ -25,7 +25,7 @@
     <title>What Are 12 Words? Seed Phrase for Beginners</title>
     <meta
       name="description"
-      content="Those 12 words are your Bitcoin backup. Learn what a seed phrase is, how to store it, and how to recover your Blitz Wallet if you lose your phone."
+      content="Learn what Blitz's 12-word seed phrase restores, how to protect it, and why key recovery is different from moving Spark funds during an operator outage."
     />
     <meta name="robots" content="index, follow" />
     <meta property="og:type" content="article" />
@@ -39,7 +39,7 @@
     />
     <meta
       property="og:description"
-      content="Your 12 words are the only backup that matters. What they are, where to keep them, and how recovery works."
+      content="What Blitz's 12 words restore, how to keep them private, and how to think about wallet recovery."
     />
     <meta
       property="og:image"
@@ -52,7 +52,7 @@
     />
     <meta
       property="twitter:description"
-      content="Plain English guide to seed phrases, storage, and recovery."
+      content="Plain English guide to Blitz seed phrases, key recovery, safe storage, and Spark recovery limits."
     />
     <meta
       property="twitter:image"
@@ -76,10 +76,10 @@
         "@context": "https://schema.org",
         "@type": "Article",
         "headline": "What Are 12 Words? Seed Phrase for Beginners",
-        "description": "Plain English guide to seed phrases: what 12 words are, how to store them, and how to recover a Blitz Wallet after losing a phone.",
+        "description": "Plain English guide to the Blitz 12-word seed phrase, what it restores, and how to store it safely.",
         "url": "https://blitzwalletapp.com/learn/what-is-seed-phrase/",
         "datePublished": "2026-09-03",
-        "dateModified": "2026-09-03",
+        "dateModified": "2026-09-23",
         "author": { "@type": "Organization", "name": "Blitz Wallet" },
         "publisher": {
           "@type": "Organization",
@@ -96,7 +96,7 @@
         "@context": "https://schema.org",
         "@type": "HowTo",
         "name": "How to Back Up and Recover 12 Words",
-        "description": "Write down your 12-word seed phrase, store it safely, and use it to recover your Blitz Wallet on a new phone.",
+        "description": "Write down the Blitz 12-word seed phrase, store it safely, and understand what restoring wallet keys does and does not establish.",
         "totalTime": "PT5M",
         "tool": [
           { "@type": "HowToTool", "name": "Pen and paper" },
@@ -124,14 +124,14 @@
             "@type": "HowToStep",
             "position": 3,
             "name": "Store the paper somewhere safe",
-            "text": "Keep it offline in a dry, private place only you can reach, like a locked drawer or safe. Never store it in photos, notes apps, email, or cloud drives.",
+            "text": "Keep it offline in a private, protected place, such as a locked drawer or safe. Avoid photos, notes apps, email, and cloud drives because copies can be exposed if an account or device is compromised.",
             "url": "https://blitzwalletapp.com/learn/what-is-seed-phrase/#step-3"
           },
           {
             "@type": "HowToStep",
             "position": 4,
-            "name": "Recover on a new phone if yours is lost",
-            "text": "Install Blitz on the new phone, choose Restore, and type the 12 words in order. Your balance and history return. You can also use the open-source recovery tool.",
+            "name": "Restore wallet keys on a new phone",
+            "text": "On a new phone, the 12 words can restore wallet keys. A restored key set does not by itself establish that Spark funds can move if operators are unavailable. Review the security page and current recovery-tool limits.",
             "url": "https://blitzwalletapp.com/learn/what-is-seed-phrase/#step-4"
           }
         ]
@@ -173,39 +173,39 @@
             "name": "What is a seed phrase in simple terms?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "It is a list of 12 ordinary words that acts as the master key to your Bitcoin. Anyone with those words in the right order can open your wallet on any phone. That is why you write them on paper and never share them."
+              "text": "A seed phrase is a set of 12 words that derives wallet keys. Anyone who obtains the phrase may be able to control those keys. Keep it private and enter it only in a verified restore or recovery flow."
             }
           },
           {
             "@type": "Question",
-            "name": "What happens if I lose my phone but kept my 12 words?",
+            "name": "What if I lose my phone?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Nothing is lost. Install Blitz on a new phone, choose Restore, and type the 12 words in order. Your balance returns. Your money lives on Bitcoin, not on the old phone."
+              "text": "On a new device, your 12 words can restore wallet keys. This does not by itself establish that Spark funds can move if operators are unavailable. Read the security and recovery guide before relying on a recovery path."
             }
           },
           {
             "@type": "Question",
-            "name": "What happens if I lose my 12 words?",
+            "name": "What if I lose the 12 words?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "You lose access to the money. No one can reset it for you, not even Blitz. There is no support ticket that brings it back. Guard those words like cash."
+              "text": "If you lose the phrase and can no longer access the wallet on a device, you may be unable to restore the wallet keys. Blitz cannot recreate your phrase. Keep a protected backup."
             }
           },
           {
             "@type": "Question",
-            "name": "Should I screenshot my seed phrase or save it online?",
+            "name": "Can I screenshot them?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. Screenshots sync to cloud backups and photo apps where hackers look first. Write the words on paper with a pen and keep the paper offline in a private, dry place."
+              "text": "Digital screenshots may sync to other devices or online backups and can be exposed if an account is compromised. Prefer a written offline backup, or another secure method you understand."
             }
           },
           {
             "@type": "Question",
-            "name": "Will Blitz ever ask for my 12 words?",
+            "name": "Will Blitz ever ask for my words?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Never. Blitz support will never ask for them. Any person, site, or message asking for your words is a scam. Only type them into the official Blitz restore screen or the open-source recovery tool."
+              "text": "Blitz support will never ask you to send the words by email, chat, or form. The official Blitz app and browser-based recovery tool may ask you to enter them. Verify the official source and understand the risks before using a recovery tool."
             }
           },
           {
@@ -213,7 +213,7 @@
             "name": "How is this different from a bank password?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "A bank can reset your password because the bank holds your money. With self-custody, you hold the money, so there is nothing to reset. The 12 words replace both the password and the bank."
+              "text": "A seed phrase can derive wallet keys, but what it can restore depends on the wallet design. In Blitz, the phrase restores wallet keys; it does not by itself establish that Spark funds can move when operators are unavailable. Read the security and recovery guide."
             }
           }
         ]
@@ -233,7 +233,9 @@
           <li><a href="/pages/about/">About</a></li>
           <li><a href="/pages/contact/">Contact</a></li>
           <li>
-            <a href="#" class="nav-download-btn download-btn">Download</a>
+            <a href="/pages/download/" class="nav-download-btn download-btn"
+              >Download</a
+            >
           </li>
         </ul>
         <button
@@ -255,11 +257,11 @@
           <h1>What are <span>12 words?</span></h1>
           <p class="lead">
             When you make a Blitz wallet, you get 12 ordinary words. Those words
-            are your money's only backup. Here is what they mean in plain
-            English.
+            help restore your wallet. Here is what the words mean and how to
+            protect them.
           </p>
           <div class="hero-actions">
-            <a href="#" class="btn-primary download-btn"
+            <a href="/pages/download/" class="btn-primary download-btn"
               >Get Blitz and save yours <i data-lucide="arrow-right"></i
             ></a>
             <a href="/pages/self-custody/" class="btn-secondary"
@@ -275,8 +277,9 @@
             <span class="eyebrow">Plain English</span>
             <h2 id="what-is-a-seed-phrase">What is a seed phrase?</h2>
             <p>
-              A seed phrase is a master key written as words. Blitz gives you 12
-              of them. Together they can rebuild your wallet on any phone.
+              A seed phrase is a set of words that creates your wallet. Blitz
+              uses 12 words. In a compatible app, they can restore the
+              corresponding wallet on another device.
             </p>
           </div>
           <div class="card-grid cols-3">
@@ -314,9 +317,9 @@
             <div>
               <h3>Never share your 12 words</h3>
               <p>
-                Blitz support will never ask for them. No giveaway, helper, or
-                website needs them. Anyone who asks is trying to steal your
-                money.
+                Blitz support will not ask you to send them by email, chat, or
+                form. Official wallet restore and recovery tools may ask you to
+                enter them. Verify the destination before entering a phrase.
               </p>
             </div>
           </div>
@@ -327,7 +330,7 @@
         <div class="section-inner">
           <div class="section-head">
             <span class="eyebrow">Do this once</span>
-            <h2>Back up your words in 4 steps</h2>
+            <h2>Back up your words in 5 steps</h2>
             <p>Do it the day you create your wallet. It takes five minutes.</p>
           </div>
           <div class="steps receive-steps" aria-label="How to back up 12 words">
@@ -341,39 +344,26 @@
             <div class="step" id="step-2">
               <h3>Check every word twice</h3>
               <p class="step-summary">
-                Read the paper back against the screen. One wrong word can lock
-                you out. Fix mistakes now while the screen is still open.
+                Read the paper back against the screen. A wrong word can prevent
+                the wallet keys from being restored. Fix mistakes now while the
+                screen is still open.
               </p>
             </div>
             <div class="step" id="step-3">
               <h3>Store the paper offline</h3>
               <p class="step-summary">
-                Keep it somewhere dry and private that only you can reach. A
-                locked drawer or safe works. Never in photos, email, or cloud
-                drives.
+                Keep it somewhere dry and protected, such as a locked drawer or
+                safe. Avoid photos, email, and cloud drives because digital
+                copies can be exposed if an account or device is compromised.
               </p>
             </div>
-            <div class="step step-wide" id="step-4">
-              <h3>Lose your phone? Restore with the words</h3>
+            <div class="step step-wide step-dark">
+              <h3>Keep a protected backup</h3>
               <p class="step-summary">
-                Install Blitz on the new phone. Choose Restore. Type the 12
-                words in order. Your balance and history come back. You can also
-                recover with the open-source
-                <a
-                  href="https://recover.blitzwalletapp.com"
-                  target="_blank"
-                  rel="noopener"
-                  >recovery tool</a
-                >
-                if Blitz is ever gone.
-              </p>
-            </div>
-            <div class="step step-wide step-dark" style="grid-column: span 3">
-              <h3>Lose the words? You lose the money</h3>
-              <p class="step-summary">
-                Say it plainly. No words means no recovery. No support ticket
-                fixes it. This is the price of owning your money outright, and
-                the paper backup is how you pay it safely.
+                If you lose the phrase and can no longer access the wallet on a
+                device, you may be unable to restore the wallet keys. Blitz
+                cannot recreate the phrase. Recovery of Spark funds also depends
+                on the supported recovery path and operator availability.
               </p>
             </div>
           </div>
@@ -399,7 +389,7 @@
                 <tr>
                   <td>Pen and paper in a safe place</td>
                   <td class="check">Do this</td>
-                  <td>Offline. Hackers cannot reach paper.</td>
+                  <td>Keep it offline and protect it from damage or theft.</td>
                 </tr>
                 <tr>
                   <td>Second copy with someone you trust</td>
@@ -409,19 +399,25 @@
                 <tr>
                   <td>Screenshot or phone photos</td>
                   <td>Never</td>
-                  <td>Photos sync to the cloud where thieves look first.</td>
+                  <td>
+                    Digital copies can sync or be exposed if a device or account
+                    is compromised.
+                  </td>
                 </tr>
                 <tr>
                   <td>Notes app, email, or cloud drive</td>
                   <td>Never</td>
-                  <td>One hacked account gives away everything.</td>
+                  <td>
+                    A compromised account can expose a digital copy of the
+                    phrase.
+                  </td>
                 </tr>
                 <tr>
                   <td>Typing words into any website</td>
                   <td>Never</td>
                   <td>
-                    Only the Blitz app restore screen or the official recovery
-                    tool ever need them.
+                    Enter the phrase only in a verified restore or recovery flow
+                    you intend to use.
                   </td>
                 </tr>
                 <tr>
@@ -445,37 +441,39 @@
             <div class="faq">
               <h3>What is a seed phrase in simple terms?</h3>
               <p>
-                Twelve ordinary words that act as the master key to your
-                Bitcoin. Whoever has them in order can open your wallet.
+                A seed phrase is a set of 12 words that creates a wallet. Anyone
+                who obtains the phrase controls the wallet. Keep it private and
+                enter it only in a verified restore or recovery flow.
               </p>
             </div>
             <div class="faq">
               <h3>What if I lose my phone?</h3>
-              <p>
-                Install Blitz on a new phone, choose Restore, type the 12 words.
-                Your balance returns.
-              </p>
+              <p>On a new device, your 12 words can restore your wallet.</p>
             </div>
             <div class="faq">
               <h3>What if I lose the 12 words?</h3>
               <p>
-                You lose access. No one can reset them, not even Blitz. Guard
-                them like cash.
+                If you lose the phrase and can no longer access the wallet on a
+                device, you will be unable to restore the wallet. Blitz cannot
+                recreate your phrase.
               </p>
             </div>
             <div class="faq">
               <h3>Can I screenshot them?</h3>
               <p>
-                No. Screenshots sync to cloud backups where hackers look. Paper
-                and pen only.
+                Digital screenshots may sync to other devices or online backups
+                and can be exposed if an account is compromised. Prefer a
+                written offline backup, or another secure method you understand.
               </p>
             </div>
             <div class="faq">
               <h3>Will Blitz ever ask for my words?</h3>
               <p>
-                Never. Any message asking for them is a scam. Learn
-                <a href="/pages/self-custody/">what self-custody means</a> so
-                the rule makes sense.
+                Blitz support will never ask you to send the words by email,
+                chat, or form. The official Blitz app and browser-based recovery
+                tool may ask you to enter them. Verify the official source and
+                understand the risks before using a recovery tool. Read
+                <a href="/pages/security/">the recovery guidance</a>.
               </p>
             </div>
             <div class="faq">
@@ -495,8 +493,8 @@
           <div class="cta-band">
             <h2>Make your backup today</h2>
             <p>
-              Create your wallet. Write 12 words. Then you truly own your
-              Bitcoin.
+              Write down your 12 words and keep them private and offline.
+              They&rsquo;re how you restore your wallet if you lose your phone.
             </p>
             <div class="hero-actions actions-centered">
               <a
@@ -517,7 +515,7 @@
         <div class="footer-brand">
           <img src="/favicon.png" alt="Blitz Wallet logo" />
           <h3>Blitz Wallet</h3>
-          <p>Your Global Payments App</p>
+          <p>Bitcoin &amp; Lightning wallet</p>
         </div>
         <div class="footer-links">
           <h4>Products</h4>
@@ -527,6 +525,22 @@
             <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
             <li>
               <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Wallet</h4>
+          <ul>
+            <li><a href="/pages/lightning-wallet/">Lightning Wallet</a></li>
+            <li><a href="/pages/spark-wallet/">Spark Wallet</a></li>
+            <li><a href="/pages/security/">Security &amp; Recovery</a></li>
+            <li>
+              <a
+                href="https://github.com/BlitzWallet/BlitzWallet"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
             </li>
           </ul>
         </div>

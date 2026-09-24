@@ -13,8 +13,7 @@
   "use strict";
 
   var SITE = "https://blitzwalletapp.com";
-  var IOS_URL =
-    "https://apps.apple.com/us/app/blitz-wallet/id6476810582";
+  var IOS_URL = "https://apps.apple.com/us/app/blitz-wallet/id6476810582";
   var ANDROID_URL =
     "https://play.google.com/store/apps/details?id=com.blitzwallet";
   var WEB_WALLET_URL = "https://wallet.blitzwalletapp.com/";
@@ -24,31 +23,110 @@
   // Static sitemap for the find_blitz_page tool. Keys are match terms.
   var PAGE_INDEX = [
     { path: "/", terms: ["home", "homepage", "overview", "main"] },
-    { path: "/pages/download/", terms: ["download", "install", "ios", "android", "app store", "play store"] },
+    {
+      path: "/pages/download/",
+      terms: [
+        "download",
+        "install",
+        "ios",
+        "android",
+        "app store",
+        "play store",
+      ],
+    },
     { path: "/pages/faq/", terms: ["faq", "questions", "help", "support"] },
-    { path: "/pages/contact/", terms: ["contact", "support", "email", "help", "partnership", "media"] },
+    {
+      path: "/pages/contact/",
+      terms: ["contact", "support", "email", "help", "partnership", "media"],
+    },
     { path: "/pages/about/", terms: ["about", "company", "mission", "team"] },
-    { path: "/pages/bitcoin-wallet/", terms: ["bitcoin wallet", "btc wallet", "create wallet", "setup"] },
-    { path: "/pages/self-custody/", terms: ["self-custody", "self custodial", "keys", "backup", "seed", "12-word"] },
-    { path: "/pages/stablecoins/", terms: ["stablecoin", "usdb", "usdc", "usdt", "dollar", "stable"] },
+    {
+      path: "/pages/bitcoin-wallet/",
+      terms: ["bitcoin wallet", "btc wallet", "create wallet", "setup"],
+    },
+    {
+      path: "/pages/self-custody/",
+      terms: [
+        "self-custody",
+        "self custodial",
+        "keys",
+        "backup",
+        "seed",
+        "12-word",
+      ],
+    },
+    {
+      path: "/pages/stablecoins/",
+      terms: ["stablecoin", "usdb", "usdc", "usdt", "dollar", "stable"],
+    },
     { path: "/pages/gifts/", terms: ["gift", "gifts", "send gift", "present"] },
-    { path: "/pages/pools/", terms: ["pool", "pools", "group", "collect", "fundraise", "split"] },
-    { path: "/pages/point-of-sale/", terms: ["pos", "point of sale", "merchant", "business", "accept", "tips"] },
-    { path: "/pages/accounts/", terms: ["account", "accounts", "sub-wallet", "kids", "family"] },
-    { path: "/pages/dollar-goals/", terms: ["dollar goals", "savings", "goals", "save"] },
-    { path: "/pages/accumulation-addresses/", terms: ["accumulation", "address", "deposit", "static address"] },
-    { path: "/pages/analytics/", terms: ["analytics", "spending", "budget", "insights"] },
-    { path: "/pages/spend-and-replace/", terms: ["spend and replace", "spend", "replace", "auto"] },
-    { path: "/pages/nostr/", terms: ["nostr", "nip-05", "nwc", "wallet connect"] },
-    { path: "/pages/lightning-address/", terms: ["lightning address", "lnurl", "receive"] },
-    { path: "/pages/blog/", terms: ["blog", "articles", "news", "learn", "guide"] },
+    {
+      path: "/pages/pools/",
+      terms: ["pool", "pools", "group", "collect", "fundraise", "split"],
+    },
+    {
+      path: "/pages/point-of-sale/",
+      terms: ["pos", "point of sale", "merchant", "business", "accept", "tips"],
+    },
+    {
+      path: "/pages/accounts/",
+      terms: ["account", "accounts", "sub-wallet", "managed accounts"],
+    },
+    {
+      path: "/pages/security/",
+      terms: [
+        "security",
+        "recovery",
+        "operators",
+        "wallet scrutiny",
+        "custody",
+      ],
+    },
+    {
+      path: "/pages/lightning-wallet/",
+      terms: ["lightning wallet", "lightning payments"],
+    },
+    { path: "/pages/spark-wallet/", terms: ["spark wallet", "spark payments"] },
+    {
+      path: "/pages/dollar-goals/",
+      terms: ["dollar goals", "savings", "goals", "save"],
+    },
+    {
+      path: "/pages/accumulation-addresses/",
+      terms: ["accumulation", "address", "deposit", "static address"],
+    },
+    {
+      path: "/pages/analytics/",
+      terms: ["analytics", "spending", "budget", "insights"],
+    },
+    {
+      path: "/pages/spend-and-replace/",
+      terms: ["spend and replace", "spend", "replace", "auto"],
+    },
+    {
+      path: "/pages/nostr/",
+      terms: ["nostr", "nip-05", "nwc", "wallet connect"],
+    },
+    {
+      path: "/pages/lightning-address/",
+      terms: ["lightning address", "lnurl", "receive"],
+    },
+    {
+      path: "/pages/blog/",
+      terms: ["blog", "articles", "news", "learn", "guide"],
+    },
     { path: "/pages/brand/", terms: ["brand", "logo", "assets", "press"] },
-    { path: "/pages/privacyPolicy/", terms: ["privacy", "privacy policy", "data"] },
+    {
+      path: "/pages/privacyPolicy/",
+      terms: ["privacy", "privacy policy", "data"],
+    },
     { path: "/pages/terms/", terms: ["terms", "terms of use", "legal"] },
   ];
 
   function findPages(query) {
-    var q = String(query || "").toLowerCase().trim();
+    var q = String(query || "")
+      .toLowerCase()
+      .trim();
     if (!q) return [];
     return PAGE_INDEX.filter(function (entry) {
       if (entry.path.toLowerCase().indexOf(q) !== -1) return true;
@@ -101,7 +179,13 @@
         execute: async function (args) {
           var matches = findPages(args && args.query);
           if (!matches.length) {
-            return "No matching page. Suggest the homepage (" + SITE + "/) or FAQ (" + SITE + "/pages/faq/).";
+            return (
+              "No matching page. Suggest the homepage (" +
+              SITE +
+              "/) or FAQ (" +
+              SITE +
+              "/pages/faq/)."
+            );
           }
           return JSON.stringify(matches.slice(0, 5));
         },
@@ -114,13 +198,25 @@
         annotations: { readOnlyHint: true },
         execute: async function () {
           return (
-            "Blitz Wallet is a self-custodial global payments app (iOS, Android, web). " +
-            "Products: mobile app, web wallet (" + WEB_WALLET_URL + "), " +
-            "point of sale (" + POS_URL + "), open-source recovery (" + RECOVERY_URL + "). " +
-            "Features: free contact payments, Bitcoin gifts via shareable links, " +
-            "group payment pools, payment links, USDT/USDC stablecoin swaps, " +
-            "instant global settlement, offline receive. Full machine-readable guide: " +
-            SITE + "/llms.txt"
+            "Blitz Wallet is a Bitcoin and Lightning wallet for iOS, Android, and the web. " +
+            "It uses Spark for supported wallet payments and also supports on-chain Bitcoin. " +
+            "Users control a 12-word seed phrase; Blitz does not store the phrase. " +
+            "Spark operators co-sign ordinary transfers. Blitz publishes an open-source, seed-based recovery tool. " +
+            "Spark's unilateral exit lets users withdraw to Bitcoin without operators, but today it is a " +
+            "command-line process. " +
+            "Products: mobile app, web wallet (" +
+            WEB_WALLET_URL +
+            "), " +
+            "point of sale (" +
+            POS_URL +
+            "), recovery tool (" +
+            RECOVERY_URL +
+            "). " +
+            "Features include Lightning addresses, gifts, group payment pools, payment links, " +
+            "stablecoin routes, Nostr Wallet Connect, and merchant point of sale. " +
+            "Full machine-readable guide: " +
+            SITE +
+            "/llms.txt"
           );
         },
       },

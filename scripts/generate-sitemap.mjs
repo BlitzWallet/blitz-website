@@ -48,6 +48,21 @@ const staticPages = [
     priority: "0.80",
   },
   {
+    loc: "/pages/security/",
+    file: "pages/security/index.html",
+    priority: "0.80",
+  },
+  {
+    loc: "/pages/lightning-wallet/",
+    file: "pages/lightning-wallet/index.html",
+    priority: "0.80",
+  },
+  {
+    loc: "/pages/spark-wallet/",
+    file: "pages/spark-wallet/index.html",
+    priority: "0.80",
+  },
+  {
     loc: "/pages/stablecoins/",
     file: "pages/stablecoins/index.html",
     priority: "0.80",
@@ -120,14 +135,19 @@ const staticPages = [
   },
 ];
 
-const blogPages = postList.map((p) => {
+const blogPages = postList
+  // The 2025 Spark explainer contains outdated technical assertions and is
+  // kept accessible as a historical article, but the current Spark guide is
+  // the sole indexable source for that intent.
+  .filter((p) => p.searchName !== "what-is-spark")
+  .map((p) => {
   const link = p.htmlPageLink.replace(/\/$/, "");
   const file = `${link.replace(/^\//, "")}/index.html`;
   const fallback = p.time
     ? new Date(parseInt(p.time)).toISOString().slice(0, 10)
     : today;
   return { loc: `${link}/`, file, priority: "0.70", fallback };
-});
+  });
 
 const urls = [
   ...staticPages.map((p) => ({ ...p, lastmod: gitLastmod(p.file, today) })),

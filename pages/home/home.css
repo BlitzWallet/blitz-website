@@ -514,6 +514,82 @@
   line-height: 1.6;
 }
 
+.feature-card-action {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.85rem;
+  color: var(--color-brand);
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.feature-card-action:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.feature-card-action:focus-visible,
+.home-faq summary:focus-visible,
+.home-faq a:focus-visible {
+  outline: 3px solid var(--color-brand);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.feature-card-dark .feature-card-action {
+  color: #fff;
+}
+
+.home-faq {
+  padding: var(--space-section) var(--space-gutter);
+  background: var(--color-surface-warm);
+}
+
+.home-faq-inner {
+  width: min(100%, var(--container-max));
+  margin: 0 auto;
+}
+
+.home-faq-inner > h2 {
+  margin: 0.65rem 0 2rem;
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  letter-spacing: -0.04em;
+}
+
+.home-faq-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.85rem;
+}
+
+.home-faq-grid details {
+  padding: 1.35rem 1.4rem;
+  border: 1px solid var(--color-hairline);
+  border-radius: 16px;
+  background: var(--color-surface);
+}
+
+.home-faq-grid summary {
+  cursor: pointer;
+  color: var(--color-ink);
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.home-faq-grid details p {
+  margin-top: 0.9rem;
+  color: var(--color-ink-60);
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+
+.home-faq-grid details a {
+  color: var(--color-brand);
+}
+
 /* Feature cards use the shared icon chip without an extra flex gap. */
 .feature-card .icon {
   margin-bottom: 0;
@@ -806,7 +882,8 @@
   }
 
   .why-use,
-  .products {
+  .products,
+  .home-faq {
     padding-inline: 1rem;
   }
 
@@ -843,6 +920,10 @@
   .feature-card-wide,
   .feature-card-split {
     min-height: 0;
+  }
+
+  .home-faq-grid {
+    grid-template-columns: 1fr;
   }
 }
 

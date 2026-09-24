@@ -24,7 +24,7 @@
     </title>
     <meta
       name="description"
-      content="Create personal and family sub-wallets in Blitz. Keep accounts under one 12-word backup, customize each name, and give every account its own Lightning address."
+      content="Create separate Blitz accounts under one wallet seed. Customize names, Lightning addresses, receiving preferences, and payment history."
     />
     <meta name="robots" content="index, follow" />
     <meta property="og:type" content="website" />
@@ -34,11 +34,11 @@
     />
     <meta
       property="og:title"
-      content="Blitz Wallet Accounts: Personal and Family Sub-Wallets"
+      content="Bitcoin Sub-Accounts and Managed Wallets | Blitz"
     />
     <meta
       property="og:description"
-      content="Personal sub-wallets and managed accounts for kids, all recoverable from your main 12-word backup."
+      content="Personal sub-accounts and managed accounts for people you help, with separate names, addresses, and histories."
     />
     <meta
       property="og:image"
@@ -51,7 +51,7 @@
     />
     <meta
       property="twitter:description"
-      content="Personal and managed accounts, one 12-word backup to recover them all."
+      content="Manage personal and managed accounts with separate names, addresses, and histories."
     />
     <meta
       property="twitter:image"
@@ -74,8 +74,8 @@
       {
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "Blitz Wallet Accounts: Personal and Family Sub-Wallets",
-        "description": "Personal sub-wallets and managed accounts that run from your main 12-word backup.",
+        "headline": "Bitcoin Sub-Accounts and Managed Wallets",
+        "description": "Personal sub-accounts and managed accounts with separate names, addresses, and histories.",
         "url": "https://blitzwalletapp.com/pages/accounts/"
       }
     </script>
@@ -109,7 +109,7 @@
             "name": "Do sub-wallets need separate backups?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. Personal and managed accounts run from your main wallet and come back with the same 12-word backup. Keep that backup safe."
+              "text": "Accounts are created under your main wallet, so its 12-word seed phrase restores them. See the security page for recovery details."
             }
           },
           {
@@ -125,7 +125,7 @@
             "name": "Can a managed account holder recover the account alone?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. Managed accounts stay under the owner's control. Pairing lets the other person use the account on their phone while you keep recovery."
+              "text": "No. Pairing lets the other person use the managed account on their phone while recovery remains linked to your main wallet."
             }
           },
           {
@@ -133,7 +133,7 @@
             "name": "What happens if I lose my phone?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Install Blitz on a new device and restore with your main 12-word backup. Your accounts come back with it."
+              "text": "Restore the main wallet's 12-word seed phrase on the new device; your accounts come back with it. See the security page for recovery details."
             }
           }
         ]
@@ -149,10 +149,13 @@
         <ul class="nav-links" id="primary-navigation">
           <li><a href="/#products">Products</a></li>
           <li><a href="/features/">Features</a></li>
+          <li><a href="/learn/">Learn</a></li>
           <li><a href="/pages/about/">About</a></li>
           <li><a href="/pages/contact/">Contact</a></li>
           <li>
-            <a href="#" class="nav-download-btn download-btn">Download</a>
+            <a href="/pages/download/" class="nav-download-btn download-btn"
+              >Download</a
+            >
           </li>
         </ul>
         <button
@@ -168,229 +171,234 @@
       </div>
     </nav>
     <main>
-    <section class="hero">
-      <div class="hero-inner">
-        <h1>Blitz Accounts: <span>wallets for you and family</span></h1>
-        <p class="lead">
-          Create separate wallets for different needs. Keep your spending
-          organized or give a child or family member their own wallet while you
-          keep control of recovery.
-        </p>
-        <div class="hero-actions">
-          <a href="#" class="btn-primary download-btn"
-            >Create an account <i data-lucide="users"></i
-          ></a>
-          <a href="/pages/self-custody/" class="btn-secondary"
-            >How recovery works</a
-          >
-        </div>
-      </div>
-    </section>
-
-    <section class="section white">
-      <div class="section-inner">
-        <div class="section-head">
-          <span class="eyebrow">Two types</span>
-          <h2>Personal and managed</h2>
-          <p>
-            Both run from your main wallet backup. Lose your phone? Your 12-word
-            backup brings everything back.
+      <section class="hero">
+        <div class="hero-inner">
+          <h1>Separate wallets <span>under one backup</span></h1>
+          <p class="lead">
+            Create separate wallets for different needs. Keep your spending
+            organized or manage an account for someone you help.
           </p>
-        </div>
-        <div
-          class="beginner-examples bento-pair"
-          aria-label="Blitz account types"
-        >
-          <article class="card">
-            <div class="icon"><i data-lucide="user"></i></div>
-            <h3>Personal accounts for you</h3>
-            <p>
-              Create “Spending,” “Savings,” or “Business” accounts to keep your
-              money organized. Give each one its own name, emoji, Lightning
-              address, and USD or BTC receiving preference, then manage its
-              balance and history separately.
-            </p>
-          </article>
-          <article class="card">
-            <div class="icon"><i data-lucide="baby"></i></div>
-            <h3>Managed accounts for others</h3>
-            <p>
-              Give a child or family member their own wallet while you keep
-              recovery in your hands. Pair the account to their phone so they
-              can use it, while you add or withdraw funds, see activity, and
-              recover it from your main backup.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section warm">
-      <div class="section-inner">
-        <div class="section-head">
-          <span class="eyebrow">Recovery and boundaries</span>
-          <h2>One backup, clear ownership</h2>
-          <p>
-            Accounts help you stay organized, but you still need to keep your
-            main backup safe.
-          </p>
-        </div>
-        <div class="card-grid cols-3">
-          <article class="card">
-            <h3>Restore everything together</h3>
-            <p>
-              Install Blitz on a new device and restore with your main 12-word
-              backup. Your personal and managed accounts come back with it.
-            </p>
-          </article>
-          <article class="card">
-            <h3>Know who is responsible</h3>
-            <p>
-              Personal accounts hold your own money. Managed accounts are for
-              someone you help. You stay responsible for recovery and funding.
-            </p>
-          </article>
-          <article class="card">
-            <h3>Use separate addresses</h3>
-            <p>
-              Give each account its own Lightning address. Payments and history
-              stay separate, and you can set each one to receive in USD or BTC.
-            </p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section white">
-      <div class="section-inner">
-        <div class="section-head">
-          <span class="eyebrow">FAQ</span>
-          <h2>Questions about Blitz Accounts</h2>
-        </div>
-        <div class="faq-list">
-          <div class="faq">
-            <h3>Do sub-wallets need separate backups?</h3>
-            <p>
-              No. They run from your main wallet and come back with the same
-              12-word backup. Keep that backup safe.
-            </p>
-          </div>
-          <div class="faq">
-            <h3>Does each account have its own Lightning address?</h3>
-            <p>
-              Sort of. Every personal sub-account can have its own Lightning
-              address and choose to receive in USD or BTC. Managed accounts also
-              get their own Lightning address, based on the username the child
-              sets.
-            </p>
-          </div>
-          <div class="faq">
-            <h3>Can a managed account holder recover the account alone?</h3>
-            <p>
-              No. Managed accounts stay under your control. Pairing lets the
-              other person use the account on their phone while you keep
-              recovery.
-            </p>
-          </div>
-          <div class="faq">
-            <h3>What happens if I lose my phone?</h3>
-            <p>
-              Install Blitz on a new device and restore with your main 12-word
-              backup. Your accounts come back with it.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section warm">
-      <div class="section-inner">
-        <div class="section-head">
-          <span class="eyebrow">What you can do</span>
-          <h2>Manage each account on its own</h2>
-        </div>
-        <div class="card-grid cols-3">
-          <div class="card">
-            <h3>Your own Lightning address</h3>
-            <p>
-              Every account gets its own address. Set it to receive in USD or
-              BTC.
-            </p>
-          </div>
-          <div class="card">
-            <h3>Move money between accounts</h3>
-            <p>
-              Move funds between personal accounts without an on-chain
-              transaction. Send to another account or pull funds in.
-            </p>
-          </div>
-          <div class="card">
-            <h3>History, names, and backup</h3>
-            <p>
-              Check history for each account, set a name and emoji, and recover
-              it with your main 12-word backup.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section white">
-      <div class="section-inner">
-        <div class="section-head">
-          <span class="eyebrow">Why it helps</span>
-          <h2>Stay organized and help others get started</h2>
-        </div>
-        <div class="card-grid cols-3">
-          <div class="card">
-            <h3>Stay organized</h3>
-            <p>
-              Keep rent, groceries, and savings separate without needing a new
-              backup.
-            </p>
-          </div>
-          <div class="card">
-            <h3>Help kids get started</h3>
-            <p>
-              They get their own wallet without needing to manage a backup. You
-              keep recovery and guide them.
-            </p>
-          </div>
-          <div class="card">
-            <h3>One backup</h3>
-            <p>
-              All accounts come back with your main 12-word backup. See
-              <a href="/pages/self-custody/">what self-custody means</a>.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section warm">
-      <div class="section-inner">
-        <div class="cta-band">
-          <h2>Make your first sub-wallet</h2>
-          <p>
-            Create a personal account for “Spending” or a managed account for
-            your kid. Same app, one 12-word backup.
-          </p>
-          <div class="hero-actions actions-centered">
-            <a href="#" class="btn-primary download-btn"
-              >Open Blitz <i data-lucide="arrow-right"></i
+          <div class="hero-actions">
+            <a href="/pages/download/" class="btn-primary download-btn"
+              >Create an account <i data-lucide="users"></i
             ></a>
-            <a href="/features/" class="btn-secondary">See all features</a>
+            <a href="/pages/self-custody/" class="btn-secondary"
+              >How recovery works</a
+            >
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Two types</span>
+            <h2>Personal and managed</h2>
+            <p>
+              Accounts are created under your main wallet, so one 12-word seed
+              restores them all.
+              <a href="/pages/security/">Read the recovery details.</a>
+            </p>
+          </div>
+          <div
+            class="beginner-examples bento-pair"
+            aria-label="Blitz account types"
+          >
+            <article class="card">
+              <div class="icon"><i data-lucide="user"></i></div>
+              <h3>Personal accounts for you</h3>
+              <p>
+                Create “Spending,” “Savings,” or “Business” accounts to keep
+                your money organized. Give each one its own name, emoji,
+                Lightning address, and USD or BTC receiving preference, then
+                manage its balance and history separately.
+              </p>
+            </article>
+            <article class="card">
+              <div class="icon"><i data-lucide="user-round-cog"></i></div>
+              <h3>Managed accounts for others</h3>
+              <p>
+                Create an account for someone you help. Pair the account to
+                their phone so they can use it, while you add or withdraw funds
+                and see activity.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Recovery and boundaries</span>
+            <h2>One wallet, clear responsibility</h2>
+            <p>
+              Accounts help you stay organized, but you still need to keep your
+              main backup safe.
+            </p>
+          </div>
+          <div class="card-grid cols-3">
+            <article class="card">
+              <h3>Restore the main wallet</h3>
+              <p>
+                Restore the main wallet's 12-word seed phrase; your accounts
+                come back with it. See the
+                <a href="/pages/security/">security page</a>.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Know who is responsible</h3>
+              <p>
+                Personal accounts hold your own money. Managed accounts are for
+                someone you help. You stay responsible for recovery and funding.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Use separate addresses</h3>
+              <p>
+                Give each account its own Lightning address. Payments and
+                history stay separate, and you can set each one to receive in
+                USD or BTC.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">FAQ</span>
+            <h2>Questions about Blitz Accounts</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>Do sub-wallets need separate backups?</h3>
+              <p>
+                They are created under your main wallet, which you restore with
+                its 12-word seed phrase. Keep that backup safe, and see the
+                <a href="/pages/security/">security page</a> for recovery
+                details.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Does each account have its own Lightning address?</h3>
+              <p>
+                Sort of. Every personal sub-account can have its own Lightning
+                address and choose to receive in USD or BTC. Managed accounts
+                also get their own Lightning address, based on the username the
+                account holder chooses.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can a managed account holder recover the account alone?</h3>
+              <p>
+                No. Pairing lets the other person use the managed account on
+                their phone while recovery remains linked to your main wallet.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>What happens if I lose my phone?</h3>
+              <p>
+                Install Blitz on a new device and restore the main wallet's
+                12-word seed phrase. Your accounts come back with it; see the
+                <a href="/pages/security/">security page</a> for recovery
+                details.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">What you can do</span>
+            <h2>Manage each account on its own</h2>
+          </div>
+          <div class="card-grid cols-3">
+            <div class="card">
+              <h3>Your own Lightning address</h3>
+              <p>
+                Every account gets its own address. Set it to receive in USD or
+                BTC.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Move money between accounts</h3>
+              <p>
+                Move funds between personal accounts without an on-chain
+                transaction. Send to another account or pull funds in.
+              </p>
+            </div>
+            <div class="card">
+              <h3>History, names, and backup</h3>
+              <p>
+                Check history for each account, set a name and emoji, and
+                restore the wallet keys with your 12-word seed phrase.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Why it helps</span>
+            <h2>Stay organized and help others get started</h2>
+          </div>
+          <div class="card-grid cols-3">
+            <div class="card">
+              <h3>Stay organized</h3>
+              <p>
+                Keep rent, groceries, and savings separate without needing a new
+                backup.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Help someone get started</h3>
+              <p>
+                A managed account has a separate name, address, and history. You
+                remain responsible for its recovery through your main wallet.
+              </p>
+            </div>
+            <div class="card">
+              <h3>One backup</h3>
+              <p>
+                Accounts are created under your main wallet, so its seed phrase
+                restores them. See
+                <a href="/pages/self-custody/">what self-custody means</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="cta-band">
+            <h2>Make your first sub-wallet</h2>
+            <p>
+              Create a personal account for “Spending” or a managed account for
+              someone you help.
+            </p>
+            <div class="hero-actions actions-centered">
+              <a href="/pages/download/" class="btn-primary download-btn"
+                >Open Blitz <i data-lucide="arrow-right"></i
+              ></a>
+              <a href="/features/" class="btn-secondary">See all features</a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
     <footer>
       <div class="footer-container">
         <div class="footer-brand">
           <img src="/favicon.png" alt="Blitz Wallet logo" />
           <h3>Blitz Wallet</h3>
-          <p>Your Global Payments App</p>
+          <p>Bitcoin &amp; Lightning wallet</p>
         </div>
         <div class="footer-links">
           <h4>Products</h4>
@@ -400,6 +408,22 @@
             <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
             <li>
               <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Wallet</h4>
+          <ul>
+            <li><a href="/pages/lightning-wallet/">Lightning Wallet</a></li>
+            <li><a href="/pages/spark-wallet/">Spark Wallet</a></li>
+            <li><a href="/pages/security/">Security &amp; Recovery</a></li>
+            <li>
+              <a
+                href="https://github.com/BlitzWallet/BlitzWallet"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
             </li>
           </ul>
         </div>

@@ -22,12 +22,10 @@
     />
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
-    <title>
-      How to Create a Bitcoin Wallet for Beginners in 3 Steps | Blitz Wallet
-    </title>
+    <title>Create a Bitcoin Wallet in 3 Steps | Blitz</title>
     <meta
       name="description"
-      content="How to create a Bitcoin wallet for beginners in 3 steps. Download Blitz free, save 12 words, and receive your first sats in under a minute."
+      content="Create a Bitcoin wallet in three steps with Blitz: install the app, write down your 12-word backup, and make your first payment."
     />
     <meta name="robots" content="index, follow" />
     <meta property="og:type" content="website" />
@@ -37,11 +35,11 @@
     />
     <meta
       property="og:title"
-      content="How to Create a Bitcoin Wallet for Beginners in 3 Steps"
+      content="Create a Bitcoin Wallet in 3 Steps | Blitz"
     />
     <meta
       property="og:description"
-      content="Download Blitz free, save 12 words, and receive your first sats. No ID, no bank, no jargon."
+      content="Install Blitz, write down your 12-word backup, and make your first Bitcoin payment."
     />
     <meta
       property="og:image"
@@ -50,11 +48,11 @@
     <meta property="twitter:card" content="summary_large_image" />
     <meta
       property="twitter:title"
-      content="How to Create a Bitcoin Wallet for Beginners in 3 Steps"
+      content="Create a Bitcoin Wallet in 3 Steps | Blitz"
     />
     <meta
       property="twitter:description"
-      content="Download Blitz free, save 12 words, and receive your first sats."
+      content="Install Blitz, write down your 12-word backup, and make your first Bitcoin payment."
     />
     <meta
       property="twitter:image"
@@ -83,7 +81,7 @@
         "applicationCategory": "FinanceApplication",
         "operatingSystem": "iOS, Android, Web",
         "url": "https://blitzwalletapp.com/pages/bitcoin-wallet/",
-        "description": "Self-custodial Bitcoin wallet for everyday global payments.",
+        "description": "A Bitcoin wallet with a user-held 12-word seed phrase, Spark, Lightning, and on-chain payment options.",
         "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
       }
     </script>
@@ -117,15 +115,7 @@
             "name": "Is Blitz really self-custodial?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Your 12-word backup generates your keys on your device. Neither Blitz nor Spark can move your funds. There is no reset if you lose the backup, so protect it carefully."
-            }
-          },
-          {
-            "@type": "Question",
-            "name": "What fees will I pay?",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "Blitz-to-Blitz contact payments are free of Blitz fees. Spark and Lightning payments are tiny, swaps via Flashnet have a small service fee, and on-chain fees vary with network conditions."
+              "text": "Blitz does not store your 12-word seed phrase. Blitz publishes an open-source recovery tool, and Spark offers a unilateral exit if operators go offline. See the security and recovery guide."
             }
           },
           {
@@ -133,7 +123,7 @@
             "name": "Does Blitz work with other Lightning wallets?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes. Your Lightning address, BOLT11 invoices, LNURL, Spark, on-chain, and pay links can interoperate with compatible wallets."
+              "text": "Blitz supports compatible Lightning addresses, payment requests, and other payment routes. Asset and route support depends on the wallet and request. Check the details in Blitz before confirming."
             }
           },
           {
@@ -141,7 +131,7 @@
             "name": "What does the 12-word backup support?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Blitz uses a 12-word BIP39 backup to restore the wallet on a new device or through the open-source recovery tool. Keep the words offline and never share them."
+              "text": "The 12-word seed phrase restores your wallet in supported Blitz flows. This does not prove that Spark funds can be moved when operators are unavailable. Keep the words private and review the security and recovery guide."
             }
           },
           {
@@ -149,7 +139,7 @@
             "name": "What happens if I send Bitcoin to the wrong address?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Bitcoin payments usually cannot be reversed. Check the recipient, asset, amount, and fee before you confirm. If you are unsure, send a small test payment first."
+              "text": "Bitcoin payments cannot be reversed. Check the recipient, asset, amount, and fee before you confirm. If you are unsure, send a small test payment first."
             }
           },
           {
@@ -165,7 +155,7 @@
             "name": "Can I import an existing wallet backup?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Use only Blitz's official recovery flow if it supports your existing wallet. BIP39 compatibility does not guarantee identical address derivation, so confirm support before moving funds and never enter your words into a website."
+              "text": "A BIP39 seed phrase from another wallet may use different address derivation. Check Blitz's official instructions before importing. Never enter your words into an unverified website or tool; the security page explains the published browser-based recovery project."
             }
           }
         ]
@@ -181,10 +171,13 @@
         <ul class="nav-links" id="primary-navigation">
           <li><a href="/#products">Products</a></li>
           <li><a href="/features/">Features</a></li>
+          <li><a href="/learn/">Learn</a></li>
           <li><a href="/pages/about/">About</a></li>
           <li><a href="/pages/contact/">Contact</a></li>
           <li>
-            <a href="#" class="nav-download-btn download-btn">Download</a>
+            <a href="/pages/download/" class="nav-download-btn download-btn"
+              >Download</a
+            >
           </li>
         </ul>
         <button
@@ -212,7 +205,7 @@
             >.
           </p>
           <div class="hero-actions">
-            <a href="#" class="btn-primary download-btn"
+            <a href="/pages/download/" class="btn-primary download-btn"
               >Create your wallet <i data-lucide="arrow-right"></i
             ></a>
             <a href="/features/" class="btn-secondary">See all features</a>
@@ -241,17 +234,20 @@
                   target="_blank"
                   rel="noopener"
                   >Spark</a
-                >, a Bitcoin Layer 2. Payments usually settle in seconds.
+                >, a Bitcoin Layer 2 for supported wallet payments.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="shield-check"></i></div>
-              <h3>Your keys, your money</h3>
-              <p>12 words back up your wallet. Blitz never holds your funds.</p>
+              <h3>You control your seed phrase</h3>
+              <p>
+                Blitz does not store your 12-word seed phrase. See the
+                <a href="/pages/security/">security and recovery guide</a>.
+              </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="globe"></i></div>
-              <h3>Works everywhere</h3>
+              <h3>Choose a payment route</h3>
               <p>Pay a somone across the street or across an ocean.</p>
             </article>
           </div>
@@ -266,7 +262,8 @@
               Create a wallet in three steps
             </h2>
             <p>
-              It takes less than a minute. No ID, no bank account, no email.
+              Download Blitz or open the web wallet, then follow the current
+              setup steps.
             </p>
           </div>
           <div class="steps receive-steps">
@@ -282,7 +279,9 @@
               <h3>Save 12 words</h3>
               <p>
                 Write the 12 words and keep them somewhere safe. If you lose
-                them, no one can recover them, not even Blitz.
+                them, you may lose access to wallet keys. Spark exit recovery
+                has separate requirements; read the
+                <a href="/pages/security/">recovery guide</a>.
                 <a href="/learn/what-is-seed-phrase/">Save your 12 words</a>.
               </p>
             </div>
@@ -308,20 +307,23 @@
             <article class="card">
               <h3>Pay contacts for free</h3>
               <p>
-                Save a friend as a contact and pay by name. No QR needed. Free
-                between Blitz users.
+                Save a friend as a contact and pay by name. No QR is needed, and
+                Blitz-to-Blitz contact payments have no Blitz transaction fee.
               </p>
             </article>
             <article class="card">
-              <h3>Receive even while offline</h3>
+              <h3>Receive with supported flows</h3>
               <p>
-                Spark lets people pay you when your phone is off. No node to
-                keep online.
+                Some supported Spark payment flows can receive while your phone
+                is offline.
               </p>
             </article>
             <article class="card">
-              <h3>Swap to dollars instantly</h3>
-              <p>Convert BTC ↔ USDB in seconds. Keep spending power steady.</p>
+              <h3>Swap supported Bitcoin and dollar balances</h3>
+              <p>
+                Blitz supports USDB and other stablecoin routes. Available
+                swaps, timing, and fees vary by route.
+              </p>
             </article>
             <article class="card">
               <h3>Send gifts and pools</h3>
@@ -362,14 +364,14 @@
                   <td class="dash">Usually not</td>
                 </tr>
                 <tr>
-                  <td>Offline receive</td>
+                  <td>Receive while offline</td>
                   <td class="check">Yes</td>
-                  <td class="dash">Often needs to be online</td>
+                  <td>Depends on the wallet and payment route</td>
                 </tr>
                 <tr>
-                  <td>Stablecoin on same balance</td>
-                  <td class="check">USDB, USDT, USDC</td>
-                  <td class="dash">BTC only</td>
+                  <td>Stablecoin support</td>
+                  <td class="check">USDB and supported USDT/USDC routes</td>
+                  <td>Depends on the wallet and network</td>
                 </tr>
               </tbody>
             </table>
@@ -387,25 +389,28 @@
             <div class="faq">
               <h3>Is Blitz really self-custodial?</h3>
               <p>
-                Yes. Your 12-word backup generates your keys on your device.
-                Neither Blitz nor Spark can move your funds. There is no reset
-                if you lose the backup, so protect it carefully. See
-                <a href="/pages/self-custody/">what self-custody means</a>.
+                Blitz does not store your 12-word seed phrase. Blitz publishes
+                an open-source recovery tool, and Spark offers a unilateral exit
+                if operators go offline. See the
+                <a href="/pages/security/">security and recovery guide</a>.
               </p>
             </div>
             <div class="faq">
               <h3>Does Blitz work with other Lightning wallets?</h3>
               <p>
-                Yes. Your Lightning address, BOLT11 invoices, LNURL, Spark,
-                on-chain, and pay links all interoperate.
+                Blitz supports compatible Lightning addresses, payment requests,
+                and other payment routes. Asset and route support depends on the
+                wallet and request. Check the details in Blitz before
+                confirming.
               </p>
             </div>
             <div class="faq">
               <h3>What does the 12-word backup support?</h3>
               <p>
-                Blitz uses a 12-word BIP39 backup to restore your wallet on a
-                new device or in another compatible app. Keep the words offline
-                and never share them.
+                The 12-word seed phrase restores wallet keys in supported Blitz
+                flows. This does not prove that Spark funds can be moved when
+                operators are unavailable. Keep the words private and review the
+                <a href="/pages/security/">security and recovery guide</a>.
               </p>
             </div>
             <div class="faq">
@@ -427,8 +432,11 @@
             <div class="faq">
               <h3>Can I import an existing wallet backup?</h3>
               <p>
-                Since Blitz is a Layer 2 Bitcoin wallet built on Spark, only
-                other Spark backups can be restored in Blitz Wallet.
+                A BIP39 seed phrase from another wallet may use different
+                address derivation. Check Blitz's official instructions before
+                importing. Never enter your words into an unverified website or
+                tool; the <a href="/pages/security/">security page</a> explains
+                the published browser-based recovery project.
               </p>
             </div>
           </div>
@@ -445,7 +453,7 @@
               the link before claiming.
             </p>
             <div class="hero-actions actions-centered">
-              <a href="#" class="btn-primary download-btn"
+              <a href="/pages/download/" class="btn-primary download-btn"
                 >Download Blitz <i data-lucide="arrow-right"></i
               ></a>
               <a href="/learn/how-to-receive-bitcoin/" class="btn-secondary"
@@ -461,7 +469,7 @@
         <div class="footer-brand">
           <img src="/favicon.png" alt="Blitz Wallet logo" />
           <h3>Blitz Wallet</h3>
-          <p>Your Global Payments App</p>
+          <p>Bitcoin &amp; Lightning wallet</p>
         </div>
         <div class="footer-links">
           <h4>Products</h4>
@@ -471,6 +479,22 @@
             <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
             <li>
               <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Wallet</h4>
+          <ul>
+            <li><a href="/pages/lightning-wallet/">Lightning Wallet</a></li>
+            <li><a href="/pages/spark-wallet/">Spark Wallet</a></li>
+            <li><a href="/pages/security/">Security &amp; Recovery</a></li>
+            <li>
+              <a
+                href="https://github.com/BlitzWallet/BlitzWallet"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
             </li>
           </ul>
         </div>

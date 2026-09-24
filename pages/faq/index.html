@@ -77,7 +77,7 @@
             "name": "What is Blitz Wallet?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Blitz Wallet is a self-custodial global payments app for iOS, Android and web. Pay contacts for free, send Gifts, collect Pools, create Paylinks, swap BTC and USDB, and accept payments as a merchant."
+              "text": "Blitz is a Bitcoin and Lightning wallet for iOS, Android, and the web. It uses Spark for payments and also supports on-chain Bitcoin."
             }
           },
           {
@@ -93,15 +93,15 @@
             "name": "Is it free?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "The app is free. Blitz-to-Blitz contact payments have no Blitz fee. Spark/Lightning fees are tiny and shown before you send. Swaps have a small fee via Flashnet. There is no monthly fee."
+              "text": "The app has no monthly charge. Blitz-to-Blitz contact payments have no Blitz transaction fee. Other payment routes and swaps may have fees; check the app before confirming."
             }
           },
           {
             "@type": "Question",
-            "name": "What is USDB?",
+            "name": "Do I need to submit ID to create a Blitz wallet?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "USDB is a USD-pegged stablecoin on Spark, issued by Brale, backed 1:1 by Treasuries and cash equivalents. Hold 10 or more USDB to earn up to 6% back, paid daily in BTC. Program terms can change, so check the app. Stablecoins carry issuer and platform risk."
+              "text": "Blitz does not require government ID to create a wallet. Third-party providers used for some payment routes may have their own terms and requirements."
             }
           },
           {
@@ -109,7 +109,23 @@
             "name": "Can I get paid while offline?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Yes for Spark/Lightning-supported payments. Nothing to keep online."
+              "text": "Some supported Spark payment flows can receive while your phone is offline. Lightning behavior depends on the payment type and service availability. A sender still needs a valid payment request or Lightning address."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I send or receive on-chain Bitcoin?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes. Blitz supports on-chain Bitcoin send and receive options where available. Miner fees and confirmation times vary with network conditions."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Are gifts and pools free?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "There is no extra Blitz fee to create a gift or pool. The underlying Lightning, Spark, on-chain, or stablecoin payment may have a network or service fee shown before confirmation."
             }
           },
           {
@@ -117,15 +133,23 @@
             "name": "What if I lose my phone?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Restore with your 12 words in Blitz or the open-source recovery tool. Funds return. Lose the words and you lose access to the funds."
+              "text": "Use the 12-word seed phrase to restore wallet keys in supported Blitz flows. If you lose the phrase and have no copy, key access may be lost. This does not establish that Spark funds can be moved when operators are unavailable. See the recovery requirements."
             }
           },
           {
             "@type": "Question",
-            "name": "What are Blitz fees for gifts versus Pools?",
+            "name": "Can Spark operators stop a normal payment?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "There is no extra Blitz fee to create a gift or Pool. The underlying Lightning, Spark, on-chain, or stablecoin network fee still applies and is shown before confirmation."
+              "text": "Spark operators participate in ordinary Spark transfers. If they are unavailable or do not cooperate, normal Spark transfers can be delayed or stop. See the security and recovery explanation."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can I recover if Blitz disappears?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Spark's unilateral exit lets you withdraw to the Bitcoin blockchain without operators. Today it's a command-line process with on-chain fees and waiting periods, and it isn't built into Blitz. Read the security page."
             }
           }
         ]
@@ -161,10 +185,13 @@
         <ul class="nav-links" id="primary-navigation">
           <li><a href="/#products">Products</a></li>
           <li><a href="/features/">Features</a></li>
+          <li><a href="/learn/">Learn</a></li>
           <li><a href="/pages/about/">About</a></li>
           <li><a href="/pages/contact/">Contact</a></li>
           <li>
-            <a href="#" class="nav-download-btn download-btn">Download</a>
+            <a href="/pages/download/" class="nav-download-btn download-btn"
+              >Download</a
+            >
           </li>
         </ul>
         <button
@@ -189,7 +216,7 @@
             <a href="/pages/contact/">contact us</a>. We will help.
           </p>
           <div class="hero-actions">
-            <a href="#" class="btn-primary download-btn"
+            <a href="/pages/download/" class="btn-primary download-btn"
               >Try Blitz now <i data-lucide="arrow-right"></i
             ></a>
             <a href="/features/" class="btn-secondary">See features</a>
@@ -207,26 +234,27 @@
             <div class="faq">
               <h3>What is Blitz Wallet?</h3>
               <p>
-                Blitz is a self-custodial wallet for everyday payments on mobile
-                and web. Pay contacts, send gifts, collect money with Pools,
-                create payment links, swap to USDB, or accept payments as a
-                merchant.
+                Blitz is a Bitcoin and Lightning wallet for iOS, Android, and
+                the web. It uses Spark for payments and supports on-chain
+                Bitcoin, Lightning addresses, gifts, pools, Nostr Wallet
+                Connect, and point of sale.
               </p>
             </div>
             <div class="faq">
               <h3>Is Blitz self-custodial?</h3>
               <p>
                 Yes. Your 12-word backup generates your keys on your device.
-                Neither Blitz nor Spark can move your funds. Back up the words
-                on paper. See
-                <a href="/pages/self-custody/">how self-custody works</a>.
+                Neither Blitz nor Spark can move your funds. See the
+                <a href="/pages/security/">security explanation</a> and
+                <a href="/pages/self-custody/">seed phrase guide</a>.
               </p>
             </div>
             <div class="faq">
-              <h3>Is it free?</h3>
+              <h3 id="fees">Is it free?</h3>
               <p>
-                The app is free. However some supported payment types have a
-                small fee associated with thenm.
+                The app has no monthly charge. Blitz-to-Blitz contact payments
+                have no Blitz transaction fee. Other payment routes and swaps
+                may have fees; check the app before confirming.
               </p>
             </div>
             <div class="faq">
@@ -238,6 +266,14 @@
                   >wallet.blitzwalletapp.com</a
                 >. Same wallet logic everywhere.
                 <a href="/pages/download/">Download options</a>.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Do I need to submit ID to create a Blitz wallet?</h3>
+              <p>
+                Blitz does not require government ID to create a wallet.
+                Third-party providers used for some payment routes may have
+                their own terms and requirements.
               </p>
             </div>
           </div>
@@ -254,28 +290,32 @@
             <div class="faq">
               <h3>What is Spark & Lightning?</h3>
               <p>
-                Lightning is Bitcoin’s instant Layer 2.
+                Lightning is a Bitcoin payment network.
                 <a
                   href="https://docs.spark.money"
                   target="_blank"
                   rel="noopener"
                   >Spark</a
                 >
-                is a newer Bitcoin Layer 2 by Lightspark using statechains +
-                FROST signatures that makes Lightning easy: no channel
-                management, offline receive, under-a-second settlement.
+                is a Bitcoin Layer 2 used by Blitz for wallet payments. Spark
+                supports fast transfers without requiring you to manage
+                Lightning channels. Spark operators participate in normal state
+                changes; see the
+                <a href="/pages/spark-wallet/">Spark wallet guide</a>.
               </p>
             </div>
             <div class="faq">
               <h3>Can I pay any Lightning QR?</h3>
               <p>
-                Yes. One scanner handles BOLT11, LNURL, Lightning addresses,
-                on-chain invoices, and Spark invoices. You can also receive at
-                <code>you@blitzwalletapp.com</code>.
+                Blitz supports compatible Lightning payment requests, LNURL,
+                Lightning addresses, on-chain Bitcoin, and Spark payment
+                requests. A payment can still fail if the request, amount, or
+                route is not supported. You can also receive at a Blitz
+                Lightning address such as <code>you@blitzwalletapp.com</code>.
               </p>
             </div>
             <div class="faq">
-              <h3>What are Gifts, Pools and Paylinks?</h3>
+              <h3 id="payment-links">What are Gifts, Pools and Paylinks?</h3>
               <p>
                 <a href="/pages/gifts/">Gifts</a> = send via a shareable link
                 that the recipient claims in Blitz.
@@ -295,7 +335,28 @@
             </div>
             <div class="faq">
               <h3>Can I get paid while offline?</h3>
-              <p>Yes nothing stops you from receiving your money.</p>
+              <p>
+                Some supported Spark payment flows can receive while your phone
+                is offline. Lightning behavior depends on the payment type and
+                service availability. A sender still needs a valid payment
+                request or Lightning address.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can I send or receive on-chain Bitcoin?</h3>
+              <p>
+                Yes. Blitz supports on-chain Bitcoin send and receive options
+                where available. Miner fees and confirmation times vary with
+                network conditions.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Are gifts and pools free?</h3>
+              <p>
+                There is no extra Blitz fee to create a gift or pool. The
+                underlying Lightning, Spark, on-chain, or stablecoin payment may
+                have a network or service fee shown before confirmation.
+              </p>
             </div>
           </div>
         </div>
@@ -314,10 +375,11 @@
                 USDB is a dollar-pegged stablecoin on Spark issued by
                 <a href="https://brale.xyz" target="_blank" rel="noopener"
                   >Brale</a
-                >, backed 1:1 by Treasury bills and cash equivalents. Hold 10 or
-                more USDB to earn up to 6% back, paid daily in BTC. Program
-                terms can change, so check the app. Stablecoins carry issuer and
-                platform risk. <a href="/pages/stablecoins/">USDB details</a>.
+                >. Check current reserve and redemption disclosures from Brale
+                before using USDB. Hold 10 or more USDB to earn up to 6% back,
+                paid daily in BTC. Program terms can change, so check the app.
+                Stablecoins carry issuer and platform risk.
+                <a href="/pages/stablecoins/">USDB details</a>.
               </p>
             </div>
             <div class="faq">
@@ -332,10 +394,10 @@
             <div class="faq">
               <h3>Why dollars on Bitcoin?</h3>
               <p>
-                Some people have a hard time with Bitcoin's short-term
-                volatility. Dollars can make everyday spending more stable. Hold
-                USDB for spending and Bitcoin for savings, then swap between
-                them in seconds.
+                Choose BTC or Dollars based on how you want to receive and use
+                funds. Bitcoin's price changes; USDB is a dollar-denominated
+                stablecoin with issuer, redemption, and network risks. Review
+                the current quote, route, and fee before confirming a swap.
               </p>
             </div>
             <div class="faq">
@@ -360,9 +422,29 @@
             <div class="faq">
               <h3>What if I lose my phone?</h3>
               <p>
-                Restore with your 12 words in Blitz or the open-source
-                <a href="https://recover.blitzwalletapp.com">recovery tool</a>.
-                Funds return. Lose the words = lose the funds.
+                Use the 12-word seed phrase to restore wallet keys in supported
+                Blitz flows. If you lose the phrase and have no copy, key access
+                may be lost.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can Spark operators stop a normal payment?</h3>
+              <p>
+                Spark operators participate in ordinary Spark transfers. If they
+                are unavailable or do not cooperate, normal Spark transfers can
+                be delayed or stop. See the
+                <a href="/pages/security/">security and recovery explanation</a
+                >.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can I recover if Blitz disappears?</h3>
+              <p>
+                Spark&rsquo;s unilateral exit lets you withdraw to the Bitcoin
+                blockchain without operators. Today it&rsquo;s a command-line
+                process with on-chain fees and waiting periods, and it
+                isn&rsquo;t built into Blitz. Read the
+                <a href="/pages/security/">security page</a>.
               </p>
             </div>
             <div class="faq">
@@ -400,7 +482,9 @@
               <a href="/pages/contact/" class="btn-primary"
                 >Contact us <i data-lucide="arrow-right"></i
               ></a>
-              <a href="#" class="btn-secondary download-btn">Download Blitz</a>
+              <a href="/pages/download/" class="btn-secondary download-btn"
+                >Download Blitz</a
+              >
             </div>
           </div>
         </div>
@@ -411,7 +495,7 @@
         <div class="footer-brand">
           <img src="/favicon.png" alt="Blitz Wallet logo" />
           <h3>Blitz Wallet</h3>
-          <p>Your Global Payments App</p>
+          <p>Bitcoin &amp; Lightning wallet</p>
         </div>
         <div class="footer-links">
           <h4>Products</h4>
@@ -421,6 +505,22 @@
             <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
             <li>
               <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Wallet</h4>
+          <ul>
+            <li><a href="/pages/lightning-wallet/">Lightning Wallet</a></li>
+            <li><a href="/pages/spark-wallet/">Spark Wallet</a></li>
+            <li><a href="/pages/security/">Security &amp; Recovery</a></li>
+            <li>
+              <a
+                href="https://github.com/BlitzWallet/BlitzWallet"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
             </li>
           </ul>
         </div>

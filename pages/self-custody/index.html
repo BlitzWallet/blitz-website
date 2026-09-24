@@ -22,12 +22,10 @@
     />
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
-    <title>
-      What Is a Self-Custody Bitcoin Wallet? Your Keys, Your Backup | Blitz
-    </title>
+    <title>Self-Custody Bitcoin Wallet: How It Works | Blitz</title>
     <meta
       name="description"
-      content="Learn what a self-custody Bitcoin wallet means. Hold your keys, protect a 12-word backup, and recover your Blitz wallet with open-source tools."
+      content="Learn how Blitz's 12-word seed, Spark operators, and recovery process fit together. Understand the limits before choosing a wallet."
     />
     <meta name="robots" content="index, follow" />
     <meta property="og:type" content="website" />
@@ -37,11 +35,11 @@
     />
     <meta
       property="og:title"
-      content="What Is a Self-Custody Bitcoin Wallet? Your Keys, Your Backup"
+      content="Self-Custody Bitcoin Wallet: How It Works"
     />
     <meta
       property="og:description"
-      content="Self-custody made simple: 12 words, your keys, your Bitcoin. No bank can freeze it."
+      content="Understand Blitz's user-held seed phrase, Spark operator role, and recovery requirements."
     />
     <meta
       property="og:image"
@@ -50,11 +48,11 @@
     <meta property="twitter:card" content="summary_large_image" />
     <meta
       property="twitter:title"
-      content="What Is a Self-Custody Bitcoin Wallet? Your Keys, Your Backup"
+      content="Self-Custody Bitcoin Wallet: How It Works"
     />
     <meta
       property="twitter:description"
-      content="Self-custody made simple: 12 words, your keys, your Bitcoin."
+      content="Understand Blitz's user-held seed phrase, Spark operator role, and recovery requirements."
     />
     <meta
       property="twitter:image"
@@ -79,8 +77,8 @@
       {
         "@context": "https://schema.org",
         "@type": "Article",
-        "headline": "Self-Custody Wallet: Your Keys, Your Money",
-        "description": "What self-custody means, how 12-word backups work, and how Blitz keeps you in control.",
+        "headline": "What self-custody means for a Blitz Wallet",
+        "description": "What user-held seed phrases mean, how Spark operators participate in normal transfers, and what independent recovery requires.",
         "url": "https://blitzwalletapp.com/pages/self-custody/",
         "author": { "@type": "Organization", "name": "Blitz Wallet" }
       }
@@ -89,8 +87,8 @@
       {
         "@context": "https://schema.org",
         "@type": "HowTo",
-        "name": "How to back up a self-custody Bitcoin wallet",
-        "description": "Back up a Blitz wallet with a 12-word BIP39 seed phrase.",
+        "name": "How to back up a wallet seed phrase",
+        "description": "Write down and securely store the 12-word seed phrase that restores your wallet.",
         "step": [
           {
             "@type": "HowToStep",
@@ -107,8 +105,8 @@
           {
             "@type": "HowToStep",
             "position": 3,
-            "name": "Test recovery",
-            "text": "Restore on another device, verify access, then remove the test copy."
+            "name": "Understand separate recovery requirements",
+            "text": "A seed phrase restores wallet keys but does not prove that Spark funds can be moved when operators are unavailable. Review the current security page and recovery evidence."
           }
         ]
       }
@@ -143,7 +141,7 @@
             "name": "Can Blitz help if I lose my backup?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. That is the point of self-custody. If Blitz could recover without the backup, it could also move your money without you. Keep the 12 words safe."
+              "text": "Blitz cannot retrieve your seed phrase. If you lose it and have no other copy, you may lose access to the wallet. Keep the words private and backed up."
             }
           },
           {
@@ -151,7 +149,7 @@
             "name": "Is self-custody harder to use?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "No. Save your 12 words once. After that, Blitz works like any other payments app. You can pay contacts, send gifts, and use pools the same way."
+              "text": "Blitz is designed to make day-to-day payments simple, but you are responsible for keeping your seed phrase safe."
             }
           },
           {
@@ -159,7 +157,7 @@
             "name": "What about large amounts?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Many people keep daily spending in Blitz and larger savings on a hardware wallet. Blitz still uses BIP39, so you can manage levels of backup as you grow."
+              "text": "Blitz is designed for day-to-day use. Before keeping a large balance in any wallet, understand its payment and recovery model and choose a setup that fits your needs."
             }
           }
         ]
@@ -175,10 +173,13 @@
         <ul class="nav-links" id="primary-navigation">
           <li><a href="/#products">Products</a></li>
           <li><a href="/features/">Features</a></li>
+          <li><a href="/learn/">Learn</a></li>
           <li><a href="/pages/about/">About</a></li>
           <li><a href="/pages/contact/">Contact</a></li>
           <li>
-            <a href="#" class="nav-download-btn download-btn">Download</a>
+            <a href="/pages/download/" class="nav-download-btn download-btn"
+              >Download</a
+            >
           </li>
         </ul>
         <button
@@ -204,11 +205,11 @@
             that lets you recover the wallet.
           </p>
           <div class="hero-actions">
-            <a href="#" class="btn-primary download-btn"
-              >Create self-custodial wallet <i data-lucide="arrow-right"></i
+            <a href="/pages/download/" class="btn-primary download-btn"
+              >Create a Blitz wallet <i data-lucide="arrow-right"></i
             ></a>
-            <a href="https://recover.blitzwalletapp.com" class="btn-secondary"
-              >See recovery tool</a
+            <a href="/pages/security/" class="btn-secondary"
+              >Read recovery evidence</a
             >
           </div>
         </div>
@@ -227,40 +228,31 @@
           <div class="card-grid cols-3">
             <article class="card">
               <div class="icon"><i data-lucide="key"></i></div>
-              <h3>You hold the keys</h3>
+              <h3>You hold the seed phrase</h3>
               <p>
-                Your wallet is made from 12 random words on your device. Whoever
-                has those words controls the funds. Blitz and
-                <a
-                  href="https://docs.spark.money"
-                  target="_blank"
-                  rel="noopener"
-                  >Spark</a
-                >
-                cannot move them.
+                Blitz does not store your 12-word backup. Anyone who gets the
+                words may be able to control the wallet.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="lock"></i></div>
-              <h3>No freeze, no reverse</h3>
+              <h3>Operators help process transfers</h3>
               <p>
-                With custodial apps, a company can freeze or reverse a payment.
-                With self-custody, only you can send. Like cash in your pocket.
+                Spark operators participate in ordinary Spark state changes. If
+                they are unavailable or do not cooperate, normal Spark transfers
+                can be delayed or stop.
               </p>
             </article>
             <article class="card">
               <div class="icon"><i data-lucide="refresh-cw"></i></div>
-              <h3>Recover anywhere</h3>
+              <h3>Recovery has requirements</h3>
               <p>
-                Enter the 12-word backup in Blitz or the open-source
-                <a
-                  href="https://github.com/BlitzWallet/spark-recover"
-                  target="_blank"
-                  rel="noopener"
-                  >spark-recover</a
-                >
-                tool. Your funds reappear. If you lose the backup, you lose the
-                funds.
+                If Spark operators go offline, Spark&rsquo;s unilateral exit
+                lets you withdraw to Bitcoin without them, though today
+                it&rsquo;s a technical process that isn&rsquo;t built into
+                Blitz. Our
+                <a href="/pages/security/">security page</a> explains the steps
+                and limits.
               </p>
             </article>
           </div>
@@ -275,11 +267,12 @@
             <div>
               <h3>Never share your seed phrase</h3>
               <p>
-                Only enter your 12 words when you are intentionally restoring
-                your wallet inside the official Blitz app or a trusted,
-                compatile wallet. Never type them into a website, form, chat, or
-                send them to anyone. Anyone who gets your seed phrase can take
-                your money.
+                Never send your seed phrase by email, chat, or form. Blitz also
+                publishes a browser-based recovery tool that asks for a seed;
+                using it means entering the words on a website. Verify the
+                official project and understand its limits before deciding
+                whether to use it. Anyone who gets your words may control the
+                wallet.
               </p>
             </div>
           </aside>
@@ -297,38 +290,40 @@
               <thead>
                 <tr>
                   <th>Question</th>
-                  <th>Custodial (exchange/bank)</th>
-                  <th>Blitz (self-custodial)</th>
+                  <th>Custodial service (varies)</th>
+                  <th>Blitz</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>Who holds the keys?</td>
-                  <td>Company</td>
-                  <td class="check">You, with 12 words</td>
-                </tr>
-                <tr>
-                  <td>Can they freeze your account?</td>
-                  <td>Yes</td>
-                  <td class="check">No, only you can send</td>
-                </tr>
-                <tr>
-                  <td>If company closes?</td>
-                  <td>Wait for withdrawal</td>
-                  <td class="check">
-                    Restore on another Spark compatible wallet or our
-                    open-source tool
+                  <td>The service provider</td>
+                  <td>
+                    You control the seed phrase; Spark operators participate in
+                    state changes
                   </td>
+                </tr>
+                <tr>
+                  <td>Who participates in normal transfers?</td>
+                  <td>The service provider</td>
+                  <td>Spark operators participate</td>
+                </tr>
+                <tr>
+                  <td>Can you exit without the provider?</td>
+                  <td>Depends on the wallet</td>
+                  <td>Through Spark&rsquo;s unilateral exit</td>
                 </tr>
                 <tr>
                   <td>If you lose backup?</td>
                   <td>Reset password</td>
-                  <td>Funds are lost, so back up carefully</td>
+                  <td>
+                    Key access may be lost; Spark recovery is a separate process
+                  </td>
                 </tr>
                 <tr>
                   <td>Privacy</td>
-                  <td>Account and ID on file</td>
-                  <td class="check">No ID needed to create a wallet</td>
+                  <td>Account information varies by provider</td>
+                  <td>No ID is required to create a Blitz wallet</td>
                 </tr>
               </tbody>
             </table>
@@ -387,25 +382,24 @@
             <div class="faq">
               <h3>Can Blitz help if I lose my backup?</h3>
               <p>
-                No. That is the point of self-custody. If Blitz could recover
-                without the backup, it could also move your money without you.
-                Keep the 12 words safe.
+                Blitz cannot retrieve your seed phrase. If you lose it and have
+                no other copy, you will lose access to the wallet. Keep the
+                words private and backed up.
               </p>
             </div>
             <div class="faq">
               <h3>Is self-custody harder to use?</h3>
               <p>
-                No. Save your 12 words once. After that, Blitz works like any
-                other payments app. You can pay contacts, send gifts, and use
-                pools the same way.
+                Blitz is designed to make day-to-day payments simple, but you
+                are responsible for keeping your seed phrase safe.
               </p>
             </div>
             <div class="faq">
               <h3>What about large amounts?</h3>
               <p>
-                Blitz is considered a "hot wallet". This means while your keys
-                are yours, it's meant to be a daily spending wallet insted of a
-                savings wallet.
+                Blitz is designed for day-to-day use. Before keeping a large
+                balance in any wallet, understand its payment and recovery model
+                and choose a setup that fits your needs.
               </p>
             </div>
           </div>
@@ -418,7 +412,7 @@
             <h2>Create your wallet</h2>
             <p>Make a wallet and save your 12 words.</p>
             <div class="hero-actions actions-centered">
-              <a href="#" class="btn-primary download-btn"
+              <a href="/pages/download/" class="btn-primary download-btn"
                 >Create wallet <i data-lucide="arrow-right"></i
               ></a>
               <a href="/pages/faq/" class="btn-secondary"
@@ -434,7 +428,7 @@
         <div class="footer-brand">
           <img src="/favicon.png" alt="Blitz Wallet logo" />
           <h3>Blitz Wallet</h3>
-          <p>Your Global Payments App</p>
+          <p>Bitcoin &amp; Lightning wallet</p>
         </div>
         <div class="footer-links">
           <h4>Products</h4>
@@ -444,6 +438,22 @@
             <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
             <li>
               <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Wallet</h4>
+          <ul>
+            <li><a href="/pages/lightning-wallet/">Lightning Wallet</a></li>
+            <li><a href="/pages/spark-wallet/">Spark Wallet</a></li>
+            <li><a href="/pages/security/">Security &amp; Recovery</a></li>
+            <li>
+              <a
+                href="https://github.com/BlitzWallet/BlitzWallet"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
             </li>
           </ul>
         </div>

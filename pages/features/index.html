@@ -19,23 +19,21 @@
     />
     <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
     <link rel="manifest" href="/public/favicon/site.webmanifest" />
-    <title>
-      Blitz Wallet Features: Accounts, Dollar Goals, Pools, Gifts & More
-    </title>
+    <title>Blitz Wallet Features: Lightning, Gifts, POS & More</title>
     <meta
       name="description"
-      content="Explore Blitz Wallet features. Pay contacts free, send gift links, collect group pools, receive USDT/USDC as Bitcoin or dollars, use POS, and more from one self-custodial wallet."
+      content="Explore Blitz Wallet features: Bitcoin and Lightning payments, gifts, pools, Nostr Wallet Connect, stablecoins, and point of sale."
     />
     <meta name="robots" content="index, follow" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://blitzwalletapp.com/features/" />
     <meta
       property="og:title"
-      content="Blitz Wallet Features for Paying Anyone, Anywhere"
+      content="Blitz Wallet Features: Lightning, Gifts, POS & More"
     />
     <meta
       property="og:description"
-      content="Free contact payments, gifts, pools, payment links, stablecoin swaps and POS. All in one self-custodial Bitcoin wallet."
+      content="Bitcoin and Lightning payments, gifts, pools, stablecoins, Nostr Wallet Connect, and point of sale."
     />
     <meta
       property="og:image"
@@ -48,11 +46,11 @@
     />
     <meta
       property="twitter:title"
-      content="Blitz Wallet Features for Paying Anyone, Anywhere"
+      content="Blitz Wallet Features: Lightning, Gifts, POS & More"
     />
     <meta
       property="twitter:description"
-      content="Free contact payments, gifts, pools, payment links, stablecoin swaps and POS."
+      content="Bitcoin and Lightning payments, gifts, pools, stablecoins, Nostr Wallet Connect, and point of sale."
     />
     <meta
       property="twitter:image"
@@ -152,7 +150,25 @@
             },
             {
               "@type": "ListItem",
+              "position": 12,
+              "name": "Lightning Wallet",
+              "url": "https://blitzwalletapp.com/pages/lightning-wallet/"
+            },
+            {
+              "@type": "ListItem",
               "position": 13,
+              "name": "Spark Wallet",
+              "url": "https://blitzwalletapp.com/pages/spark-wallet/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 14,
+              "name": "Security and Recovery",
+              "url": "https://blitzwalletapp.com/pages/security/"
+            },
+            {
+              "@type": "ListItem",
+              "position": 15,
               "name": "How to Receive Bitcoin",
               "url": "https://blitzwalletapp.com/learn/how-to-receive-bitcoin/"
             }
@@ -190,10 +206,13 @@
         <ul class="nav-links" id="primary-navigation">
           <li><a href="/#products">Products</a></li>
           <li><a href="/features/" class="active">Features</a></li>
+          <li><a href="/learn/">Learn</a></li>
           <li><a href="/pages/about/">About</a></li>
           <li><a href="/pages/contact/">Contact</a></li>
           <li>
-            <a href="#" class="nav-download-btn download-btn">Download</a>
+            <a href="/pages/download/" class="nav-download-btn download-btn"
+              >Download</a
+            >
           </li>
         </ul>
         <button
@@ -218,7 +237,7 @@
             instantly.
           </p>
           <div class="hero-actions">
-            <a href="#" class="btn-primary download-btn"
+            <a href="/pages/download/" class="btn-primary download-btn"
               >Download Blitz <i data-lucide="arrow-right"></i
             ></a>
             <a href="/pages/download/" class="btn-secondary"
@@ -246,8 +265,8 @@
               <div class="icon"><i data-lucide="users"></i></div>
               <h3>Accounts</h3>
               <p>
-                Personal sub-wallets for you, managed accounts for kids and
-                family.
+                Personal sub-wallets and managed wallets to help someone get
+                started.
               </p>
             </a>
             <a
@@ -355,8 +374,7 @@
               <div class="highlight-number">$0.00</div>
               <div class="highlight-label">Blitz-to-Blitz contact fee</div>
               <p class="card-copy">
-                Send to contacts for free. Lightning/Spark fees are otherwise
-                tiny.
+                Other payment routes may have network or service fees.
               </p>
             </div>
             <div class="card">
@@ -388,13 +406,30 @@
             <a href="/pages/self-custody/" class="card card-link"
               ><h3>Self-Custody</h3>
               <p>
-                Your keys, your money. How one 12-word backup recovers every
-                account.
+                How your 12-word seed works and what recovery may require.
               </p></a
             >
             <a href="/pages/download/" class="card card-link"
               ><h3>Download</h3>
               <p>iOS, Android, web. The same wallet everywhere.</p></a
+            >
+            <a href="/pages/lightning-wallet/" class="card card-link"
+              ><h3>Lightning wallet</h3>
+              <p>
+                Use Lightning payments without managing channels or a node.
+              </p></a
+            >
+            <a href="/pages/spark-wallet/" class="card card-link"
+              ><h3>Spark wallet</h3>
+              <p>
+                Learn what Spark does in Blitz and how its trust model works.
+              </p></a
+            >
+            <a href="/pages/security/" class="card card-link"
+              ><h3>Security and recovery</h3>
+              <p>
+                Understand seed phrases, operators, and independent recovery.
+              </p></a
             >
           </div>
         </div>
@@ -403,11 +438,11 @@
       <section class="section warm">
         <div class="section-inner">
           <div class="cta-band">
-            <h2>Ready to try it?</h2>
-            <p>Create a wallet in seconds. Add a little Bitcoin or USD</p>
+            <h2>Ready to explore Blitz?</h2>
+            <p>Review payment and recovery details, then choose a platform.</p>
 
             <div class="hero-actions actions-centered">
-              <a href="#" class="btn-primary download-btn"
+              <a href="/pages/download/" class="btn-primary download-btn"
                 >Download Blitz Wallet <i data-lucide="arrow-right"></i
               ></a>
               <a href="https://wallet.blitzwalletapp.com" class="btn-secondary"
@@ -423,7 +458,7 @@
         <div class="footer-brand">
           <img src="/favicon.png" alt="Blitz Wallet logo" />
           <h3>Blitz Wallet</h3>
-          <p>Your Global Payments App</p>
+          <p>Bitcoin &amp; Lightning wallet</p>
         </div>
         <div class="footer-links">
           <h4>Products</h4>
@@ -433,6 +468,22 @@
             <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
             <li>
               <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Wallet</h4>
+          <ul>
+            <li><a href="/pages/lightning-wallet/">Lightning Wallet</a></li>
+            <li><a href="/pages/spark-wallet/">Spark Wallet</a></li>
+            <li><a href="/pages/security/">Security &amp; Recovery</a></li>
+            <li>
+              <a
+                href="https://github.com/BlitzWallet/BlitzWallet"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
             </li>
           </ul>
         </div>

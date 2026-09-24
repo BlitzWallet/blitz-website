@@ -1805,7 +1805,7 @@ function generateHTML({ poolId, ogTitle, ogDescription, ogImage, poolData }) {
                     </span>
                     <span class="payment-option-text">
                       <span class="payment-option-label">Cash App</span>
-                      <span class="payment-option-sub">Pay instantly</span>
+                      <span class="payment-option-sub">Continue in Cash App</span>
                     </span>
                   </button>
                 </div>
