@@ -5,7 +5,8 @@
   "main": "index.mjs",
   "scripts": {
     "dev": "tsc -w & nodemon .",
-    "build": "node scripts/generate-sitemap.mjs && rm -rf dist && mkdir dist && cp -R index.html 404.html 200.html tips_page.html favicon.png robots.txt sitemap.xml llms.txt llms-full.txt BingSiteAuth.xml .well-known pages learn public src dist/ && rm -rf dist/pages/blog/README.md dist/pages/blog/template",
+    "icons": "node scripts/build-icons.mjs",
+    "build": "node scripts/generate-sitemap.mjs && node scripts/build-icons.mjs && rm -rf dist && mkdir dist && cp -R index.html 404.html 200.html tips_page.html favicon.png robots.txt sitemap.xml llms.txt llms-full.txt BingSiteAuth.xml .well-known pages learn public src dist/ && rm -rf dist/pages/blog/README.md dist/pages/blog/template",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Blake Kaufman",
@@ -14,5 +15,8 @@
   "dependencies": {
     "@netlify/edge-functions": "^3.0.4",
     "dotenv": "16.4.1"
+  },
+  "devDependencies": {
+    "lucide": "^1.48.0"
   }
 }

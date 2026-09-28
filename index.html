@@ -1,11 +1,8 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
-    ></script>
+    <!-- Google tag (gtag.js): injected after load so its ~150KB of JS doesn't
+         compete with first paint on mobile. Calls queue in dataLayer until then. -->
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag() {
@@ -13,6 +10,12 @@
       }
       gtag("js", new Date());
       gtag("config", "G-WNRJ7Y4RVE");
+      addEventListener("load", function () {
+        var s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE";
+        document.head.appendChild(s);
+      });
     </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -90,6 +93,15 @@
       content="A simple Bitcoin and Lightning wallet built on Spark. Pay contacts, use a Lightning address, and send or receive on-chain."
     />
 
+    <!-- Start the font fetch from the HTML instead of waiting for
+         font-loader.js; it applies the (now cached) stylesheet. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+    />
     <link rel="stylesheet" href="./src/assets/styles/index.css" />
     <link rel="stylesheet" href="./src/assets/styles/components.css" />
     <link rel="stylesheet" href="./src/assets/styles/navbar_footer.css" />
