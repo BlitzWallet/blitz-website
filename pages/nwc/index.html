@@ -136,70 +136,7 @@
         ]
       }
     </script>
-    <style>
-      /* Pairing panel: only shown when the page is opened from a connection
-         request link (/nwc/auth?pubkey=...&state=...). */
-      .pair-panel {
-        max-width: 560px;
-        margin: 2rem auto 0;
-        text-align: left;
-      }
-      .pair-panel h2 {
-        font-size: 1.4rem;
-        margin-bottom: 0.4rem;
-      }
-      .pair-app {
-        font-weight: 600;
-      }
-      .pair-grid {
-        display: grid;
-        grid-template-columns: auto 1fr;
-        gap: 1.5rem;
-        align-items: center;
-        margin-top: 1.25rem;
-      }
-      .pair-qr {
-        background: #ffffff;
-        padding: 10px;
-        border-radius: var(--radius-card);
-        border: 1px solid var(--color-hairline);
-        line-height: 0;
-      }
-      .pair-qr img,
-      .pair-qr canvas {
-        width: 180px;
-        height: 180px;
-      }
-      .pair-list {
-        margin: 0;
-        padding-left: 1.1rem;
-      }
-      .pair-list li {
-        margin-bottom: 0.35rem;
-      }
-      .pair-actions {
-        margin-top: 1.25rem;
-        display: flex;
-        gap: 0.75rem;
-        flex-wrap: wrap;
-      }
-      .pair-note {
-        margin-top: 1rem;
-        font-size: 0.9rem;
-        color: var(--color-ink-45);
-      }
-      @media (max-width: 680px) {
-        .pair-grid {
-          grid-template-columns: 1fr;
-        }
-        .pair-qr {
-          justify-self: center;
-        }
-      }
-      [hidden] {
-        display: none !important;
-      }
-    </style>
+    <link rel="stylesheet" href="/pages/nwc/style.css" />
   </head>
   <body>
     <nav>
@@ -234,7 +171,6 @@
     <main>
       <section class="hero">
         <div class="hero-inner">
-          <span class="hero-badge">Nostr Wallet Connect</span>
           <h1>Connect apps to <span>Blitz Wallet</span></h1>
           <p class="lead">
             Let apps like Telegram bots, Nostr clients and games request
@@ -258,7 +194,11 @@
             </h2>
             <p class="muted-copy" id="pair-summary"></p>
             <div class="pair-grid">
-              <div class="pair-qr" id="pair-qr" aria-label="Connection QR code"></div>
+              <div
+                class="pair-qr"
+                id="pair-qr"
+                aria-label="Connection QR code"
+              ></div>
               <ol class="pair-list">
                 <li>On your phone, tap <strong>Open in Blitz</strong>.</li>
                 <li>
@@ -382,7 +322,8 @@
               <div class="icon"><i data-lucide="wallet"></i></div>
               <h3>Check, receive and pay</h3>
               <p>
-                Message <a href="https://t.me/BlitzWalletBot">@BlitzWalletBot</a>
+                Message
+                <a href="https://t.me/BlitzWalletBot">@BlitzWalletBot</a>
                 to see your balance, create invoices and pay them. Every payment
                 needs your confirmation and PIN.
               </p>
@@ -439,8 +380,8 @@
                 Wallet Connect (Nostr Wallet Connect, NWC) is an open protocol
                 that lets apps ask your wallet to create invoices, check your
                 balance or send payments. In Blitz, connected apps use a
-                separate Wallet Connect account, and you choose what each app may
-                do.
+                separate Wallet Connect account, and you choose what each app
+                may do.
               </p>
             </div>
             <div class="faq">
@@ -583,81 +524,7 @@
         </div>
       </div>
     </div>
-    <script>
-      // Connection requests (NWC-08). The app sends people to
-      // blitzwallet.app/nwc/auth?pubkey=...; on a phone with Blitz that opens
-      // the app directly. Everywhere else it lands here, so offer the same
-      // request as a nostr+walletauth:// link and a QR code for the Blitz
-      // camera. Only public keys and a one-time code are in the link.
-      (function () {
-        var params = new URLSearchParams(location.search);
-        if (!params.has('pubkey') && !params.has('state')) return;
-
-        var pubkey = (params.get('pubkey') || '').toLowerCase();
-        var state = (params.get('state') || '').toLowerCase();
-        var relays = params.getAll('relay');
-        var valid =
-          /^[0-9a-f]{64}$/.test(pubkey) &&
-          /^[0-9a-f]{32,128}$/.test(state) &&
-          relays.length > 0 &&
-          relays.every(function (r) {
-            return /^wss:\/\/\S+$/i.test(r);
-          });
-        if (!valid) {
-          document.getElementById('pair-invalid').hidden = false;
-          return;
-        }
-
-        params.delete('pubkey');
-        var uri =
-          'nostr+walletauth://' +
-          pubkey +
-          '?' +
-          params.toString().replace(/\+/g, '%20');
-
-        var name = (params.get('name') || '').replace(/[\u0000-\u001f\u007f\u200e\u200f\u202a-\u202e\u2066-\u2069]/g, '').slice(0, 40);
-        if (name) document.getElementById('pair-app').textContent = name;
-
-        var wants = [];
-        var methods = (params.get('request_methods') || '') + ' ' + (params.get('optional_request_methods') || '');
-        if (/\bmake_invoice\b/.test(methods)) wants.push('receive payments');
-        if (/\bpay_invoice\b/.test(methods)) wants.push('send payments (you decide)');
-        if (/\bget_balance\b/.test(methods)) wants.push('see your balance');
-        if (/\blist_transactions\b/.test(methods)) wants.push('see your transactions');
-        var summary = wants.length ? 'It asks to ' + wants.join(', ') + '.' : '';
-        var max = Number(params.get('max_amount'));
-        var period = params.get('renewal_period');
-        if (max >= 1000 && period) {
-          summary +=
-            ' Spending limit: ' +
-            Math.floor(max / 1000).toLocaleString('en-US') +
-            ' sats per ' +
-            ({ daily: 'day', weekly: 'week', monthly: 'month', yearly: 'year' }[period] || period) +
-            '.';
-        }
-        document.getElementById('pair-summary').textContent = summary;
-
-        document.getElementById('pair-open').href = uri;
-        var copy = document.getElementById('pair-copy');
-        copy.addEventListener('click', function () {
-          navigator.clipboard.writeText(uri).then(function () {
-            copy.textContent = 'Copied ✓';
-          });
-        });
-        document.getElementById('pair').hidden = false;
-
-        function drawQr() {
-          if (!window.QRCode) return setTimeout(drawQr, 100);
-          new QRCode(document.getElementById('pair-qr'), {
-            text: uri,
-            width: 180,
-            height: 180,
-            correctLevel: QRCode.CorrectLevel.M,
-          });
-        }
-        window.addEventListener('DOMContentLoaded', drawQr);
-      })();
-    </script>
+    <script src="/pages/nwc/script.js"></script>
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
@@ -667,10 +534,10 @@
       function gtag() {
         dataLayer.push(arguments);
       }
-      gtag('js', new Date());
+      gtag("js", new Date());
       // Report the path only: connection links carry a one-time code in the
       // query string that must not reach analytics.
-      gtag('config', 'G-WNRJ7Y4RVE', {
+      gtag("config", "G-WNRJ7Y4RVE", {
         page_location: location.origin + location.pathname,
       });
     </script>

@@ -1,0 +1,110 @@
+@font-face {
+  font-family: 'Poppins';
+  src: url('/public/fonts/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Poppins';
+  src: url('/public/fonts/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-display: swap;
+}
+:root {
+  --color-brand: #0375f6;
+  --color-ink: #121111;
+  --color-muted: rgba(18, 17, 17, 0.6);
+  --color-bg: #fbfaf7;
+  --color-surface: #ffffff;
+  --color-hairline: rgba(18, 17, 17, 0.08);
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: 'Poppins', sans-serif;
+}
+main {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid var(--color-hairline);
+  border-radius: 8px;
+  padding: 32px 24px 20px;
+  box-shadow: 0 22px 52px rgba(18, 17, 17, 0.09);
+}
+img {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+}
+h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 16px 0 4px;
+}
+p {
+  color: var(--color-muted);
+  margin: 0 0 24px;
+}
+code {
+  display: block;
+  background: var(--color-bg);
+  border: 1px solid var(--color-hairline);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 12px;
+  word-break: break-all;
+  max-height: 92px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  text-align: left;
+  color: var(--color-muted);
+}
+.btn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 12px;
+  border-radius: 999px;
+  border: 2px solid var(--color-brand);
+  font: 700 1rem 'Poppins', sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-brand);
+}
+.primary {
+  background: var(--color-brand);
+  color: #ffffff;
+}
+.qr {
+  display: inline-block;
+  background: #ffffff;
+  padding: 10px;
+  border: 1px solid var(--color-hairline);
+  border-radius: 8px;
+  line-height: 0;
+  margin-bottom: 8px;
+}
+.qr img,
+.qr canvas {
+  width: 200px;
+  height: 200px;
+}
+.qr-hint {
+  font-size: 0.85rem;
+  margin-bottom: 20px;
+}
+[hidden] {
+  display: none !important;
+}
