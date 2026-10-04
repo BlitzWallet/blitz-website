@@ -19,17 +19,47 @@
   align-items: center;
   margin-top: 1.25rem;
 }
-.pair-qr {
-  background: #ffffff;
-  padding: 10px;
-  border-radius: var(--radius-card);
-  border: 1px solid var(--color-hairline);
-  line-height: 0;
+/* QR box, same as the paylink / pool / tips pages. Scoped so it doesn't
+   override the download modal's .qr-wrapper. */
+.pair-panel .qr-wrapper {
+  width: 100%;
+  max-width: 260px;
+  background: var(--color-surface-warm);
+  border: none;
+  border-radius: 16px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
-.pair-qr img,
-.pair-qr canvas {
-  width: 180px;
-  height: 180px;
+.pair-panel .qr-wrapper.clickable {
+  cursor: pointer;
+}
+.pair-panel .qr-wrapper.clickable:hover {
+  opacity: 0.92;
+}
+.qr-code {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  padding: 6%;
+  border-radius: 12px;
+}
+.qr-tap-hint {
+  color: var(--color-ink);
+  font-size: 0.8rem;
+  text-align: center;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.qr-tap-hint svg {
+  width: 16px;
+  height: 16px;
 }
 .pair-list {
   margin: 0;
@@ -53,7 +83,7 @@
   .pair-grid {
     grid-template-columns: 1fr;
   }
-  .pair-qr {
+  .pair-panel .qr-wrapper {
     justify-self: center;
   }
 }

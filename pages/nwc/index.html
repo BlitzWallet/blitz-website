@@ -194,11 +194,16 @@
             </h2>
             <p class="muted-copy" id="pair-summary"></p>
             <div class="pair-grid">
-              <div
-                class="pair-qr"
-                id="pair-qr"
-                aria-label="Connection QR code"
-              ></div>
+              <div class="qr-wrapper clickable" id="pair-qr-wrapper">
+                <div
+                  class="qr-code"
+                  id="pair-qr"
+                  aria-label="Connection QR code"
+                ></div>
+                <span class="qr-tap-hint"
+                  ><i data-lucide="copy"></i> Tap to copy</span
+                >
+              </div>
               <ol class="pair-list">
                 <li>On your phone, tap <strong>Open in Blitz</strong>.</li>
                 <li>

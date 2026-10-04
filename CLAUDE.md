@@ -12,13 +12,13 @@ This is the **Blitz Wallet** marketing/PR website — a static site with Netlify
 # Install dependencies
 npm install
 
-# Start dev server (runs TypeScript watch + nodemon)
+# Start dev server (netlify dev, serves source files directly; no rebuild needed)
 npm run dev
 
 # No build step or test suite is configured
 ```
 
-Local dev server runs at `http://localhost:3000`. For Netlify function testing, use `netlify dev` with the Netlify CLI.
+`npm run dev` runs `netlify dev` (http://localhost:8888) with functions and redirects. The `[dev] publish = "."` setting in `netlify.toml` serves the repo root instead of `dist/`.
 
 ## Architecture
 

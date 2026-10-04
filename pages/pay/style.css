@@ -1,110 +1,202 @@
-@font-face {
-  font-family: 'Poppins';
-  src: url('/public/fonts/Poppins-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Poppins';
-  src: url('/public/fonts/Poppins-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-display: swap;
-}
-:root {
-  --color-brand: #0375f6;
-  --color-ink: #121111;
-  --color-muted: rgba(18, 17, 17, 0.6);
-  --color-bg: #fbfaf7;
-  --color-surface: #ffffff;
-  --color-hairline: rgba(18, 17, 17, 0.08);
-}
-* {
-  box-sizing: border-box;
-}
+/* Card + QR styles mirror the paylink / pool / tips pages
+   (netlify/handle-paylink.js, netlify/handle-pool.js, tips_page.html).
+   Tokens and fonts come from /src/assets/styles/index.css. */
 body {
-  margin: 0;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 24px 16px;
-  background: var(--color-bg);
-  color: var(--color-ink);
-  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: var(--color-surface-warm);
 }
-main {
+
+.pay-card {
   width: 100%;
-  max-width: 420px;
-  text-align: center;
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   background: var(--color-surface);
-  border: 1px solid var(--color-hairline);
-  border-radius: 8px;
-  padding: 32px 24px 20px;
-  box-shadow: 0 22px 52px rgba(18, 17, 17, 0.09);
+  border-radius: 24px;
+  padding: 2rem;
+  box-shadow: var(--shadow-card);
+  border: 1px solid var(--color-surface-offset);
 }
-img {
+
+.pay-logo {
   width: 64px;
   height: 64px;
   border-radius: 16px;
 }
-h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin: 16px 0 4px;
+
+.hint {
+  font-size: 0.8rem;
+  color: var(--color-ink-45);
+  text-align: center;
+  margin: 0;
 }
-p {
-  color: var(--color-muted);
-  margin: 0 0 24px;
+.hint.error {
+  color: var(--color-error-text);
+  font-size: 0.875rem;
 }
-code {
-  display: block;
-  background: var(--color-bg);
-  border: 1px solid var(--color-hairline);
-  border-radius: 8px;
-  padding: 12px;
-  font-size: 12px;
-  word-break: break-all;
-  max-height: 92px;
-  overflow: hidden;
-  margin-bottom: 24px;
-  text-align: left;
-  color: var(--color-muted);
-}
-.btn {
-  display: block;
+
+.qr-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   width: 100%;
-  padding: 15px;
-  margin-bottom: 12px;
-  border-radius: 999px;
-  border: 2px solid var(--color-brand);
-  font: 700 1rem 'Poppins', sans-serif;
+}
+
+/* ── QR ─────────────────────────────────────────────────────────────── */
+.qr-screen-title {
+  font-weight: 500;
+  font-size: 1.1rem;
+  text-align: center;
+  margin: 0;
+  color: var(--color-ink);
+}
+
+.qr-amount {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.1;
+  color: var(--color-brand);
+  margin: 0;
+  text-align: center;
+}
+
+.qr-wrapper {
+  width: 90%;
+  max-width: 320px;
+  background: var(--color-surface-warm);
+  border-radius: 16px;
+  padding: 3%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.qr-wrapper.clickable {
+  cursor: pointer;
+}
+.qr-wrapper.clickable:hover {
+  opacity: 0.92;
+}
+
+.qr-code {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: white;
+  padding: 6%;
+  border-radius: 12px;
+}
+
+.qr-tap-hint {
+  color: var(--color-ink);
+  font-size: 0.8rem;
+  text-align: center;
+  opacity: 0.7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.qr-tap-hint svg {
+  width: 16px;
+  height: 16px;
+}
+
+.qr-copy-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-surface-warm);
+  border-radius: 12px;
+  padding: 0.625rem 0.875rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.qr-copy-text {
+  flex: 1;
+  font-size: 0.85rem;
+  color: var(--color-ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.qr-clipboard-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: var(--color-ink);
+  opacity: 0.6;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.qr-clipboard-btn:hover {
+  opacity: 1;
+}
+.qr-clipboard-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ── Actions ────────────────────────────────────────────────────────── */
+.qr-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.action-button {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
   text-decoration: none;
   cursor: pointer;
-  background: transparent;
-  color: var(--color-brand);
+  transition: all 0.3s ease;
+  font-family: var(--font-sans);
 }
-.primary {
+.action-button.primary {
   background: var(--color-brand);
-  color: #ffffff;
+  color: white;
+  box-shadow: 0 4px 15px var(--color-brand-strong);
 }
-.qr {
-  display: inline-block;
-  background: #ffffff;
-  padding: 10px;
-  border: 1px solid var(--color-hairline);
-  border-radius: 8px;
-  line-height: 0;
-  margin-bottom: 8px;
+.action-button.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--color-brand-strong);
 }
-.qr img,
-.qr canvas {
-  width: 200px;
-  height: 200px;
+.action-button.secondary {
+  background: transparent;
+  color: var(--color-ink);
+  border: 1px solid var(--color-surface-offset);
 }
-.qr-hint {
-  font-size: 0.85rem;
-  margin-bottom: 20px;
+.action-button.secondary:hover {
+  background: var(--color-surface-warm);
 }
+
+@media (max-width: 500px) {
+  .pay-card {
+    padding: 1.75rem 1.25rem;
+  }
+}
+
 [hidden] {
   display: none !important;
 }

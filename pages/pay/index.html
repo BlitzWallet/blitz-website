@@ -19,7 +19,9 @@
       server, so it doesn't end up in server logs. No analytics on this page
       for the same reason.
     -->
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
     <link rel="stylesheet" href="/pages/pay/style.css" />
+    <script src="/src/js/font-loader.js" defer></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
       integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
@@ -28,21 +30,24 @@
     ></script>
   </head>
   <body>
-    <main>
-      <img
-        src="/public/favicon/web-app-manifest-512x512.png"
-        alt="Blitz Wallet"
-      />
-      <h1 id="amount">Lightning invoice</h1>
-      <p id="hint">Pay with any Lightning wallet.</p>
-      <div id="invoice-view" hidden>
-        <div class="qr" id="qr" aria-label="Invoice QR code"></div>
-        <p class="qr-hint">Scan with your phone's wallet, or use the buttons below.</p>
-        <code id="invoice"></code>
-        <a id="open" class="btn primary" href="#">Open wallet</a>
-        <button id="copy" class="btn" type="button">Copy invoice</button>
+    <main class="pay-card">
+      <p class="qr-amount" id="amount" hidden></p>
+      <p class="hint" id="hint">Pay with any Lightning wallet.</p>
+      <div class="qr-view" id="invoice-view" hidden>
+        <div class="qr-wrapper clickable" id="qr-wrapper">
+          <div class="qr-code" id="qr" aria-label="Invoice QR code"></div>
+          <span class="qr-tap-hint"
+            ><i data-lucide="copy"></i> Tap to copy</span
+          >
+        </div>
+        <div class="qr-actions">
+          <a id="open" class="action-button primary" href="#">Open wallet</a>
+          <button id="copy" class="action-button secondary" type="button">
+            Copy invoice
+          </button>
+        </div>
       </div>
-      <p id="error" hidden>
+      <p class="hint error" id="error" hidden>
         This link doesn't contain a valid Lightning invoice.
       </p>
     </main>

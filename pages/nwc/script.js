@@ -53,19 +53,23 @@
 
   document.getElementById('pair-open').href = uri;
   var copy = document.getElementById('pair-copy');
-  copy.addEventListener('click', function () {
+  function copyUri() {
     navigator.clipboard.writeText(uri).then(function () {
       copy.textContent = 'Copied ✓';
     });
-  });
+  }
+  copy.addEventListener('click', copyUri);
+  document.getElementById('pair-qr-wrapper').addEventListener('click', copyUri);
   document.getElementById('pair').hidden = false;
 
   function drawQr() {
     if (!window.QRCode) return setTimeout(drawQr, 100);
     new QRCode(document.getElementById('pair-qr'), {
       text: uri,
-      width: 180,
-      height: 180,
+      width: 220,
+      height: 220,
+      colorDark: '#000000',
+      colorLight: '#ffffff',
       correctLevel: QRCode.CorrectLevel.M,
     });
   }
