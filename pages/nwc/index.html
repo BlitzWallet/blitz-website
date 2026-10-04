@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="canonical" href="https://blitzwalletapp.com/nwc/" />
+    <link
+      rel="icon"
+      type="image/png"
+      href="/public/favicon/favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="/public/favicon/favicon.svg" />
+    <link rel="shortcut icon" href="/public/favicon/favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/public/favicon/apple-touch-icon.png"
+    />
+    <meta name="apple-mobile-web-app-title" content="Blitz Wallet" />
+    <link rel="manifest" href="/public/favicon/site.webmanifest" />
+    <title>Wallet Connect: Connect Apps to Blitz | Blitz</title>
+    <meta
+      name="description"
+      content="Connect apps like Telegram bots and Nostr clients to Blitz Wallet with Nostr Wallet Connect. Separate balance, permissions you choose, and spending budgets enforced on your phone."
+    />
+    <meta name="robots" content="index, follow" />
+    <!-- Pairing links carry a one-time code; keep it out of Referer headers. -->
+    <meta name="referrer" content="no-referrer" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://blitzwalletapp.com/nwc/" />
+    <meta
+      property="og:title"
+      content="Wallet Connect: Connect Apps to Blitz Wallet"
+    />
+    <meta
+      property="og:description"
+      content="Let apps request payments from a separate Blitz account, with permissions and a budget you control."
+    />
+    <meta
+      property="og:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Wallet Connect for Blitz Wallet" />
+    <meta
+      property="twitter:description"
+      content="Connect apps to a separate Blitz account with permissions and budgets."
+    />
+    <meta
+      property="twitter:image"
+      content="https://blitzwalletapp.com/public/twitterCard.png"
+    />
+    <link rel="stylesheet" href="/src/assets/styles/index.css" />
+    <link rel="stylesheet" href="/src/assets/styles/components.css" />
+    <link rel="stylesheet" href="/src/assets/styles/navbar_footer.css" />
+    <link rel="stylesheet" href="/src/components/downloadModal/style.css" />
+    <link rel="stylesheet" href="/src/assets/styles/downloadButton.css" />
+    <link rel="stylesheet" href="/src/assets/styles/pillar.css" />
+    <script src="/src/js/navbar.js" defer></script>
+    <script src="/src/js/font-loader.js" defer></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"
+      integrity="sha512-CNgIRecGo7nphbeZ04Sc13ka07paqdeTu0WR1IM4kNcpmBAUSHSQX0FslNhTDadL4O5SAGapGt4FodqL8My0mA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+      defer
+    ></script>
+    <script src="/src/components/downloadModal/index.js" defer></script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Wallet Connect: Connect Apps to Blitz Wallet",
+        "description": "How Nostr Wallet Connect works in Blitz Wallet.",
+        "url": "https://blitzwalletapp.com/nwc/"
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://blitzwalletapp.com/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Wallet Connect",
+            "item": "https://blitzwalletapp.com/nwc/"
+          }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Wallet Connect?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Wallet Connect (Nostr Wallet Connect, NWC) is an open protocol that lets apps ask your wallet to create invoices, check your balance or send payments. In Blitz, connected apps use a separate Wallet Connect account, and you choose what each app may do."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Can a connected app reach my main Blitz balance?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "No. Connected apps only use your Wallet Connect account, which has its own balance. Your main balance is never available to them."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How do I disconnect an app?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Open Blitz, go to Settings, Wallet Connect, choose the connection and delete it. The app loses access immediately."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Why does Wallet Connect need notifications?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Your wallet lives on your phone. Requests from apps reach Blitz as push notifications, so Blitz can answer them even when the app is closed."
+            }
+          }
+        ]
+      }
+    </script>
+    <style>
+      /* Pairing panel: only shown when the page is opened from a connection
+         request link (/nwc/auth?pubkey=...&state=...). */
+      .pair-panel {
+        max-width: 560px;
+        margin: 2rem auto 0;
+        text-align: left;
+      }
+      .pair-panel h2 {
+        font-size: 1.4rem;
+        margin-bottom: 0.4rem;
+      }
+      .pair-app {
+        font-weight: 600;
+      }
+      .pair-grid {
+        display: grid;
+        grid-template-columns: auto 1fr;
+        gap: 1.5rem;
+        align-items: center;
+        margin-top: 1.25rem;
+      }
+      .pair-qr {
+        background: #ffffff;
+        padding: 10px;
+        border-radius: var(--radius-card);
+        border: 1px solid var(--color-hairline);
+        line-height: 0;
+      }
+      .pair-qr img,
+      .pair-qr canvas {
+        width: 180px;
+        height: 180px;
+      }
+      .pair-list {
+        margin: 0;
+        padding-left: 1.1rem;
+      }
+      .pair-list li {
+        margin-bottom: 0.35rem;
+      }
+      .pair-actions {
+        margin-top: 1.25rem;
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+      .pair-note {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        color: var(--color-ink-45);
+      }
+      @media (max-width: 680px) {
+        .pair-grid {
+          grid-template-columns: 1fr;
+        }
+        .pair-qr {
+          justify-self: center;
+        }
+      }
+      [hidden] {
+        display: none !important;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <div class="nav-container">
+        <a href="/" class="logo"
+          ><img src="/favicon.png" alt="Blitz Wallet logo"
+        /></a>
+        <ul class="nav-links" id="primary-navigation">
+          <li><a href="/#products">Products</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/learn/">Learn</a></li>
+          <li><a href="/pages/about/">About</a></li>
+          <li><a href="/pages/contact/">Contact</a></li>
+          <li>
+            <a href="/pages/download/" class="nav-download-btn download-btn"
+              >Download</a
+            >
+          </li>
+        </ul>
+        <button
+          type="button"
+          class="mobile-menu"
+          id="mobileMenu"
+          aria-label="Open navigation menu"
+          aria-controls="primary-navigation"
+          aria-expanded="false"
+        >
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+    <main>
+      <section class="hero">
+        <div class="hero-inner">
+          <span class="hero-badge">Nostr Wallet Connect</span>
+          <h1>Connect apps to <span>Blitz Wallet</span></h1>
+          <p class="lead">
+            Let apps like Telegram bots, Nostr clients and games request
+            payments from a separate Blitz account, with the permissions and
+            spending budget you choose.
+          </p>
+          <div class="hero-actions">
+            <a href="https://t.me/BlitzWalletBot" class="btn-primary"
+              >Use Blitz in Telegram <i data-lucide="send"></i
+            ></a>
+            <a href="/pages/download/" class="btn-secondary download-btn"
+              >Get Blitz</a
+            >
+          </div>
+
+          <!-- Connection request fallback. Filled in by the script below. -->
+          <div class="card pair-panel" id="pair" hidden>
+            <h2>
+              <span class="pair-app" id="pair-app">An app</span> wants to
+              connect to Blitz
+            </h2>
+            <p class="muted-copy" id="pair-summary"></p>
+            <div class="pair-grid">
+              <div class="pair-qr" id="pair-qr" aria-label="Connection QR code"></div>
+              <ol class="pair-list">
+                <li>On your phone, tap <strong>Open in Blitz</strong>.</li>
+                <li>
+                  On a computer, scan the code with the Blitz camera (Send →
+                  Scan).
+                </li>
+                <li>Review what the app asks for, then approve or decline.</li>
+              </ol>
+            </div>
+            <div class="pair-actions">
+              <a class="btn-primary" id="pair-open" href="#"
+                >Open in Blitz <i data-lucide="arrow-up-right"></i
+              ></a>
+              <button type="button" class="btn-secondary" id="pair-copy">
+                Copy link
+              </button>
+            </div>
+            <p class="pair-note">
+              The app chose its own name, so only approve a request you just
+              started yourself. No secret is shared: the app uses its own key.
+            </p>
+          </div>
+          <div class="card pair-panel" id="pair-invalid" hidden>
+            <h2>This connection link isn't valid</h2>
+            <p class="muted-copy">
+              Ask the app for a new link, or create a connection manually in
+              Blitz → Settings → Wallet Connect.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">How it works</span>
+            <h2>Apps can request, but your wallet decides</h2>
+          </div>
+          <div class="card-grid cols-3">
+            <div class="card">
+              <div class="icon"><i data-lucide="layers"></i></div>
+              <h3>A separate account</h3>
+              <p>
+                Connected apps use your Wallet Connect account, with its own
+                balance. Your main balance is never available to them.
+              </p>
+            </div>
+            <div class="card">
+              <div class="icon"><i data-lucide="sliders-horizontal"></i></div>
+              <h3>Permissions per app</h3>
+              <p>
+                Choose what each app can do: receive payments, send payments,
+                see your balance, see transactions or check invoices.
+              </p>
+            </div>
+            <div class="card">
+              <div class="icon"><i data-lucide="shield-check"></i></div>
+              <h3>Spending budgets</h3>
+              <p>
+                Cap what an app can send per day, week, month or year. Blitz
+                enforces the limit on your phone, not the app.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Connect an app</span>
+            <h2>Approve it in one tap</h2>
+            <p>
+              Apps that support one-tap connections send you a link. Nothing to
+              copy, and no secret leaves the app.
+            </p>
+          </div>
+          <div class="steps">
+            <div class="step">
+              <h3>Open the link</h3>
+              <p>
+                Tap the app's connect link on your phone, or scan its QR code
+                with Blitz.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Review the request</h3>
+              <p>
+                Blitz shows the permissions and budget the app asks for. Sending
+                stays off unless you turn it on.
+              </p>
+            </div>
+            <div class="step">
+              <h3>Approve</h3>
+              <p>
+                The app connects right away. Change or remove it any time in
+                Settings → Wallet Connect.
+              </p>
+            </div>
+          </div>
+          <div class="card space-top-sm">
+            <h3>Apps that need a connection string</h3>
+            <p class="muted-copy">
+              Some apps ask you to paste a connection string instead. In Blitz,
+              go to Settings → Wallet Connect → Add connection, choose
+              permissions and a budget, and copy the string into the app. Treat
+              it like a password: anyone who has it can use that connection.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section white">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Blitz in Telegram</span>
+            <h2>Your wallet, right in your chats</h2>
+          </div>
+          <div class="card-grid cols-2">
+            <div class="card">
+              <div class="icon"><i data-lucide="wallet"></i></div>
+              <h3>Check, receive and pay</h3>
+              <p>
+                Message <a href="https://t.me/BlitzWalletBot">@BlitzWalletBot</a>
+                to see your balance, create invoices and pay them. Every payment
+                needs your confirmation and PIN.
+              </p>
+            </div>
+            <div class="card">
+              <div class="icon"><i data-lucide="zap"></i></div>
+              <h3>Request money in any chat</h3>
+              <p>
+                Type <code>@BlitzWalletBot 5000 pizza</code> in any chat to post
+                a payment request. Friends pay it from their own wallet; your
+                balance stays private.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section warm">
+        <div class="section-inner">
+          <div class="section-head">
+            <span class="eyebrow">Stay in control</span>
+            <h2>Good habits for connected apps</h2>
+          </div>
+          <div class="card-grid cols-3">
+            <div class="card">
+              <h3>One connection per app</h3>
+              <p>
+                Give each app its own connection so you can remove one without
+                touching the others.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Set a budget</h3>
+              <p>
+                A budget limits what an app could spend even if it were
+                compromised.
+              </p>
+            </div>
+            <div class="card">
+              <h3>Approve only what you started</h3>
+              <p>
+                Apps name themselves. Decline any request you didn't just begin.
+              </p>
+            </div>
+          </div>
+          <div class="section-head space-top-lg">
+            <span class="eyebrow">FAQ</span>
+            <h2>Wallet Connect questions</h2>
+          </div>
+          <div class="faq-list">
+            <div class="faq">
+              <h3>What is Wallet Connect?</h3>
+              <p>
+                Wallet Connect (Nostr Wallet Connect, NWC) is an open protocol
+                that lets apps ask your wallet to create invoices, check your
+                balance or send payments. In Blitz, connected apps use a
+                separate Wallet Connect account, and you choose what each app may
+                do.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Can a connected app reach my main Blitz balance?</h3>
+              <p>
+                No. Connected apps only use your Wallet Connect account, which
+                has its own balance. Your main balance is never available to
+                them.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>How do I disconnect an app?</h3>
+              <p>
+                Open Blitz, go to Settings → Wallet Connect, choose the
+                connection and delete it. The app loses access immediately.
+              </p>
+            </div>
+            <div class="faq">
+              <h3>Why does Wallet Connect need notifications?</h3>
+              <p>
+                Your wallet lives on your phone. Requests from apps reach Blitz
+                as push notifications, so Blitz can answer them even when the
+                app is closed.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="section white">
+        <div class="cta-band">
+          <h2>Connect your first app</h2>
+          <p>Get Blitz, then open Settings → Wallet Connect.</p>
+          <div class="hero-actions actions-centered">
+            <a href="/pages/download/" class="btn-primary download-btn"
+              >Open Blitz <i data-lucide="arrow-right"></i
+            ></a>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-brand">
+          <img src="/favicon.png" alt="Blitz Wallet logo" />
+          <h3>Blitz Wallet</h3>
+          <p>Bitcoin &amp; Lightning wallet</p>
+        </div>
+        <div class="footer-links">
+          <h4>Products</h4>
+          <ul>
+            <li><a href="/#products">Mobile App</a></li>
+            <li><a href="https://wallet.blitzwalletapp.com">Web Wallet</a></li>
+            <li><a href="/pages/point-of-sale/">Point of Sale</a></li>
+            <li>
+              <a href="https://recover.blitzwalletapp.com">Recovery Platform</a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Wallet</h4>
+          <ul>
+            <li><a href="/pages/lightning-wallet/">Lightning Wallet</a></li>
+            <li><a href="/pages/spark-wallet/">Spark Wallet</a></li>
+            <li><a href="/pages/security/">Security &amp; Recovery</a></li>
+            <li>
+              <a
+                href="https://github.com/BlitzWallet/BlitzWallet"
+                target="_blank"
+                rel="noopener"
+                >GitHub</a
+              >
+            </li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="/pages/about/">About</a></li>
+            <li><a href="/features/">Features</a></li>
+            <li><a href="/learn/">Learn</a></li>
+            <li><a href="/pages/contact/">Contact</a></li>
+            <li><a href="/pages/blog/">Blog</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Legal</h4>
+          <ul>
+            <li><a href="/pages/privacyPolicy/">Privacy Policy</a></li>
+            <li><a href="/pages/terms/">Terms of Use</a></li>
+            <li>
+              <a href="http://www.apache.org/licenses/LICENSE-2.0">License</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Blitz Wallet LLC. All rights reserved.</p>
+      </div>
+    </footer>
+    <div class="modal-backdrop" id="modalBackdrop"></div>
+    <div class="modal-container" id="modalContainer">
+      <div class="download-modal">
+        <button
+          type="button"
+          class="modal-close"
+          id="modalClose"
+          aria-label="Close download dialog"
+        >
+          <i data-lucide="x"></i>
+        </button>
+        <div class="modal-header">
+          <h2>Download Blitz Wallet</h2>
+          <p>Choose your platform to get started</p>
+        </div>
+        <div class="modal-tabs">
+          <button class="modal-tab active" data-platform="ios">
+            <i data-lucide="apple"></i><span>iOS</span></button
+          ><button class="modal-tab" data-platform="android">
+            <i data-lucide="smartphone"></i><span>Android</span>
+          </button>
+        </div>
+        <div class="modal-content">
+          <div class="qr-wrapper"><div id="qr-code"></div></div>
+          <p class="modal-instructions">Scan with your mobile device</p>
+          <div class="store-badges">
+            <a
+              href="https://apps.apple.com/us/app/blitz-wallet/id6476810582"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="apple"></i><span>App Store</span></a
+            ><a
+              href="https://play.google.com/store/apps/details?id=com.blitzwallet"
+              class="store-badge"
+              target="_blank"
+              rel="noopener"
+              ><i data-lucide="play"></i><span>Play Store</span></a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Connection requests (NWC-08). The app sends people to
+      // blitzwallet.app/nwc/auth?pubkey=...; on a phone with Blitz that opens
+      // the app directly. Everywhere else it lands here, so offer the same
+      // request as a nostr+walletauth:// link and a QR code for the Blitz
+      // camera. Only public keys and a one-time code are in the link.
+      (function () {
+        var params = new URLSearchParams(location.search);
+        if (!params.has('pubkey') && !params.has('state')) return;
+
+        var pubkey = (params.get('pubkey') || '').toLowerCase();
+        var state = (params.get('state') || '').toLowerCase();
+        var relays = params.getAll('relay');
+        var valid =
+          /^[0-9a-f]{64}$/.test(pubkey) &&
+          /^[0-9a-f]{32,128}$/.test(state) &&
+          relays.length > 0 &&
+          relays.every(function (r) {
+            return /^wss:\/\/\S+$/i.test(r);
+          });
+        if (!valid) {
+          document.getElementById('pair-invalid').hidden = false;
+          return;
+        }
+
+        params.delete('pubkey');
+        var uri =
+          'nostr+walletauth://' +
+          pubkey +
+          '?' +
+          params.toString().replace(/\+/g, '%20');
+
+        var name = (params.get('name') || '').replace(/[\u0000-\u001f\u007f\u200e\u200f\u202a-\u202e\u2066-\u2069]/g, '').slice(0, 40);
+        if (name) document.getElementById('pair-app').textContent = name;
+
+        var wants = [];
+        var methods = (params.get('request_methods') || '') + ' ' + (params.get('optional_request_methods') || '');
+        if (/\bmake_invoice\b/.test(methods)) wants.push('receive payments');
+        if (/\bpay_invoice\b/.test(methods)) wants.push('send payments (you decide)');
+        if (/\bget_balance\b/.test(methods)) wants.push('see your balance');
+        if (/\blist_transactions\b/.test(methods)) wants.push('see your transactions');
+        var summary = wants.length ? 'It asks to ' + wants.join(', ') + '.' : '';
+        var max = Number(params.get('max_amount'));
+        var period = params.get('renewal_period');
+        if (max >= 1000 && period) {
+          summary +=
+            ' Spending limit: ' +
+            Math.floor(max / 1000).toLocaleString('en-US') +
+            ' sats per ' +
+            ({ daily: 'day', weekly: 'week', monthly: 'month', yearly: 'year' }[period] || period) +
+            '.';
+        }
+        document.getElementById('pair-summary').textContent = summary;
+
+        document.getElementById('pair-open').href = uri;
+        var copy = document.getElementById('pair-copy');
+        copy.addEventListener('click', function () {
+          navigator.clipboard.writeText(uri).then(function () {
+            copy.textContent = 'Copied ✓';
+          });
+        });
+        document.getElementById('pair').hidden = false;
+
+        function drawQr() {
+          if (!window.QRCode) return setTimeout(drawQr, 100);
+          new QRCode(document.getElementById('pair-qr'), {
+            text: uri,
+            width: 180,
+            height: 180,
+            correctLevel: QRCode.CorrectLevel.M,
+          });
+        }
+        window.addEventListener('DOMContentLoaded', drawQr);
+      })();
+    </script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-WNRJ7Y4RVE"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag('js', new Date());
+      // Report the path only: connection links carry a one-time code in the
+      // query string that must not reach analytics.
+      gtag('config', 'G-WNRJ7Y4RVE', {
+        page_location: location.origin + location.pathname,
+      });
+    </script>
+  </body>
+</html>

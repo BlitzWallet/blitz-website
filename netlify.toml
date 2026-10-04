@@ -128,6 +128,34 @@
   status = 200
   force = true
 
+# Wallet Connect page. Also the fallback for app connection links
+# (blitzwallet.app/nwc/auth?pubkey=...) when they don't open the app directly.
+[[redirects]]
+  from = "/nwc"
+  to = "/pages/nwc/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/nwc/*"
+  to = "/pages/nwc/"
+  status = 200
+  force = true
+
+# Lightning invoice landing page for the Telegram bot's Open wallet / Copy
+# buttons (the invoice is in the #fragment and never reaches the server).
+[[redirects]]
+  from = "/pay"
+  to = "/pages/pay/"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/pay/"
+  to = "/pages/pay/"
+  status = 200
+  force = true
+
 [[headers]]
   for = "/.well-known/assetlinks.json"
   [headers.values]

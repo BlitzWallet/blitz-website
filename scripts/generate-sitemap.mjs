@@ -112,6 +112,11 @@ const staticPages = [
     file: "pages/lightning-address/index.html",
     priority: "0.80",
   },
+  {
+    loc: "/nwc/",
+    file: "pages/nwc/index.html",
+    priority: "0.80",
+  },
   { loc: "/learn/", file: "learn/index.html", priority: "0.80" },
   {
     loc: "/learn/how-to-receive-bitcoin/",
