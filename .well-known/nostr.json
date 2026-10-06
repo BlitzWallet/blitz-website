@@ -202,7 +202,7 @@
     "dougskipper": "e88f8c2f7bc9fec1c67b053dd5c3a7aa411f4b067a5370b413155a5ad14dda76",
     "betoneto": "21ac29561b5de90cdc21995fc0707525cd78c8a52d87721ab681d3d609d1e2df",
     "itv": "c9f7c2ddc1f1c100832a7be07f724652ce21986470183421a80463069b84dad9",
-    "saintoshi": "48ca053916454f5d6171da28b677ce9a4922e672fb0e5707d1bb69bf1d4b2dff",
+    "saintoshi": "7169b8a60dd5806d1058d9bef3493b04c6171489235b97e87ecd5155685dee49",
     "mus": "106f9ee1f32919971efabab9d3f8df3cbabb97b239f9c724fcde22389730eddb",
     "Bobz": "db1f03a8a14f62fe86c75fde03cdb66ae6b95f22b11b4d1e3cab9272c15890e5",
     "Bara": "a816adf8e46c9c2fecebe422214ff198bf646f69a6613f8a2987dde201955bf1",
@@ -1891,6 +1891,14 @@
       "wss://relay.primal.net"
     ],
     "b4d8e5b172938c1848b1eb4c77c09cbe4acd67cbb717f147450b60b961a5f0d8": [
+      "wss://relay.damus.io",
+      "wss://nostr.wine.",
+      "wss://nos.lol",
+      "wss://relay.snort.social",
+      "wss://eden.nostr.land",
+      "wss://relay.primal.net"
+    ],
+    "7169b8a60dd5806d1058d9bef3493b04c6171489235b97e87ecd5155685dee49": [
       "wss://relay.damus.io",
       "wss://nostr.wine.",
       "wss://nos.lol",
