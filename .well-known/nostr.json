@@ -2,7 +2,6 @@
   "names": {
     "blitz": "020597ed3e7823c578e75e419522dabf023bbe1964ca99e7a20f99a70f33f71b6a",
     "Blake": "9de53da0b6fe88ccdf3b197513ce0462c325ae251aad95fd7ebfbc16a89a6801",
-    "isolabellart": "f4db5270bd991b17bea1e6d035f45dee392919c29474bbac10342d223c74e0d0",
     "vexpertsystems": "4b9e6350130bc6bf3436f4062109e8dfbdbefbf7df7a36593129eb27e5d6ec89",
     "whoISjohngalt": "818e0e2d33b9a877a3d7a02988e2a3713ed7a32c5ce20fe9175259409235ecf4",
     "kboom": "c4f076133f1cb058327a3ed6d27bacbe6f8880179073f7f3eda87093de21dfb4",
@@ -214,7 +213,8 @@
     "AlunoSaoMaximo": "b90649f1df4fcdf7aa574048e56df11c5efeb7f52bed46907719335fd5b14528",
     "satopolys": "74f48ac47b409da384add5ad772c8494bcb3afd40a15acb5ac23c0c123e77e8b",
     "Satopolys": "25d5d22c1552a034fe95e7e208780a9bfab3552d4b8b41344960a6412a72be2c",
-    "nenad": "9e67d69751ee7e281ac68b0d6b71dbadf4bffbbfa8ce64d8c6ea1bfbe62afe13"
+    "nenad": "9e67d69751ee7e281ac68b0d6b71dbadf4bffbbfa8ce64d8c6ea1bfbe62afe13",
+    "isolabellart": "f4db5270bd991b17bea1e6d035f45dee392919c29474bbac10342d223c74e0d0"
   },
   "relays": {
     "c6e230a25ead3c497013637bf377bced81c7cdb60d881a63edb138b08aa68083": [
